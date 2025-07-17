@@ -1,0 +1,23 @@
+// ==========================================
+// Arquivo: questoes.js
+// Descrição: Contém todas as questões do simulado PL-900
+// ==========================================
+
+export const questoes = [
+
+   {
+  "tipo": "unica",
+  "texto": "Uma empresa usa o Dataverse para armazenar informações sobre os produtos que ela vende.\n\nA empresa deseja uma interface que permita que os usuários móveis não autenticados acessem essas informações.\n\nVocê precisa recomendar o componente da Microsoft Power Platform que a empresa deve usar para criar a interface.\n\nQual componente você deve recomendar?",
+  "opcoes": [
+    "Aplicativo baseado em modelo",
+    "Site do Power Pages",
+    "Aplicativo de tela"
+  ],
+  "resposta": 2,
+  "explicacao": "Aplicativos de tela do Power Apps permitem criar interfaces personalizadas e otimizadas para dispositivos móveis, com controle completo sobre layout e conectividade com fontes de dados como o Dataverse.",
+  "link": "https://learn.microsoft.com/pt-br/power-apps/maker/canvas-apps/getting-started",
+  "dominio": "Demonstrar as funcionalidades do Power Apps (20 a 25%)"
+}
+
+    
+    ];

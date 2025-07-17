@@ -1,0 +1,180 @@
+<!-- ==========================================
+Arquivo: index.html
+Descrição: Página principal do Simulado DP-900
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulado DP-900</title>
+
+  <!-- Chart.js para os gráficos -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="robots" content="noindex, nofollow">
+</head>
+
+<body>
+
+  <!-- Estrutura Principal -->
+  <div class="container">
+
+    <!-- Botão para expandir/ocultar a Sidebar -->
+
+
+    <!-- Barra Lateral Esquerda de Questões -->
+    <div class="sidebar">
+      <ul id="listaQuestoes"></ul>
+    </div>
+
+    <!-- Área de Conteúdo -->
+    <div class="content">
+      <button id="toggleSidebar" class="toggle-sidebar">
+        <p id="arrow" class="arrow">⮜</p>
+      </button> <!-- seta apontando para a esquerda -->
+      <div id="progressoContainer">
+        <span id="textoProgresso"></span>
+        <div class="barra-externa">
+          <div class="barra-interna" id="barraProgresso"></div>
+        </div>
+      </div>
+      <div id="quiz">
+        <div id="questaoContainer"></div>
+      </div>
+
+
+
+
+      <div id="feedback" class="feedback hidden"></div>
+
+      <button id="voltarBtn" class="btn-voltar hidden">Voltar questão</button>
+      <button id="confirmarBtn" class="btn-confirmar">Confirmar</button>
+      <button id="proximaBtn" class="btn-proxima hidden">Próxima questão</button>
+      <button id="finalizarBtn" class="btn-finalizar hidden">Finalizar</button>
+
+      <!-- Resultado Final -->
+      <div id="resultadoFinal" class="results hidden">
+
+        <p id="pontuacao"></p>
+
+        <!-- Gráfico de Pizza da Pontuação -->
+        <canvas id="graficoResultado"></canvas>
+
+
+        <!-- Gráfico de Barras por Domínio -->
+        <canvas id="graficoDominio"></canvas>
+
+        <p id="tempoTotal"></p>
+
+        <div class="summary" id="resumoQuestoes"></div>
+      </div>
+    </div>
+    <!-- <button id="toggleSidebarDireita" class="toggle-sidebarDireita">
+      <p id="arrowDireita" class="arrowDireita">⮜</p> 
+    </button>  seta apontando para a esquerda -->
+
+
+    <!-- Estrutura do menu lateral direito alterada com classe específica e evento -->
+    <div class="sidebarDireita">
+      <center>
+        <ul id="listaSimulados">DP - 900</ul>
+      </center>
+      <ul class="listaSimulados"><a href="../01-SIMULADO/index.html">01. SIMULADO</a></ul>
+      <li class="listaSimulados"><a href="../02-SIMULADO/index.html">02. SIMULADO</a></li>
+
+    </div>
+
+  </div>
+  <!-- Rodapé -->
+  <footer class="text-gray-200 py-6 text-center">
+    <center><a href="/DP-900/curso.html">Voltar ao curso</a></center>
+  </footer>
+  <!-- Script adicionado no final da página para confirmação -->
+  <script>
+    document.querySelectorAll('.sidebarDireita ul.listaSimulados a').forEach(link => {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const urlDestino = this.href;
+        const confirma = confirm("Você perderá a sessão atual do simulado e ingressará em um novo simulado. Deseja continuar?");
+
+        if (confirma) {
+          window.location.href = urlDestino;
+        }
+      });
+    });
+  </script>
+
+
+  <!-- Script principal -->
+  <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/main.js"></script>
+
+
+
+  <button id="botaoReportar" class="btn-reportar-flutuante hidden">Reportar Problema</button>
+  <!-- Modal de Reportar Problema -->
+  <div id="modalProblema" class="modal hidden">
+    <div class="modal-content">
+      <h2>Reportar Problema</h2>
+      <textarea id="textoProblema" placeholder="Descreva o problema encontrado..." rows="6"></textarea>
+      <div class="botoes-modal">
+        <button id="enviarProblemaBtn">Enviar</button>
+        <button id="cancelarProblemaBtn">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const content = document.querySelector('.content');
+    const arrow = toggleBtn.querySelector('.arrow');
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+      content.classList.toggle('expandido');
+
+      if (sidebar.classList.contains('hidden')) {
+        // toggleBtn.style.left = '10px';
+        arrow.classList.remove('arrow-close')
+        arrow.classList.add('arrow-open');
+        // toggleBtn.textContent = '❯' /* '⮜' */; // Setinha para a direita
+      } else {
+        // toggleBtn.style.left = '250px';
+        arrow.classList.remove('arrow-open')
+        arrow.classList.add('arrow-close');
+        // arrow.textContent = '⮜' /* '⮜' */; // Setinha para a esquerda
+      }
+    });
+  </script>
+
+
+  <script>
+    // Desabilita o clique direito
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Desabilita seleção de texto
+    document.addEventListener('selectstart', event => event.preventDefault());
+
+    // Bloqueia atalhos comuns de cópia e inspeção
+    document.addEventListener('keydown', function (e) {
+      if (e.ctrlKey && ['u', 's', 'c', 'x', 'a'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+      }
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i', 'j'].includes(e.key.toLowerCase()))) {
+        e.preventDefault();
+      }
+    });
+  </script>
+
+</body>
+
+
+
+
+</html>
