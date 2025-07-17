@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
+    <link rel="stylesheet" href="../assets/css/auth.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#celular').mask('(00) 00000-0000');
+            $('#origem').on('change', function () {
+                if ($(this).val() === 'FIRJAN') {
+                    $('#email').attr('pattern', '^[a-zA-Z0-9._%+-]+@firjan\\.com\\.br$');
+                    $('#email').attr('title', 'Somente e-mails @firjan.com.br são permitidos para FIRJAN');
+                    $('#label-outro-local').hide();
+                    $('#outro_local').prop('required', false);
+                } else if ($(this).val() === 'Outros') {
+                    $('#email').removeAttr('pattern');
+                    $('#email').removeAttr('title');
+                    $('#label-outro-local').show();
+                    $('#outro_local').prop('required', true);
+                } else {
+                    $('#email').removeAttr('pattern');
+                    $('#email').removeAttr('title');
+                    $('#label-outro-local').hide();
+                    $('#outro_local').prop('required', false);
+                }
+            });
+
+            // Visualizar senha
+            $('.senha-toggle').on('click', function () {
+                const input = $(this).siblings('input');
+                const type = input.attr('type') === 'password' ? 'text' : 'password';
+                input.attr('type', type);
+                $(this).find('svg').toggleClass('hide');
+            });
+
+            // Validação de confirmação de senha, e-mail FIRJAN e senha forte
+            $('form').on('submit', function (e) {
+                const senha = $('#senha').val();
+                const confirmaSenha = $('#confirma_senha').val();
+
+                // Senhas iguais
+                if (senha !== confirmaSenha) {
+                    alert('As senhas não coincidem!');
+                    $('#confirma_senha').focus();
+                    e.preventDefault();
+                    return;
+                }
+
+                // Senha forte
+                const senhaForte = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/;
+                const sequencias = ['1234', 'abcd', 'senha', 'qwer', '4321', '1111', '0000'];
+                let senhaInvalida = false;
+                sequencias.forEach(seq => {
+                    if (senha.toLowerCase().includes(seq)) {
+                        senhaInvalida = true;
+                    }
+                });
+                if (!senhaForte.test(senha) || senhaInvalida) {
+                    alert('A senha deve ter pelo menos 8 caracteres, conter letras e números e não pode ser uma sequência simples como "1234", "abcd", "senha", etc.');
+                    $('#senha').focus();
+                    e.preventDefault();
+                    return;
+                }
+
+                // Validação extra para FIRJAN
+                if ($('#origem').val() === 'FIRJAN') {
+                    const email = $('#email').val().trim();
+                    if (!/@firjan\.com\.br$/i.test(email)) {
+                        alert('Para FIRJAN, somente e-mails @firjan.com.br são permitidos.');
+                        $('#email').focus();
+                        e.preventDefault();
+                        return;
+                    }
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div style="text-align:center; margin-bottom: 12px;">
+            <img src="../assets/imagens/certiacademy_logo.svg" alt="CertiAcademy Logo"
+                style="width:180px; max-width:90vw; height:auto;">
+        </div>
+        <form action="../controller/register.php" method="POST">
+            <label>Nome:
+                <input type="text" name="nome" required>
+            </label>
+            <label>Origem:
+                <select name="origem" id="origem" required>
+                    <option value="">Selecione...</option>
+                    <option value="FIRJAN">FIRJAN</option>
+                    <option value="UDEMY">UDEMY</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </label>
+            <label id="label-outro-local" style="display:none;">
+                Informe o local:
+                <input type="text" name="outro_local" id="outro_local" maxlength="50">
+            </label>
+            <label>Email:
+                <input type="email" name="email" id="email" required>
+            </label>
+            <label>Celular:
+                <input type="text" name="celular" id="celular" required maxlength="15">
+            </label>
+            <label>Senha:
+                <div class="senha-group">
+                    <input type="password" name="senha" id="senha" required autocomplete="new-password">
+                    <button type="button" class="senha-toggle" tabindex="-1" aria-label="Mostrar/ocultar senha">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                    </button>
+                </div>
+            </label>
+            <label>Confirme a Senha:
+                <div class="senha-group">
+                    <input type="password" name="confirma_senha" id="confirma_senha" required
+                        autocomplete="new-password">
+                    <button type="button" class="senha-toggle" tabindex="-1" aria-label="Mostrar/ocultar senha">
+                        <svg viewBox="0 0 24 24">
+                            <path
+                                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 13c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10a4 4 0 100 8 4 4 0 000-8z" />
+                        </svg>
+                    </button>
+                </div>
+            </label>
+            <div style="display: flex; align-items: flex-start; gap: 8px; margin-bottom: 12px;">
+                <input type="checkbox" id="lgpd" name="lgpd" required style="margin-top: 2px;">
+                <label for="lgpd" style="font-size: 0.95rem; color: #333;">
+                    Li e concordo com o
+                    <a href="../controller/termo-lgpd.php" target="_blank" style="color: #2563eb; text-decoration: underline;">Termo de Uso e Política de Privacidade</a>
+                    conforme a Lei Geral de Proteção de Dados (LGPD).
+                </label>
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+        <p>Já tem conta? <a href="login.html">Entrar</a></p>
+    </div>
+</body>
+
+</html>

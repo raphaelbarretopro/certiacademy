@@ -1,0 +1,15 @@
+{
+    "name": "barreto/900",
+    "description": "projeto",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "admin"
+        }
+    ],
+    "require": {}
+}
