@@ -3,6 +3,7 @@ const fs = require('fs');
 const { exec } = require('child_process');
 const path = require('path');
 const app = express();
+const rateLimit = require('express-rate-limit'); // Import rate-limiting middleware
 const PORT = 3000;
 
 const arquivoQuestoes = path.join(__dirname, 'questoes.js');
@@ -17,7 +18,15 @@ app.get('/questoes', (req, res) => {
   });
 });
 
-app.post('/corrigir', (req, res) => {
+// Create a rate limiter: max 10 requests per minute
+const corrigirLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 10, // Limit each IP to 10 requests per `windowMs`
+  message: 'Too many requests, please try again later.', // Custom error message
+});
+
+// Apply rate limiter to the `/corrigir` route
+app.post('/corrigir', corrigirLimiter, (req, res) => {
   exec(`node "${arquivoCorrigir}"`, (error, stdout, stderr) => {
     if (error) return res.status(500).send(stderr);
     res.send(stdout);
