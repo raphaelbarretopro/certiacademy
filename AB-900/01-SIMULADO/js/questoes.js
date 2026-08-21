@@ -1,6 +1,6 @@
 // ==========================================
 // Arquivo: questoes.js
-// Descrição: Contém todas as questões do simulado AI-900
+// Descrição: Contém todas as questões do simulado AB-900
 // ==========================================
 
 export const questoes = [
