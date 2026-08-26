@@ -150,9 +150,9 @@ export const questoes = [
       "A calculadora de TCO (custo total de propriedade) exibe o custo da execução de cargas de trabalho no Azure.",
       "A calculadora de TCO (custo total de propriedade) gera relatórios gráficos."
     ],
-    "respostas": [true, false, true],
-    "explicacao": "A calculadora de TCO permite estimar os custos atuais de infraestrutura local (como em datacenters) para compará-los com os custos no Azure, mas não exibe os custos de execução diretamente no Azure. Além disso, ela fornece relatórios gráficos que ajudam na visualização dos dados.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cloud-adoption-framework/migrate/",
+    "respostas": [true, true, true],
+    "explicacao": "A calculadora de TCO estima o custo atual de uma infraestrutura on-premises (datacenter) e, ao mesmo tempo, apresenta o custo equivalente estimado ao executar essas mesmas cargas de trabalho no Azure, exibindo os dois lado a lado em um relatório comparativo. Ela também gera relatórios gráficos para facilitar a visualização das economias potenciais.",
+    "link": "https://azure.microsoft.com/pt-br/pricing/tco/calculator/",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
@@ -284,7 +284,7 @@ export const questoes = [
     ],
     "respostas": [false, true, false],
     "explicacao": "Uma assinatura do Azure só pode estar associada a um único locatário do Microsoft Entra por vez. No entanto, é possível transferir uma assinatura para outro locatário. A expiração de uma assinatura não exclui automaticamente o locatário do Microsoft Entra.",
-    "link": "https://learn.microsoft.com/pt-br/azure/active-directory/fundamentals/active-directory-how-subscriptions-associated-directory",
+    "link": "https://learn.microsoft.com/pt-br/entra/fundamentals/whatis",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
@@ -409,7 +409,7 @@ export const questoes = [
       "A Sincronização de Arquivos do Azure sincroniza arquivos e pastas entre os Arquivos do Azure e servidores de arquivos Windows."
     ],
     "respostas": [true, false, true],
-    "explicacao": "O AzCopy é uma ferramenta de linha de comando eficiente para transferir dados para o Azure Storage. O serviço que permite migração de grandes volumes de dados fisicamente é o Azure Data Box, não o Gerenciador de Armazenamento. A Sincronização de Arquivos do Azure permite manter os arquivos locais e na nuvem sincronizados, ideal para cenários híbridos.",
+    "explicacao": "O AzCopy é uma ferramenta de linha de comando eficiente para transferir dados para o Azure Storage. O serviço que permite migração física de grandes volumes de dados é o Azure Data Box, não o Storage Explorer. A Sincronização de Arquivos do Azure permite manter os arquivos locais e na nuvem sincronizados, ideal para cenários híbridos.",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/common/storage-use-azcopy-blobs",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
