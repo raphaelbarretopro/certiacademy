@@ -147,7 +147,7 @@ export const questoes = [
       "pagar para transferir todos os dados do site para o Azure",
       "reduzir o número de conexões ao site"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Azure é um serviço de pagamento conforme o uso (pay-as-you-go), o que significa que você será cobrado com base no seu consumo. Você deve planejar pagar custos de uso mensais pelos serviços e recursos do Azure usados para hospedar seu site.",
     "link": "https://azure.microsoft.com/pt-br/pricing/purchase-options/pay-as-you-go/",
     "dominio": "Descrever os conceitos da nuvem",
@@ -207,7 +207,7 @@ export const questoes = [
       "privada",
       "pública"
     ],
-    "resposta": 0,
+    "resposta": 1,
     "explicacao": "Uma nuvem híbrida (às vezes chamada de \"cloud hybrid\") é um ambiente de computação que combina um datacenter local (também chamado de nuvem privada) com uma nuvem pública, permitindo que dados e aplicativos sejam compartilhados entre eles.",
     "link": "https://azure.microsoft.com/pt-br/overview/what-is-hybrid-cloud-computing/",
     "dominio": "Descrever os conceitos da nuvem",
@@ -392,7 +392,7 @@ export const questoes = [
       "privada",
       "pública"
     ],
-    "resposta": 0,
+    "resposta": 1,
     "explicacao": "Uma nuvem híbrida é um ambiente de computação que combina um datacenter local (nuvem privada) com uma nuvem pública, permitindo que dados e aplicativos sejam compartilhados entre eles.",
     "link": "https://azure.microsoft.com/pt-br/overview/what-is-hybrid-cloud-computing/",
     "dominio": "Descrever os conceitos da nuvem",
@@ -490,7 +490,7 @@ export const questoes = [
       "Regras de rede",
       "Marcas de serviço"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "As regras de NAT (Network Address Translation) no Firewall do Azure permitem que o tráfego proveniente da internet seja traduzido e encaminhado para um servidor dentro de uma rede virtual. Ao processar as regras, o Firewall do Azure aplica primeiro as regras de NAT, depois as regras de rede e, por último, as regras de aplicativo.",
     "link": "https://learn.microsoft.com/pt-br/azure/firewall/rule-processing",
     "dominio": "Descrever os conceitos da nuvem",
@@ -507,7 +507,7 @@ export const questoes = [
       "camada de rede",
       "camada de perímetro"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "A camada de perímetro utiliza proteção contra negação de serviço distribuída (DDoS) para filtrar ataques em larga escala antes que possam causar uma negação de serviço para os usuários — esse é um dos princípios do modelo de defesa em profundidade.",
     "link": "https://learn.microsoft.com/pt-br/training/modules/secure-network-connectivity-azure/2-what-is-defense-in-depth",
     "dominio": "Descrever os conceitos da nuvem",
@@ -539,7 +539,7 @@ export const questoes = [
       "rede",
       "armazenamento"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Azure não cobra pelas horas de núcleo da VM enquanto ela está Parada (Desalocada). No entanto, você continua acumulando cobranças pelo armazenamento do Azure necessário para o disco do SO da VM e quaisquer discos de dados anexados.",
     "link": "https://learn.microsoft.com/pt-br/azure/virtual-machines/states-billing",
     "dominio": "Descrever os conceitos da nuvem",
@@ -616,7 +616,7 @@ export const questoes = [
       "ser implantada em um grupo de recursos separado.",
       "ter duas interfaces de rede."
     ],
-    "resposta": 0,
+    "resposta": 1,
     "explicacao": "Para garantir o isolamento de comunicação de uma VM no Azure, ela deve ser implantada em uma rede virtual separada.",
     "link": "https://learn.microsoft.com/pt-br/azure/virtual-network/virtual-networks-overview",
     "dominio": "Descrever os conceitos da nuvem",
@@ -650,7 +650,7 @@ export const questoes = [
       "O Azure Application Gateway",
       "O Azure Functions"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Azure Functions é uma solução sem servidor (serverless) que permite escrever menos código, manter menos infraestrutura e economizar em custos.",
     "link": "https://learn.microsoft.com/pt-br/azure/azure-functions/",
     "dominio": "Descrever os conceitos da nuvem",
@@ -667,7 +667,7 @@ export const questoes = [
       "pagar para transferir todos os dados do site para o Azure",
       "reduzir o número de conexões ao site"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Azure é um serviço de pagamento conforme o uso: você será cobrado com base no seu consumo, portanto deve planejar pagar custos de uso mensais pelos serviços e recursos usados para hospedar seu site.",
     "link": "https://azure.microsoft.com/pt-br/pricing/purchase-options/pay-as-you-go/",
     "dominio": "Descrever os conceitos da nuvem",
@@ -684,7 +684,7 @@ export const questoes = [
       "pagar para transferir todos os dados do site para o Azure",
       "reduzir o número de conexões ao site"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "As plataformas de nuvem pública, como o Azure, funcionam inteiramente em um esquema de utilidade baseado em consumo. Em vez de pagar custos antecipados enormes por hardware físico, racks de infraestrutura e componentes de servidor, você paga apenas pelos recursos que consome ativamente — agregados e cobrados como custos de uso mensais.",
     "link": "https://azure.microsoft.com/pt-br/pricing/purchase-options/pay-as-you-go/",
     "dominio": "Descrever os conceitos da nuvem",
