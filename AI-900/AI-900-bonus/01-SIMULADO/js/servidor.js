@@ -8,7 +8,8 @@ const PORT = 3000;
 const arquivoQuestoes = path.join(__dirname, 'questoes.js');
 const arquivoCorrigir = path.join(__dirname, 'corrigir-dominios.js');
 
-app.use(express.static(__dirname)); // para servir o index.html
+app.use('/index.html', express.static(path.join(__dirname, 'index.html'))); // Serves index.html
+app.use('/public', express.static(path.join(__dirname, 'public'))); // Serves public subdirectory
 
 app.get('/questoes', (req, res) => {
   fs.readFile(arquivoQuestoes, 'utf8', (err, data) => {
