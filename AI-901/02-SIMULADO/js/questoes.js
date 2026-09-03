@@ -1,773 +1,569 @@
 // ==========================================
-// Arquivo: questoes.js
-// Descrição: Contém todas as questões do simulado AI-900
+// Arquivo: questoes_bloco02.js
+// Descrição: Simulado AI-901 (Microsoft Azure AI Fundamentals) — tradução PT-BR (Contexto Oficial Microsoft)
+// BLOCO 02 de 04 — Construção de Agentes, SDKs e Visão/Voz
+// 32 questões — distribuição balanceada conforme guia oficial de estudos
+//
+// CORRESPONDÊNCIA COM O BANCO ORIGINAL: Questões de 33 a 64.
 // ==========================================
 
 export const questoes = [
-  //FABRICIO
+  // Questão Original: 33
+  {
+    "tipo": "unica",
+    "texto": "Você tem um projeto no Azure AI Foundry que contém um agente chamado Agent1. Você precisa garantir que o Agent1 sempre chame uma Azure Function quando responder à entrada do usuário. Como você deve definir o parâmetro `tool_choice` para o Agent1?",
+    "opcoes": [
+      "required",
+      "auto",
+      "none"
+    ],
+    "resposta": 0,
+    "explicacao": "Definir `tool_choice` como 'required' força o modelo a selecionar e usar pelo menos uma ferramenta (neste caso, a Azure Function) antes de retornar uma resposta ao usuário. A opção 'auto' deixaria a critério do modelo, e 'none' desativaria a ferramenta.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/function-calling",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 34
   {
     "tipo": "combobox",
-    "texto": "O Azure Machine Learning designer permite que você crie modelos de machine learning <combobox>.",
+    "texto": "<combobox> define quais campos extrair ao analisar conteúdo usando o Azure Content Understanding (Inteligência de Documentos).",
     "opcoes": [
-      "Selecione uma resposta",
-      "adicionando e conectando módulos em um canvas visual.",
-      "executando automaticamente tarefas comuns de preparação de dados.",
-      "selecionando automaticamente um algoritmo para construir o modelo mais preciso.",
-      "usando uma experiência baseada em notebooks com foco em código."
+      "Selecione uma opção",
+      "Uma lista de palavras-chave (keyword list)",
+      "Um processamento exclusivo de reconhecimento óptico de caracteres (OCR)",
+      "Um esquema (schema)",
+      "Uma chamada de API síncrona"
+    ],
+    "resposta": 3,
+    "explicacao": "Ao configurar um analisador personalizado, você define um esquema (schema). O esquema atua como o esqueleto estrutural que dita ao modelo de IA quais campos específicos, rótulos e tipos de dados ele deve procurar e extrair do documento.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/concept-custom",
+    "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 35
+  {
+    "tipo": "unica",
+    "texto": "Você tem um projeto no Microsoft Foundry que contém uma implantação (deployment) de modelo habilitado para visão. Você precisa desenvolver um aplicativo que envie uma mensagem contendo texto e uma URL de imagem. A solução deve garantir o menor tempo de resposta (menor latência) possível. Qual estrutura de mensagem você deve incluir na solicitação?",
+    "opcoes": [
+      "Uma mensagem do sistema (system message) que inclua tanto o item de texto quanto o item de imagem no array de conteúdo.",
+      "Uma mensagem do sistema que inclua apenas um item de texto e envie o item de imagem em uma solicitação separada.",
+      "Uma mensagem de usuário (user message) que inclua apenas o texto e envie o item de imagem em uma solicitação separada.",
+      "Uma mensagem de usuário (user message) que inclua tanto o item de texto quanto o item de imagem no array de conteúdo."
+    ],
+    "resposta": 3,
+    "explicacao": "Para minimizar a latência e o número de viagens de ida e volta (round trips) na rede, você deve enviar uma única mensagem de usuário (role: user) contendo um array de conteúdo (content array) que carregue o bloco de texto e o bloco de imagem na mesma solicitação HTTP.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 36
+  {
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre o uso de imagens em modelos multimodais.",
+    "afirmacoes": [
+      "No playground do Foundry, você pode fazer upload de uma imagem local e incluir texto na mesma mensagem ao fornecer prompts para um modelo multimodal.",
+      "Ao usar a API de Respostas da OpenAI e um modelo habilitado para visão, as imagens podem ser fornecidas apenas como dados de imagem codificados em base64.",
+      "Prompts que incluem imagens exigem a implantação de um modelo apenas de texto, porque as capacidades multimodais são tratadas na camada de aplicativo."
+    ],
+    "respostas": [true, false, false],
+    "explicacao": "A afirmação 2 é falsa porque as imagens também podem ser fornecidas via URLs HTTP públicas, não apenas base64. A afirmação 3 é falsa porque o próprio modelo fundacional precisa ser inerentemente multimodal (ex.: GPT-4o) para processar os tokens visuais; um modelo exclusivo de texto falharia na leitura de pixels.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 37
+  {
+    "tipo": "unica",
+    "texto": "Você está desenvolvendo um aplicativo que processa gravações de correio de voz usando o Azure Content Understanding no Foundry Tools. Qual recurso o serviço usa para converter áudio em texto?",
+    "opcoes": [
+      "Extração de frases-chave (key phrase extraction)",
+      "Transcrição (transcription)",
+      "Voice Live",
+      "Reconhecimento Óptico de Caracteres (OCR)"
     ],
     "resposta": 1,
-    "explicacao": "O Azure Machine Learning designer é uma interface gráfica baseada em arrastar e soltar, que permite aos usuários criar pipelines de aprendizado de máquina conectando módulos visuais. Essa abordagem facilita a criação de modelos sem exigir codificação, ideal para cenários de baixo código.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-designer",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "explicacao": "A transcrição (conversão de fala em texto ou Speech-to-Text) é o processo dedicado a escutar arquivos de áudio, como correios de voz, e transformá-los em uma transcrição textual digitalizada.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/speech-to-text",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre aprendizado de máquina automatizado (AutoML) no Azure.",
-    "afirmacoes": [
-      "O aprendizado de máquina automatizado permite incluir scripts Python personalizados em um pipeline de treinamento.",
-      "O aprendizado de máquina automatizado implementa soluções de machine learning sem exigir experiência em programação.",
-      "O aprendizado de máquina automatizado permite conectar visualmente conjuntos de dados e módulos em um canvas interativo."
-    ],
-    "respostas": [
-      false,
-      true,
-      false
-    ],
-    "explicacao": "A primeira afirmação é falsa, pois o AutoML não permite a inclusão direta de scripts Python personalizados em seu pipeline padrão — isso é possível com o Azure ML SDK e Designer. A segunda afirmação é verdadeira, pois o AutoML foi projetado para facilitar o uso sem a necessidade de escrever código. A terceira afirmação é falsa, pois a funcionalidade de conectar visualmente datasets e módulos está disponível no Azure Machine Learning Designer, e não no AutoML.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Um projeto de pesquisa médica utiliza um grande conjunto de dados anonimizados de imagens de escaneamento cerebral que são categorizadas em tipos predefinidos de hemorragia cerebral. É necessário usar aprendizado de máquina para apoiar a detecção precoce dos diferentes tipos de hemorragia cerebral nas imagens antes que elas sejam analisadas por uma pessoa. Este é um exemplo de qual tipo de aprendizado de máquina?",
-    "opcoes": [
-      "Clustering",
-      "Regressão",
-      "Classificação"
-    ],
-    "resposta": 2,
-    "explicacao": "Como os tipos de hemorragia cerebral já estão previamente definidos, trata-se de um problema de classificação supervisionada. O modelo de aprendizado de máquina será treinado com dados rotulados para identificar corretamente a qual categoria cada nova imagem pertence.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/fundamentals-machine-learning/3-types-of-machine-learning",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Ao treinar um modelo, por que você deve dividir aleatoriamente as linhas em subconjuntos separados?",
-    "opcoes": [
-      "Treinar o modelo duas vezes para obter melhor precisão",
-      "Treinar múltiplos modelos simultaneamente para obter melhor desempenho",
-      "Testar o modelo usando dados que não foram utilizados no treinamento"
-    ],
-    "resposta": 2,
-    "explicacao": "A divisão aleatória dos dados em subconjuntos permite criar conjuntos de treinamento e teste. Isso é essencial para avaliar a capacidade de generalização do modelo, testando-o com dados que ele nunca viu antes.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/introduction-to-machine-learning/",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "multipla",
-    "texto": "Você está avaliando se deve usar um workspace básico ou empresarial no Azure Machine Learning. Quais são duas tarefas que exigem um workspace empresarial?",
-    "opcoes": [
-      "Usar uma interface gráfica do usuário (GUI) para executar experimentos de aprendizado de máquina automatizado.",
-      "Criar uma instância de computação para usar como estação de trabalho.",
-      "Usar uma interface gráfica do usuário (GUI) para definir e executar experimentos de aprendizado de máquina com o Azure Machine Learning designer.",
-      "Criar um conjunto de dados a partir de um arquivo CSV (valores separados por vírgula)."
-    ],
-    "respostas": [
-      0,
-      1
-    ],
-    "explicacao": "O uso do aprendizado de máquina automatizado com interface gráfica e a criação de instâncias de computação são funcionalidades que exigem o uso de um workspace empresarial no Azure Machine Learning. As demais opções estão disponíveis em workspaces básicos.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-workspace?view=azureml-api-2",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "multipla",
-    "texto": "Você precisa prever a faixa de renda de um cliente com base no seguinte conjunto de dados. Quais dois campos você deve usar como variáveis preditoras (features)?",
-    "imagemUrl": "img/imgq47.png",
-    "opcoes": [
-      "Nível educacional",
-      "Sobrenome",
-      "Idade",
-      "Faixa de renda",
-      "Nome"
-    ],
-    "respostas": [
-      0,
-      2
-    ],
-    "explicacao": "Para prever a faixa de renda (variável de saída), é necessário selecionar variáveis preditoras (features) relevantes. Idade e nível educacional são características do cliente que influenciam sua renda. Nome e sobrenome não são preditores úteis e a faixa de renda é a variável alvo, portanto, não deve ser usada como feature.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/introduction-to-machine-learning/",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você está desenvolvendo uma ferramenta que processará imagens de lojas de varejo e identificará os produtos de concorrentes. A solução usará um modelo personalizado. Qual serviço do Azure Cognitive Services você deve usar?",
-    "opcoes": [
 
-      "Visão Personalizada",
-      "Reconhecedor de Formulários",
-      "Face",
-      "Visão Computacional"
-
-    ],
-    "resposta": 0,
-    "explicacao": "O serviço Visão Personalizada permite treinar um modelo personalizado de classificação ou detecção de objetos com base em imagens fornecidas pelo usuário, sendo ideal para cenários como identificação de produtos de concorrentes em ambientes de varejo.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/custom-vision-service/home",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre exemplos de clustering em aprendizado de máquina.",
-    "afirmacoes": [
-      "Organizar documentos em grupos com base em semelhanças do texto contido nos documentos é um exemplo de clustering.",
-      "Agrupar pacientes semelhantes com base em sintomas e resultados de testes diagnósticos é um exemplo de clustering.",
-      "Prever se uma pessoa desenvolverá sintomas de alergia leves, moderados ou graves com base na contagem de pólen é um exemplo de clustering."
-    ],
-    "respostas": [
-      true,
-      true,
-      false
-    ],
-    "explicacao": "As duas primeiras afirmações descrevem corretamente o uso de clustering, pois envolvem agrupamento sem rótulos pré-definidos. A terceira afirmação descreve uma tarefa de classificação, pois busca prever um rótulo específico (leve, moderado, grave).",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/introduction-to-machine-learning/",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre o uso de conjuntos de validação em aprendizado de máquina.",
-    "afirmacoes": [
-      "Um conjunto de validação inclui o conjunto de exemplos de entrada que será usado para treinar um modelo.",
-      "Um conjunto de validação pode ser usado para determinar quão bem um modelo prevê rótulos.",
-      "Um conjunto de validação pode ser usado para verificar se todos os dados de treinamento foram usados para treinar o modelo."
-    ],
-    "respostas": [
-      false,
-      true,
-      false
-    ],
-    "explicacao": "O conjunto de validação não é utilizado para treinar o modelo, mas sim para avaliar o desempenho dele em dados que não foram usados no treinamento. A segunda afirmação está correta, pois o conjunto de validação mede a capacidade preditiva. A terceira afirmação está incorreta, pois esse não é o propósito do conjunto de validação.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "multipla",
-    "texto": "Quais são duas métricas que você pode usar para avaliar um modelo de regressão? Cada resposta correta apresenta uma solução completa.",
-    "opcoes": [
-      "Coeficiente de determinação (R²)",
-      "Pontuação F1",
-      "Erro quadrático médio (RMSE)",
-      "Área sob a curva (AUC)",
-      "Acurácia balanceada"
-    ],
-    "respostas": [
-      0,
-      2
-    ],
-    "explicacao": "O coeficiente de determinação (R²) mede a proporção da variância nos dados que é explicada pelo modelo de regressão. Já o erro quadrático médio (RMSE) quantifica a diferença entre os valores previstos e os valores reais. Ambas são métricas apropriadas para avaliar modelos de regressão. As demais são utilizadas para modelos de classificação.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#regression",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "combobox",
-    "texto": "Prever quantos veículos atravessarão uma ponte em um determinado dia é um exemplo de <combobox>",
-    "opcoes": [
-      "Selecione uma resposta",
-      "classificação",
-      "agrupamento (clustering)",
-      "regressão"
-    ],
-    "resposta": 3,
-    "explicacao": "Prever uma quantidade numérica contínua, como o número de veículos que cruzam uma ponte, é uma tarefa de regressão, que é usada para prever valores numéricos com base em variáveis independentes.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#regression",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
+  // Questão Original: 38
   {
     "tipo": "dragdrop",
-    "texto": "Você precisa usar o Azure Machine Learning Designer para construir um modelo que prevê preços de automóveis. Quais módulos devem ser usados para completar o modelo? Arraste os módulos apropriados para os locais corretos.",
-    "imagemUrl": "img/imgq53.png",
+    "texto": "Você está desenvolvendo um aplicativo em Python usando a API da OpenAI. Você precisa enviar tanto o texto quanto o conteúdo da imagem na mesma solicitação (request). Arraste os valores apropriados para completar a estrutura JSON do array `content`.",
     "itens": [
-      {
-        "label": "Select Columns in Dataset"
-      },
-      {
-        "label": "Split Data"
-      },
-      {
-        "label": "Linear Regression"
-      }
+      { "label": "input_text" },
+      { "label": "input_image" },
+      { "label": "input_url" },
+      { "label": "output_image" }
     ],
     "grupos": [
-      "Grupo 1",
-      "Grupo 2",
-      "Grupo 3"
+      "{\"type\": \"___\", \"text\": \"O que há nesta imagem?\"}",
+      "{\"type\": \"___\", \"image_url\": image_url}"
     ],
     "respostas": {
-      "Grupo 1": [
-        "Select Columns in Dataset"
-      ],
-      "Grupo 2": [
-        "Split Data"
-      ],
-      "Grupo 3": [
-        "Linear Regression"
-      ]
+      "{\"type\": \"___\", \"text\": \"O que há nesta imagem?\"}": ["input_text"],
+      "{\"type\": \"___\", \"image_url\": image_url}": ["input_image"]
     },
-    "explicacao": "O módulo 'Select Columns in Dataset' é usado para escolher as colunas relevantes. Em seguida, o módulo 'Split Data' divide os dados em conjuntos de treinamento e teste. Finalmente, como o objetivo é prever valores contínuos (preço), utiliza-se o módulo 'Linear Regression'.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/algorithm-module-reference/linear-regression",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "explicacao": "No SDK atualizado (ou nos wrappers específicos do documento), você diferencia a entrada de texto da entrada de imagem declarando explicitamente o tipo do bloco no payload, associando o tipo de entrada aos campos respectivos.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 39
   {
     "tipo": "unica",
-    "texto": "Qual tipo de aprendizado de máquina você deve usar para identificar grupos de pessoas com hábitos de compra semelhantes?",
+    "texto": "Você está desenvolvendo um aplicativo que analisa gravações de correio de voz. Você precisa extrair uma transcrição e informações estruturadas das gravações. Qual tipo de analisador (analyzer) você deve usar?",
     "opcoes": [
-      "Classificação",
-      "Regressão",
-      "Agrupamento (Clustering)"
+      "analisador de documentos (document analyzer)",
+      "analisador de vídeo (video analyzer)",
+      "analisador de áudio (audio analyzer)",
+      "analisador de imagem (image analyzer)"
     ],
     "resposta": 2,
-    "explicacao": "O agrupamento (clustering) é uma técnica de aprendizado não supervisionado usada para identificar grupos de dados com características semelhantes. No caso de hábitos de compra, essa abordagem permite segmentar pessoas em grupos com base em comportamentos semelhantes, mesmo sem rótulos prévios.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/fundamentals-machine-learning/3-types-of-machine-learning",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "explicacao": "O `audio analyzer` é o componente encarregado de processar cargas de trabalho acústicas. Ele transcreve o áudio e, na sequência, permite usar esquemas de IA para extrair informações estruturadas do conteúdo falado.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/batch-transcription",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "combobox",
-    "texto": "<combobox> modelos podem ser usados para prever o preço de venda de itens leiloados.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Classificação",
-      "Agrupamento (Clustering)",
-      "Regressão"
-    ],
-    "resposta": 3,
-    "explicacao": "A regressão é usada quando a saída esperada é um valor numérico contínuo, como o preço de um item. Esse tipo de modelo aprende a partir de dados históricos para prever valores futuros com base em variáveis de entrada.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/fundamentals-machine-learning/3-types-of-machine-learning",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Qual métrica você pode usar para avaliar um modelo de classificação?",
-    "opcoes": [
-      "Taxa de verdadeiros positivos (True Positive Rate)",
-      "Erro absoluto médio (MAE)",
-      "Coeficiente de determinação (R²)",
-      "Raiz do erro quadrático médio (RMSE)"
-    ],
-    "resposta": 0,
-    "explicacao": "A taxa de verdadeiros positivos (True Positive Rate) é uma métrica comumente usada para avaliar modelos de classificação, especialmente em cenários de classificação binária. Ela mede a proporção de positivos reais que foram corretamente identificados pelo modelo.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/component-reference/evaluate-model?view=azureml-api-2",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
+
+  // Questão Original: 40
   {
     "tipo": "multipla",
-    "texto": "Quais dois componentes você pode arrastar para o canvas no Azure Machine Learning Designer? Cada resposta correta apresenta uma solução completa.",
+    "texto": "Você possui uma implantação de modelo habilitado para visão. Você precisa garantir que o modelo consiga analisar as imagens enviadas por sua aplicação. Em quais DOIS formatos válidos você pode fornecer as imagens? (Escolha duas)",
     "opcoes": [
-      "Conjunto de dados (dataset)",
-      "Computação (compute)",
-      "Pipeline",
-      "Módulo (module)"
+      "Uma string de dados de imagem codificada em base64.",
+      "Um documento JSON que descreve o conteúdo da imagem.",
+      "Uma descrição em texto codificada em UTF-8 da imagem.",
+      "Uma URL publicamente acessível da imagem."
     ],
-    "respostas": [
-      0,
-      3
-    ],
-    "explicacao": "No Azure Machine Learning Designer, os usuários podem arrastar conjuntos de dados e módulos para o canvas visual. Esses elementos são essenciais para criar, treinar e avaliar modelos de machine learning. Os recursos de computação são configurados separadamente e os pipelines são o resultado final da composição dos elementos no canvas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-designer",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "respostas": [0, 3],
+    "explicacao": "A API de visão da Microsoft/OpenAI suporta a ingestão de imagens de duas maneiras nativas: via URLs absolutas acessíveis publicamente, ou via injeção direta de strings base64 no corpo da requisição (payload).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 41
+  {
+    "tipo": "combobox",
+    "texto": "Após implantar um modelo GPT habilitado para visão no Azure AI Foundry, você deve configurar seu aplicativo para enviar solicitações (requests) para o(a) <combobox>.",
+    "opcoes": [
+      "Selecione uma opção",
+      "ponto de extremidade (endpoint) do modelo",
+      "pipeline de avaliação do modelo",
+      "playground do Foundry",
+      "dataset de treinamento do modelo"
+    ],
+    "resposta": 1,
+    "explicacao": "Ao concluir uma implantação (deployment), o Azure gera um ponto de extremidade (endpoint) de API seguro. Aplicações de terceiros se conectam diretamente a esta URL de endpoint para enviar os prompts e realizar a inferência.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/create-resource",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 42
   {
     "tipo": "unica",
-    "texto": "Você precisa criar um conjunto de dados de treinamento e um conjunto de dados de validação a partir de um conjunto de dados existente. Qual módulo no Azure Machine Learning Designer você deve usar?",
+    "texto": "Você está desenvolvendo um aplicativo que extrai campos de PDFs usando o Azure Content Understanding (Inteligência de Documentos). Você precisa usar o SDK de Python para enviar o PDF para análise e recuperar os resultados. O que você deve fazer?",
     "opcoes": [
-      "Selecionar colunas no conjunto de dados (Select Columns in Dataset)",
-      "Adicionar linhas (Add Rows)",
-      "Dividir dados (Split Data)",
-      "Unir dados (Join Data)"
+      "Chamar `analyze()` para retornar os campos extraídos de forma síncrona na mesma solicitação.",
+      "Enviar o PDF para um analisador e ler os resultados nos cabeçalhos (headers) da solicitação.",
+      "Chamar `begin_analyze()` e, em seguida, chamar `poller.result()` para recuperar os resultados.",
+      "Usar OCR para extrair texto do PDF e mapear os campos manualmente no código."
     ],
     "resposta": 2,
-    "explicacao": "O módulo 'Split Data' no Azure Machine Learning Designer permite dividir um conjunto de dados em subconjuntos, como conjuntos de treinamento e validação, o que é uma prática comum para avaliação de modelos de machine learning.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/component-reference/split-data",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "explicacao": "Como a análise de documentos complexos é uma operação de longa duração, a implementação correta no Azure SDK envolve iniciar o trabalho assíncrono chamando `begin_analyze()` e usar o método `result()` do poller gerado para aguardar e obter o JSON final estruturado.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/quickstarts/get-started-sdks-rest-api",
+    "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 43
+  {
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre o Catálogo de Modelos (Model Catalog) no portal do Microsoft Foundry.",
+    "afirmacoes": [
+      "No novo portal do Microsoft Foundry, você deve fazer o ajuste fino (fine-tune) de um modelo obrigatoriamente antes de poder implantá-lo.",
+      "Você pode testar um modelo do catálogo de modelos somente após implantá-lo (deploy).",
+      "Você pode implantar um modelo do catálogo de modelos somente após retreinar o modelo."
+    ],
+    "respostas": [false, true, false],
+    "explicacao": "O ajuste fino (fine-tuning) e o retreinamento são completamente opcionais. Você pode implantar modelos base diretamente do catálogo sem modificá-los. No entanto, para usar o ambiente de testes (Playground), a plataforma exige que exista um ponto de extremidade ativo (implantação) para processar os prompts.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/model-catalog-overview",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 44
+  {
+    "tipo": "unica",
+    "texto": "Você possui uma implantação de modelo habilitado para visão. Usando a API de Respostas do Azure OpenAI, você precisa fornecer uma imagem para análise no prompt. Qual item de conteúdo estrutural deve encapsular a imagem na solicitação HTTP?",
+    "opcoes": [
+      "image_generation",
+      "output_image",
+      "input_image",
+      "image_base64"
+    ],
+    "resposta": 2,
+    "explicacao": "Na arquitetura do payload, o conteúdo visual enviado pelo usuário para o modelo atua como um dado de entrada de imagem (`input_image`), em oposição a uma imagem que foi gerada como saída (`output_image`).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/reference",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 45
   {
     "tipo": "dragdrop",
-    "texto": "Associe os tipos de aprendizado de máquina aos cenários apropriados.",
+    "texto": "Você precisa extrair informações estruturadas de faturas digitalizadas no formato PDF e de gravações de correio de voz no formato WAV. Arraste o tipo correto de analisador para cada tipo de conteúdo.",
     "itens": [
-      {
-        "label": "Prever quantos minutos de atraso um voo terá com base na quantidade de neve em um aeroporto."
-      },
-      {
-        "label": "Segmentar clientes em diferentes grupos para apoiar o departamento de marketing."
-      },
-      {
-        "label": "Prever se um aluno concluirá um curso universitário."
-      }
+      { "label": "analisador de áudio (audio analyzer)" },
+      { "label": "analisador de documentos (document analyzer)" },
+      { "label": "analisador de imagem (image analyzer)" },
+      { "label": "analisador de vídeo (video analyzer)" }
     ],
     "grupos": [
-      "Classificação",
-      "Agrupamento (Clustering)",
-      "Regressão"
+      "Faturas digitalizadas em formato PDF",
+      "Gravações de correio de voz em formato WAV"
     ],
     "respostas": {
-      "Regressão": [
-        "Prever quantos minutos de atraso um voo terá com base na quantidade de neve em um aeroporto."
-      ],
-      "Agrupamento (Clustering)": [
-        "Segmentar clientes em diferentes grupos para apoiar o departamento de marketing."
-      ],
-      "Classificação": [
-        "Prever se um aluno concluirá um curso universitário."
-      ]
+      "Faturas digitalizadas em formato PDF": ["analisador de documentos (document analyzer)"],
+      "Gravações de correio de voz em formato WAV": ["analisador de áudio (audio analyzer)"]
     },
-    "explicacao": "Regressão é usada para prever valores numéricos contínuos. Clustering agrupa dados semelhantes sem rótulos definidos. Classificação prevê categorias baseadas em entradas, como prever se um aluno concluirá ou não um curso.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/fundamentals-machine-learning/",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "explicacao": "Arquivos PDF (Faturas) exigem um `document analyzer` que mescla layout, OCR e linguagem natural para capturar tabelas e campos de texto. Arquivos WAV são formatos acústicos e requerem um `audio analyzer` para transcrição fonética.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/",
+    "dominio": "Visão e Linguagem",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 46
   {
-    "tipo": "combobox",
-    "texto": "<combobox> é a probabilidade calculada de uma classificação correta de imagem.",
+    "tipo": "unica",
+    "texto": "Você tem uma assinatura do Azure. Você precisa usar os recursos de Inteligência de Documentos (Content Understanding) para extrair dados estruturados de faturas. O que você deve provisionar?",
     "opcoes": [
-      "Selecione uma resposta",
-      "Acurácia",
-      "Confiança",
-      "Erro quadrático médio (RMSE)",
-      "Sentimento"
+      "Um projeto do Microsoft Foundry",
+      "Um recurso do Azure OpenAI",
+      "Um recurso do Microsoft Foundry (Azure AI Foundry)",
+      "Um serviço Azure AI Search"
     ],
     "resposta": 2,
-    "explicacao": "Confiança representa a probabilidade calculada de que a previsão feita por um modelo de classificação de imagem está correta. Por exemplo, ao classificar uma imagem como 'gato', o modelo pode retornar 95% de confiança nessa previsão.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/custom-vision-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
+    "explicacao": "Para hospedar projetos integrados e utilizar recursos multimodais como Content Understanding dentro de uma arquitetura centralizada unificada, você deve criar primeiramente um Recurso (Resource) do Azure AI Foundry (anteriormente AI Studio), que funciona como o hub de provisionamento.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/create-azure-ai-resource",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 47
+  {
+    "tipo": "unica",
+    "texto": "Você desenvolveu um aplicativo em Python que envia um arquivo JPEG de uma foto local para um modelo habilitado para visão. Para enviar os dados localmente (sem fazer upload público da foto), como você deve configurar o campo da imagem na chamada da API?",
+    "opcoes": [
+      "data:image/jpeg;base64,<dados_binários_da_imagem>",
+      "file:///C:/images/photo.jpg",
+      "C:\\images\\photo.jpg",
+      "https://<sua-conta-de-storage>.blob.core.windows.net/<container>/<arquivo>.jpg"
+    ],
+    "resposta": 0,
+    "explicacao": "Para injetar uma imagem local diretamente em uma chamada REST, é obrigatório converter seus bits binários para texto utilizando codificação Base64 e anexar o cabeçalho de Mime-Type correto (`data:image/jpeg;base64,...`). O serviço em nuvem não consegue ler diretórios C: locais.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision#call-the-chat-completion-apis",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 48
+  {
+    "tipo": "unica",
+    "texto": "Você precisa converter notificações de clientes, que estão em formato de texto, em um áudio falado natural (voz artificial) que possa ser reproduzido em um sistema telefônico. Qual recurso de Serviço de Fala do Azure você deve usar?",
+    "opcoes": [
+      "reconhecimento de fala (speech recognition)",
+      "síntese de fala (speech synthesis)",
+      "reconhecimento de locutor (speaker recognition)",
+      "tradução de fala (speech translation)"
+    ],
+    "resposta": 1,
+    "explicacao": "A síntese de fala (Text-to-Speech ou TTS) é o processo exato de converter cadeias de texto digital em áudios de voz que soam com timbre humano para sistemas interativos.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/text-to-speech",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 49
+  {
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre os Avaliadores (Evaluators) no Microsoft Foundry.",
+    "afirmacoes": [
+      "Avaliadores no Microsoft Foundry substituem a necessidade de configurar limites de tokens.",
+      "Avaliadores no Microsoft Foundry podem avaliar a qualidade e a segurança das respostas geradas por um modelo de IA generativa.",
+      "Avaliadores podem retreinar automaticamente um modelo implantado quando problemas de qualidade são detectados."
+    ],
+    "respostas": [false, true, false],
+    "explicacao": "Os avaliadores (Evaluators) fornecem métricas de diagnóstico (como relevância, aterramento (groundedness) ou uso de linguagem de ódio). Eles são pontuadores estáticos e não alteram a configuração de hardware (limites de token) nem geram jobs autônomos de retreinamento do modelo.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/concepts/evaluation-approach-gen-ai",
+    "dominio": "IA Responsável e Avaliação",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 50
   {
     "tipo": "combobox",
-    "texto": "Garantir que um sistema de IA não forneça uma previsão quando campos importantes contêm valores incomuns ou ausentes está relacionado ao princípio de <combobox> da IA responsável.",
+    "texto": "<combobox> é usado para comparar e implantar uma ampla gama de modelos de fornecedores diversos para o desenvolvimento de IA generativa no Microsoft Foundry.",
     "opcoes": [
-      "Selecione uma resposta",
-      "Inclusão",
-      "Privacidade e segurança",
-      "Confiabilidade e segurança",
-      "Transparência"
+      "Selecione uma opção",
+      "O Catálogo de Modelos (Model catalog)",
+      "A página de Monitoramento (Monitor page)",
+      "A página de Pontos de extremidade de serviço (Service endpoints)",
+      "A página de Modelos de solução (Solution templates)"
+    ],
+    "resposta": 1,
+    "explicacao": "O Catálogo de Modelos (Model Catalog) é a vitrine central da Microsoft onde desenvolvedores podem descobrir, testar benchmarks, comparar custos e implantar milhares de modelos fundacionais (OpenAI, Mistral, Llama, Phi, etc.).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/model-catalog-overview",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 51
+  {
+    "tipo": "unica",
+    "texto": "Sua empresa possui milhares de chamadas de suporte ao cliente gravadas em vários idiomas e armazenadas como arquivos de áudio no Armazenamento do Azure (Azure Storage). Você precisa gerar transcrições em texto de todas as gravações. Qual capacidade do Azure Speech você deve usar?",
+    "opcoes": [
+      "transcrição em lote de fala para texto (batch transcription)",
+      "transcrição em tempo real de fala para texto (real-time transcription)",
+      "texto para fala (text-to-speech)",
+      "tradução de fala (speech translation)"
+    ],
+    "resposta": 0,
+    "explicacao": "Para grandes volumes de áudios históricos estáticos (arquivados em um storage), a API de Transcrição em Lote (Batch Transcription) é o método assíncrono projetado para máxima eficiência e otimização de custos.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/batch-transcription",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 52
+  {
+    "tipo": "unica",
+    "texto": "Você precisa comparar os custos operacionais, tokens e benchmarks de Desempenho de grandes modelos de linguagem (LLMs) antes de implantar uma solução. Qual recurso do portal Azure AI Foundry você deve usar?",
+    "opcoes": [
+      "A página de Conformidade (Compliance)",
+      "O Catálogo de Avaliadores (Evaluator catalog)",
+      "O menu de Ferramentas (Tools)",
+      "O Leaderboard de Modelos (Model leaderboard)"
     ],
     "resposta": 3,
-    "explicacao": "Confiabilidade e segurança são princípios da IA responsável que garantem que os sistemas de IA sejam robustos e seguros, mesmo quando há entrada de dados inesperada ou valores ausentes. Esse princípio busca prevenir decisões incorretas ou perigosas causadas por falhas nos dados.",
-    "link": "https://learn.microsoft.com/pt-br/azure/well-architected/ai/responsible-ai",
-    "dominio": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
-    "simulado": "ai-2"
+    "explicacao": "O Model Leaderboard (Tabela de Classificação de Modelos) dentro do catálogo permite posicionar LLMs lado a lado para comparar diretamente suas métricas de pontuação, custos, latência e desempenho médio antes de escolher qual provisionar.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/model-benchmarks",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 53
   {
-    "tipo": "combobox",
-    "texto": "Garantir que as variáveis numéricas nos dados de treinamento estejam em uma escala semelhante é um exemplo de <combobox>.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Ingestão de dados",
-      "Engenharia de atributos",
-      "Seleção de atributos",
-      "Treinamento de modelo"
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre a publicação de Agentes de IA.",
+    "afirmacoes": [
+      "Um agente deve ser publicado antes de poder ser usado por aplicativos para enviar solicitações (requests).",
+      "No portal Microsoft Foundry, você deve fazer o ajuste fino (fine-tune) do modelo antes de poder publicar um agente.",
+      "Um agente é publicado automaticamente sempre que você salva sua configuração (draft)."
     ],
-    "resposta": 2,
-    "explicacao": "A engenharia de atributos (feature engineering) inclui atividades como normalização e padronização dos dados, o que garante que variáveis numéricas estejam na mesma escala. Isso é essencial para melhorar o desempenho de muitos algoritmos de aprendizado de máquina.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/how-to-configure-auto-features?view=azureml-api-1",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "respostas": [true, false, false],
+    "explicacao": "Para que um agente responda a requisições externas, o seu endpoint deve ser publicado (afirmação 1 verdadeira). Modelos base não exigem fine-tuning (afirmação 2 falsa). Salvar uma configuração cria apenas um rascunho (draft) e não publica o agente no endpoint de produção, o processo de publicação é uma ação manual explícita (afirmação 3 falsa). *Nota: O gabarito original apresentava erro na afimativa 3; a verificação oficial do MS Learn confirma que 'Save' e 'Publish' são eventos distintos em agentes Copilot/Azure.*",
+    "link": "https://learn.microsoft.com/pt-br/microsoft-copilot-studio/publish-fundamentals",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
   },
+
+  // Questão Original: 54
   {
     "tipo": "combobox",
-    "texto": "Atribuir classes às imagens antes de treinar um modelo de classificação é um exemplo de <combobox>.",
+    "texto": "Você implantou um modelo de geração de imagem. Para garantir que um aplicativo em Python possa gerar uma imagem a partir de um prompt do usuário usando a API, você deve chamar o método <combobox> no SDK do cliente.",
     "opcoes": [
-      "Selecione uma resposta",
-      "Avaliação",
-      "Engenharia de atributos",
-      "Ajuste de hiperparâmetros",
-      "Rotulagem"
+      "Selecione uma opção",
+      "chat.completions.create()",
+      "images.create()",
+      "images.generate()",
+      "responses.create()"
+    ],
+    "resposta": 3,
+    "explicacao": "Para acessar modelos baseados no DALL-E e gerar ativos de imagem a partir de prompts através do SDK da OpenAI, o método de chamada correto estruturado na biblioteca é o `client.images.generate()`.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/dall-e-quickstart?tabs=dalle3%2Ccommand-line%2Cpython-new&pivots=programming-language-python",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 55
+  {
+    "tipo": "unica",
+    "texto": "Você está desenvolvendo um aplicativo leve que chamará um agente programaticamente usando o SDK. Para autenticar a chamada, você precisa identificar o 'ID do agente'. O que você deve fazer para encontrar esse dado da forma mais rápida?",
+    "opcoes": [
+      "No catálogo de modelos, abra o cartão do modelo e copie o nome da família do modelo.",
+      "No portal do Foundry, copie o nome geral do projeto.",
+      "No catálogo de ferramentas do Foundry, copie o nome da ferramenta usada pelo agente.",
+      "No playground do Foundry, selecione 'Code' (Código) e visualize as variáveis de ambiente (.env)."
+    ],
+    "resposta": 3,
+    "explicacao": "A seção 'Visualizar Código' (View Code) no Playground expõe trechos prontos para uso em Python ou C# já pré-preenchidos com as configurações e variáveis de ambiente (como endpoint URLs, chaves de API e IDs de agentes) baseados na sua sessão ativa.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/prompt-flow-playground",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 56
+  {
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre o uso de SDKs no Azure AI Foundry.",
+    "afirmacoes": [
+      "Para usar o SDK, você deve obrigatoriamente construir manualmente as solicitações HTTP brutas para o endpoint do modelo.",
+      "Ao usar o SDK em um aplicativo, você deve criar um web service separado para interagir com o modelo implantado.",
+      "No SDK, a classe `AIProjectClient` (ou equivalente) fornece acesso programático a um projeto implantado e aos seus recursos conectados."
+    ],
+    "respostas": [false, false, true],
+    "explicacao": "O propósito fundamental de um SDK é abstrair a manipulação manual de cabeçalhos e roteamento HTTP (afirmação 1 falsa). Você não precisa hospedar middlewares complexos ou serviços web extras; seu aplicativo cliente fala com o modelo diretamente via SDK (afirmação 2 falsa). O Client do Projeto serve de ponte central de autenticação (afirmação 3 verdadeira).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/sdk-overview",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 57
+  {
+    "tipo": "unica",
+    "texto": "Você está desenvolvendo um aplicativo que analisa arquivos de vídeo carregados para extrair informações estruturadas (como objetos, cenários e marcações temporais) dos vídeos. Qual API o aplicativo deve chamar?",
+    "opcoes": [
+      "A API de Análise de Sentimentos no Serviço de Linguagem",
+      "A API `Analyze` (Analisar) no Content Understanding (Inteligência de Documentos)",
+      "A API de Análise de Imagem (Image Analysis) nos serviços Vision",
+      "A API do Azure OpenAI"
+    ],
+    "resposta": 1,
+    "explicacao": "O Azure Content Understanding atua como uma solução unificada e multimodal. Para arquivos contínuos no tempo (como vídeos), ele coordena automaticamente a extração de dados tabulares, transcrição e detecção visual usando o método `Analyze` API de vídeo.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/overview",
+    "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 58
+  {
+    "tipo": "combobox",
+    "texto": "Os serviços de Inteligência de Conteúdo do Azure utilizam tarefas de <combobox> para capturar a fala e convertê-la em texto a partir de faixas de áudio e vídeo.",
+    "opcoes": [
+      "Selecione uma opção",
+      "diarização (diarization)",
+      "extração de frases-chave (key phrase extraction)",
+      "síntese (synthesis)",
+      "transcrição (transcription)"
     ],
     "resposta": 4,
-    "explicacao": "Rotulagem é o processo de atribuir categorias ou valores aos dados, como marcar imagens com rótulos de classes. Esse passo é essencial antes de treinar modelos supervisionados de classificação.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#etapa-1-preparar-dados",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "explicacao": "A transcrição é a função central (Speech-to-Text) que processa as frequências fonéticas e mapeia a entrada oral em caracteres de texto digitais no script.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/speech-to-text",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "simnao",
-    "texto": "Você tem um modelo do Azure Machine Learning que prevê a qualidade do produto. O modelo tem um conjunto de dados de treinamento que contém 50.000 registros. Uma amostra dos dados é mostrada na tabela a seguir.",
-    "imagemUrl": "img/imgq64.png",
-    "afirmacoes": [
-      "Massa (kg) é uma característica.",
-      "Teste de Qualidade é um rótulo.",
-      "Temperatura (C) é um rótulo."
-    ],
-    "respostas": [
-      true,
-      true,
-      false
-    ],
-    "explicacao": "Em aprendizado supervisionado, as características (features) são os dados de entrada usados para prever o rótulo (label). Neste caso, 'Massa (kg)' e 'Temperatura (C)' são características que ajudam a prever o 'Teste de Qualidade', que é o rótulo de saída.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#etapa-2-selecionar-variável-de-previsão-e-rotular-dados",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre tipos de aprendizado de máquina.",
-    "afirmacoes": [
-      "Você treina um modelo de regressão usando dados não rotulados.",
-      "A técnica de classificação é usada para prever dados numéricos sequenciais ao longo do tempo.",
-      "Agrupar itens por suas características em comum é um exemplo de clusterização."
-    ],
-    "respostas": [
-      false,
-      false,
-      true
-    ],
-    "explicacao": "A primeira afirmação está incorreta, pois modelos de regressão requerem dados rotulados com valores contínuos. A segunda também está incorreta, já que classificação é usada para prever categorias, não séries temporais — nesse caso seria mais apropriado usar modelos como RNNs. A terceira afirmação está correta, pois a clusterização agrupa elementos com base em similaridade, sem necessidade de rótulos.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/fundamentals-machine-learning/3-types-of-machine-learning",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "multipla",
-    "texto": "Quais duas ações são realizadas durante as etapas de ingestão e preparação de dados em um processo de Machine Learning do Azure? Cada resposta correta apresenta parte da solução.",
-    "opcoes": [
-      "Calcular a precisão do modelo.",
-      "Pontuar dados de teste usando o modelo.",
-      "Combinar múltiplos conjuntos de dados.",
-      "Usar o modelo para previsões em tempo real.",
-      "Remover registros que contêm valores ausentes."
-    ],
-    "respostas": [
-      2,
-      4
-    ],
-    "explicacao": "Durante a etapa de ingestão e preparação de dados no processo de machine learning, é comum combinar diversos conjuntos de dados para formar uma base unificada de análise. Além disso, registros com valores ausentes são tratados ou removidos para garantir a qualidade e a consistência dos dados antes do treinamento do modelo. As demais ações são realizadas em etapas posteriores do ciclo de machine learning.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-ml-pipelines?view=azureml-api-2",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
+
+  // Questão Original: 59
   {
     "tipo": "unica",
-    "texto": "Você precisa prever a população animal de uma determinada área. Qual tipo de Machine Learning do Azure você deve usar?",
+    "texto": "Você desenvolveu um aplicativo usando o SDK de Linguagem do Azure (Language SDK). O objetivo é retornar uma lista com os tópicos centrais de um bloco grande de texto não estruturado. Qual método de Python atende a essa exigência?",
     "opcoes": [
-      "Regressão",
-      "Agrupamento (clustering)",
-      "Classificação"
+      "client.begin_extract_summary()",
+      "client.extract_key_phrases()",
+      "client.recognize_linked_entities()",
+      "client.recognize_entities()"
     ],
-    "resposta": 0,
-    "explicacao": "A tarefa de prever a população animal envolve estimar um valor numérico contínuo com base em variáveis de entrada. Esse tipo de problema é típico da técnica de regressão, que é usada em machine learning para prever números contínuos, como preços, temperaturas ou contagens.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/algorithm-cheat-sheet?view=azureml-api-1#kinds-of-machine-learning",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
+    "resposta": 1,
+    "explicacao": "A Extração de Frases-Chave (Key Phrase Extraction) analisa as propriedades semânticas do texto longo e extrai os termos e expressões vitais (talking points) que mais representam os tópicos discutidos, retornando-os como uma matriz de string.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/key-phrase-extraction/overview",
+    "dominio": "Processamento de Linguagem Natural",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre o uso de rótulos (labels) em modelos de machine learning.",
-    "afirmacoes": [
-      "Para um modelo de regressão, os rótulos devem ser numéricos.",
-      "Para um modelo de agrupamento (clustering), os rótulos devem ser usados.",
-      "Para um modelo de classificação, os rótulos devem ser numéricos."
-    ],
-    "respostas": [
-      true,
-      false,
-      false
-    ],
-    "explicacao": "Em modelos de regressão, os rótulos (valores a serem previstos) devem ser numéricos, pois o objetivo é prever valores contínuos. Em modelos de clustering, não se utilizam rótulos, pois são métodos não supervisionados que agrupam dados com base em similaridades. Já os modelos de classificação utilizam rótulos categóricos, e não necessariamente numéricos, pois classificam dados em categorias distintas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/algorithm-cheat-sheet",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-2"
-  },
+
+  // Questão Original: 60
   {
     "tipo": "unica",
-    "texto": "Sua empresa deseja construir uma máquina de reciclagem para garrafas. A máquina deve identificar automaticamente garrafas com o formato correto e rejeitar todos os outros itens. Qual tipo de carga de trabalho de IA a empresa deve utilizar?",
+    "texto": "Você está desenvolvendo um aplicativo que grava a voz de um usuário pelo microfone e envia esse áudio gravado diretamente para um modelo multimodal avançado. Para que o modelo receba e processe o áudio bruto, o que o payload da solicitação deve encapsular?",
     "opcoes": [
-      "Detecção de anomalias",
-      "IA conversacional",
-      "Visão computacional",
-      "Processamento de linguagem natural"
+      "Uma imagem (espectrograma) dos frames de áudio.",
+      "Apenas a transcrição de texto da voz pré-processada por outro serviço.",
+      "Um prompt de entrada de áudio (audio input prompt).",
+      "Um vetor de embedding de texto (text embedding vector)."
     ],
     "resposta": 2,
-    "explicacao": "A visão computacional permite que sistemas interpretem e compreendam informações visuais a partir de imagens ou vídeos. Nesse caso, a máquina de reciclagem utiliza a visão computacional para identificar visualmente garrafas com o formato correto e filtrar objetos indesejados.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/technology-choices/ai-services#categories-of-azure-ai-services",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
+    "explicacao": "Novos modelos multimodais fundacionais (como o GPT-4o) recebem dados visuais e fonéticos nativamente em suas camadas de atenção profunda. Portanto, você passa o buffer acústico em um prompt de entrada de áudio direto, sem precisar de uma fase legada de Speech-to-Text intermediária.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre a criação de modelos de detecção de objetos no serviço Custom Vision.",
-    "afirmacoes": [
-      "Ao criar um modelo de detecção de objetos no serviço Custom Vision, é necessário escolher um tipo de classificação entre Multirrótulo (Multilabel) ou Multiclasse (Multiclass).",
-      "É possível criar um modelo de detecção de objetos no serviço Custom Vision para localizar o conteúdo dentro de uma imagem.",
-      "Ao criar um modelo de detecção de objetos no serviço Custom Vision, é possível selecionar entre um conjunto de domínios predefinidos."
-    ],
-    "respostas": [
-      false,
-      true,
-      true
-    ],
-    "explicacao": "No serviço Custom Vision, é necessário selecionar o tipo de classificação (Multirrótulo ou Multiclasse) ao configurar o projeto. Esse serviço também permite treinar modelos de detecção de objetos, capazes de identificar e localizar conteúdos em imagens. Além disso, oferece domínios predefinidos otimizados para diferentes cenários, como alimentos, produtos e ambientes.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/custom-vision-service/get-started-build-detector",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
+
+  // Questão Original: 61
   {
     "tipo": "combobox",
-    "texto": "Contar o número de animais em uma área com base em uma transmissão de vídeo é um exemplo de <combobox>.",
+    "texto": "Ao usar o SDK do Microsoft Foundry (Azure AI Project) em aplicativos, a classe <combobox> é o ponto de entrada oficial do cliente para acessar implantações, agentes, avaliadores e índices.",
     "opcoes": [
-      "Selecione uma resposta",
-      "Previsão (forecasting)",
-      "Visão computacional (computer vision)",
-      "IA conversacional (conversational AI)",
-      "Detecção de anomalias (anomaly detection)"
-    ],
-    "resposta": 2,
-    "explicacao": "A tarefa de contar animais com base em um vídeo exige a análise de conteúdo visual, que é realizada por meio da visão computacional. Essa carga de trabalho permite identificar e rastrear objetos em imagens ou vídeos, sendo ideal para aplicações como vigilância, controle de espécies e monitoramento ambiental.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/technology-choices/ai-services#categories-of-azure-ai-services",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre o uso do serviço Face do Azure para reconhecimento facial de funcionários.",
-    "afirmacoes": [
-      "O serviço Face pode ser usado para realizar reconhecimento facial de funcionários.",
-      "O serviço Face será mais preciso se você fornecer mais fotos de amostra de cada funcionário em diferentes ângulos.",
-      "Se um funcionário estiver usando óculos escuros, o serviço Face sempre falhará ao reconhecê-lo."
-    ],
-    "respostas": [
-      true,
-      true,
-      false
-    ],
-    "explicacao": "O serviço Face do Azure é projetado para identificar e verificar rostos humanos em imagens, podendo ser usado para reconhecimento facial de funcionários. A precisão melhora com múltiplas amostras de ângulos variados. Embora acessórios como óculos escuros possam afetar a precisão, o serviço não falha automaticamente em todos os casos, pois depende do treinamento e qualidade das imagens.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/face/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você precisa desenvolver um aplicativo móvel para que os funcionários escaneiem e armazenem suas despesas durante viagens. Qual tipo de visão computacional você deve utilizar?",
-    "opcoes": [
-      "Segmentação semântica",
-      "Classificação de imagem",
-      "Detecção de objetos",
-      "Reconhecimento óptico de caracteres (OCR)"
-    ],
-    "resposta": 3,
-    "explicacao": "O Reconhecimento Óptico de Caracteres (OCR) é usado para extrair texto impresso ou manuscrito de imagens, como recibos e faturas. Para digitalizar e armazenar despesas de viagem, a aplicação precisa extrair os dados textuais dos documentos escaneados, o que é exatamente a função do OCR.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview-ocr",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "simnao",
-    "texto": "Avalie as afirmações a seguir sobre o serviço Custom Vision do Azure.",
-    "afirmacoes": [
-      "O serviço Custom Vision pode ser usado para detectar objetos em uma imagem.",
-      "O serviço Custom Vision exige que você forneça seus próprios dados para treinar o modelo.",
-      "O serviço Custom Vision pode ser usado para analisar arquivos de vídeo."
-    ],
-    "respostas": [
-      true,
-      true,
-      false
-    ],
-    "explicacao": "O Custom Vision permite criar modelos personalizados de detecção de objetos em imagens, e requer que os usuários forneçam seus próprios conjuntos de dados rotulados para treinamento. No entanto, ele não é projetado para análise direta de vídeos; para isso, o serviço adequado é o Video Indexer.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/custom-vision-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você está processando fotos de corredores em uma corrida. É necessário ler os números nas camisetas dos corredores para identificá-los nas fotos. Qual tipo de visão computacional você deve utilizar?",
-    "opcoes": [
-      "Reconhecimento facial",
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Classificação de imagem",
-      "Detecção de objetos"
+      "Selecione uma opção",
+      "AIProjectClient",
+      "ChatCompletionsClient",
+      "FoundryLocalManager",
+      "ModelCatalogClient"
     ],
     "resposta": 1,
-    "explicacao": "O reconhecimento óptico de caracteres (OCR) é a técnica apropriada para extrair texto de imagens, como os números nas camisetas dos corredores. Isso permite identificar os indivíduos por meio dos caracteres visuais registrados nas fotos.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview-ocr",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
+    "explicacao": "O `AIProjectClient` atua como o painel de controle mestre (gateway) no nível do código. Com um único cliente autenticado vinculado à string de conexão do seu projeto, você descobre e envia trabalhos para os serviços integrados da nuvem.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/sdk-overview",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "dragdrop",
-    "texto": "Associe os tipos de aprendizado de máquina aos cenários apropriados. Arraste o tipo de aprendizado de máquina da coluna da esquerda para o cenário correspondente à direita.",
-    "itens": [
-      {
-        "label": "Classificação de imagem"
-      },
-      {
-        "label": "Detecção de objetos"
-      },
-      {
-        "label": "Segmentação semântica"
-      }
-    ],
-    "grupos": [
-      "Separar imagens de ursos polares e ursos marrons.",
-      "Determinar a localização de um urso em uma foto.",
-      "Determinar quais pixels em uma imagem fazem parte de um urso."
-    ],
-    "respostas": {
-      "Separar imagens de ursos polares e ursos marrons.": [
-        "Classificação de imagem"
-      ],
-      "Determinar a localização de um urso em uma foto.": [
-        "Detecção de objetos"
-      ],
-      "Determinar quais pixels em uma imagem fazem parte de um urso.": [
-        "Segmentação semântica"
-      ]
-    },
-    "explicacao": "A classificação de imagem é usada para categorizar imagens inteiras em classes, como diferentes tipos de animais. A detecção de objetos identifica a posição de um objeto dentro de uma imagem. Já a segmentação semântica classifica cada pixel da imagem para indicar quais pertencem ao objeto de interesse.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/technology-choices/ai-services#categories-of-azure-ai-services",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
+
+  // Questão Original: 62
   {
     "tipo": "unica",
-    "texto": "Você utiliza drones para identificar onde crescem ervas daninhas entre fileiras de plantações e enviar uma instrução para sua remoção. Isso é um exemplo de qual tipo de visão computacional?",
+    "texto": "Sua aplicação Python precisa escutar continuamente o microfone padrão do dispositivo e gerar transcrições em tempo real usando o Speech SDK do Azure. Qual classe fundamental você deve instanciar para realizar essa tarefa de escuta?",
     "opcoes": [
-      "Detecção de objetos (object detection)",
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Segmentação de cena (scene segmentation)"
+      "SpeechRecognizer",
+      "SpeechSynthesizer",
+      "SpeechConfig",
+      "AudioOutputConfig"
     ],
     "resposta": 0,
-    "explicacao": "A detecção de objetos é usada para localizar e identificar objetos específicos em uma imagem ou vídeo. No cenário descrito, a tecnologia é aplicada para detectar a presença de ervas daninhas entre as plantações, permitindo que ações automatizadas sejam tomadas com base nessa localização.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/ai-services/image-video-processing",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
+    "explicacao": "A classe `SpeechRecognizer` é o motor executivo no SDK responsável pela conversão de Fala em Texto (Speech-to-Text). Você invoca métodos dessa classe (como `start_continuous_recognition()`) para ativar o rastreamento fonético contínuo a partir do stream de entrada (microfone).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/get-started-speech-to-text",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco02"
   },
-  {
-    "tipo": "dragdrop",
-    "texto": "Associe as tarefas de reconhecimento facial às perguntas apropriadas. Arraste a tarefa correta da coluna da esquerda para a pergunta correspondente na coluna da direita.",
-    "itens": [
-      {
-        "label": "verificação"
-      },
-      {
-        "label": "semelhança"
-      },
-      {
-        "label": "agrupamento"
-      },
-      {
-        "label": "identificação"
-      }
-    ],
-    "grupos": [
-      "As duas imagens de um rosto pertencem à mesma pessoa?",
-      "Essa pessoa se parece com outras pessoas?",
-      "Todos os rostos pertencem ao mesmo grupo?",
-      "Quem é essa pessoa neste grupo de pessoas?"
-    ],
-    "respostas": {
-      "As duas imagens de um rosto pertencem à mesma pessoa?": [
-        "verificação"
-      ],
-      "Essa pessoa se parece com outras pessoas?": [
-        "semelhança"
-      ],
-      "Todos os rostos pertencem ao mesmo grupo?": [
-        "agrupamento"
-      ],
-      "Quem é essa pessoa neste grupo de pessoas?": [
-        "identificação"
-      ]
-    },
-    "explicacao": "A verificação compara dois rostos para confirmar se pertencem à mesma pessoa. A similaridade mede o quão semelhantes são dois rostos. O agrupamento organiza rostos semelhantes em grupos. A identificação busca determinar quem é a pessoa com base em um conjunto de rostos conhecidos.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/face/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "dragdrop",
-    "texto": "Associe os tipos de cargas de trabalho de visão computacional aos cenários apropriados. Arraste o tipo da coluna da esquerda para o cenário correspondente à direita.",
-    "itens": [
-      {
-        "label": "Reconhecimento facial"
-      },
-      {
-        "label": "Reconhecimento óptico de caracteres (OCR)"
-      },
-      {
-        "label": "Detecção de objetos"
-      }
-    ],
-    "grupos": [
-      "Identificar celebridades em imagens.",
-      "Extrair nomes de filmes de pôsteres de filmes.",
-      "Localizar veículos em imagens."
-    ],
-    "respostas": {
-      "Identificar celebridades em imagens.": [
-        "Reconhecimento facial"
-      ],
-      "Extrair nomes de filmes de pôsteres de filmes.": [
-        "Reconhecimento óptico de caracteres (OCR)"
-      ],
-      "Localizar veículos em imagens.": [
-        "Detecção de objetos"
-      ]
-    },
-    "explicacao": "O reconhecimento facial é utilizado para identificar pessoas em imagens, como celebridades. O OCR é utilizado para extrair texto de imagens, como nomes de filmes em pôsteres. A detecção de objetos é usada para localizar e identificar a presença de itens específicos, como veículos, em imagens.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/ai-services/image-video-processing",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você precisa determinar a localização de carros em uma imagem para que possa estimar a distância entre eles. Qual tipo de visão computacional você deve usar?",
-    "opcoes": [
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Detecção de objetos (object detection)",
-      "Classificação de imagem (image classification)",
-      "Detecção facial (face detection)"
-    ],
-    "resposta": 1,
-    "explicacao": "A detecção de objetos é usada para localizar e identificar instâncias específicas de objetos, como carros, dentro de uma imagem. Isso permite calcular a posição dos objetos e, com base nisso, estimar a distância entre eles.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/ai-services/image-video-processing",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-2"
-  },
+
+  // Questão Original: 63
   {
     "tipo": "multipla",
-    "texto": "Em quais dois cenários você pode usar o serviço Form Recognizer? Cada resposta correta apresenta uma solução completa.",
+    "texto": "Você está construindo um script simples que usará uma biblioteca de cliente ou SDK para enviar prompts de chat e se conectar a um modelo implantado de forma segura na nuvem da Microsoft. Quais TRÊS elementos obrigatórios você deve fornecer no código? (Escolha três)",
     "opcoes": [
-      "Extrair o número da fatura a partir de uma nota fiscal.",
-      "Traduzir um formulário do francês para o inglês.",
-      "Localizar a imagem de um produto em um catálogo.",
-      "Identificar o nome do varejista a partir de um recibo."
+      "O Nome da Implantação (Deployment name) do modelo",
+      "O tipo de tarefa algorítmica (task type)",
+      "O nome de exibição do projeto Foundry (display name)",
+      "Credenciais de identidade / Microsoft Entra ID (ou chaves de API)",
+      "A URL do Ponto de extremidade (Endpoint URL)"
     ],
-    "respostas": [
-      0,
-      3
+    "respostas": [0, 3, 4],
+    "explicacao": "Qualquer acesso a recursos seguros requer o mapeamento de rota e permissão: a 'URL do Endpoint' (Onde a nuvem atende), o 'Nome da Implantação' (Qual modelo virtual processará a requisição) e a 'Credencial' (Quem está pedindo permissão/autorização).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/create-resource",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
+  },
+
+  // Questão Original: 64
+  {
+    "tipo": "unica",
+    "texto": "Sua solicitação (request) enviará uma imagem a um modelo de visão para análise. Para que o modelo produza uma resposta direcionada, contextual e útil, qual é a principal diretriz que você deve formatar juntamente na mensagem do prompt de texto?",
+    "opcoes": [
+      "o número da versão explícita do modelo de software",
+      "uma descrição clara da tarefa a ser executada",
+      "o nome da implantação do modelo",
+      "o Dataset ID de onde a imagem foi proveniente"
     ],
-    "explicacao": "O Form Recognizer é um serviço de IA que permite extrair informações estruturadas de documentos como notas fiscais e recibos. Ele pode identificar campos como número da fatura e nome do comerciante. No entanto, tradução de idiomas é uma função do Translator e identificação de imagens pertence à visão computacional.",
-    "link": "https://learn.microsoft.com/pt-br/azure/applied-ai-services/form-recognizer/overview",
-    "dominio": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
-    "simulado": "ai-2"
+    "resposta": 1,
+    "explicacao": "Imagens desacompanhadas de contexto causam confusão. Fornecer uma instrução explícita sobre a tarefa (ex.: 'Descreva a cor do objeto no centro da imagem' ou 'Quais são as calorias listadas na tabela desta foto?') ancora as camadas de atenção da IA generativa e melhora a qualidade da inferência (Prompt Engineering).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/prompt-engineering",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco02"
   }
-
-
-
-
 ];

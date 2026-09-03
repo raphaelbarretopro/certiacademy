@@ -1,685 +1,579 @@
 // ==========================================
-// Arquivo: questoes.js
-// Descrição: Contém todas as questões do simulado AI-900
+// Arquivo: questoes_bloco04.js
+// Descrição: Simulado AI-901 (Microsoft Azure AI Fundamentals) — tradução PT-BR (Contexto Oficial Microsoft)
+// BLOCO 04 de 04 — Visão, Fala, IA Responsável e Administração de Modelos
+// 32 questões — distribuição balanceada conforme guia oficial de estudos
+//
+// CORRESPONDÊNCIA COM O BANCO ORIGINAL: Questões de 97 a 128.
 // ==========================================
-//FABRICIO E RAPHAEL
-export const questoes = [
-  {
-    "tipo": "dragdrop",
-    "texto": "Você está projetando um sistema que gerará automaticamente cotações de seguro.\n\nAssocie os princípios de IA responsável da Microsoft aos requisitos apropriados.",
-    "itens": [
-      { "label": "Responsabilidade" },
-      { "label": "Justiça" },
-      { "label": "Inclusão" },
-      { "label": "Privacidade e segurança" },
-      { "label": "Confiabilidade e segurança" },
-      { "label": "Transparência" }
-    ],
-    "grupos": [
-      "As informações pessoais de um cliente devem estar visíveis apenas para a equipe envolvida no processo de tomada de decisão.",
-      "O processo de tomada de decisão deve ser registrado para que a equipe possa identificar o raciocínio por trás de uma cotação específica.",
-      "O sistema deve ser acessível a clientes que usam leitores de tela ou outras tecnologias assistivas."
-    ],
-    "respostas": {
-      "As informações pessoais de um cliente devem estar visíveis apenas para a equipe envolvida no processo de tomada de decisão.": ["Privacidade e segurança"],
-      "O processo de tomada de decisão deve ser registrado para que a equipe possa identificar o raciocínio por trás de uma cotação específica.": ["Transparência"],
-      "O sistema deve ser acessível a clientes que usam leitores de tela ou outras tecnologias assistivas.": ["Inclusão"]
-    },
-    "explicacao": "A privacidade e segurança garantem que os dados dos clientes sejam acessados apenas por pessoas autorizadas. A transparência exige que o raciocínio por trás das decisões da IA seja rastreável. A inclusão assegura que todos os usuários, incluindo aqueles com deficiências, possam interagir com o sistema.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cloud-adoption-framework/strategy/inform/ai",
-    "dominio": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
-    "simulado": "ai-4"
-  },
-  //209
-  {
-    "tipo": "unica",
-    "texto": "Qual tipo de entidade de processamento de linguagem natural (PLN) é usado para identificar um número de telefone?",
-    "opcoes": [
-      "Expressão regular",
-      "Aprendizado de máquina",
-      "Lista",
-      "Padrão.any"
-    ],
-    "resposta": 0,
-    "explicacao": "Entidades do tipo 'expressão regular' são utilizadas para identificar padrões bem definidos, como números de telefone, que seguem um formato fixo. Isso permite extrair dados estruturados de textos de forma precisa.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/conversational-language-understanding/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  //210
-  {
-    "tipo": "combobox",
-    "texto": "Retornar uma caixa delimitadora que indica a localização de um veículo em uma imagem é um exemplo de <combobox>.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Classificação de imagem",
-      "Detecção de objeto",
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Detecção facial"
-    ],
-    "resposta": 2,
-    "explicacao": "A detecção de objeto é usada para localizar e identificar objetos dentro de uma imagem, retornando caixas delimitadoras (bounding boxes) ao redor dos itens detectados. Isso difere da classificação de imagem, que apenas rotula a imagem como um todo.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/concept-object-detection",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //211
-  {
-    "tipo": "unica",
-    "texto": "Sua empresa está explorando o uso de tecnologias de reconhecimento de voz em seus dispositivos domésticos inteligentes. A empresa deseja identificar quaisquer barreiras que possam, inadvertidamente, excluir grupos específicos de usuários.\n\nEste é um exemplo de qual princípio orientador da Microsoft para IA responsável?",
-    "opcoes": [
-      "Responsabilidade",
-      "Justiça",
-      "Privacidade e segurança",
-      "Inclusão"
-    ],
-    "resposta": 3,
-    "explicacao": "A inclusão é um princípio da IA responsável que visa garantir que soluções de IA sejam acessíveis e úteis para todos os grupos de usuários, incluindo aqueles com diferentes capacidades, idiomas ou contextos culturais.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cloud-adoption-framework/strategy/inform/ai#responsible-and-trusted-ai",
-    "dominio": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
-    "simulado": "ai-4"
-  },
-  //212
-  {
-    "tipo": "dragdrop",
-    "texto": "Você possui um grande conjunto de dados que contém informações de vendas de veículos.\n\nVocê precisa treinar um modelo de machine learning automatizado (automated ML) para prever os valores de venda de veículos com base no tipo de veículo.\n\nQual tarefa você deve selecionar? Para responder, associe corretamente a tarefa apropriada na área de resposta.",
-    "itens": [
-      { "label": "Classificação" },
-      { "label": "Regressão" },
-      { "label": "Previsão de séries temporais" },
-      { "label": "Processamento de Linguagem Natural (visualização)" },
-      { "label": "Visão Computacional (visualização)" }
-    ],
-    "grupos": [
-      "Treinar um modelo para prever valores de venda de veículos com base no tipo de veículo."
-    ],
-    "respostas": {
-      "Treinar um modelo para prever valores de venda de veículos com base no tipo de veículo.": ["Regressão"]
-    },
-    "explicacao": "A tarefa de regressão é usada para prever valores contínuos, como preços ou valores de venda. Como o objetivo é prever valores de venda com base em dados históricos, essa é a escolha apropriada no contexto de aprendizado de máquina automatizado.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
-  },
-  //213
-  {
-    "tipo": "combobox",
-    "texto": "Ao avaliar o desempenho de um modelo, a <combobox> exibe os positivos e negativos previstos e reais usando uma grade de valores 0 e 1.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Métrica AUC",
-      "Matriz de confusão",
-      "Curva ROC",
-      "Limite"
-    ],
-    "resposta": 2,
-    "explicacao": "A matriz de confusão é uma ferramenta usada para avaliar a performance de modelos de classificação, apresentando os valores reais e previstos em uma estrutura de tabela com base em categorias como verdadeiro positivo, falso positivo, verdadeiro negativo e falso negativo.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#classification-metrics",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
-  },
-  //214
-  {
-    "tipo": "unica",
-    "texto": "Você precisa converter recibos em transações em uma planilha. A planilha deve incluir a data da transação, o comerciante, o valor total gasto e quaisquer impostos pagos.\n\nQual serviço de IA do Azure você deve usar?",
-    "opcoes": [
-      "Visão Personalizada (Custom Vision)",
-      "Reconhecimento de Formulários (Form Recognizer)",
-      "Reconhecimento Facial (Face)",
-      "Serviço de Linguagem (Language)"
-    ],
-    "resposta": 1,
-    "explicacao": "O serviço Azure Form Recognizer é ideal para extrair informações estruturadas de documentos como recibos, faturas e formulários. Ele pode identificar automaticamente campos como data, comerciante e valores, facilitando a conversão em planilhas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //215
-  {
-    "tipo": "combobox",
-    "texto": "Prever quantos veículos irão atravessar uma ponte em um determinado dia é um exemplo de <combobox>.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Classificação",
-      "Agrupamento (clustering)",
-      "Regressão"
-    ],
-    "resposta": 3,
-    "explicacao": "Regressão é usada para prever valores numéricos contínuos. Neste caso, como o objetivo é estimar a quantidade de veículos — um valor numérico — em um dia específico, trata-se de um problema de regressão.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#regression",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
-  },
-  //216
-  {
-    "tipo": "combobox",
-    "texto": "Em um modelo de aprendizado de máquina, os dados usados como entradas são chamados de <combobox>.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Atributos (features)",
-      "Funções",
-      "Rótulos (labels)",
-      "Instâncias"
-    ],
-    "resposta": 1,
-    "explicacao": "No aprendizado de máquina, 'features' (atributos) são as variáveis de entrada utilizadas pelo modelo para fazer previsões. Elas representam as características observadas nos dados que ajudam a estimar a saída desejada.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml#feature-selection",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
-  },
-  //217
-  {
-    "tipo": "unica",
-    "texto": "Você tem um sistema de segurança que analisa imagens de câmeras de segurança (CCTV) para permitir a entrada de funcionários autorizados em áreas restritas.\n\nQual tipo de visão computacional o sistema utiliza?",
-    "opcoes": [
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Segmentação semântica",
-      "Detecção facial e reconhecimento facial",
-      "Análise de imagem"
-    ],
-    "resposta": 2,
-    "explicacao": "A detecção e o reconhecimento facial são técnicas de visão computacional usadas para identificar e autenticar indivíduos com base em características faciais. Esse é o método adequado para permitir acesso a pessoas autorizadas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/concept-face-detection",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //218
-  {
-    "tipo": "unica",
-    "texto": "Você tem um sistema de segurança que analisa imagens de câmeras de segurança (CCTV) para permitir a entrada de funcionários autorizados em áreas restritas.\n\nQual tipo de visão computacional o sistema utiliza?",
-    "opcoes": [
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Segmentação semântica",
-      "Detecção facial e reconhecimento facial",
-      "Análise de imagem"
-    ],
-    "resposta": 2,
-    "explicacao": "A detecção e o reconhecimento facial são técnicas de visão computacional usadas para identificar e autenticar indivíduos com base em características faciais. Esse é o método adequado para permitir acesso a pessoas autorizadas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/concept-face-detection",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //219
-  {
-    "tipo": "unica",
-    "texto": "Você tem um aplicativo que identifica as coordenadas de um produto em uma imagem de uma prateleira de supermercado. Qual serviço o aplicativo usa?",
-    "opcoes": [
-      "Classificação do Custom Vision",
-      "Detecção de objetos do Custom Vision",
-      "Leitura do Computer Vision",
-      "Reconhecimento óptico de caracteres (OCR) do Computer Vision"
-    ],
-    "resposta": 1,
-    "explicacao": "A detecção de objetos do Custom Vision é o serviço apropriado para identificar e localizar objetos específicos (como produtos) dentro de uma imagem, retornando suas coordenadas. A classificação apenas categoriza a imagem, e o OCR do Computer Vision foca na extração de texto.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/custom-vision-service/get-started-build-detector",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //220
-  {
-    "tipo": "combobox",
-    "texto": "Um sistema de monitoramento de tráfego que coleta números de matrícula de veículos de filmagens de CFTV é um exemplo de <combobox> no serviço de Visão Computacional.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "classificação de imagem",
-      "detecção de objetos",
-      "análise espacial",
-      "extração de texto"
-    ],
-    "resposta": 4,
-    "explicacao": "A extração de texto, ou OCR (Optical Character Recognition), é o recurso do serviço de Visão Computacional que permite identificar e extrair texto de imagens, como números de matrícula de veículos em filmagens.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview-ocr",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //221
-  {
-    "tipo": "unica",
-    "texto": "Você precisa construir uma solução de marcação de imagens para mídias sociais que marca automaticamente as imagens de seus amigos. Qual serviço do Azure Cognitive Services você deve usar?",
-    "opcoes": [
-      "Face",
-      "Form Recognizer",
-      "Language",
-      "Computer Vision"
-    ],
-    "resposta": 0,
-    "explicacao": "O serviço Azure AI Face (anteriormente Face API) é ideal para identificar e verificar faces humanas em imagens, o que é fundamental para marcar amigos automaticamente em fotos de mídias sociais.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/whats-new",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //222
-  {
-    "tipo": "combobox",
-    "texto": "Um historiador pode usar <combobox> para digitalizar artigos de jornal.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "análise facial",
-      "classificação de imagem",
-      "detecção de objetos",
-      "reconhecimento óptico de caracteres (OCR)"
-    ],
-    "resposta": 4,
-    "explicacao": "O Reconhecimento Óptico de Caracteres (OCR) é a tecnologia usada para converter diferentes tipos de documentos, como artigos de jornal, em dados editáveis e pesquisáveis. É essencial para digitalizar textos.",
-    "link": "https://learn.microsoft.com/en-us/azure/ai-services/computer-vision/overview-ocr",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //223
-  {
-    "tipo": "comboboxs",
-    "texto": "Você tem um aplicativo que identifica pássaros em imagens. O aplicativo executa as seguintes tarefas: identifica a localização dos pássaros na imagem; identifica as espécies dos pássaros na imagem. Que tipo de visão computacional cada tarefa usa? Para responder, selecione as opções apropriadas na área de resposta. Cada seleção correta vale um ponto.",
 
-    "pares": [
-      {
-        "requisito": "Localizar os pássaros:",
-        "opcoes": [
-          "Legendas automatizadas",
-          "Classificação de imagem",
-          "Detecção de objetos",
-          "Reconhecimento óptico de caracteres (OCR)"
-        ],
-        "resposta": 2
-      },
-      {
-        "requisito": "Identificar as espécies dos pássaros:",
-        "opcoes": [
-          "Legendas automatizadas",
-          "Classificação de imagem",
-          "Detecção de objetos",
-          "Reconhecimento óptico de caracteres (OCR)"
-        ],
-        "resposta": 1
-      }
-    ],
-    "explicacao": "Localizar os pássaros na imagem envolve a detecção de objetos, que identifica a presença e o local de múltiplos objetos em uma imagem. Identificar as espécies dos pássaros é uma tarefa de classificação de imagem, onde a imagem ou partes dela são categorizadas com base em seu conteúdo.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/concept-object-detection",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  //224
-  {
-    "tipo": "unica",
-    "texto": "Você tem uma solução que lê manuscritos em diferentes idiomas e categoriza os manuscritos com base no tópico. Que tipos de cargas de trabalho de processamento de linguagem natural (PLN) a solução usa?",
-    "opcoes": [
-      "reconhecimento de fala e reconhecimento de entidade",
-      "reconhecimento de fala e modelagem de linguagem",
-      "tradução e extração de frases-chave",
-      "tradução e análise de sentimento"
-    ],
-    "resposta": 2,
-    "explicacao": "Para ler manuscritos em diferentes idiomas, a solução precisa de tradução. Para categorizar os manuscritos com base no tópico, a extração de frases-chave é utilizada para identificar os temas principais do texto, permitindo a categorização. Reconhecimento de fala não se aplica a manuscritos (texto escrito).",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/translator/translator-overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  //225
-  {
-    "tipo": "combobox",
-    "texto": "A resposta interativa a perguntas inseridas por um usuário como parte de um aplicativo é um exemplo de <combobox>.",
-    "opcoes": [
-      "Selecione uma opção",
-      "detecção de anomalias",
-      "visão computacional",
-      "processamento de linguagem natural",
-      "previsão"
-    ],
-    "resposta": 3,
-    "explicacao": "O processamento de linguagem natural (PLN) é a área da inteligência artificial que permite que computadores entendam, interpretem e gerem linguagem humana. A interação através de perguntas e respostas é uma aplicação direta do PLN, comum em chatbots e assistentes virtuais.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/language-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  //226
-  {
-    "tipo": "unica",
-    "texto": "Você tem 100 vídeos instrucionais que NÃO contêm áudio. Cada vídeo instrucional tem um roteiro. Você precisa gerar um arquivo de áudio de narração para cada vídeo com base no roteiro. Que tipo de carga de trabalho você deve usar?",
-    "opcoes": [
-      "modelagem de linguagem",
-      "reconhecimento de fala",
-      "síntese de fala",
-      "tradução"
-    ],
-    "resposta": 2,
-    "explicacao": "A síntese de fala é o processo de converter texto em fala humana. É o serviço ideal para gerar narrações de áudio a partir de roteiros, pois permite transformar o conteúdo textual em áudio para os vídeos.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/speech-service/text-to-speech",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  //227
-  {
-    "tipo": "combobox",
-    "texto": "O processamento de linguagem natural pode ser usado para <combobox>.",
-    "opcoes": [
-      "Selecione uma opção",
-      "classificar mensagens de e-mail como relacionadas ao trabalho ou pessoais",
-      "prever o número de aluguéis futuros de carros",
-      "prever quais visitantes do site farão uma transação",
-      "parar um processo em uma fábrica quando temperaturas extremamente altas forem registradas"
-    ],
-    "resposta": 1,
-    "explicacao": "O processamento de linguagem natural (PLN) é uma área da IA que lida com a interação entre computadores e linguagem humana. Classificar mensagens de e-mail com base em seu conteúdo (como trabalho ou pessoal) é uma aplicação direta do PLN, que envolve a análise e compreensão do texto para atribuir categorias.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/language-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  //228
-  {
-    "tipo": "unica",
-    "texto": "Qual serviço de IA você pode usar para extrair a intenção de uma entrada de usuário como “Ligue-me de volta mais tarde”?",
-    "opcoes": [
-      "Azure Cognitive Search",
-      "Translator",
-      "Language",
-      "Speech"
-    ],
-    "resposta": 2,
-    "explicacao": "O serviço Azure AI Language (anteriormente Azure Cognitive Services para Linguagem) fornece recursos de compreensão de linguagem natural, incluindo extração de intenção. Isso permite que um aplicativo entenda o propósito por trás de uma declaração do usuário, como 'Ligue-me de volta mais tarde'.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você está construindo um modelo de compreensão de linguagem para um negócio de comércio eletrônico. É necessário garantir que o modelo detecte quando declarações estão fora do escopo pretendido do modelo. O que você deve fazer?",
-    "opcoes": [
-      "Exportar o modelo",
-      "Adicionar declarações à intenção None",
-      "Criar uma entidade de tarefa predefinida",
-      "Criar um novo modelo"
-    ],
-    "resposta": 1,
-    "explicacao": "A intenção None é usada para classificar declarações que não pertencem a nenhuma das outras intenções personalizadas. Isso ajuda o modelo a identificar quando uma entrada está fora do escopo previsto.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/conversational-language-understanding/concepts/none-intent",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "combobox",
-    "texto": "<combobox> pode ser usado para criar aplicativos sem código que utilizam modelos integrados de processamento de linguagem natural.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Azure Health Bot",
-      "Microsoft Bot Framework",
-      "Power Virtual Agents"
-    ],
-    "resposta": 3,
-    "explicacao": "O Power Virtual Agents é uma plataforma sem código que permite a criação de chatbots inteligentes utilizando modelos integrados de PLN, sem necessidade de conhecimento em programação.",
-    "link": "https://learn.microsoft.com/pt-br/power-virtual-agents/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
+export const questoes = [
+  // Questão Original: 97
   {
     "tipo": "simnao",
-    "texto": "Para cada uma das seguintes afirmações, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
+    "texto": "Avalie as afirmações sobre a implantação (deployment) de modelos no Catálogo de Modelos do Azure.",
     "afirmacoes": [
-      "Um dispositivo inteligente em casa que responde a perguntas como 'Qual é o meu próximo compromisso?' é um exemplo de IA conversacional.",
-      "Um recurso de chat interativo em um site corporativo pode ser implementado usando o Azure Bot Service.",
-      "Gerar automaticamente legendas para vídeos pré-gravados é um exemplo de IA conversacional."
-    ],
-    "respostas": [true, true, false],
-    "explicacao": "Dispositivos que interagem por meio de linguagem natural, como assistentes virtuais, são exemplos de IA conversacional. O Azure Bot Service permite criar experiências de chat interativas. A geração automática de legendas é uma tarefa de visão computacional, não de IA conversacional.",
-    "link": "https://azure.microsoft.com/pt-br/products/ai-services/ai-bot-service?msockid=345c085ff06f67123f701e59f125667c",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Qual é um exemplo do princípio de IA responsável da Microsoft relacionado à transparência?",
-    "opcoes": [
-      "Garantir que as oportunidades sejam distribuídas igualmente entre todos os candidatos",
-      "Ajudar os usuários a entender as decisões tomadas por um sistema de IA",
-      "Garantir que os desenvolvedores sejam responsáveis pelas soluções que criam",
-      "Garantir que os dados privilegiados dos usuários sejam armazenados de forma segura"
-    ],
-    "resposta": 1,
-    "explicacao": "Transparência é um princípio da IA responsável da Microsoft que visa garantir que os sistemas de IA forneçam informações claras e compreensíveis sobre como funcionam e tomam decisões, permitindo que os usuários confiem e utilizem esses sistemas de forma eficaz.",
-    "link": "https://learn.microsoft.com/pt-br/azure/well-architected/ai/responsible-ai",
-    "dominio": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você precisa fornecer aos clientes a capacidade de consultar o status de pedidos usando telefones, redes sociais ou assistentes digitais. O que você deve usar?",
-    "opcoes": [
-      "Um modelo do Azure Machine Learning",
-      "O serviço Translator",
-      "Um modelo do Form Recognizer",
-      "Azure Bot Service"
-    ],
-    "resposta": 3,
-    "explicacao": "O Azure Bot Service oferece um ambiente integrado para o desenvolvimento de bots, permitindo criar, conectar, testar, implantar e gerenciar bots inteligentes. Ele permite interações naturais com os usuários por meio de diversos canais, como redes sociais e assistentes digitais.",
-    "link": "https://learn.microsoft.com/pt-br/azure/bot-service/bot-service-overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você planeja construir uma solução de IA conversacional que possa ser disponibilizada no Microsoft Teams, Microsoft Cortana e Amazon Alexa. Qual serviço você deve usar?",
-    "opcoes": [
-      "Azure Bot Service",
-      "Azure Cognitive Search",
-      "Serviço de Fala",
-      "Serviço de Linguagem"
-    ],
-    "resposta": 0,
-    "explicacao": "O Azure Bot Service permite criar bots que podem ser integrados a soluções baseadas em voz, como Cortana, Alexa e Google Assistant. Ele fornece os canais e interfaces necessários para conectar bots a essas plataformas, permitindo interações por comandos de voz.",
-    "link": "https://learn.microsoft.com/pt-br/azure/bot-service/bot-service-overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "simnao",
-    "texto": "Para cada uma das seguintes afirmações, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
-    "afirmacoes": [
-      "Um recurso de chat interativo em um site corporativo pode ser implementado usando o Azure Bot Service.",
-      "Gerar automaticamente legendas para vídeos pré-gravados é um exemplo de IA conversacional.",
-      "Um dispositivo inteligente em casa que responde a perguntas como 'Qual é o meu próximo compromisso?' é um exemplo de IA conversacional."
+      "Você pode implantar um modelo base suportado diretamente do catálogo de modelos sem modificações.",
+      "O playground é usado obrigatoriamente para criar a implantação do modelo antes que ele possa ser testado.",
+      "Após implantar um modelo, você pode usar o playground no portal do Microsoft Foundry para enviar prompts e revisar as respostas."
     ],
     "respostas": [true, false, true],
-    "explicacao": "O Azure Bot Service permite criar experiências de IA conversacional, como chatbots em sites. A geração automática de legendas é uma tarefa de conversão de fala em texto, não de IA conversacional. Dispositivos inteligentes que interagem por linguagem natural são exemplos de IA conversacional.",
-    "link": "https://azure.microsoft.com/pt-br/products/ai-services/ai-bot-service?msockid=345c085ff06f67123f701e59f125667c",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
+    "explicacao": "Você implanta modelos baseados no catálogo diretamente (afirmação 1 verdadeira). O Playground é uma ferramenta de teste, não a ferramenta de criação da implantação; a implantação é feita no catálogo ou hub (afirmação 2 falsa). O Playground usa a implantação ativa para testar os prompts (afirmação 3 verdadeira).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-studio/how-to/model-catalog-overview",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco04"
   },
+  
+  // Questão Original: 98
   {
     "tipo": "unica",
-    "texto": "Qual serviço do Azure Cognitive Services pode ser usado para identificar documentos que contêm informações sensíveis?",
+    "texto": "Você tem um projeto do Microsoft Foundry que contém uma implantação de modelo de chat habilitado para visão. Seu aplicativo em Python usa a API de respostas para enviar uma solicitação com um prompt e uma imagem JPEG local. Qual valor você deve usar para incluir a imagem local na requisição HTTP?",
     "opcoes": [
-      "Visão Personalizada",
-      "Compreensão de Linguagem Conversacional",
-      "Reconhecedor de Formulários"
+      "data:image/jpeg;base64,...",
+      "C:\\images\\photo.jpg",
+      "file:///C:/images/photo.jpg",
+      "https://<storage>.blob.core.windows.net/<container>/<file>.jpg"
     ],
-    "resposta": 2,
-    "explicacao": "O Azure Form Recognizer é projetado para analisar e extrair informações de documentos, incluindo dados estruturados e não estruturados. Ele pode identificar e processar informações sensíveis ao analisar o conteúdo dos documentos e categorizar os dados.",
-    "link": "https://learn.microsoft.com/pt-br/azure/applied-ai-services/form-recognizer/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
+    "resposta": 0,
+    "explicacao": "Para enviar imagens locais sem hospedá-las publicamente na internet, a API REST do Azure OpenAI exige que os binários da imagem sejam convertidos em uma string codificada em Base64, precedida pelo cabeçalho do tipo MIME correspondente.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco04"
   },
+  
+  // Questão Original: 99
   {
     "tipo": "combobox",
-    "texto": "Detectar flutuações incomuns de temperatura em uma máquina de grande porte é um exemplo de <combobox>.",
+    "texto": "O serviço de <combobox> é usado para extrair datas, quantidades, nomes de organizações e locais a partir de blocos de texto longo.",
     "opcoes": [
-      "Selecione uma resposta",
-      "uma carga de trabalho de visão computacional",
-      "uma carga de trabalho de mineração de conhecimento",
-      "uma carga de trabalho de processamento de linguagem natural (PLN)",
-      "uma carga de trabalho de detecção de anomalias"
-    ],
-    "resposta": 4,
-    "explicacao": "A detecção de anomalias é usada para identificar padrões ou dados que não seguem o comportamento esperado. Isso é comum em sistemas de monitoramento, como máquinas industriais, onde desvios como variações de temperatura podem indicar falhas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/",
-    "dominio": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Um dispositivo inteligente que responde à pergunta 'Qual é o preço das ações da Contoso Ltd.?' é um exemplo de qual carga de trabalho de IA?",
-    "opcoes": [
-      "Mineração de conhecimento",
-      "Processamento de linguagem natural",
-      "Visão computacional",
-      "Detecção de anomalias"
-    ],
-    "resposta": 1,
-    "explicacao": "O processamento de linguagem natural (PLN) permite que dispositivos inteligentes compreendam, interpretem e respondam a perguntas feitas em linguagem humana. Neste caso, o dispositivo interpreta a pergunta e fornece uma resposta relevante, caracterizando uma carga de trabalho de PLN.",
-    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/technology-choices/natural-language-processing",
-    "dominio": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "dragdrop",
-    "texto": "Associe cada modelo de aprendizado de máquina à sua descrição correspondente.",
-    "itens": [
-      { "label": "Classificação" },
-      { "label": "Agrupamento (Clustering)" },
-      { "label": "Regressão" }
-    ],
-    "grupos": [
-      "Um modelo de aprendizado supervisionado usado para prever valores numéricos.",
-      "Um modelo de aprendizado supervisionado usado para prever categorias.",
-      "Um modelo de aprendizado não supervisionado usado para agrupar entidades semelhantes com base em características."
-    ],
-    "respostas": {
-      "Um modelo de aprendizado supervisionado usado para prever valores numéricos.": ["Regressão"],
-      "Um modelo de aprendizado supervisionado usado para prever categorias.": ["Classificação"],
-      "Um modelo de aprendizado não supervisionado usado para agrupar entidades semelhantes com base em características.": ["Agrupamento (Clustering)"]
-    },
-    "explicacao": "Modelos de regressão são usados para prever valores contínuos, como preços. Modelos de classificação são usados para prever categorias, como tipos de e-mails. Modelos de agrupamento são usados para identificar padrões e agrupar dados semelhantes sem rótulos prévios.",
-    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-automated-ml",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você está desenvolvendo uma ferramenta que processará imagens de lojas de varejo e identificará os produtos de concorrentes. A solução deve ser treinada com imagens fornecidas pela sua empresa. Qual serviço de IA do Azure você deve usar?",
-    "opcoes": [
-      "Reconhecedor de Formulários",
-      "Visão Personalizada",
-      "Reconhecimento Facial",
-      "Visão Computacional"
-    ],
-    "resposta": 1,
-    "explicacao": "O Custom Vision permite treinar modelos personalizados com imagens fornecidas pela empresa, sendo ideal para tarefas de classificação e detecção de objetos, como identificar produtos de concorrentes em imagens de lojas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/custom-vision-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "unica",
-    "texto": "Você está desenvolvendo uma ferramenta que processará imagens de lojas de varejo e identificará os produtos de concorrentes. A solução deve ser treinada com imagens fornecidas pela sua empresa. Qual serviço de IA do Azure você deve usar?",
-    "opcoes": [
-      "Reconhecedor de Formulários",
-      "Visão Personalizada",
-      "Reconhecimento Facial",
-      "Visão Computacional"
-    ],
-    "resposta": 1,
-    "explicacao": "O Custom Vision permite treinar modelos personalizados com imagens fornecidas pela empresa, sendo ideal para tarefas de classificação e detecção de objetos, como identificar produtos de concorrentes em imagens de lojas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cognitive-services/custom-vision-service/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
-  },
-  {
-    "tipo": "combobox",
-    "texto": "Prever quantas horas extras um entregador trabalhará com base no número de pedidos recebidos é um exemplo de <combobox>.",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Classificação",
-      "Agrupamento",
-      "Regressão"
+      "Selecione uma opção",
+      "Extração de frases-chave (Key phrase extraction)",
+      "Detecção de idioma (Language detection)",
+      "Reconhecimento de Entidades Nomeadas (NER)",
+      "Análise de Sentimentos (Sentiment Analysis)"
     ],
     "resposta": 3,
-    "explicacao": "A previsão de valores numéricos, como o número de horas extras, com base em dados de entrada, como o número de pedidos, caracteriza um modelo de regressão. A regressão é usada para prever variáveis contínuas.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/introduction-to-machine-learning/",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
+    "explicacao": "Nota de Correção: O banco original marcava equivocadamente 'Detecção de idioma'. A extração categórica de nomes, locais, quantidades e datas de um texto não estruturado é, por definição arquitetural, a tarefa de Reconhecimento de Entidades Nomeadas (NER).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/named-entity-recognition/overview",
+    "dominio": "Processamento de Linguagem Natural",
+    "simulado": "ai901-bloco04"
   },
+  
+  // Questão Original: 100
   {
     "tipo": "unica",
-    "texto": "Prever rendimentos agrícolas com base em condições climáticas e medições da qualidade do solo é um exemplo de qual tipo de modelo de aprendizado de máquina?",
+    "texto": "Você precisa desenvolver um aplicativo usando o SDK do Microsoft Foundry para enviar prompts de chat para um modelo de IA generativa implantado. Quais informações o código do aplicativo deve incluir obrigatoriamente para estabelecer a comunicação?",
     "opcoes": [
-      "Classificação",
-      "Regressão",
-      "Agrupamento"
+      "O dataset de treinamento, o histórico do playground e o nome do projeto.",
+      "O histórico do playground, a URL do ponto de extremidade e o tipo de tarefa.",
+      "As credenciais de autenticação, a URL do ponto de extremidade (endpoint URL) e o nome da implantação do modelo.",
+      "O nome de exibição do projeto, o dataset de treinamento e o tipo de tarefa."
     ],
-    "resposta": 1,
-    "explicacao": "Modelos de regressão são utilizados para prever valores numéricos contínuos, como rendimentos agrícolas, com base em variáveis de entrada como clima e qualidade do solo. Eles são ideais para problemas em que a saída é uma quantidade numérica.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/introduction-to-machine-learning/",
-    "dominio": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
-    "simulado": "ai-4"
+    "resposta": 2,
+    "explicacao": "A tríade de conexão via SDK requer: Credenciais (para autorização Entra ID / Chaves), a URL do Endpoint (para o roteamento da rede) e o Nome da Implantação (para selecionar o modelo específico no servidor).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/create-resource",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco04"
   },
+  
+  // Questão Original: 101
   {
     "tipo": "unica",
-    "texto": "Você precisa identificar nomes de ruas com base em placas de rua em fotografias. Qual tipo de visão computacional deve ser utilizado?",
+    "texto": "Qual das ações abaixo pode ser executada nativamente usando o serviço Azure Vision (Visão Computacional)?",
     "opcoes": [
-      "Detecção de objetos",
-      "Reconhecimento óptico de caracteres (OCR)",
-      "Classificação de imagem",
-      "Reconhecimento facial"
+      "Criar miniaturas temporais para vídeos de treinamento.",
+      "Extrair frases-chave de documentos puramente textuais.",
+      "Identificar raças específicas de animais em fluxos de vídeo ao vivo.",
+      "Extrair dados textuais legíveis de cartas manuscritas."
+    ],
+    "resposta": 3,
+    "explicacao": "A leitura de letras cursivas manuscritas em imagens e a sua transformação em strings digitais é a funcionalidade de Reconhecimento Óptico de Caracteres (OCR / Read API), que faz parte do núcleo do serviço Azure Vision.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview-ocr",
+    "dominio": "Visão Computacional",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 102
+  {
+    "tipo": "unica",
+    "texto": "Qual recurso de processamento de linguagem natural (PNL) pode ser usado para identificar rapidamente os principais pontos de discussão (talking points) em milhares de pesquisas de feedback de clientes?",
+    "opcoes": [
+      "Tradução (Translation)",
+      "Detecção de idioma (Language detection)",
+      "Reconhecimento de entidades (Entity recognition)",
+      "Extração de frases-chave (Key phrase extraction)"
+    ],
+    "resposta": 3,
+    "explicacao": "A extração de frases-chave isola os termos e jargões mais relevantes e repetidos dentro de um texto, permitindo mapear rapidamente as métricas e os tópicos principais de discussão (talking points) sem ler o texto completo.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/key-phrase-extraction/overview",
+    "dominio": "Processamento de Linguagem Natural",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 103
+  {
+    "tipo": "unica",
+    "texto": "Declarar publicamente e documentar as fontes dos dados que foram utilizados para treinar um modelo de Machine Learning é uma prática que atende primariamente a qual princípio de IA Responsável?",
+    "opcoes": [
+      "Privacidade e segurança",
+      "Confiabilidade e segurança",
+      "Justiça",
+      "Transparência"
+    ],
+    "resposta": 3,
+    "explicacao": "A Transparência exige clareza sobre o ciclo de vida da IA. Explicar como a IA funciona e declarar abertamente a origem dos dados de treinamento permite que as partes interessadas auditem o modelo e entendam suas limitações.",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 104
+  {
+    "tipo": "unica",
+    "texto": "Você planeja criar um aplicativo de IA que usará o Azure OpenAI. A solução exige que uma quantidade de taxa de transferência (throughput) fixa e dedicada seja alocada para o modelo. Qual tipo de implantação você deve usar?",
+    "opcoes": [
+      "Provisionada (Provisioned Throughput)",
+      "Padrão (Standard)",
+      "Lote Global (Global Batch)",
+      "Padrão de Zona de Dados (Data Zone Standard)"
+    ],
+    "resposta": 0,
+    "explicacao": "A implantação Padrão (Standard) é tarifada conforme o uso e sujeita a limites flutuantes de rede. Para garantir latência consistente e um processamento de tokens por minuto (TPM) isolado e reservado, deve-se comprar e usar a implantação de Taxa de Transferência Provisionada (Provisioned Throughput).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/provisioned-throughput",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 105
+  {
+    "tipo": "unica",
+    "texto": "Você está construindo um aplicativo de aprovação de empréstimos baseado em IA. Você precisa garantir que o aplicativo documente formalmente os motivos pelos quais um empréstimo foi aprovado ou rejeitado, tornando esse relatório explicativo disponível ao solicitante. Este é um exemplo de qual princípio de IA responsável?",
+    "opcoes": [
+      "Transparência",
+      "Prestação de contas",
+      "Justiça",
+      "Inclusão"
+    ],
+    "resposta": 0,
+    "explicacao": "Fornecer um relatório explicativo aos usuários finais sobre como e por que o algoritmo tomou uma decisão de alto impacto (como negar um empréstimo) atende ao princípio de Transparência (explicabilidade).",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 106
+  {
+    "tipo": "unica",
+    "texto": "Testar e verificar se os modelos de aprendizado de máquina NÃO exibem viés racial, viés de gênero ou preferências discriminatórias é um exemplo de qual princípio de IA responsável da Microsoft?",
+    "opcoes": [
+      "Segurança (Safety)",
+      "Confiabilidade (Reliability)",
+      "Justiça (Fairness)",
+      "Privacidade e segurança (Privacy and security)"
+    ],
+    "resposta": 2,
+    "explicacao": "O princípio de Justiça (Fairness) dita que os sistemas de IA devem tratar todas as pessoas de forma equitativa e as avaliações devem garantir que o algoritmo não desenvolva discriminações demográficas (gênero, raça, idade).",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 107
+  {
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre os modelos disponíveis no serviço Azure OpenAI.",
+    "afirmacoes": [
+      "Os modelos Whisper no Azure OpenAI são usados exclusivamente para gerar vetores semânticos.",
+      "Os modelos de Embedding no Azure OpenAI são usados para converter texto em matrizes de vetores numéricos.",
+      "Os modelos GPT-4.1 no Azure OpenAI são usados ativamente para gerar imagens originais baseadas em prompts de linguagem natural."
+    ],
+    "respostas": [false, true, false],
+    "explicacao": "O Whisper é o modelo da OpenAI para reconhecimento de fala e transcrição (afirmação 1 falsa). Modelos de embedding criam vetores para buscas semânticas RAG (afirmação 2 verdadeira). Os modelos para gerar imagens são da família DALL-E, não GPT-4.1 (afirmação 3 falsa).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/models",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 108
+  {
+    "tipo": "combobox",
+    "texto": "Contar o número de animais em uma área de preservação com base na análise de um feed de vídeo capturado por drones é um exemplo de <combobox>.",
+    "opcoes": [
+      "Selecione uma opção",
+      "visão computacional (computer vision)",
+      "extração de informações (information extraction)",
+      "processamento de linguagem natural (NLP)",
+      "mineração de conhecimento (knowledge mining)"
     ],
     "resposta": 1,
-    "explicacao": "O reconhecimento óptico de caracteres (OCR) é utilizado para extrair e reconhecer texto em imagens, como nomes de ruas em placas. Ele identifica caracteres, letras e palavras a partir de dados visuais, sendo ideal para esse tipo de tarefa.",
-    "link": "https://learn.microsoft.com/pt-br/azure/app-service/overview-ai-integration",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
+    "explicacao": "Analisar pixels e frames espaciais para detectar e contar objetos do mundo físico (Spatial Analysis / Object Detection) pertence estritamente ao escopo das cargas de trabalho de Visão Computacional.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview",
+    "dominio": "Visão Computacional",
+    "simulado": "ai901-bloco04"
   },
+  
+  // Questão Original: 109
   {
     "tipo": "dragdrop",
-    "texto": "Associe os tipos de cargas de trabalho de visão computacional aos cenários apropriados.",
+    "texto": "Associe os requisitos de compliance com os princípios apropriados de IA Responsável da Microsoft.",
     "itens": [
-      { "label": "Classificação de imagem" },
-      { "label": "Detecção de objetos" },
-      { "label": "Reconhecimento óptico de caracteres (OCR)" }
+      { "label": "Justiça (Fairness)" },
+      { "label": "Privacidade e Segurança (Privacy and Security)" },
+      { "label": "Transparência (Transparency)" }
     ],
     "grupos": [
-      "Gerar legendas para imagens",
-      "Extrair nomes de títulos de filmes de imagens de pôsteres",
-      "Localizar veículos em imagens"
+      "O sistema não deve discriminar decisões com base em gênero, raça ou idade.",
+      "Dados pessoais rastreáveis devem ser visíveis apenas para usuários aprovados na rede.",
+      "Processos de tomada de decisão automatizados devem ser registrados para que usuários aprovem e identifiquem por que uma decisão foi tomada."
     ],
     "respostas": {
-      "Gerar legendas para imagens": ["Classificação de imagem"],
-      "Extrair nomes de títulos de filmes de imagens de pôsteres": ["Reconhecimento óptico de caracteres (OCR)"],
-      "Localizar veículos em imagens": ["Detecção de objetos"]
+      "O sistema não deve discriminar decisões com base em gênero, raça ou idade.": ["Justiça (Fairness)"],
+      "Dados pessoais rastreáveis devem ser visíveis apenas para usuários aprovados na rede.": ["Privacidade e Segurança (Privacy and Security)"],
+      "Processos de tomada de decisão automatizados devem ser registrados para que usuários aprovem e identifiquem por que uma decisão foi tomada.": ["Transparência (Transparency)"]
     },
-    "explicacao": "A classificação de imagem pode ser usada para gerar legendas ao identificar o conteúdo visual. O OCR é ideal para extrair texto de imagens, como títulos de filmes em pôsteres. A detecção de objetos é usada para localizar itens específicos, como veículos, dentro de imagens.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
+    "explicacao": "Não discriminar e evitar vieses demográficos = Justiça. Limitar visibilidade a usuários aprovados (RBAC/Encryption) = Privacidade. Registrar as decisões para rastreabilidade lógica e explicação de motivos = Transparência.",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
   },
+  
+  // Questão Original: 110
   {
-    "tipo": "unica",
-    "texto": "Você tem um bot que identifica os nomes de marcas de produtos em imagens de prateleiras de supermercado. Qual serviço esse bot utiliza?",
+    "tipo": "combobox",
+    "texto": "Um modelo de IA treinado para atuar no campo da visão computacional tem como uma de suas capacidades clássicas <combobox>.",
     "opcoes": [
-      "Enriquecimento de IA para recursos do Azure Search",
-      "Análise de imagem do Computer Vision",
-      "Classificação de imagem do Custom Vision",
-      "Recursos de compreensão de linguagem"
+      "Selecione uma opção",
+      "analisar imagens para classificar e detectar objetos",
+      "criar conteúdo visual e artes novas baseadas em prompts de texto",
+      "organizar dados numéricos estruturados em categorias preditivas clássicas",
+      "usar correspondência de padrões e expressões regulares para estruturar JSON"
     ],
     "resposta": 1,
-    "explicacao": "A análise de imagem do serviço Computer Vision permite a detecção de marcas comerciais em imagens, utilizando um banco de dados com milhares de logotipos globais. Essa funcionalidade é ideal para identificar marcas em fotos de prateleiras de supermercado.",
-    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/concept-brand-detection",
-    "dominio": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
-    "simulado": "ai-4"
+    "explicacao": "A detecção de objetos (Object Detection) e a classificação de imagens (Image Classification) são as tarefas fundamentais na fundação da arquitetura clássica de Visão Computacional.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview",
+    "dominio": "Visão Computacional",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 111
+  {
+    "tipo": "unica",
+    "texto": "Qual tipo de carga de trabalho (workload) de IA do Azure você deve usar para criar novas ilustrações criativas a partir do texto longo de um artigo?",
+    "opcoes": [
+      "IA generativa (Generative AI)",
+      "Inteligência de Documentos (Document Intelligence)",
+      "Visão computacional (Computer vision)",
+      "Processamento de linguagem natural (Natural language processing)"
+    ],
+    "resposta": 0,
+    "explicacao": "A criação (síntese) de conteúdo original inédito — seja texto, código ou ilustrações de imagem a partir de prompts (como o modelo DALL-E) — define a carga de trabalho de Inteligência Artificial Generativa.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/models#dall-e",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 112
+  {
+    "tipo": "unica",
+    "texto": "Capturar e digitalizar texto legível a partir de matrizes de pixels em imagens é um exemplo prático de qual recurso de IA?",
+    "opcoes": [
+      "Detecção de objetos (Object detection)",
+      "Análise de texto (Text analysis)",
+      "Reconhecimento óptico de caracteres (OCR)",
+      "Descrição de imagens (Image description)"
+    ],
+    "resposta": 2,
+    "explicacao": "O Reconhecimento Óptico de Caracteres (OCR) é a tecnologia específica dentro da Visão Computacional dedicada a isolar, reconhecer e extrair caracteres textuais de formatos de imagem ou papel digitalizado.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview-ocr",
+    "dominio": "Visão Computacional",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 113
+  {
+    "tipo": "multipla",
+    "texto": "Quais dos itens abaixo compõem os princípios norteadores oficiais da Microsoft para a Inteligência Artificial Responsável? (Escolha três)",
+    "opcoes": [
+      "Opinionatedness (Opinatividade)",
+      "Decisiveness (Capacidade de decisão)",
+      "Fairness (Justiça)",
+      "Reliability and safety (Confiabilidade e segurança)",
+      "Inclusiveness (Inclusão)",
+      "Knowledgeability (Nível de conhecimento)"
+    ],
+    "respostas": [2, 3, 4],
+    "explicacao": "Os 6 princípios oficiais da Microsoft são: Justiça (Fairness), Confiabilidade e Segurança (Reliability and safety), Privacidade e Segurança (Privacy and security), Inclusão (Inclusiveness), Transparência (Transparency) e Prestação de Contas (Accountability).",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 114
+  {
+    "tipo": "combobox",
+    "texto": "Ao desenvolver um sistema crítico de IA autônomo, como veículos autônomos ou sistemas médicos, o princípio da IA responsável de <combobox> deve ser rigidamente aplicado para garantir a operação consistente e sem causar danos físicos ao longo da vida útil do sistema.",
+    "opcoes": [
+      "Selecione uma opção",
+      "justiça (fairness)",
+      "confiabilidade e segurança (reliability and safety)",
+      "prestação de contas (accountability)",
+      "inclusão (inclusiveness)"
+    ],
+    "resposta": 2,
+    "explicacao": "Em cenários onde a falha do algoritmo pode resultar em danos físicos à saúde ou ao patrimônio do usuário (como dirigir um carro ou dosar medicação), o princípio de Confiabilidade e Segurança exige testes rígidos para mitigar comportamentos inesperados do modelo.",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 115
+  {
+    "tipo": "unica",
+    "texto": "Sua aplicação possui uma interface de chat onde o usuário digita 'Como eu atualizo minha Base de Conhecimento programaticamente?'. O aplicativo orquestra a chamada e devolve a resposta 'Você pode usar nossas APIs REST...', acompanhada da citação da fonte documental. Qual tipo de solução de IA orquestra esse fluxo?",
+    "opcoes": [
+      "uma solução isolada de análise de sentimentos",
+      "um aplicativo de visão computacional",
+      "um agente conversacional (agent / copilot)",
+      "um modelo estático de aprendizado de máquina tabular"
+    ],
+    "resposta": 2,
+    "explicacao": "Sistemas de perguntas e respostas que retêm histórico, invocam ferramentas externas (como bases de conhecimento corporativas RAG) e interagem ativamente com os usuários via diálogos são orquestrados por Agentes Conversacionais (Agents/Copilots).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/agents/overview",
+    "dominio": "Construção de Agentes e Ferramentas",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 116
+  {
+    "tipo": "combobox",
+    "texto": "O atendimento interativo, interpretativo e semântico de perguntas inseridas de forma natural por um usuário como parte de um aplicativo corporativo é um exemplo clássico de <combobox>.",
+    "opcoes": [
+      "Selecione uma opção",
+      "visão computacional",
+      "processamento de linguagem natural (PNL)",
+      "previsão estatística (forecasting)",
+      "extração de metadados de imagem"
+    ],
+    "resposta": 2,
+    "explicacao": "Sempre que o núcleo computacional de uma solução requer o entendimento e a geração da semântica da linguagem humana (seja falada ou escrita), a disciplina fundamental sendo empregada é o Processamento de Linguagem Natural.",
+    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/technology-choices/natural-language-processing",
+    "dominio": "Processamento de Linguagem Natural",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 117
+  {
+    "tipo": "simnao",
+    "texto": "Avalie o escopo das capacidades de processamento Multimodal.",
+    "afirmacoes": [
+      "Todos os modelos de IA, sem exceção, podem analisar e gerar saídas de imagens contextuais.",
+      "Um modelo de IA generativa multimodal pode interpretar nativamente uma entrada de imagem dentro do prompt fornecido pelo usuário.",
+      "Um modelo multimodal permite projetar esquemas que combinem tokens de blocos de texto e matrizes de imagens na mesma requisição simultânea."
+    ],
+    "respostas": [false, true, true],
+    "explicacao": "A grande maioria dos modelos preditivos e LLMs tradicionais lida exclusivamente com matrizes tabulares ou vetores textuais (afirmação 1 falsa). O termo 'Multimodal' refere-se especificamente à capacidade arquitetônica do modelo de absorver e combinar diferentes naturezas de mídia (texto e imagem) de forma nativa e simultânea (afirmações 2 e 3 verdadeiras).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
+    "dominio": "IA Generativa",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 118
+  {
+    "tipo": "multipla",
+    "texto": "Em quais DOIS cenários práticos você utilizaria especificamente as tecnologias de reconhecimento de fala (Speech Recognition)? (Escolha duas)",
+    "opcoes": [
+      "Criar uma transcrição em texto de uma reunião corporativa ou chamada telefônica gravada.",
+      "Um sistema de entretenimento de carro que lê em voz alta as mensagens de texto recebidas pelo motorista.",
+      "Criar um sistema automatizado de anúncios de plataforma e atrasos para uma estação de trem.",
+      "Fornecer legendas ocultas (closed captions) automatizadas para vídeos gravados ou transmissões ao vivo."
+    ],
+    "respostas": [0, 3],
+    "explicacao": "O reconhecimento de fala atua 'escutando' ondas sonoras para transformá-las em texto (Speech-to-Text). Gerar atas de reunião e legendar vídeos são as aplicações diretas disso. Os sistemas de carros e estações de trem descritos nas opções usam o processo inverso: a Síntese de Fala (Text-to-Speech).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/speech-to-text",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 119
+  {
+    "tipo": "unica",
+    "texto": "Você tem 100 vídeos instrucionais corporativos que NÃO contêm nenhum áudio. Cada vídeo possui um roteiro escrito correspondente. Você precisa gerar e adicionar um arquivo de áudio de narração realista para cada vídeo com base neste roteiro. Qual tipo de carga de trabalho você deve usar?",
+    "opcoes": [
+      "Tradução (Translation)",
+      "Reconhecimento de fala (Speech recognition)",
+      "Modelagem de linguagem (Language modeling)",
+      "Síntese de fala (Speech synthesis / Text-to-speech)"
+    ],
+    "resposta": 3,
+    "explicacao": "A ação mecânica de ler um roteiro de texto estático e gerar uma narração acústica simulando uma voz humana sintética utiliza o motor de Síntese de Fala (Text-to-Speech).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/text-to-speech",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 120
+  {
+    "tipo": "unica",
+    "texto": "Qual das seguintes ações operacionais é o melhor exemplo da implementação do princípio de IA Responsável de Transparência (Transparency)?",
+    "opcoes": [
+      "Garantir juridicamente que os desenvolvedores sejam os únicos responsabilizados pelas soluções autônomas que criam.",
+      "Garantir matematicamente que as oportunidades, como empréstimos, sejam alocadas de forma igualitária a todos os solicitantes.",
+      "Ajudar os usuários corporativos e finais a entender os limites da inteligência e como as decisões são processadas pelo sistema de IA.",
+      "Garantir através de chaves que os dados privilegiados dos usuários sejam armazenados de forma criptografada."
+    ],
+    "resposta": 2,
+    "explicacao": "Ajudar o usuário a entender 'como' e 'por que' a IA chegou a um determinado resultado elimina o fator de 'caixa preta', que é a exigência principal do princípio de Transparência.",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 121
+  {
+    "tipo": "combobox",
+    "texto": "O serviço de <combobox> atua abstraindo a complexidade de redes neurais acústicas para ouvir e converter áudio falado capturado de clientes diretamente em texto formatado na aplicação.",
+    "opcoes": [
+      "Selecione uma opção",
+      "Azure Language (Linguagem)",
+      "Azure Speech (Fala)",
+      "Azure Vision (Visão Computacional)",
+      "Azure OpenAI (Modelos Fundacionais)"
+    ],
+    "resposta": 2,
+    "explicacao": "O Azure Speech Service é o conjunto dedicado de APIs da Microsoft especializado no processamento de sinais de áudio, executando tanto Speech-to-Text quanto Text-to-Speech e tradução de voz em tempo real.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/overview",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 122
+  {
+    "tipo": "unica",
+    "texto": "Você tem um sistema de aprovação de empréstimos financeiro baseado em IA. Durante os rigorosos testes em ambiente de homologação, os engenheiros descobrem que o sistema tem um alto viés histórico de gênero, reprovando desproporcionalmente mulheres. Qual princípio central de IA responsável o modelo está violando diretamente?",
+    "opcoes": [
+      "Confiabilidade e segurança (Reliability and safety)",
+      "Transparência (Transparency)",
+      "Prestação de contas (Accountability)",
+      "Justiça (Fairness)"
+    ],
+    "resposta": 3,
+    "explicacao": "O viés algorítmico, o preconceito racial e a discriminação de gênero resultam em tratamentos não equitativos. A obrigação ética de mitigar e resolver essas disparidades é governada pelo princípio de Justiça (Fairness).",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 123
+  {
+    "tipo": "dragdrop",
+    "texto": "Associe a descrição correta à ferramenta correspondente do ecossistema de Machine Learning clássico da Microsoft.",
+    "itens": [
+      { "label": "Azure Machine Learning designer" },
+      { "label": "Automated Machine Learning (AutoML)" },
+      { "label": "Azure Machine Learning workspace" },
+      { "label": "Notebooks" }
+    ],
+    "grupos": [
+      "Fornece um ambiente para profissionais escreverem e executarem código Python diretamente no navegador (browser-based).",
+      "Permite construir rotinas visuais de treinamento usando uma interface gráfica de arrastar e soltar (drag-and-drop).",
+      "Itera automaticamente por diversos algoritmos e hiperparâmetros na nuvem para encontrar o melhor modelo possível.",
+      "Atua como o espaço unificado e centralizado na nuvem para agrupar e gerenciar todos os recursos e artefatos de IA do projeto."
+    ],
+    "respostas": {
+      "Fornece um ambiente para profissionais escreverem e executarem código Python diretamente no navegador (browser-based).": ["Notebooks"],
+      "Permite construir rotinas visuais de treinamento usando uma interface gráfica de arrastar e soltar (drag-and-drop).": ["Azure Machine Learning designer"],
+      "Itera automaticamente por diversos algoritmos e hiperparâmetros na nuvem para encontrar o melhor modelo possível.": ["Automated Machine Learning (AutoML)"],
+      "Atua como o espaço unificado e centralizado na nuvem para agrupar e gerenciar todos os recursos e artefatos de IA do projeto.": ["Azure Machine Learning workspace"]
+    },
+    "explicacao": "O ecossistema clássico de ML do Azure se baseia no Workspace. Ele contém o Designer para Low-Code/No-Code, Notebooks para desenvolvedores Code-First, e o AutoML para descobrir automaticamente o melhor modelo matemático para datasets limpos.",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/overview-what-is-azure-machine-learning",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 124
+  {
+    "tipo": "unica",
+    "texto": "Você planeja projetar e implantar (deploy) um modelo de IA generativa massivo (como Llama 3) em um novo projeto do Microsoft Foundry restrito à região de nuvem 'Leste dos EUA' (East US). Em nível de arquitetura, o que você deve verificar primeiro?",
+    "opcoes": [
+      "A disponibilidade regional e cota de processamento do modelo.",
+      "O limite individual de token da janela de contexto da rede neural.",
+      "O suporte a chamadas REST API padrão do serviço.",
+      "O método técnico de autenticação exigido pela aplicação frontend."
+    ],
+    "resposta": 0,
+    "explicacao": "Diferentes datacenters globais têm hardwares de GPU distintos. A implantação falhará imediatamente se o modelo fundacional escolhido não estiver disponível (Availability) ou não tiver capacidade provisionada na região do Azure na qual o projeto está hospedado.",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/models",
+    "dominio": "Fundamentos de IA do Azure",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 125
+  {
+    "tipo": "combobox",
+    "texto": "Um modelo matemático de visão computacional (Computer Vision model) tem o objetivo primário de <combobox>.",
+    "opcoes": [
+      "Selecione uma opção",
+      "analisar as matrizes de pixels em imagens para classificar cenas e detectar objetos",
+      "criar conteúdo visual do zero (geração) baseado estritamente em descrições de texto",
+      "organizar colunas de dados numéricos estruturados em categorias preditivas matemáticas",
+      "usar correspondência rígida de padrões para recuperar imagens idênticas a partir de um banco de dados relacional"
+    ],
+    "resposta": 1,
+    "explicacao": "A Visão Computacional analisa imagens existentes do mundo real para inferir significado por meio da extração espacial de características, como reconhecimento facial, detecção de objetos de segurança e classificação de cenários (Computer Vision / Image Analysis).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview",
+    "dominio": "Visão Computacional",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 126
+  {
+    "tipo": "simnao",
+    "texto": "Avalie as afirmações sobre as ferramentas de orquestração fonética.",
+    "afirmacoes": [
+      "O serviço de síntese de fala (Speech Synthesis) converte fluxos de áudio falados por usuários em formatos de texto digital escrito.",
+      "O serviço de reconhecimento de fala (Speech Recognition) tem a capacidade contínua de detectar e transcrever a entrada fonética falada via microfone.",
+      "O recurso nativo de conversão de texto em fala (Text-to-Speech) isolado tem o objetivo arquitetural de ler um texto em inglês e emitir um áudio falado traduzido em espanhol em tempo real."
+    ],
+    "respostas": [false, true, false],
+    "explicacao": "A síntese faz texto-para-áudio (afirmação 1 falsa). O reconhecimento faz áudio-para-texto (afirmação 2 verdadeira). A conversão de texto em fala é focada puramente na leitura acústica; o fluxo lógico de tradução exige o encadeamento prévio do Azure Translator ou o uso da API consolidada de Speech Translation (afirmação 3 falsa).",
+    "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/speech-to-text",
+    "dominio": "Processamento de Linguagem Natural e Voz",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 127
+  {
+    "tipo": "unica",
+    "texto": "Você está gerenciando o design de um novo sistema de IA corporativo garantindo ativamente que o layout e os métodos de entrada de dados empoderem todas as pessoas, especificamente capacitando o uso pleno por indivíduos que possuem deficiências auditivas, deficiências visuais severas ou limitações motoras. Este é um exemplo de qual princípio orientador da Microsoft para IA responsável?",
+    "opcoes": [
+      "Prestação de contas (Accountability)",
+      "Confiabilidade e segurança (Reliability and safety)",
+      "Justiça (Fairness)",
+      "Inclusão (Inclusiveness)"
+    ],
+    "resposta": 3,
+    "explicacao": "Embora a Justiça trate do algoritmo não apresentar viés para grupos demográficos, a acessibilidade física (como acomodar leitores de tela ou comandos de acessibilidade alternativos para limitações cognitivas/motoras) pertence estritamente ao princípio da Inclusão (Inclusiveness).",
+    "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+    "dominio": "IA Responsável",
+    "simulado": "ai901-bloco04"
+  },
+  
+  // Questão Original: 128
+  {
+    "tipo": "combobox",
+    "texto": "Ao desenvolver um agente integrado, a ação de fornecer respostas dinâmicas, contextuais e interativas para perguntas formuladas por um usuário via teclado no aplicativo é o caso de uso definitivo da área de <combobox>.",
+    "opcoes": [
+      "Selecione uma opção",
+      "visão computacional",
+      "processamento de linguagem natural (PNL)",
+      "previsão e mineração de dados em lote",
+      "síntese fonética direcional"
+    ],
+    "resposta": 2,
+    "explicacao": "O processamento, decodificação da intenção sintática e a formulação gramatical de respostas em linguagem de máquina pertencem ao ramo das redes neurais de Processamento de Linguagem Natural (PNL).",
+    "link": "https://learn.microsoft.com/pt-br/azure/architecture/data-guide/technology-choices/natural-language-processing",
+    "dominio": "Processamento de Linguagem Natural",
+    "simulado": "ai901-bloco04"
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ];
