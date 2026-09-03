@@ -1,6 +1,6 @@
 // ==========================================
 // Arquivo: questoes_bloco01.js
-// Descrição: Simulado AI-901 (Microsoft Azure AI Fundamentals) — tradução PT-BR
+// Descrição: Simulado AI-901 (Microsoft Azure AI Fundamentals) — tradução PT-BR (Contexto Oficial Microsoft)
 // BLOCO 01 de 04 — Fundamentos de IA, Serviços de IA do Azure e IA Responsável
 // 32 questões — distribuição balanceada conforme guia oficial de estudos
 //
@@ -11,7 +11,7 @@ export const questoes = [
   // Questão Original: 1
   {
     "tipo": "unica",
-    "texto": "Você está usando o Azure Speech SDK para desenvolver um aplicativo em Python que suporta conversas faladas em tempo real. Qual classe do Azure Speech você deve usar para configurar a conexão com o serviço Azure Speech?",
+    "texto": "Você está usando o SDK de Fala do Azure (Azure Speech SDK) para desenvolver um aplicativo em Python que suporta conversas faladas em tempo real. Qual classe do serviço de Fala você deve usar para configurar a conexão com o serviço?",
     "opcoes": [
       "AudioOutputConfig",
       "SpeechSynthesizer",
@@ -28,7 +28,7 @@ export const questoes = [
   // Questão Original: 2
   {
     "tipo": "combobox",
-    "texto": "Ao usar a API de Responses da OpenAI e um modelo habilitado para visão, você pode incluir uma imagem em uma solicitação fornecendo-a como <combobox>.",
+    "texto": "Ao usar a API de Respostas do OpenAI e um modelo habilitado para visão, você pode incluir uma imagem em uma solicitação (request) fornecendo-a como <combobox>.",
     "opcoes": [
       "Selecione uma opção",
       "dados de imagem codificados em base64",
@@ -37,7 +37,7 @@ export const questoes = [
       "um token de assinatura de acesso compartilhado (SAS)"
     ],
     "resposta": 1,
-    "explicacao": "Modelos de visão nas APIs da OpenAI aceitam imagens diretamente no payload se elas forem enviadas no formato de string codificada em base64 (Data URL) ou através de uma URL pública acessível via HTTP.",
+    "explicacao": "Modelos de visão nas APIs do OpenAI aceitam imagens diretamente no payload se elas forem enviadas no formato de string codificada em base64 (Data URL) ou através de uma URL pública acessível via HTTP.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -46,7 +46,7 @@ export const questoes = [
   // Questão Original: 3
   {
     "tipo": "unica",
-    "texto": "Você precisa criar um agente de IA no Microsoft Foundry que siga um papel (role) e comportamento específicos ao responder aos usuários. O que você deve configurar?",
+    "texto": "Você precisa criar um agente de IA no Microsoft Foundry (Azure AI Studio) que siga uma função (role) e um comportamento específicos ao responder aos usuários. O que você deve configurar?",
     "opcoes": [
       "instruções do sistema (system instructions)",
       "temperatura (temperature)",
@@ -54,7 +54,7 @@ export const questoes = [
       "limite máximo de tokens (max completion tokens)"
     ],
     "resposta": 0,
-    "explicacao": "As instruções do sistema (também chamadas de mensagem de sistema ou system prompt) definem a persona, os limites, o tom e as diretrizes comportamentais que o agente de IA usará durante a interação com o usuário.",
+    "explicacao": "As instruções do sistema (também chamadas de mensagem do sistema ou system prompt) definem a persona, as regras, o tom e as diretrizes comportamentais que a função (role) do agente de IA usará durante a interação.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/system-message",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -63,14 +63,14 @@ export const questoes = [
   // Questão Original: 4
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre prompts de sistema (system prompts).",
+    "texto": "Avalie as afirmações sobre prompts do sistema (system prompts).",
     "afirmacoes": [
-      "Prompts de sistema podem ser usados para autorizar usuários.",
-      "Um prompt de sistema é usado para reduzir os tokens por minuto (TPM).",
-      "Um prompt de sistema guia o comportamento de um modelo de IA generativa."
+      "Prompts do sistema podem ser usados para autorizar usuários.",
+      "Um prompt do sistema é usado para reduzir os tokens por minuto (TPM).",
+      "Um prompt do sistema guia o comportamento de um modelo de IA generativa."
     ],
     "respostas": [false, false, true],
-    "explicacao": "O prompt do sistema serve puramente para moldar o comportamento e as restrições do modelo (afirmação 3). Ele não tem capacidade para gerenciar segurança/autenticação (afirmação 1) nem pode alterar configurações de infraestrutura como TPM (afirmação 2).",
+    "explicacao": "O prompt do sistema serve puramente para moldar o comportamento e as restrições lógicas do modelo (afirmação 3). Ele não tem capacidade para gerenciar controle de acesso/autorização (afirmação 1) nem pode alterar configurações de infraestrutura como TPM (afirmação 2).",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/system-message",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -87,7 +87,7 @@ export const questoes = [
       "um serviço Azure AI Search"
     ],
     "resposta": 2,
-    "explicacao": "O Azure Content Understanding (também conhecido em contextos de serviços cognitivos como Document Intelligence) permite configurar analisadores baseados em um esquema definido para mapear e extrair dados complexos, pares chave-valor e itens aninhados de documentos, como faturas.",
+    "explicacao": "O Azure Content Understanding (Inteligência de Documentos) permite configurar analisadores baseados em um esquema definido para mapear e extrair dados complexos, pares chave-valor e itens aninhados de documentos corporativos estruturados, como faturas.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/",
     "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
     "simulado": "ai901-bloco01"
@@ -99,11 +99,11 @@ export const questoes = [
     "texto": "Avalie as seguintes afirmações sobre os recursos de Voice Live.",
     "afirmacoes": [
       "O Voice Live retorna apenas texto transcrito.",
-      "O Voice Live exige que você implemente separadamente serviços de conversão de fala em texto e de texto em fala.",
+      "O Voice Live exige que você implante separadamente serviços de conversão de fala em texto e de texto em fala.",
       "O Voice Live combina conversão de fala em texto, raciocínio e conversão de texto em fala em uma única experiência de conversação."
     ],
     "respostas": [false, false, true],
-    "explicacao": "As APIs de voz ponta-a-ponta (como o Voice Live em ferramentas unificadas de conversação) eliminam a necessidade de encadear serviços separados. Elas abstraem o fluxo de ouvir, raciocinar (LLM) e responder com voz sintetizada, retornando áudio e não apenas texto.",
+    "explicacao": "As APIs de voz ponta a ponta (como o Voice Live) eliminam a necessidade de encadear serviços separados. Elas abstraem o fluxo de ouvir, raciocinar no modelo fundacional e responder com voz sintetizada, retornando áudio diretamente.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/",
     "dominio": "Processamento de Linguagem Natural e Voz",
     "simulado": "ai901-bloco01"
@@ -112,7 +112,7 @@ export const questoes = [
   // Questão Original: 7
   {
     "tipo": "combobox",
-    "texto": "Você está desenvolvendo um aplicativo de voz que escuta comandos falados e os converte em texto usando o Azure Speech. No código Python a seguir, qual instrução inicia a captura de um trecho curto de áudio para transcrição única? <combobox>",
+    "texto": "Você está desenvolvendo um aplicativo de voz que escuta comandos falados e os converte em texto usando o serviço de Fala (Azure Speech). No código Python a seguir, qual instrução inicia a captura de um trecho curto de áudio para transcrição única? <combobox>",
     "opcoes": [
       "Selecione uma opção",
       "recognizer.recognize_once()",
@@ -121,7 +121,7 @@ export const questoes = [
       "recognizer.start_keyword_recognition()"
     ],
     "resposta": 1,
-    "explicacao": "O método `recognize_once()` (ou `recognize_once_async()` dependendo da implementação) escuta uma única declaração por até 15 segundos ou até detectar um período de silêncio, ideal para comandos curtos.",
+    "explicacao": "O método `recognize_once()` escuta uma única declaração por até 15 segundos ou até detectar um período de silêncio, sendo a abordagem padrão para capturar e transcrever comandos curtos.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/get-started-speech-to-text",
     "dominio": "Processamento de Linguagem Natural e Voz",
     "simulado": "ai901-bloco01"
@@ -130,16 +130,16 @@ export const questoes = [
   // Questão Original: 8
   {
     "tipo": "multipla",
-    "texto": "Quais são os dois propósitos das instruções ao fazer um prompt para um modelo de IA generativa? (Escolha duas)",
+    "texto": "Quais são os DOIS propósitos do uso de instruções ao formular um prompt para um modelo de IA generativa? (Escolha duas)",
     "opcoes": [
-      "Define o papel e o comportamento do agente.",
-      "Seleciona qual modelo usar.",
+      "Define a função (role) e o comportamento do agente.",
+      "Seleciona qual modelo de implantação usar.",
       "Define a região do Azure onde a inferência ocorre.",
-      "Define a alocação de tokens por minuto (TPM) para o modelo.",
+      "Define a alocação de tokens por minuto (TPM) para a implantação do modelo.",
       "Define restrições para as respostas do modelo."
     ],
     "respostas": [0, 4],
-    "explicacao": "As instruções (prompts) servem para comunicar ao modelo de IA o seu papel/comportamento desejado e para estabelecer restrições de formatação ou conteúdo. Região, TPM e tipo de modelo são configurações de infraestrutura.",
+    "explicacao": "As instruções em um prompt (prompt engineering) servem para comunicar a função/persona do agente e para estabelecer restrições claras de formato ou conteúdo. Configurações como região, modelo e TPM são feitas na implantação (infraestrutura).",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/prompt-engineering",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -148,7 +148,7 @@ export const questoes = [
   // Questão Original: 9
   {
     "tipo": "combobox",
-    "texto": "Para configurar a saída de síntese de voz (Text-to-Speech) para que o áudio seja salvo diretamente em um arquivo, você deve instanciar a classe de configuração de áudio como <combobox>.",
+    "texto": "Para configurar a saída de conversão de texto em fala (Speech Synthesis) para que o áudio seja salvo diretamente em um arquivo local, você deve instanciar a classe de configuração de áudio como <combobox>.",
     "opcoes": [
       "Selecione uma opção",
       "AudioOutputConfig(filename=\"output.wav\")",
@@ -156,7 +156,7 @@ export const questoes = [
       "AudioStreamFormat(wave_stream_format=AudioStreamWaveFormat.PCM)"
     ],
     "resposta": 1,
-    "explicacao": "Para rotear o áudio sintetizado para um arquivo local, utiliza-se a classe `AudioOutputConfig` (frequentemente implementada como `speechsdk.audio.AudioOutputConfig(filename=...)`) passando o caminho do arquivo desejado.",
+    "explicacao": "Para rotear o áudio sintetizado para um arquivo, utiliza-se a classe `AudioOutputConfig` passando explicitamente o caminho de destino no parâmetro `filename`.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/get-started-text-to-speech",
     "dominio": "Processamento de Linguagem Natural e Voz",
     "simulado": "ai901-bloco01"
@@ -165,16 +165,16 @@ export const questoes = [
   // Questão Original: 10
   {
     "tipo": "combobox",
-    "texto": "Para definir a função (role) e os comportamentos de um agente de IA, você deve configurar um <combobox> para o agente.",
+    "texto": "Para definir a função (role) e os comportamentos de um agente de IA, você deve configurar um(a) <combobox> para o agente.",
     "opcoes": [
       "Selecione uma opção",
       "slot de implantação",
       "índice de embeddings",
       "trabalho de ajuste fino (fine-tuning)",
-      "prompt de sistema (system prompt)"
+      "prompt do sistema (system prompt)"
     ],
     "resposta": 4,
-    "explicacao": "O prompt de sistema (ou mensagem do sistema) é a diretriz fundamental fornecida ao modelo generativo para ditar sua persona, tom e restrições antes de começar a interagir com os usuários.",
+    "explicacao": "O prompt do sistema (mensagem do sistema) é a diretriz inicial e fundamental fornecida ao modelo generativo para estruturar sua função (role) e moldar o comportamento operacional antes de iniciar o loop de chat.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/system-message",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -183,7 +183,7 @@ export const questoes = [
   // Questão Original: 11
   {
     "tipo": "combobox",
-    "texto": "No SDK de Python, ao chamar operações assíncronas de longa duração (como a extração de dados de faturas), você usa o objeto poller. Para recuperar o resultado final quando a operação é concluída, você chama <combobox>.",
+    "texto": "No SDK, ao iniciar tarefas assíncronas de longa duração usando o Inteligência de Documentos (Content Understanding), a API retorna um rastreador `poller`. Para recuperar o resultado estruturado quando o processamento for concluído na nuvem, você deve invocar <combobox>.",
     "opcoes": [
       "Selecione uma opção",
       "get_results()",
@@ -192,7 +192,7 @@ export const questoes = [
       "wait()"
     ],
     "resposta": 2,
-    "explicacao": "O padrão da biblioteca do Azure SDK para operações de longa duração (LRO) é usar o método `result()` no objeto do poller. Isso pausa a execução até que o processamento em nuvem seja finalizado e retorna o payload com os dados.",
+    "explicacao": "O padrão LRO (Long-Running Operations) do Azure SDK exige que você chame o método `.result()` no objeto `poller`. Isso pausa o encadeamento até que a nuvem retorne o status de sucesso e entrega o payload final.",
     "link": "https://learn.microsoft.com/pt-br/azure/developer/python/sdk/azure-sdk-library-usage-patterns#long-running-operations",
     "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
     "simulado": "ai901-bloco01"
@@ -201,7 +201,7 @@ export const questoes = [
   // Questão Original: 12
   {
     "tipo": "dragdrop",
-    "texto": "Você tem um projeto com um recurso do Azure OpenAI chamado 'resource1'. Você implantou um modelo 'gpt-4.1-mini' com o nome de implantação 'my-mini-gpt'. Associe as propriedades de conexão com os valores corretos.",
+    "texto": "Você tem um projeto com um recurso do Azure OpenAI chamado 'resource1'. Você configurou uma implantação (deployment) de um modelo 'gpt-4.1-mini' nomeando-a como 'my-mini-gpt'. Associe as propriedades de conexão da API com os valores corretos.",
     "itens": [
       { "label": "gpt-4.1-mini" },
       { "label": "my-mini-gpt" },
@@ -209,14 +209,14 @@ export const questoes = [
       { "label": "resource1" }
     ],
     "grupos": [
-      "Subdomínio na URL (https://___.openai.azure.com...)",
-      "Parâmetro 'model' na chamada da API"
+      "Subdomínio no ponto de extremidade (https://___.openai.azure.com...)",
+      "Parâmetro 'model' na chamada de inferência da API"
     ],
     "respostas": {
-      "Subdomínio na URL (https://___.openai.azure.com...)": ["resource1"],
-      "Parâmetro 'model' na chamada da API": ["my-mini-gpt"]
+      "Subdomínio no ponto de extremidade (https://___.openai.azure.com...)": ["resource1"],
+      "Parâmetro 'model' na chamada de inferência da API": ["my-mini-gpt"]
     },
-    "explicacao": "O subdomínio da URL é sempre o nome do seu Recurso do Azure OpenAI (`resource1`). Ao fazer a chamada à API no Azure, o campo 'model' exige o Nome da Implantação (Deployment Name), que neste caso é `my-mini-gpt`.",
+    "explicacao": "O subdomínio da URL do ponto de extremidade herda o nome do Recurso do Azure (`resource1`). Na requisição para inferência, a API exige o Nome da Implantação (`my-mini-gpt`), não o nome base do modelo.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/create-resource",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -225,14 +225,14 @@ export const questoes = [
   // Questão Original: 13
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre Agentes e Modelos de IA Generativa.",
+    "texto": "Avalie as afirmações sobre o funcionamento de Agentes e Modelos de IA Generativa.",
     "afirmacoes": [
-      "Um modelo generativo de IA é retreinado antes de executar cada solicitação do usuário.",
-      "Um agente de IA responde copiando e colando respostas armazenadas em um banco de dados.",
-      "Um agente de IA usa um modelo de IA generativa para estabelecer ações com base na entrada do usuário."
+      "Um modelo generativo de IA é retreinado ativamente antes de realizar a inferência de cada solicitação do usuário.",
+      "Um agente de IA responde copiando e colando respostas engessadas de um banco de dados relacional.",
+      "Um agente de IA usa um modelo de IA generativa para estabelecer etapas de ação com base na intenção do usuário."
     ],
     "respostas": [false, false, true],
-    "explicacao": "Modelos generativos não são retreinados para cada prompt (a inferência usa parâmetros estáticos) e não copiam textos de bancos de dados; eles geram palavras (tokens) com base em probabilidades matemáticas. Um Agente, por sua vez, usa o modelo para decidir quais ações tomar (como chamar funções).",
+    "explicacao": "Modelos operam inferência com parâmetros estáticos, não são retreinados para cada prompt. Eles também não copiam texto de bancos de dados. Um agente utiliza a capacidade de raciocínio do modelo fundacional para interpretar a entrada e orquestrar ações.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/models",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -241,26 +241,26 @@ export const questoes = [
   // Questão Original: 14
   {
     "tipo": "dragdrop",
-    "texto": "Associe cada tarefa ao seu respectivo Princípio de IA Responsável da Microsoft.",
+    "texto": "Associe as diretrizes de governança ao seu respectivo princípio oficial de IA Responsável da Microsoft.",
     "itens": [
-      { "label": "Justiça (Fairness)" },
+      { "label": "Imparcialidade (Fairness)" },
       { "label": "Privacidade e Segurança" },
       { "label": "Transparência" },
-      { "label": "Confiabilidade e Segurança (Reliability and safety)" }
+      { "label": "Confiabilidade e segurança (Reliability and safety)" }
     ],
     "grupos": [
-      "Garantir que as decisões NÃO sejam tendenciosas contra grupos demográficos",
-      "Criptografar dados sensíveis de clientes e restringir o acesso",
-      "Informar aos usuários quando estão interagindo com IA e explicar suas limitações",
-      "Testar sistemas de IA sob diferentes condições para reduzir falhas inesperadas"
+      "Garantir que as inferências do modelo NÃO prejudiquem nem favoreçam grupos demográficos específicos.",
+      "Aplicar criptografia em dados de clientes e utilizar RBAC para restringir o acesso.",
+      "Comunicar claramente aos usuários que o sistema é automatizado e descrever suas capacidades e limitações.",
+      "Submeter o sistema de IA a testes adversários para mitigar o risco de falhas não previstas."
     ],
     "respostas": {
-      "Garantir que as decisões NÃO sejam tendenciosas contra grupos demográficos": ["Justiça (Fairness)"],
-      "Criptografar dados sensíveis de clientes e restringir o acesso": ["Privacidade e Segurança"],
-      "Informar aos usuários quando estão interagindo com IA e explicar suas limitações": ["Transparência"],
-      "Testar sistemas de IA sob diferentes condições para reduzir falhas inesperadas": ["Confiabilidade e Segurança (Reliability and safety)"]
+      "Garantir que as inferências do modelo NÃO prejudiquem nem favoreçam grupos demográficos específicos.": ["Imparcialidade (Fairness)"],
+      "Aplicar criptografia em dados de clientes e utilizar RBAC para restringir o acesso.": ["Privacidade e Segurança"],
+      "Comunicar claramente aos usuários que o sistema é automatizado e descrever suas capacidades e limitações.": ["Transparência"],
+      "Submeter o sistema de IA a testes adversários para mitigar o risco de falhas não previstas.": ["Confiabilidade e segurança (Reliability and safety)"]
     },
-    "explicacao": "A Microsoft possui 6 princípios. Justiça evita o viés demográfico. Privacidade foca em criptografia/RBAC. Transparência foca em explicabilidade. Confiabilidade foca em testes rigorosos para cenários de falha.",
+    "explicacao": "No glossário de exames da Microsoft, 'Fairness' é traduzido como Imparcialidade (lidando com vieses demográficos). Criptografia é Privacidade e Segurança. Explicabilidade da máquina é Transparência. Prevenção e resiliência a falhas é Confiabilidade e Segurança.",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -269,14 +269,14 @@ export const questoes = [
   // Questão Original: 15
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre o funcionamento de Modelos de IA Generativa.",
+    "texto": "Avalie as afirmações conceituais sobre IA Generativa.",
     "afirmacoes": [
-      "Gerar uma resposta a um prompt de usuário ocorre durante a fase de inferência (inference).",
-      "Um modelo de IA generativa gera respostas copiando documentos armazenados diretamente dos seus dados de treinamento.",
-      "Um modelo de IA generativa produz saída prevendo o próximo token com base em padrões aprendidos em seus dados de treinamento."
+      "O ato de processar um prompt e gerar uma resposta para um usuário é chamado de inferência.",
+      "Um modelo de IA generativa cria respostas colando diretamente trechos de documentos exatos de seus dados de treinamento originais.",
+      "Um modelo de IA generativa constrói a saída prevendo estatisticamente o próximo token com base nos padrões linguísticos absorvidos."
     ],
     "respostas": [true, false, true],
-    "explicacao": "O processo de execução ao vivo de um modelo é chamado de inferência. Modelos generativos (LLMs) não copiam dados; eles são motores autorregressivos que calculam probabilidades e geram o próximo token um a um.",
+    "explicacao": "A etapa operacional (pós-treinamento) onde o modelo gera resultados é a inferência. Modelos generativos (LLMs) funcionam via predição autorregressiva de tokens, eles não copiam e colam fragmentos literais de um repositório.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/overview",
     "dominio": "Fundamentos de IA do Azure",
     "simulado": "ai901-bloco01"
@@ -285,7 +285,7 @@ export const questoes = [
   // Questão Original: 16
   {
     "tipo": "unica",
-    "texto": "Você precisa criar uma solução de IA que produza novas imagens de produtos com base em descrições escritas fornecidas pelos usuários. Qual carga de trabalho (workload) de IA você deve usar?",
+    "texto": "Sua equipe precisa desenvolver uma solução que leia instruções em texto e sintetize imagens totalmente novas e originais para um catálogo de produtos. Qual carga de trabalho (workload) de IA fornece essa capacidade?",
     "opcoes": [
       "análise de imagem (image analysis)",
       "geração de imagem (image generation)",
@@ -293,7 +293,7 @@ export const questoes = [
       "reconhecimento óptico de caracteres (OCR)"
     ],
     "resposta": 1,
-    "explicacao": "A criação de ativos visuais totalmente novos a partir de prompts de texto (Text-to-Image) utilizando modelos como DALL-E se classifica como Geração de Imagem (Image Generation), parte das cargas de trabalho de IA Generativa.",
+    "explicacao": "Modelos fundacionais voltados à criação (como o DALL-E) realizam a tarefa de Geração de Imagem (Image Generation), materializando os conceitos textuais do prompt em ativos visuais inéditos. As demais opções focam em inspecionar imagens que já existem.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/concepts/models#dall-e",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -302,7 +302,7 @@ export const questoes = [
   // Questão Original: 17
   {
     "tipo": "combobox",
-    "texto": "As soluções de extração de informações que detectam e leem texto em documentos e imagens digitalizados dependem da carga de trabalho de <combobox>.",
+    "texto": "Soluções projetadas para detectar caracteres físicos, ler formulários e mapear texto em imagens digitalizadas dependem inerentemente do campo de estudo da <combobox>.",
     "opcoes": [
       "Selecione uma opção",
       "visão computacional (computer vision)",
@@ -311,7 +311,7 @@ export const questoes = [
       "síntese de fala (speech synthesis)"
     ],
     "resposta": 1,
-    "explicacao": "A leitura de texto através do reconhecimento óptico de caracteres (OCR) a partir de pixels de imagens digitalizadas é uma tarefa fundamental da disciplina de Visão Computacional.",
+    "explicacao": "O Reconhecimento Óptico de Caracteres (OCR) necessário para extrair textos legíveis a partir da estrutura de pixels de imagens é um subdomínio fundamental da Visão Computacional.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/overview-ocr",
     "dominio": "Visão Computacional",
     "simulado": "ai901-bloco01"
@@ -320,15 +320,15 @@ export const questoes = [
   // Questão Original: 18
   {
     "tipo": "unica",
-    "texto": "Você tem um projeto com um modelo de IA generativa implantado. Você precisa garantir que as respostas geradas minimizem os custos e permaneçam dentro de um tamanho (comprimento) definido. Qual parâmetro você deve configurar?",
+    "texto": "Em um projeto com uma implantação de modelo generativo, você recebe a tarefa de controlar os custos de API garantindo que as respostas do modelo nunca excedam um limite de comprimento (tamanho) pré-definido. Qual configuração você deve ajustar na requisição?",
     "opcoes": [
       "Top P",
       "Temperatura (Temperature)",
       "Tokens Máximos de Conclusão (Max Completion Tokens)",
-      "Configurações da versão do modelo"
+      "Configurações da versão de implantação"
     ],
     "resposta": 2,
-    "explicacao": "O parâmetro `Max Completion Tokens` limita de forma rígida a quantidade máxima de unidades de texto que o modelo gerará na resposta. Como os serviços costumam ser faturados por token, limitar isso controla ativamente o gasto e o tamanho da resposta.",
+    "explicacao": "A limitação física da resposta é controlada pelo parâmetro `Max Completion Tokens`. Ao definir esse limite, o serviço interrompe a geração assim que a cota é atingida, permitindo prever e minimizar o custo da inferência por chamada.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/reference",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -337,14 +337,14 @@ export const questoes = [
   // Questão Original: 19
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre práticas operacionais em IA Responsável.",
+    "texto": "Avalie as práticas organizacionais abaixo frente aos Princípios de IA Responsável.",
     "afirmacoes": [
-      "Práticas 'human-in-the-loop' (humano no controle) fornecem prestação de contas (accountability) para decisões geradas por IA.",
-      "A implantação de um sistema de IA em um ambiente de produção elimina a necessidade de monitoramento contínuo.",
-      "Revelar os nomes da equipe que projetou o sistema fornece prestação de contas pelas saídas da IA."
+      "Adotar diretrizes 'humano no controle' (human-in-the-loop) reforça o princípio de Responsabilidade (Accountability) para as decisões finais da IA.",
+      "Após a implantação de um modelo estabilizado em produção, a necessidade de avaliações e monitoramentos contínuos é eliminada.",
+      "Divulgar em relatórios internos os nomes dos engenheiros que projetaram o sistema transfere e conclui a meta de Responsabilidade (Accountability)."
     ],
     "respostas": [true, false, false],
-    "explicacao": "Ter um ser humano revisando a decisão da IA (human-in-the-loop) garante o princípio de Responsabilização (Accountability). O monitoramento contínuo é sempre obrigatório (data drift) e simplesmente divulgar os nomes dos criadores não exime as organizações das responsabilidades operacionais ao vivo.",
+    "explicacao": "O princípio de Responsabilidade garante que os algoritmos estejam sujeitos à revisão de um moderador humano final. Modelos em produção sempre sofrem desgaste e exigem monitoramento de deriva (drift). A responsabilidade é uma governança corporativa e sistêmica contínua, e não apenas divulgar os nomes dos criadores.",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -353,15 +353,15 @@ export const questoes = [
   // Questão Original: 20
   {
     "tipo": "unica",
-    "texto": "Sua empresa processa e-mails de suporte ao cliente. Você precisa implementar uma solução de IA que identifique automaticamente menções a pessoas, organizações e locais nos e-mails. Qual técnica de análise de texto você deve usar?",
+    "texto": "Um sistema de inteligência extrai insights de solicitações de suporte ao cliente. Você precisa que a solução varra o corpo de texto não estruturado para isolar ativamente menções a pessoas, nomes de empresas e cidades. Qual recurso de PNL atende a essa exigência?",
     "opcoes": [
       "Reconhecimento de Entidades Nomeadas (NER)",
       "Extração de frases-chave",
       "Análise de sentimentos",
-      "Resumo (Summarization)"
+      "Geração de resumo"
     ],
     "resposta": 0,
-    "explicacao": "A extração e categorização de pessoas, lugares, organizações e datas a partir de um bloco de texto é a definição de Reconhecimento de Entidades Nomeadas (Named Entity Recognition - NER).",
+    "explicacao": "O Reconhecimento de Entidades Nomeadas (NER) varre o texto, identifica categorias predefinidas (como Pessoas, Locais e Organizações) e extrai esses nós isoladamente.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/named-entity-recognition/overview",
     "dominio": "Processamento de Linguagem Natural",
     "simulado": "ai901-bloco01"
@@ -370,16 +370,16 @@ export const questoes = [
   // Questão Original: 21
   {
     "tipo": "combobox",
-    "texto": "Garantir que revisores humanos supervisionem as decisões geradas pela IA e permaneçam responsáveis pelo resultado final é um exemplo do princípio de IA responsável da Microsoft focado em <combobox>.",
+    "texto": "Garantir processos de governança onde agentes humanos inspecionam as recomendações da IA e assumem os resultados da aprovação final é o alicerce do princípio de <combobox> da Microsoft.",
     "opcoes": [
       "Selecione uma opção",
-      "prestação de contas (accountability)",
-      "justiça (fairness)",
-      "privacidade e segurança (privacy and security)",
-      "transparência (transparency)"
+      "Responsabilidade (Accountability)",
+      "Imparcialidade (Fairness)",
+      "Privacidade e segurança",
+      "Transparência"
     ],
     "resposta": 1,
-    "explicacao": "Sempre que sistemas delegam decisões importantes, o princípio de Accountability (Prestação de Contas/Responsabilização) exige que humanos mantenham controle total e sejam os tomadores de decisão finais (human-in-the-loop).",
+    "explicacao": "A IA Responsável não delega culpa para os algoritmos. O princípio de Responsabilidade (Accountability) afirma que os humanos mantêm a propriedade sobre as decisões apoiadas pelo modelo de inteligência.",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -388,7 +388,7 @@ export const questoes = [
   // Questão Original: 22
   {
     "tipo": "unica",
-    "texto": "Você precisa criar uma solução de IA que gere rascunhos de e-mails de marketing com base em uma breve descrição de um produto e seu público-alvo. Qual carga de trabalho de IA você deve usar?",
+    "texto": "Você recebeu a tarefa de criar uma aplicação que toma breves descrições do catálogo de produtos como entrada e compõe, a partir do zero, campanhas e e-mails de marketing coerentes para os clientes. Qual área da IA atende a isso?",
     "opcoes": [
       "reconhecimento de fala",
       "classificação de texto",
@@ -396,7 +396,7 @@ export const questoes = [
       "visão computacional"
     ],
     "resposta": 2,
-    "explicacao": "A IA Generativa tem o propósito central de criar conteúdo textual inédito (como gerar rascunhos, poemas, códigos, redações) a partir de diretrizes/prompts, ao contrário de modelos clássicos que apenas classificam os dados existentes.",
+    "explicacao": "Criar blocos criativos estendidos e originais de texto com base em orientações enxutas no prompt é o caso de uso definitivo da Inteligência Artificial Generativa (LLMs).",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/overview",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -405,14 +405,14 @@ export const questoes = [
   // Questão Original: 23
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre a implantação e utilização de modelos generativos.",
+    "texto": "Avalie o fluxo de chamadas a modelos generativos no Azure.",
     "afirmacoes": [
-      "O parâmetro de Temperatura (Temperature) deve ser definido antes da implantação do modelo.",
-      "Durante a inferência, o nome do modelo base é usado para rotear as solicitações.",
-      "Após a implantação do modelo, tanto o código quanto ferramentas de teste podem ser usados para interagir com o modelo."
+      "Os desenvolvedores devem fixar o parâmetro de Temperatura (Temperature) durante o provisionamento e implantação do modelo na nuvem.",
+      "Para solicitar uma inferência, o aplicativo cliente roteia a requisição HTTP usando o nome base da arquitetura do modelo.",
+      "Uma vez ativo no Azure, o modelo responderá de forma equivalente a chamadas REST oriundas de aplicativos ou sessões no Playground web."
     ],
     "respostas": [false, false, true],
-    "explicacao": "A temperatura é ajustada na hora da chamada/inferência, não na implantação. A solicitação é enviada usando o Nome da Implantação (Deployment Name) e não o nome base do modelo. O modelo pode ser acessado via código (SDK) ou no playground (ferramenta de teste).",
+    "explicacao": "A Temperatura é injetada livremente a cada requisição de inferência e não é fixada na implantação. O roteamento (URL endpoint) exige que o cliente informe o Nome da Implantação (Deployment Name) que a empresa escolheu, e não o nome estático da arquitetura do modelo base.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/create-resource",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -421,16 +421,16 @@ export const questoes = [
   // Questão Original: 24
   {
     "tipo": "combobox",
-    "texto": "Avaliar os resultados de um modelo em grupos demográficos diferentes para reduzir o viés é um exemplo do princípio de IA responsável da Microsoft focado em <combobox>.",
+    "texto": "Realizar testes e equalizações em matrizes de desempenho para garantir que grupos demográficos distintos obtenham um nível de precisão semelhante atende primariamente ao princípio de <combobox>.",
     "opcoes": [
       "Selecione uma opção",
-      "prestação de contas (accountability)",
-      "justiça (fairness)",
-      "privacidade e segurança (privacy and security)",
-      "transparência (transparency)"
+      "Responsabilidade (Accountability)",
+      "Imparcialidade (Fairness)",
+      "Privacidade e segurança",
+      "Transparência"
     ],
     "resposta": 2,
-    "explicacao": "O princípio de Justiça (Fairness) lida com a mitigação de vieses nos modelos e garante que todos os grupos demográficos recebam um tratamento e uma precisão equitativa pelas decisões do algoritmo.",
+    "explicacao": "O princípio da Imparcialidade (Fairness) dita ativamente a erradicação de viés algorítmico, mitigando disparidades de desempenho ou recusas indesejadas em sistemas de IA que afetem comunidades baseadas em gênero, raça ou idade.",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -439,16 +439,16 @@ export const questoes = [
   // Questão Original: 25
   {
     "tipo": "combobox",
-    "texto": "O princípio de IA responsável da Microsoft de transparência exige que os sistemas de IA <combobox>.",
+    "texto": "Como parte da declaração de Transparência, a Microsoft exige que os modelos e sistemas de IA <combobox>.",
     "opcoes": [
       "Selecione uma opção",
-      "sejam explicáveis aos usuários (be explainable to users)",
-      "protejam dados sensíveis dos usuários",
-      "reduzam o viés nas decisões",
-      "exijam supervisão humana"
+      "sejam explicáveis e claros para os usuários finais sobre suas interações e decisões",
+      "empreguem rígidos controles de acesso e de chave do cliente",
+      "adotem paridade algorítmica para erradicar decisões tendenciosas",
+      "passem por rigoroso escrutínio e aprovação de agentes humanos"
     ],
     "resposta": 1,
-    "explicacao": "Transparência significa clareza na comunicação. Usuários têm o direito de saber que estão interagindo com um robô e devem ter acesso a explicações claras e compreensíveis sobre como e por que o sistema toma certas decisões.",
+    "explicacao": "O princípio da Transparência determina que não haja engano: os indivíduos devem estar cientes de que estão utilizando IA e devem ser capazes de acessar uma explicação sobre a natureza da tomada de decisão ou do conteúdo gerado (explicabilidade).",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -457,15 +457,15 @@ export const questoes = [
   // Questão Original: 26
   {
     "tipo": "unica",
-    "texto": "Você está desenvolvendo um aplicativo de suporte ao cliente alimentado por IA. Qual tarefa é um exemplo prático do princípio de Inclusão (Inclusiveness) da IA responsável?",
+    "texto": "Você lidera o comitê de ética na arquitetura de um novo assistente virtual para uma seguradora. Qual diretriz abaixo representa especificamente a aderência ao princípio de Inclusão (Inclusiveness)?",
     "opcoes": [
-      "Criptografar dados armazenados de clientes usando RBAC.",
-      "Avaliar saídas em grupos demográficos para reduzir o viés.",
-      "Projetar a interface para suportar múltiplos idiomas e leitores de tela.",
-      "Fornecer explicações sobre como as previsões são geradas."
+      "Assegurar que os dados trafegados entre o backend e a nuvem sejam anonimizados e encriptados.",
+      "Estabelecer comitês de auditoria que documentem as divergências de desempenho entre gêneros.",
+      "Garantir a integração do aplicativo com tecnologias assistivas, comandos de voz para limitação motora e acessibilidade em múltiplos idiomas.",
+      "Apresentar aos operadores um dashboard mostrando o peso de cada variável matemática do modelo na deliberação."
     ],
     "resposta": 2,
-    "explicacao": "O princípio da Inclusão orienta os desenvolvedores a quebrar barreiras para comunidades com deficiência física e a considerar contextos multiculturais, de modo que pessoas com limitações visuais (leitores de tela) ou de idioma possam usar o sistema adequadamente.",
+    "explicacao": "A Inclusão busca capacitar todos de maneira universal, engajando intencionalmente interfaces e experiências (leitores de tela, acessibilidade linguística e auditiva) que habilitem pessoas portadoras de deficiências a extrair o mesmo valor do sistema de IA.",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -474,16 +474,16 @@ export const questoes = [
   // Questão Original: 27
   {
     "tipo": "combobox",
-    "texto": "Uma carga de trabalho de IA que produz novo conteúdo com base na entrada do usuário é um exemplo prático de <combobox>.",
+    "texto": "Um fluxo arquitetural fundamentado em receber variáveis soltas do usuário na entrada e combiná-las para gerar do zero conteúdos inéditos contextuais ilustra a modalidade de <combobox>.",
     "opcoes": [
       "Selecione uma opção",
-      "compreensão de conteúdo (content understanding)",
+      "compreensão e estruturação de documentos",
       "IA generativa (generative AI)",
-      "extração de informação (information extraction)",
-      "análise de texto (text analysis)"
+      "extração de pares de informações nomeadas",
+      "análise semântica e de viés"
     ],
     "resposta": 2,
-    "explicacao": "Modelos que não apenas categorizam ou buscam informações, mas criam artigos novos, imagens, códigos e fluxos do zero com base em instruções (prompts) são classificados como cargas de IA Generativa.",
+    "explicacao": "A inteligência artificial clássica é amplamente analítica (classificação ou reconhecimento). A IA Generativa distingue-se ao assumir o papel criador (síntese) desenvolvendo respostas novas, mídia digital e código de software a partir de diretivas estruturadas.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/overview",
     "dominio": "Fundamentos de IA do Azure",
     "simulado": "ai901-bloco01"
@@ -492,14 +492,14 @@ export const questoes = [
   // Questão Original: 28
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre o princípio de Justiça (Fairness) em IA.",
+    "texto": "Avalie a implementação e as ramificações de Imparcialidade (Fairness).",
     "afirmacoes": [
-      "A justiça pode ser alcançada focando puramente em melhorar a precisão geral (overall accuracy) do modelo.",
-      "Avaliar as saídas do sistema de IA para identificar e reduzir viés em grupos demográficos apoia a justiça.",
-      "Garantir justiça significa que todos os usuários sempre receberão exatamente a mesma saída de texto do sistema."
+      "Alcançar uma alta precisão média global no modelo de IA é evidência matemática suficiente de que o modelo atende aos requisitos de Imparcialidade.",
+      "Auditar o desempenho do algoritmo segmentando as amostras de validação com base em grupos demográficos é um pilar da Imparcialidade.",
+      "A Imparcialidade estipula que a arquitetura retorne o mesmo texto padrão engessado para todos os usuários sem diferenciação contextual."
     ],
     "respostas": [false, true, false],
-    "explicacao": "Melhorar a métrica global de precisão não ajuda minorias que podem estar sendo prejudicadas (afirmação 1 é falsa). A justiça busca remover tratamentos dispares indesejados, não emitir a mesma resposta literal para solicitações distintas de indivíduos diferentes (afirmação 3 é falsa).",
+    "explicacao": "A precisão média pode mascarar falhas grotescas contra minorias no dataset (afirmação 1 falsa). O objetivo da Imparcialidade é evitar a discriminação estrutural avaliando coortes, mas não significa perder a capacidade de entregar respostas ricas, diversas e customizadas por contexto do usuário (afirmação 3 falsa).",
     "link": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
     "dominio": "IA Responsável",
     "simulado": "ai901-bloco01"
@@ -508,16 +508,16 @@ export const questoes = [
   // Questão Original: 29
   {
     "tipo": "combobox",
-    "texto": "Quando o conteúdo é enviado para análise no Azure Content Understanding (Inteligência de Documentos), a extração por padrão é uma chamada de rede <combobox>.",
+    "texto": "Ao disparar cargas de documentos complexos visando extração para a nuvem da Inteligência de Documentos, a interface REST se comporta por design de forma <combobox>.",
     "opcoes": [
       "Selecione uma opção",
-      "síncrona",
-      "assíncrona",
-      "retornada apenas em texto simples não estruturado",
-      "limitada apenas ao processamento de reconhecimento óptico (OCR)"
+      "completamente síncrona aguardando finalização",
+      "assíncrona baseada em polling de operação longa",
+      "que resulta unicamente na entrega de um PDF vetorizado",
+      "restrita à formatação de matriz de pixels (OCR legada)"
     ],
     "resposta": 2,
-    "explicacao": "Dado o peso das operações de leitura de documentos complexos, a API opera de forma assíncrona. Ela fornece um ID de Job (poller) que o sistema monitora até a extração (estruturada) estar pronta.",
+    "explicacao": "Tarefas avançadas baseadas em esquema no Content Understanding/Inteligência de Documentos são disparadas de forma assíncrona; o cliente HTTP inicia a tarefa, recebe um token de rastreio (poller) e consulta ativamente o serviço posteriormente para consumir a matriz JSON da extração.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/concept-document-intelligence",
     "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
     "simulado": "ai901-bloco01"
@@ -526,15 +526,15 @@ export const questoes = [
   // Questão Original: 30
   {
     "tipo": "unica",
-    "texto": "Você tem um projeto com um modelo de IA generativa implantado. Você testou o modelo no playground e agora precisa desenvolver um aplicativo externo para enviar solicitações a ele. Quais informações o aplicativo deve incluir na chamada para autenticar e encontrar o modelo?",
+    "texto": "No ambiente Azure, uma aplicação precisa ser codificada para disparar solicitações contra um modelo que você configurou no hub. Além do payload JSON e das chaves atreladas à segurança (credenciais de autenticação), o que informa à rede a localização do serviço?",
     "opcoes": [
-      "O histórico exportado do playground.",
-      "O dataset de treinamento do modelo.",
-      "O nome de exibição do projeto Foundry.",
-      "O endpoint de implantação e as credenciais de autenticação."
+      "A exportação serializada do ambiente do Playground.",
+      "O manifesto integral dos dados de Fine-Tuning do recurso.",
+      "O identificador de nomenclatura comercial do projeto Foundry.",
+      "A URI do ponto de extremidade (endpoint) provisionado do modelo."
     ],
     "resposta": 3,
-    "explicacao": "A comunicação com qualquer modelo exposto via rede exige a chave de segurança de acesso (bearer token ou subscription key) e a URL do endpoint que foi atribuído ao modelo durante a implantação para que a rede do Azure saiba o destino da chamada REST.",
+    "explicacao": "Sempre que uma implantação de modelo é concluída (seja OpenAI ou terceiros no Catálogo), o portal aloca e provisiona uma URL pública (Ponto de extremidade / Endpoint) criptografada que seu código cliente deve consumir.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/create-resource",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
@@ -543,14 +543,14 @@ export const questoes = [
   // Questão Original: 31
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre os recursos do Azure Content Understanding (Inteligência de Documentos).",
+    "texto": "Avalie a estrutura operacional do serviço Inteligência de Documentos (Content Understanding).",
     "afirmacoes": [
-      "O Azure Content Understanding pode analisar apenas documentos no formato PDF.",
-      "Os resultados da análise do Azure Content Understanding são retornados no formato estruturado JSON.",
-      "O Azure Content Understanding extrai campos estruturados usando OCR para digitalizar o texto inicialmente."
+      "As bibliotecas e análises da Inteligência de Documentos processam exclusivamente layouts em extensão PDF.",
+      "O produto final consolidado das extrações no Azure é devolvido via estrutura de esquema no formato JSON.",
+      "A captura inicial de texto visível ou manuscrito no pipeline de Inteligência de Documentos utiliza instâncias subjacentes de OCR."
     ],
     "respostas": [false, true, true],
-    "explicacao": "A plataforma é multimodal e suporta formatos como JPEG, PNG, TIFF, Excel, além de PDFs (a afirmação 1 é falsa). Ela lê o visual e transforma em textos mapeados por chave-valor dentro de um objeto JSON programático.",
+    "explicacao": "O escopo de suporte do serviço abrange desde imagens estáticas em PNG, TIFF e JPEG a planilhas Office complexas e vídeos, e não se limita a PDFs (afirmação 1 falsa). Ele atua integrando o reconhecimento óptico de base (OCR) a camadas de compreensão de linguagem e envia os campos e metadados pareados via JSON estruturado.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/document-intelligence/overview",
     "dominio": "Mineração de Conhecimento e Inteligência de Documentos",
     "simulado": "ai901-bloco01"
@@ -559,14 +559,14 @@ export const questoes = [
   // Questão Original: 32
   {
     "tipo": "simnao",
-    "texto": "Avalie as afirmações sobre o parâmetro `tool_choice` para agentes que usam LLMs.",
+    "texto": "O comportamento orquestrador de um agente que interage com APIs externas pode ser modificado controlando o atributo `tool_choice` da comunicação. Avalie as afirmações.",
     "afirmacoes": [
-      "Definir `tool_choice` como 'auto' permite que o agente decida de forma autônoma se deve ou não chamar uma ferramenta.",
-      "Definir `tool_choice` como 'none' significa que o modelo pode decidir aleatoriamente se chama uma ferramenta.",
-      "Definir `tool_choice` como 'required' garante que o agente chame obrigatóriamente uma ou mais ferramentas antes de responder."
+      "Quando o parâmetro é ajustado para 'auto', o modelo tem permissão total para avaliar se usar ou não a ferramenta trará valor ao prompt.",
+      "Quando o parâmetro é ajustado para 'none', a autonomia algorítmica escolhe uma ferramenta de forma arbitrária.",
+      "Quando o parâmetro é ajustado para 'required', a engine subjacente é estritamente obrigada a acionar as chamadas de função registradas antes de consolidar a resposta."
     ],
     "respostas": [true, false, true],
-    "explicacao": "A configuração 'none' desativa o acesso às ferramentas (a afirmação 2 é falsa, pois ele perde a capacidade de decisão e de chamada de ferramentas). As configurações 'auto' e 'required' delegam liberdade e impõem obrigatoriedade, respectivamente.",
+    "explicacao": "A opção 'auto' permite autonomia inteligente, enquanto 'required' força o acionamento de pelo menos um recurso. No entanto, o comando 'none' não permite autonomia arbitrária; ele restringe totalmente as chamadas, forçando o LLM a operar restrito ao processamento puro sem acionar a ferramenta (afirmação 2 falsa).",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/function-calling",
     "dominio": "IA Generativa",
     "simulado": "ai901-bloco01"
