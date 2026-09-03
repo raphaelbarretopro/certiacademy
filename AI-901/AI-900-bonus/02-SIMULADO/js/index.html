@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Correção de Domínios - AI-900</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    pre { background: #f4f4f4; padding: 10px; max-height: 300px; overflow: auto; }
+    .dominios { margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h2>Visualizar questoes.js</h2>
+  <button onclick="corrigirDominios()">Corrigir Domínios</button>
+  <div class="dominios" id="dominios"></div>
+  <h3>Conteúdo do questoes.js:</h3>
+  <pre id="codigo"></pre>
+  <script>
+    async function carregarQuestoes() {
+      const res = await fetch('/questoes');
+      const texto = await res.text();
+      document.getElementById('codigo').textContent = texto;
+
+      // Extrair domínios e contar
+      const dominiosOficiais = [
+        "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
+        "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
+        "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
+        "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
+        "Descrever os recursos de cargas de trabalho de IA generativas no Azure"
+      ];
+      const regex = /"dominio"\s*:\s*"([^"]+)"/g;
+      let match, contagem = {};
+      while ((match = regex.exec(texto))) {
+        let dom = match[1].replace(/\s*\([^)]*\)/g, '').trim();
+        contagem[dom] = (contagem[dom] || 0) + 1;
+      }
+      let html = '<b>Domínios encontrados:</b><ul>';
+      for (const dom of dominiosOficiais) {
+        html += `<li>${dom}: <b>${contagem[dom] || 0}</b></li>`;
+      }
+      html += '</ul>';
+      document.getElementById('dominios').innerHTML = html;
+    }
+
+    async function corrigirDominios() {
+      const res = await fetch('/corrigir', { method: 'POST' });
+      const texto = await res.text();
+      alert(texto);
+      carregarQuestoes();
+    }
+
+    carregarQuestoes();
+  </script>
+</body>
+</html>
