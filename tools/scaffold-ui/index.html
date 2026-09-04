@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CertiAcademy Scaffold UI</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --panel: #ffffff;
+      --panel-2: #eaf1fb;
+      --text: #172033;
+      --muted: #5b6475;
+      --line: #d4deef;
+      --primary: #0b63ce;
+      --primary-2: #084c9f;
+      --success: #13795b;
+      --danger: #b42318;
+      --shadow: 0 18px 50px rgba(23, 32, 51, 0.12);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(11, 99, 206, 0.10), transparent 28%),
+        linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .layout {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .hero,
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(212, 222, 239, 0.9);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      display: grid;
+      gap: 16px;
+      background:
+        linear-gradient(135deg, rgba(11, 99, 206, 0.08), rgba(19, 121, 91, 0.06)),
+        var(--panel);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(11, 99, 206, 0.10);
+      color: var(--primary);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    .hero p,
+    .helper,
+    .legend {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 24px;
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .tabs {
+      display: inline-grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 8px;
+      border-radius: 14px;
+      background: var(--panel-2);
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      border: 0;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font: inherit;
+      font-weight: 700;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: var(--panel);
+      color: var(--text);
+      box-shadow: 0 8px 18px rgba(23, 32, 51, 0.10);
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      font-weight: 600;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font: inherit;
+      background: #fff;
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: 2px solid rgba(11, 99, 206, 0.20);
+      border-color: rgba(11, 99, 206, 0.45);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    button.action {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    button.action:hover {
+      transform: translateY(-1px);
+    }
+
+    button.primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 12px 22px rgba(11, 99, 206, 0.22);
+    }
+
+    button.primary:hover {
+      background: var(--primary-2);
+    }
+
+    button.secondary {
+      background: #eef4ff;
+      color: var(--primary);
+    }
+
+    button.ghost {
+      background: #f8fafc;
+      color: var(--muted);
+    }
+
+    .status {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: #f8fafc;
+      color: var(--muted);
+      border: 1px solid #e9edf5;
+    }
+
+    .status.success {
+      background: rgba(19, 121, 91, 0.10);
+      color: var(--success);
+      border-color: rgba(19, 121, 91, 0.25);
+    }
+
+    .status.error {
+      background: rgba(180, 35, 24, 0.10);
+      color: var(--danger);
+      border-color: rgba(180, 35, 24, 0.25);
+    }
+
+    .status.warning {
+      background: rgba(180, 120, 24, 0.10);
+      color: #8a5a00;
+      border-color: rgba(180, 120, 24, 0.25);
+    }
+
+    .terminal {
+      margin-top: 16px;
+      background: #0e1726;
+      color: #dce7fb;
+      border-radius: 16px;
+      padding: 18px;
+      min-height: 420px;
+      white-space: pre-wrap;
+      line-height: 1.45;
+      overflow: auto;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .tip-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      background: linear-gradient(180deg, #fff, #f7faff);
+    }
+
+    .tip-card strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .tip-card ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    .tip-card li + li {
+      margin-top: 6px;
+    }
+
+    code.inline {
+      font-family: Consolas, "Courier New", monospace;
+      background: #eef4ff;
+      color: var(--primary-2);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 920px) {
+      .grid,
+      .field-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <section class="hero">
+      <span class="eyebrow">Ferramenta local</span>
+      <h1>Scaffold gráfico do CertiAcademy</h1>
+      <p>Use esta interface para criar cursos e simulados no padrão atual do repositório sem montar os comandos manualmente. A criação real continua acontecendo pelo scaffold oficial do projeto.</p>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <div class="tabs" role="tablist" aria-label="Modo do scaffold">
+          <button class="tab active" id="tab-course" type="button" data-mode="course">Novo curso</button>
+          <button class="tab" id="tab-simulado" type="button" data-mode="simulado">Novo simulado</button>
+        </div>
+
+        <form id="scaffold-form">
+          <div class="field-grid">
+            <label>
+              Caminho do curso
+              <input id="course" name="course" placeholder="AZ-104" required />
+              <span class="helper">Use o caminho relativo da pasta, por exemplo <code class="inline">AZ-104</code>.</span>
+            </label>
+
+            <label>
+              Título
+              <input id="title" name="title" placeholder="Microsoft Azure Administrator" />
+              <span class="helper">No modo curso, esse valor alimenta a página do curso e o card da home.</span>
+            </label>
+          </div>
+
+          <div id="course-fields" class="stack">
+            <div class="field-grid">
+              <label>
+                Quantidade de simulados
+                <input id="simulados" name="simulados" type="number" min="1" value="1" />
+              </label>
+
+              <label>
+                Headline da hero
+                <input id="headline" name="headline" placeholder="Microsoft Azure Administrator" />
+              </label>
+            </div>
+
+            <label>
+              Descrição da hero
+              <textarea id="description" name="description" placeholder="Seja bem-vindo ao curso preparatorio..."></textarea>
+            </label>
+          </div>
+
+          <div id="simulado-fields" class="stack hidden">
+            <div class="field-grid">
+              <label>
+                Nome da pasta do simulado
+                <input id="name" name="name" placeholder="04-SIMULADO" />
+                <span class="helper">Se deixar em branco, o próximo número disponível é usado automaticamente.</span>
+              </label>
+
+              <label>
+                Título do simulado
+                <input id="simulado-title" name="simuladoTitle" placeholder="AZ-104 - 04-SIMULADO" />
+              </label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="action secondary" type="button" id="preview-btn">Pré-visualizar</button>
+            <button class="action primary" type="button" id="create-btn">Criar agora</button>
+            <button class="action ghost" type="reset" id="reset-btn">Limpar formulário</button>
+          </div>
+        </form>
+      </div>
+
+      <aside class="panel stack">
+        <div>
+          <h2>Saída</h2>
+          <p class="legend">A prévia só mostra o que será criado. A criação real executa o scaffold com <code class="inline">--write</code> e depois roda a validação do repositório.</p>
+        </div>
+
+        <div id="status" class="status">Pronto para executar.</div>
+        <div id="terminal" class="terminal">Nenhum comando executado ainda.</div>
+
+        <div class="tip-card">
+          <strong>Como abrir esta tela corretamente</strong>
+          <ul>
+            <li>Não abra este arquivo HTML com duplo clique ou via <code class="inline">file://</code>.</li>
+            <li>Inicie o servidor local com <code class="inline">node scripts/scaffold-ui-server.mjs</code>.</li>
+            <li>Abra a interface em <code class="inline">http://localhost:4173</code>.</li>
+          </ul>
+        </div>
+
+        <div class="tip-card">
+          <strong>O que essa interface automatiza</strong>
+          <ul>
+            <li>Criação de curso novo com <code class="inline">curso.html</code>, simulados e arquivos base.</li>
+            <li>Criação de novo simulado em curso existente.</li>
+            <li>Atualização automática do card da home.</li>
+            <li>Atualização automática da navegação lateral dos simulados do curso.</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const form = document.getElementById('scaffold-form');
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const courseFields = document.getElementById('course-fields');
+    const simuladoFields = document.getElementById('simulado-fields');
+    const statusBox = document.getElementById('status');
+    const terminal = document.getElementById('terminal');
+    const previewButton = document.getElementById('preview-btn');
+    const createButton = document.getElementById('create-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const actionButtons = [previewButton, createButton];
+
+    let currentMode = 'course';
+    let apiReady = false;
+
+    function setMode(mode) {
+      currentMode = mode;
+      tabs.forEach((tab) => {
+        tab.classList.toggle('active', tab.dataset.mode === mode);
+      });
+
+      courseFields.classList.toggle('hidden', mode !== 'course');
+      simuladoFields.classList.toggle('hidden', mode !== 'simulado');
+    }
+
+    function setStatus(message, kind = '') {
+      statusBox.textContent = message;
+      statusBox.className = `status${kind ? ` ${kind}` : ''}`;
+    }
+
+    function setActionsEnabled(enabled) {
+      actionButtons.forEach((button) => {
+        button.disabled = !enabled;
+      });
+    }
+
+    async function parseApiResponse(response) {
+      const rawText = await response.text();
+
+      if (!rawText.trim()) {
+        throw new Error('A resposta da API veio vazia. Verifique se a interface foi aberta pelo servidor local.');
+      }
+
+      try {
+        return JSON.parse(rawText);
+      } catch {
+        const preview = rawText.slice(0, 400).trim();
+        throw new Error(`A API nao retornou JSON valido. Verifique se a interface foi aberta em http://localhost:4173. Resposta recebida: ${preview}`);
+      }
+    }
+
+    async function checkApiHealth() {
+      if (window.location.protocol === 'file:') {
+        apiReady = false;
+        setActionsEnabled(false);
+        setStatus('Abra esta interface pelo servidor local em http://localhost:4173.', 'warning');
+        terminal.textContent = 'Esta pagina foi aberta como arquivo local.\n\nPassos corretos:\n1. Rode: node scripts/scaffold-ui-server.mjs\n2. Abra: http://localhost:4173';
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/health');
+        const result = await parseApiResponse(response);
+
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || 'A API de saude nao respondeu corretamente.');
+        }
+
+        apiReady = true;
+        setActionsEnabled(true);
+        setStatus('Servidor local conectado.');
+      } catch (error) {
+        apiReady = false;
+        setActionsEnabled(false);
+        setStatus('Nao foi possivel conectar ao servidor local da UI.', 'warning');
+        terminal.textContent = `${error.message}\n\nInicie o servidor com:\nnode scripts/scaffold-ui-server.mjs\n\nDepois abra:\nhttp://localhost:4173`;
+      }
+    }
+
+    function formatOutput(result) {
+      const sections = [];
+      sections.push(`Comando:\n${result.command}`);
+
+      if (result.scaffold) {
+        const scaffoldText = `${result.scaffold.stdout || ''}${result.scaffold.stderr || ''}`.trim() || 'Sem saida do scaffold.';
+        sections.push(`Scaffold:\n${scaffoldText}`);
+      }
+
+      if (result.validation) {
+        const validationText = `${result.validation.stdout || ''}${result.validation.stderr || ''}`.trim() || 'Sem saida da validacao.';
+        sections.push(`Validacao:\n${validationText}`);
+      }
+
+      return sections.join('\n\n');
+    }
+
+    function getPayload(write) {
+      const payload = {
+        mode: currentMode,
+        course: document.getElementById('course').value,
+        title: currentMode === 'course'
+          ? document.getElementById('title').value
+          : document.getElementById('simulado-title').value,
+        write
+      };
+
+      if (currentMode === 'course') {
+        payload.simulados = document.getElementById('simulados').value;
+        payload.headline = document.getElementById('headline').value;
+        payload.description = document.getElementById('description').value;
+      } else {
+        payload.name = document.getElementById('name').value;
+      }
+
+      return payload;
+    }
+
+    async function execute(write) {
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      if (!apiReady) {
+        setStatus('Servidor local indisponivel. Abra a UI em http://localhost:4173.', 'warning');
+        terminal.textContent = 'A interface nao esta conectada ao servidor local.\n\nRode no terminal:\nnode scripts/scaffold-ui-server.mjs\n\nDepois abra a pagina em http://localhost:4173';
+        return;
+      }
+
+      const payload = getPayload(write);
+      setStatus(write ? 'Criando estrutura...' : 'Gerando previa...');
+      terminal.textContent = 'Executando...';
+      setActionsEnabled(false);
+      resetButton.disabled = true;
+
+      try {
+        const response = await fetch('/api/scaffold', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await parseApiResponse(response);
+
+        if (!response.ok || !result.ok) {
+          setStatus(result.error || 'A execucao falhou.', 'error');
+          terminal.textContent = formatOutput(result);
+          return;
+        }
+
+        setStatus(write ? 'Estrutura criada e validada com sucesso.' : 'Previa gerada com sucesso.', 'success');
+        terminal.textContent = formatOutput(result);
+      } catch (error) {
+        setStatus(`Falha de comunicacao: ${error.message}`, 'error');
+        terminal.textContent = error.stack || error.message;
+      } finally {
+        setActionsEnabled(apiReady);
+        resetButton.disabled = false;
+      }
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => setMode(tab.dataset.mode));
+    });
+
+    previewButton.addEventListener('click', () => execute(false));
+    createButton.addEventListener('click', () => execute(true));
+    resetButton.addEventListener('click', () => {
+      setTimeout(() => setMode(currentMode), 0);
+      setStatus('Formulario limpo.');
+      terminal.textContent = 'Nenhum comando executado ainda.';
+    });
+
+    setMode('course');
+    setActionsEnabled(false);
+    checkApiHealth();
+  </script>
+</body>
+
+</html>

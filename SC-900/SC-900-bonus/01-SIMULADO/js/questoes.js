@@ -346,7 +346,9 @@ export const questoes = [
     ],
     "resposta": 1,
     "explicacao": "A opção correta é O centro de conformidade do Microsoft 365, que oferece um local central para gerenciar as políticas de proteção de dados e DLP.",
-    "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/microsoft-365-compliance-center?view=o365-worldwide"
+    "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/microsoft-365-compliance-center?view=o365-worldwide",
+    "dominio": "Descrever os recursos das soluções de conformidade da Microsoft",
+    "simulado": "sc-b1"
   },
   {
     "tipo": "unica",

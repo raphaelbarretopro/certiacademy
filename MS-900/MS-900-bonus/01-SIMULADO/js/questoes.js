@@ -28,11 +28,7 @@ export const questoes = [
             "A conta de cobrança é criada quando uma organização trabalha com um representante da Microsoft ou parceiro autorizado."
         ],
         "respostas": [true, true, true],
-        "explicacao": [
-            "Quando um indivíduo se inscreve diretamente em uma assinatura do Microsoft 365, é criada uma conta de cobrança do tipo Microsoft Online Subscription Agreement (MOSA).",
-            "Empresas que assinam contratos de licenciamento por volume, como o Microsoft Products and Services Agreement (MPSA), têm contas de cobrança criadas para gerenciar essas aquisições.",
-            "Organizações que trabalham com representantes da Microsoft ou parceiros autorizados têm contas de cobrança do tipo Microsoft Customer Agreement (MCA)."
-        ],
+        "explicacao": "Quando um indivíduo se inscreve diretamente em uma assinatura do Microsoft 365, é criada uma conta de cobrança do tipo Microsoft Online Subscription Agreement (MOSA). Empresas que assinam contratos de licenciamento por volume, como o Microsoft Products and Services Agreement (MPSA), têm contas de cobrança criadas para gerenciar essas aquisições. Organizações que trabalham com representantes da Microsoft ou parceiros autorizados têm contas de cobrança do tipo Microsoft Customer Agreement (MCA).",
         "link": "https://learn.microsoft.com/pt-br/microsoft-365/commerce/manage-billing-accounts",
         "dominio": "Descrever os preços, o licenciamento e o suporte do Microsoft 365",
         "simulado": "ms-b1"

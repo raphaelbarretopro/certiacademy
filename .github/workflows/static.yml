@@ -22,8 +22,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Check shared runtime migration
+        run: node scripts/migrate-shared-runtime-assets.mjs
+      - name: Check shared engine sync
+        run: node scripts/sync-simulado-engine.mjs
+      - name: Validate simulados
+        run: node scripts/validate-simulados.mjs
+
   # Single deploy job since we're just deploying
   deploy:
+    needs: validate
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

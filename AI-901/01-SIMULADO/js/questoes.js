@@ -38,7 +38,7 @@ export const questoes = [
     "dominio": "Implementar soluções de IA usando Microsoft Foundry",
     "simulado": "ai901-bloco01"
   },
-  // Questão Original: 4
+    // Questão Original: 4
   {
     "tipo": "simnao",
     "texto": "Avalie as afirmações sobre prompts do sistema (system prompts).",
@@ -367,4 +367,5 @@ export const questoes = [
     "dominio": "Implementar soluções de IA usando Microsoft Foundry",
     "simulado": "ai901-bloco01"
   }
+  
 ];

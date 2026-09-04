@@ -566,11 +566,7 @@ export const questoes = [
     "respostas": [false, false, true],
     "dominio": "Descrever aplicativos e serviços do Microsoft 365",
     "simulado": "ms-2",
-    "explicacao": [
-      "O Planner não oferece agendamento público de compromissos — essa funcionalidade é do Microsoft Bookings.",
-      "O Planner não envia confirmações de compromisso por SMS ou email automaticamente — isso é típico do Microsoft Bookings e Power Automate.",
-      "O Planner é projetado para gerenciamento de tarefas usando quadros Kanban e cartões de tarefas, o que torna essa afirmação correta."
-    ],
+    "explicacao": "O Planner não oferece agendamento público de compromissos; essa funcionalidade é do Microsoft Bookings. O Planner também não envia confirmações de compromisso por SMS ou email automaticamente; isso é típico do Microsoft Bookings e do Power Automate. Já o Planner é projetado para gerenciamento de tarefas usando quadros Kanban e cartões de tarefas, o que torna a terceira afirmação correta.",
     "link": "https://support.microsoft.com/pt-br/office/treinamento-em-v%C3%ADdeo-do-microsoft-planner-4d71390f-08d8-4db0-84ea-92fb078687c7"
   },
   {

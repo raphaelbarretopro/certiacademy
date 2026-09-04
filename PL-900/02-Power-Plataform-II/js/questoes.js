@@ -16,9 +16,7 @@ export const questoes = [
       false,
       true
     ],
-    "explicacao": [
-      "Afirmação 01 - Não, o Common Data Service suporta dois tipos de propriedade de registro: propriedade da Organização e propriedade do Usuário ou Equipe. Essa é uma escolha que acontece no momento em que a entidade é criada e não pode ser alterada. Afirmação 02 - Sim, combinar condições e ações, você pode fazer o seguinte com regras de negócios: Definir valores de campo - Limpar valores de campo - Definir níveis de exigência de campo - Mostrar ou ocultar campos - Habilitar ou desabilitar campos - Validar dados e mostrar mensagens de erro - Criar recomendações de negócios baseadas em inteligência de negócios."
-    ],
+    "explicacao": "Afirmação 01: Não. O Common Data Service suporta dois tipos de propriedade de registro, Organização e Usuário ou Equipe, e essa escolha ocorre no momento da criação da entidade, não podendo ser alterada depois. Afirmação 02: Sim. Regras de negócios podem definir valores, limpar campos, alterar obrigatoriedade, mostrar ou ocultar campos, habilitar ou desabilitar controles, validar dados e exibir mensagens de erro.",
     "link": "https://docs.microsoft.com/pt-br/power-platform/admin/wp-security-cds",
     "dominio": "Identificar os componentes básicos do Microsoft Power Platform",
     "simulado": "pl-2"

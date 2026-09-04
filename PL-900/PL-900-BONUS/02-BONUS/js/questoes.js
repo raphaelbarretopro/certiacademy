@@ -148,7 +148,7 @@ export const questoes = [
     ],
     "respostas": [false, true],
     "explicacao": "Aplicativos baseados em modelo são ideais para cenários centrados em dados, geralmente dentro do Dataverse. Já os aplicativos de tela (Canvas Apps) oferecem maior controle de design e são mais apropriados para uso em dispositivos móveis com conectividade a fontes como SharePoint. Como o objetivo é permitir carregamento móvel com interação visual personalizada, o aplicativo de tela é a melhor opção.",
-    "link": "power-apps/maker/canvas-apps/get-started",
+    "link": "https://learn.microsoft.com/pt-br/power-apps/maker/canvas-apps/get-started",
     "dominio": "Descrever o valor de negócios do Microsoft Power Platform",
     "simulado": "pl-b2"
   },

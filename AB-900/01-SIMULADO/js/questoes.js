@@ -19,7 +19,8 @@ export const questoes = [
     ],
     "explicacao": "Afirmação 1: A Pesquisa e inteligência no centro de administração do Microsoft 365 possui recursos básicos de busca, embora pesquisas completas de eDiscovery e auditoria sejam frequentemente redirecionadas para o Purview. Afirmação 2: O portal do Microsoft Defender permite acessar logs de auditoria e eventos voltados especificamente para o gerenciamento de ameaças e telemetria dos produtos Defender. Afirmação 3: O portal do Microsoft Purview é a ferramenta central e principal para pesquisar logs de auditoria, investigando ações de usuários e administradores em todos os serviços do Microsoft 365.",
     "link": "https://learn.microsoft.com/pt-br/purview/audit-log-search",
-    "dominio": "Entenda as tarefas de proteção e governança de dados para Microsoft 365 e Copilot (35 a 40%)"
+    "dominio": "Entenda as tarefas de proteção e governança de dados para Microsoft 365 e Copilot (35 a 40%)",
+    "simulado": "ab-900"
   },
   {
     "tipo": "combobox",
@@ -49,7 +50,8 @@ export const questoes = [
     "resposta": 3,
     "explicacao": "Um registro de aplicativo cria uma entidade de serviço (service principal) no Microsoft Entra ID e fornece as credenciais necessárias (como ID do cliente e segredo ou certificado). Isso permite que serviços externos de nuvem se autentiquem de forma programática utilizando fluxos como o OAuth 2.0 (client-credential flow), sem a necessidade de interação humana. As outras opções, como MFA ou Acesso Condicional, servem para proteger ou criar regras para o acesso de identidades de usuários, mas não criam a identidade do aplicativo no locatário.",
     "link": "https://learn.microsoft.com/pt-br/entra/identity-platform/app-objects-and-service-principals",
-    "dominio": "Identificar os principais recursos e objetos dos serviços do Microsoft 365 (30 a 35%)"
+    "dominio": "Identificar os principais recursos e objetos dos serviços do Microsoft 365 (30 a 35%)",
+    "simulado": "ab-900"
   },
   {
     "tipo": "combobox",
