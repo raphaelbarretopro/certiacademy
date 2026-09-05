@@ -17,12 +17,12 @@
 // ==========================================
 
 export const firebaseConfig = {
-  apiKey: '',
-  authDomain: '',
-  projectId: '',
-  storageBucket: '',
-  messagingSenderId: '',
-  appId: ''
+  apiKey: 'AIzaSyCzDCabeTvsBayahjAxUpJrfo2fte2I5lE',
+  authDomain: 'certiacademy-d0562.firebaseapp.com',
+  projectId: 'certiacademy-d0562',
+  storageBucket: 'certiacademy-d0562.firebasestorage.app',
+  messagingSenderId: '79101260143',
+  appId: '1:79101260143:web:79c092ecaa3cac93b1b89a'
 };
 
 // Versão do SDK carregada do CDN do Google. Mantenha os três módulos na mesma
