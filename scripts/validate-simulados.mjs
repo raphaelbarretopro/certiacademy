@@ -405,10 +405,11 @@ async function validateSimulado(dirPath) {
       errors.push(`${relativeDir}: index.html deve declarar 'data-requer-sessao' no body`);
     }
 
-    // Dependencia de CDN sem versao entra em producao sozinha na proxima
-    // versao maior e pode quebrar a tela de resultado sem aviso.
-    if (/src="https:\/\/cdn\.jsdelivr\.net\/npm\/chart\.js"/.test(indexContent)) {
-      errors.push(`${relativeDir}: index.html carrega chart.js sem versao fixa`);
+    // Toda dependencia de CDN sem versao fixa entra em producao sozinha na
+    // proxima versao maior e pode quebrar a pagina sem aviso.
+    const cdnSemVersao = indexContent.match(/src="(https:\/\/cdn\.jsdelivr\.net\/npm\/[^"@]+)"/);
+    if (cdnSemVersao) {
+      errors.push(`${relativeDir}: index.html carrega dependencia de CDN sem versao fixa: ${cdnSemVersao[1]}`);
     }
   }
 

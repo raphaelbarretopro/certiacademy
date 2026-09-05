@@ -1331,46 +1331,37 @@ Descricao: Tela de fechamento do simulado, na mesma linguagem visual do
 }
 
 .rf-medidor {
-  position: relative;
   width: 200px;
-  height: 200px;
   margin: 0 auto;
 }
 
-.rf-medidor canvas {
-  width: 200px !important;
-  height: 200px !important;
+/* O anel e o numero vivem no mesmo SVG, ancorados no centro do viewBox: o
+   alinhamento e exato por construcao e o desenho nunca deforma. */
+.rf-anel {
+  display: block;
+  width: 200px;
+  height: 200px;
 }
 
-.rf-medidor-centro {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.rf-medidor-valor {
-  font-size: 3rem;
+.rf-anel-valor {
+  font-family: inherit;
+  font-size: 44px;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: -.03em;
+  letter-spacing: -1px;
   font-variant-numeric: tabular-nums;
 }
 
-.rf-medidor-pct {
-  font-size: 1.4rem;
+.rf-anel-pct {
+  font-size: 22px;
   font-weight: 600;
 }
 
-.rf-medidor-rotulo {
-  font-size: .82rem;
-  color: var(--rf-tinta-3);
-  margin-top: 6px;
-  text-transform: uppercase;
-  letter-spacing: .08em;
+.rf-anel-rotulo {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  fill: var(--rf-tinta-3);
 }
 
 .rf-sintese {
@@ -1477,21 +1468,26 @@ Descricao: Tela de fechamento do simulado, na mesma linguagem visual do
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
+  align-items: center;
 }
 
 .rf-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  min-height: 46px;
   font-family: inherit;
   font-size: .95rem;
   font-weight: 600;
-  padding: 12px 24px;
+  line-height: 1.2;
+  padding: 0 24px;
   border-radius: 8px;
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color .15s, border-color .15s;
+  white-space: nowrap;
+  transition: background-color .15s, border-color .15s, color .15s;
 }
 
 .rf-btn:focus-visible {
@@ -1519,9 +1515,9 @@ Descricao: Tela de fechamento do simulado, na mesma linguagem visual do
 }
 
 .rf-btn-neutro {
-  background: transparent;
+  background: var(--rf-superficie);
   color: var(--rf-tinta-2);
-  border-color: transparent;
+  border-color: var(--rf-linha);
 }
 
 .rf-btn-neutro:hover {

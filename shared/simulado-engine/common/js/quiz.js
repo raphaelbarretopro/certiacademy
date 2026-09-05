@@ -767,9 +767,14 @@ function mostrarResultadoFinal(forceRender = false) {
 
   const sidebar = document.querySelector(".sidebar");
   if (sidebar) sidebar.style.display = "none";
-  // Oculta a sidebar direita
+  // Oculta a sidebar direita e a coluna que a envolve. Esconder so a sidebar
+  // deixava a coluna ocupando espaco no flex e empurrava o painel para a
+  // esquerda, em vez de centraliza-lo.
   const sidebarDireita = document.querySelector(".sidebarDireita");
   if (sidebarDireita) sidebarDireita.style.display = "none";
+
+  const colunaDireita = document.querySelector(".sidebarDireita-coluna");
+  if (colunaDireita) colunaDireita.style.display = "none";
   const container = document.querySelector(".container");
   if (container) container.style.justifyContent = "center";
 
@@ -808,13 +813,7 @@ function mostrarResultadoFinal(forceRender = false) {
     </div>
 
     <div class="rf-destaque">
-      <div class="rf-medidor">
-        <canvas id="graficoResultado" aria-label="Percentual de acerto do simulado"></canvas>
-        <div class="rf-medidor-centro">
-          <span class="rf-medidor-valor rf-${estado}">${percentual}<span class="rf-medidor-pct">%</span></span>
-          <span class="rf-medidor-rotulo">de acerto</span>
-        </div>
-      </div>
+      <div class="rf-medidor">${montarAnel(percentual, aprovado)}</div>
 
       <div class="rf-sintese">
         <span class="rf-selo rf-selo-${estado}">${rotuloEstado}</span>
@@ -911,45 +910,36 @@ export function marcarResultadoGravado() {
 //             - Gráfico de Barras: Pontuação por Domínio
 //             - Utiliza Chart.js para renderizar os gráficos
 // ==========================================
+// ==========================================
+// Funcao: montarAnel(percentual, aprovado)
+// Descricao: Medidor de acerto em SVG. Antes era um doughnut do Chart.js com o
+//            numero posicionado por CSS sobre o canvas, e os dois centros nao
+//            coincidiam. Aqui o texto vive dentro do proprio SVG, ancorado no
+//            centro do viewBox, entao o alinhamento e exato por construcao - e
+//            o desenho nunca deforma, porque o viewBox e quadrado.
+// ==========================================
+function montarAnel(percentual, aprovado) {
+  const raio = 86;
+  const circunferencia = 2 * Math.PI * raio;
+  const fracao = Math.min(Math.max(percentual, 0), 100) / 100;
+  const preenchido = circunferencia * fracao;
+  const cor = aprovado ? COR_APROVADO : COR_ABAIXO;
+
+  return `
+    <svg class="rf-anel" viewBox="0 0 200 200" role="img"
+         aria-label="${percentual}% de acerto no simulado">
+      <circle cx="100" cy="100" r="${raio}" fill="none"
+              stroke="${COR_NEUTRA}" stroke-width="16"></circle>
+      <circle cx="100" cy="100" r="${raio}" fill="none"
+              stroke="${cor}" stroke-width="16" stroke-linecap="round"
+              stroke-dasharray="${preenchido.toFixed(2)} ${(circunferencia - preenchido).toFixed(2)}"
+              transform="rotate(-90 100 100)"></circle>
+      <text class="rf-anel-valor" x="100" y="98" text-anchor="middle" fill="${cor}">${percentual}<tspan class="rf-anel-pct">%</tspan></text>
+      <text class="rf-anel-rotulo" x="100" y="124" text-anchor="middle">DE ACERTO</text>
+    </svg>`;
+}
+
 function desenharGraficos() {
-  const pontuacao = calcularPontuacao();
-  const aprovado = pontuacao >= NOTA_DE_CORTE_PONTOS;
-  const corPrincipal = aprovado ? COR_APROVADO : COR_ABAIXO;
-
-  // ---------- medidor de acerto ----------
-  // Um anel fino com o numero grande no centro le melhor que uma rosca cheia:
-  // o percentual ja esta escrito, entao o grafico so precisa dar a proporcao.
-  const ctxResultado = document.getElementById('graficoResultado');
-
-  if (ctxResultado) {
-    new Chart(ctxResultado.getContext('2d'), {
-      type: 'doughnut',
-      data: {
-        labels: ['Pontos obtidos', 'Pontos nao obtidos'],
-        datasets: [{
-          data: [pontuacao, Math.max(1000 - pontuacao, 0)],
-          backgroundColor: [corPrincipal, COR_NEUTRA],
-          borderWidth: 0,
-          hoverOffset: 0
-        }]
-      },
-      options: {
-        cutout: '78%',
-        responsive: true,
-        maintainAspectRatio: true,
-        animation: { duration: 600 },
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              label: contexto => `${contexto.label}: ${Math.round(contexto.parsed)}`
-            }
-          }
-        }
-      }
-    });
-  }
-
   // ---------- aproveitamento por assunto ----------
   // Barras em HTML, e nao um grafico do Chart.js: os nomes de dominio da
   // Microsoft sao longos e, num eixo de grafico, ou sao truncados ou colidem

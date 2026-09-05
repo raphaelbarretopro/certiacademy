@@ -63,6 +63,9 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
     cronometroDiv.style.top = "0";
     cronometroDiv.style.left = "0";
     cronometroDiv.style.width = "100%";
+    // Sem border-box, o padding soma a largura de 100% e a barra fica mais larga
+    // que a janela, jogando a area do aluno para fora da tela pela direita.
+    cronometroDiv.style.boxSizing = "border-box";
     cronometroDiv.style.backgroundColor = "#000";
     cronometroDiv.style.color = "#fff";
     cronometroDiv.style.padding = "10px";

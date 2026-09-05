@@ -57,14 +57,17 @@ export function montarBadgeSessao(perfil) {
   const badge = document.createElement('div');
   badge.id = BADGE_ID;
   badge.style.position = 'absolute';
-  badge.style.right = '14px';
+  badge.style.right = '16px';
   badge.style.top = '50%';
   badge.style.transform = 'translateY(-50%)';
   badge.style.display = 'flex';
   badge.style.alignItems = 'center';
-  badge.style.gap = '10px';
-  badge.style.fontSize = '15px';
-  badge.style.lineHeight = '1';
+  badge.style.gap = '12px';
+  badge.style.fontSize = '14px';
+  // Sem line-height uniforme, o link e o botao assentam em linhas de base
+  // diferentes e ficam visivelmente desalinhados dentro da barra.
+  badge.style.lineHeight = '1.2';
+  badge.style.whiteSpace = 'nowrap';
 
   if (perfil.fotoUrl) {
     const foto = document.createElement('img');
@@ -87,22 +90,42 @@ export function montarBadgeSessao(perfil) {
   const historico = document.createElement('a');
   historico.href = urlDoSite('dashboard.html');
   historico.textContent = 'Meu desempenho';
+  historico.style.display = 'inline-flex';
+  historico.style.alignItems = 'center';
+  historico.style.boxSizing = 'border-box';
+  historico.style.height = '30px';
+  historico.style.padding = '0 10px';
   historico.style.color = '#fff';
   historico.style.fontSize = '13px';
-  historico.style.textDecoration = 'underline';
-  historico.style.textUnderlineOffset = '3px';
+  historico.style.borderRadius = '4px';
+  historico.style.border = '1px solid transparent';
+  historico.style.textDecoration = 'none';
+  historico.addEventListener('mouseenter', () => {
+    historico.style.background = 'rgba(255,255,255,.12)';
+  });
+  historico.addEventListener('mouseleave', () => {
+    historico.style.background = 'transparent';
+  });
   badge.appendChild(historico);
 
   const sairBtn = document.createElement('button');
   sairBtn.type = 'button';
   sairBtn.id = 'sairBtn';
   sairBtn.textContent = 'Sair';
+  // Mesma altura e caixa do link ao lado, para os dois assentarem na mesma
+  // linha dentro da barra.
+  sairBtn.style.display = 'inline-flex';
+  sairBtn.style.alignItems = 'center';
+  sairBtn.style.boxSizing = 'border-box';
+  sairBtn.style.height = '30px';
+  sairBtn.style.padding = '0 12px';
   sairBtn.style.background = 'transparent';
   sairBtn.style.color = '#fff';
   sairBtn.style.border = '1px solid rgba(255,255,255,.55)';
   sairBtn.style.borderRadius = '4px';
-  sairBtn.style.padding = '4px 10px';
+  sairBtn.style.fontFamily = 'inherit';
   sairBtn.style.fontSize = '13px';
+  sairBtn.style.lineHeight = '1.2';
   sairBtn.style.cursor = 'pointer';
   sairBtn.addEventListener('click', encerrarSessao);
   badge.appendChild(sairBtn);
