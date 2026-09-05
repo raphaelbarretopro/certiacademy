@@ -50,7 +50,7 @@ function montarCorpo(indexQuestao, texto) {
   const { curso, simulado } = identificarOrigem();
   const questao = indexQuestao + 1;
 
-  return {
+  const corpo = {
     _subject: `Reporte de Problema - ${curso}/${simulado} (Questão ${questao})`,
     _template: 'table',
     _captcha: 'false',
@@ -60,6 +60,18 @@ function montarCorpo(indexQuestao, texto) {
     Mensagem: texto,
     Pagina: window.location.href
   };
+
+  // Com o login obrigatorio o reporte deixa de ser anonimo: da para responder
+  // ao aluno sem depender de ele se identificar no texto.
+  const perfil = window.CertiAcademyPerfil;
+
+  if (perfil && perfil.email) {
+    corpo.Aluno = perfil.nomeCompleto || perfil.primeiroNome || '';
+    corpo.Email = perfil.email;
+    corpo._replyto = perfil.email;
+  }
+
+  return corpo;
 }
 
 // ==========================================

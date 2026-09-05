@@ -4,6 +4,21 @@ Descrição: Estilos principais do Simulado SC-900
 ========================================== */
 
 /* ==========================================
+Portao de sessao
+Descricao: o conteudo do simulado fica oculto ate o login ser confirmado.
+           Sem isso, quem nao esta logado ve a estrutura da prova piscar antes
+           de ser redirecionado para a tela de entrada. O app.js libera a
+           pagina definindo data-sessao="ok" no body.
+========================================== */
+body[data-requer-sessao] {
+  visibility: hidden;
+}
+
+body[data-requer-sessao][data-sessao="ok"] {
+  visibility: visible;
+}
+
+/* ==========================================
 Reset básico
 ========================================== */
 body {

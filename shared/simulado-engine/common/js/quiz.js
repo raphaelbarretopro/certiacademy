@@ -22,13 +22,14 @@ function getRenderApi() {
   return renderApi;
 }
 
-function getRepositorioAssetUrl(relativeAssetPath) {
-  const pageUrl = new URL(window.location.href);
-  const pathSegments = pageUrl.pathname.split('/').filter(Boolean);
-  const directoryDepth = Math.max(pathSegments.length - 1, 0);
-  const prefix = '../'.repeat(directoryDepth);
+// Este modulo mora em <raiz>/shared/simulado-engine/common/js/, entao a raiz do
+// site sai da propria URL do modulo. Contar segmentos do caminho da pagina
+// levava ate a raiz do dominio, o que quebra a imagem em Project Pages do
+// GitHub, onde o site comeca dentro de /<repositorio>/.
+const REPOSITORIO_ROOT = new URL('../../../../', import.meta.url);
 
-  return new URL(`${prefix}${relativeAssetPath}`, pageUrl).toString();
+function getRepositorioAssetUrl(relativeAssetPath) {
+  return new URL(relativeAssetPath, REPOSITORIO_ROOT).toString();
 }
 
 // ==========================================

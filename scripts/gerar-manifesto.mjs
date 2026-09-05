@@ -127,6 +127,10 @@ async function build() {
   return { cursos };
 }
 
+function normalizarQuebras(texto) {
+  return texto.replaceAll('\r\n', '\n');
+}
+
 async function main() {
   const manifesto = await build();
   const conteudo = `${JSON.stringify(manifesto, null, 2)}\n`;
@@ -135,7 +139,10 @@ async function main() {
     ? await fs.readFile(manifestPath, 'utf8')
     : null;
 
-  if (atual === conteudo) {
+  // O repositorio usa text=auto, entao o arquivo em disco vem com CRLF no
+  // Windows e LF no Linux. A comparacao ignora essa diferenca, e a escrita
+  // preserva o estilo que o arquivo ja tinha.
+  if (atual !== null && normalizarQuebras(atual) === conteudo) {
     console.log('Manifesto ja esta sincronizado com a estrutura do repositorio.');
     return;
   }
@@ -146,7 +153,8 @@ async function main() {
     process.exit(1);
   }
 
-  await fs.writeFile(manifestPath, conteudo, 'utf8');
+  const usaCrlf = atual !== null && atual.includes('\r\n');
+  await fs.writeFile(manifestPath, usaCrlf ? conteudo.replaceAll('\n', '\r\n') : conteudo, 'utf8');
 
   const totalSimulados = manifesto.cursos.reduce((soma, curso) => soma + curso.simulados.length, 0);
   console.log(`cursos.json atualizado: ${manifesto.cursos.length} cursos, ${totalSimulados} simulados.`);

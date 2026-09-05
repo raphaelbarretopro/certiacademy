@@ -1,0 +1,214 @@
+<!-- ==========================================
+Arquivo: privacidade.html
+Descrição: Política de privacidade e exclusão de conta do CertiAcademy.
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacidade | CertiAcademy</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .prosa h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 2rem 0 .6rem;
+    }
+
+    .prosa p,
+    .prosa li {
+      color: #374151;
+      line-height: 1.7;
+    }
+
+    .prosa ul {
+      list-style: disc;
+      padding-left: 1.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .prosa li {
+      margin-bottom: .35rem;
+    }
+
+    .prosa p {
+      margin-bottom: 1rem;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4">
+      <a href="./" class="inline-flex items-center gap-3">
+        <img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12">
+      </a>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-12 max-w-3xl prosa">
+
+    <h1 class="text-3xl font-bold mb-3">Política de Privacidade</h1>
+    <p class="text-gray-500 text-sm mb-8">Última atualização: setembro de 2026</p>
+
+    <p>O CertiAcademy é uma plataforma de simulados para certificações Microsoft. Esta página explica quais dados
+      guardamos quando você cria uma conta, por que guardamos e como apagar tudo.</p>
+
+    <h2>Quais dados coletamos</h2>
+    <p>O acesso aos simulados é feito com sua conta Google. Da conta recebemos e armazenamos:</p>
+    <ul>
+      <li>seu nome, como cadastrado no Google;</li>
+      <li>seu endereço de e-mail;</li>
+      <li>o endereço da sua foto de perfil;</li>
+      <li>um identificador interno gerado pelo Firebase Authentication.</li>
+    </ul>
+    <p><strong>Não recebemos e não temos acesso à sua senha do Google.</strong> A autenticação acontece inteiramente
+      no Google, e recebemos apenas a confirmação de que ela deu certo.</p>
+
+    <h2>O que guardamos sobre seus estudos</h2>
+    <p>Ao finalizar um simulado, guardamos o resultado para montar o seu histórico:</p>
+    <ul>
+      <li>qual curso e qual simulado você fez;</li>
+      <li>a pontuação obtida, na escala de 0 a 1000;</li>
+      <li>quanto tempo você levou;</li>
+      <li>seu aproveitamento em cada assunto do exame;</li>
+      <li>a data e a hora da conclusão.</li>
+    </ul>
+    <p>Esses dados existem para uma finalidade só: mostrar a você a sua própria evolução e apontar os assuntos em que
+      vale investir mais estudo.</p>
+
+    <h2>Quem tem acesso</h2>
+    <p>Seu histórico é pessoal. As regras de segurança do banco de dados permitem que apenas a sua própria conta leia
+      e escreva os seus dados. Não há ranking, não há comparação entre alunos e nada é exibido publicamente.</p>
+    <p>Não vendemos, não alugamos e não compartilhamos seus dados com terceiros para fins comerciais ou de
+      publicidade.</p>
+
+    <h2>Onde os dados ficam</h2>
+    <p>Usamos o Firebase Authentication e o Cloud Firestore, serviços do Google, para autenticação e armazenamento.
+      Os dados ficam sujeitos à infraestrutura e às práticas de segurança do Google.</p>
+
+    <h2>Por quanto tempo guardamos</h2>
+    <p>Enquanto sua conta existir. Quando você a exclui, os dados são removidos.</p>
+
+    <h2>Seus direitos</h2>
+    <p>Pela Lei Geral de Proteção de Dados, você pode pedir a qualquer momento o acesso, a correção ou a exclusão dos
+      seus dados. A exclusão está disponível abaixo, sem intermediários. Para as demais solicitações, escreva para
+      <a href="mailto:raphael.boliveira@gmail.com" class="text-blue-600 underline">raphael.boliveira@gmail.com</a>.
+    </p>
+
+    <h2>Excluir minha conta</h2>
+    <div class="bg-white border border-red-200 rounded-xl p-6 mt-4">
+      <p class="mb-4">Isto remove sua conta e todo o histórico de simulados associado a ela. <strong>A ação é
+          permanente e não pode ser desfeita.</strong></p>
+
+      <div id="areaLogado" class="hidden">
+        <p class="text-sm text-gray-600 mb-4">Conta conectada: <span id="emailConta" class="font-semibold"></span></p>
+        <button id="excluirBtn" type="button"
+          class="bg-red-600 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-red-700">
+          Excluir minha conta
+        </button>
+      </div>
+
+      <p id="areaDeslogado" class="text-sm text-gray-600 hidden">
+        <a href="./login.html?next=%2Fprivacidade.html" class="text-blue-600 underline">Entre na sua conta</a>
+        para poder excluí-la.
+      </p>
+
+      <p id="estadoExclusao" class="mt-4 text-sm hidden" role="status"></p>
+    </div>
+
+    <p class="mt-10">
+      <a href="./" class="text-blue-600">Voltar para a página inicial</a>
+    </p>
+
+  </main>
+
+  <footer class="bg-gray-800 text-gray-300 py-8 mt-12">
+    <div class="container mx-auto px-6 text-center text-sm">
+      <p>© 2026 CertiAcademy. Este projeto não é afiliado à Microsoft.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { aguardarSessao, excluirConta } from './shared/simulado-engine/common/js/auth.js';
+    import { firebaseConfigurado } from './shared/simulado-engine/common/js/firebase-config.js';
+
+    const areaLogado = document.getElementById('areaLogado');
+    const areaDeslogado = document.getElementById('areaDeslogado');
+    const emailConta = document.getElementById('emailConta');
+    const excluirBtn = document.getElementById('excluirBtn');
+    const estado = document.getElementById('estadoExclusao');
+
+    function relatar(texto, cor) {
+      estado.textContent = texto;
+      estado.className = `mt-4 text-sm ${cor}`;
+    }
+
+    if (!firebaseConfigurado()) {
+      areaDeslogado.classList.remove('hidden');
+      areaDeslogado.textContent = 'O login ainda não foi configurado neste ambiente.';
+    } else {
+      aguardarSessao()
+        .then(user => {
+          if (user) {
+            emailConta.textContent = user.email || '';
+            areaLogado.classList.remove('hidden');
+          } else {
+            areaDeslogado.classList.remove('hidden');
+          }
+        })
+        .catch(erro => {
+          console.error('Falha ao verificar a sessao:', erro);
+          areaDeslogado.classList.remove('hidden');
+          areaDeslogado.textContent = 'Não foi possível verificar sua sessão agora. Recarregue a página.';
+        });
+
+      excluirBtn.addEventListener('click', async () => {
+        const confirmado = confirm(
+          'Excluir sua conta remove permanentemente todo o seu histórico de simulados. Esta ação não pode ser desfeita.\n\nDeseja continuar?'
+        );
+
+        if (!confirmado) return;
+
+        excluirBtn.disabled = true;
+        relatar('Excluindo sua conta...', 'text-gray-600');
+
+        try {
+          await excluirConta();
+          relatar('Conta excluída. Redirecionando...', 'text-green-700');
+          setTimeout(() => window.location.replace('./'), 1800);
+        } catch (erro) {
+          console.error('Falha ao excluir a conta:', erro);
+          excluirBtn.disabled = false;
+
+          const codigo = erro && erro.code ? erro.code : '';
+
+          if (codigo === 'auth/popup-blocked') {
+            relatar('Precisamos confirmar sua identidade, mas o navegador bloqueou a janela do Google. Libere os pop-ups e tente de novo.', 'text-red-700');
+          } else if (codigo === 'auth/popup-closed-by-user') {
+            relatar('A confirmação foi cancelada. Sua conta não foi excluída.', 'text-red-700');
+          } else {
+            relatar('Não foi possível excluir a conta agora. Tente novamente em instantes.', 'text-red-700');
+          }
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

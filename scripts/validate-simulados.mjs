@@ -398,6 +398,18 @@ async function validateSimulado(dirPath) {
         errors.push(`${relativeDir}: stylesheet referenciado nao existe: ${stylesheetMatch[1]}`);
       }
     }
+
+    // O portao de sessao e obrigatorio: sem o atributo, quem nao esta logado ve
+    // a estrutura da prova aparecer antes do redirecionamento para o login.
+    if (!/<body[^>]*\sdata-requer-sessao/.test(indexContent)) {
+      errors.push(`${relativeDir}: index.html deve declarar 'data-requer-sessao' no body`);
+    }
+
+    // Dependencia de CDN sem versao entra em producao sozinha na proxima
+    // versao maior e pode quebrar a tela de resultado sem aviso.
+    if (/src="https:\/\/cdn\.jsdelivr\.net\/npm\/chart\.js"/.test(indexContent)) {
+      errors.push(`${relativeDir}: index.html carrega chart.js sem versao fixa`);
+    }
   }
 
   if (await pathExists(questoesPath)) {

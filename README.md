@@ -80,6 +80,46 @@ Essa checagem valida automaticamente:
 
 O workflow de GitHub Pages também executa essa validação antes do deploy.
 
+## Login e Sessão do Aluno
+
+O acesso aos simulados exige conta Google. A autenticação usa **Firebase Authentication** direto do navegador, sem backend próprio, e o site continua hospedado no GitHub Pages.
+
+### Configuração (uma vez por ambiente)
+
+1. Crie um projeto em [console.firebase.google.com](https://console.firebase.google.com)
+2. Adicione um app **Web** (`</>`) e copie o objeto `firebaseConfig`
+3. Cole os valores em `shared/simulado-engine/common/js/firebase-config.js`
+4. Em **Authentication → Sign-in method**, habilite o provedor **Google**
+5. Em **Authentication → Settings → Authorized domains**, adicione o domínio do GitHub Pages e `localhost`
+
+Enquanto a configuração estiver vazia, `login.html` exibe um aviso em vez de falhar com erro interno do SDK.
+
+> Os valores de `firebaseConfig` **não são segredos**. A configuração do cliente é pública por natureza: identifica o projeto, não autoriza nada. Quem protege os dados são as Security Rules — que entram na fase 3, junto com o histórico.
+
+### Como funciona
+
+| Arquivo | Papel |
+|---|---|
+| `shared/.../js/firebase-config.js` | configuração do projeto e versão do SDK |
+| `shared/.../js/auth.js` | login, logout, exclusão de conta e o portão `exigirSessao()` |
+| `shared/.../js/session-ui.js` | saudação com o primeiro nome, avatar e botão de sair |
+| `login.html` | tela de entrada, com retorno ao destino pretendido |
+| `privacidade.html` | política de privacidade e exclusão de conta |
+
+O portão vive no `app.js`, que já era o único ponto de entrada JavaScript dos simulados — por isso o login vale para todos eles sem que os HTML precisem declarar nada além do atributo `data-requer-sessao` no `body`.
+
+Três detalhes que o login obrigatório exige, e que estão implementados:
+
+- **espera de sessão** — o portão aguarda o primeiro disparo de `onAuthStateChanged` em vez de ler `currentUser` na carga da página; ler direto manda para o login justamente quem já estava logado;
+- **página oculta até o portão resolver** — o CSS compartilhado esconde `body[data-requer-sessao]` e o `app.js` libera com `data-sessao="ok"`, para que a estrutura da prova não pisque antes do redirecionamento. Se a autenticação falhar, a página reaparece com uma mensagem, nunca em branco;
+- **destino preservado** — quem abre o link direto de um simulado volta para ele depois de entrar. O parâmetro `next` só aceita caminhos do próprio site, para não virar um redirecionamento aberto.
+
+O login usa `signInWithPopup`, e não `signInWithRedirect`: o fluxo de redirecionamento depende de um iframe entre domínios e não funciona em navegadores que bloqueiam armazenamento de terceiros quando o site não está no domínio do Firebase Hosting.
+
+### Efeito no "Reportar Problema"
+
+Com sessão garantida, o reporte deixa de ser anônimo: `report.js` inclui nome e e-mail do aluno e define `_replyto`, permitindo responder direto a quem reportou.
+
 ## Manifesto de Cursos
 
 O arquivo `cursos.json` na raiz é a fonte única de quais cursos e simulados existem. A estrutura é derivada do disco; os textos editoriais (`titulo`, `chamada`) e o campo `visivelNaHome` são escritos à mão e preservados entre execuções.
