@@ -1592,3 +1592,27 @@ Descricao: Tela de fechamento do simulado, na mesma linguagem visual do
   color: var(--rf-tinta-3);
   font-variant-numeric: tabular-nums;
 }
+
+/* ==========================================
+Rodape dos simulados
+Descricao: O "Voltar ao curso" aparece em todas as telas do simulado - durante
+           a prova, no resultado e na revisao - e agora usa o mesmo botao das
+           demais acoes, em vez de um link solto dentro de <center>.
+========================================== */
+.rodape-simulado {
+  display: flex;
+  justify-content: center;
+  padding: 8px 16px 40px;
+}
+
+/* O rodape fica fora de .resultado-final, entao repete os tokens de que o
+   botao precisa. */
+.rodape-simulado .rf-btn {
+  --rf-tinta: #101826;
+  --rf-tinta-2: #4B5B70;
+  --rf-linha: #D3DCE7;
+  --rf-superficie: #FFFFFF;
+  --rf-superficie-2: #E8EDF4;
+  --rf-azul: #0078D4;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

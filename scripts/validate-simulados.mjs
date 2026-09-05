@@ -411,6 +411,19 @@ async function validateSimulado(dirPath) {
     if (cdnSemVersao) {
       errors.push(`${relativeDir}: index.html carrega dependencia de CDN sem versao fixa: ${cdnSemVersao[1]}`);
     }
+
+    // Link comecando com "/" aponta para a raiz do dominio, e nao para a do
+    // site: em Project Pages do GitHub, onde tudo vive sob /<repositorio>/,
+    // esses caminhos levam a 404 sem dar nenhum sinal em desenvolvimento.
+    const linkAbsoluto = indexContent.match(/(?:href|src)="(\/(?!\/)[^"]*)"/);
+    if (linkAbsoluto) {
+      errors.push(`${relativeDir}: index.html usa caminho absoluto, que quebra fora da raiz do dominio: ${linkAbsoluto[1]}`);
+    }
+
+    // O rodape deve usar o botao padrao, e nao o link solto de antes.
+    if (indexContent.includes('Voltar ao curso') && !/class="rodape-simulado"/.test(indexContent)) {
+      errors.push(`${relativeDir}: index.html deve usar <footer class="rodape-simulado"> no rodape`);
+    }
   }
 
   if (await pathExists(questoesPath)) {

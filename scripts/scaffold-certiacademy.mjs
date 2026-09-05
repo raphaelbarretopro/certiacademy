@@ -429,8 +429,8 @@ Descricao: Pagina principal do simulado ${courseCode}
 ${sidebarHtml}
   </div>
 
-  <footer class="text-gray-200 py-6 text-center">
-    <center><a href="${courseLink}">Voltar ao curso</a></center>
+  <footer class="rodape-simulado">
+    <a href="${courseLink}" class="rf-btn rf-btn-secundario">Voltar ao curso</a>
   </footer>
 
   <script>
