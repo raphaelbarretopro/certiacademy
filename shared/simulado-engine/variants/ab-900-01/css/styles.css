@@ -1266,3 +1266,363 @@ Estilo Celular e Tablets
   vertical-align: middle;
 }
 
+/* ==========================================
+Resultado final
+Descricao: Tela de fechamento do simulado, na mesma linguagem visual do
+           dashboard: verde quando o desempenho alcanca a nota de corte de 700
+           pontos, ambar quando fica abaixo, e cinza neutro para o restante.
+========================================== */
+.resultado-final {
+  --rf-tinta: #101826;
+  --rf-tinta-2: #4B5B70;
+  --rf-tinta-3: #74839A;
+  --rf-linha: #D3DCE7;
+  --rf-superficie: #FFFFFF;
+  --rf-superficie-2: #F2F5F9;
+  --rf-aprovado: #0E7A52;
+  --rf-aprovado-suave: #DCEFE6;
+  --rf-abaixo: #A96A00;
+  --rf-abaixo-suave: #F8ECD9;
+  --rf-azul: #0078D4;
+
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 8px 4px 48px;
+  color: var(--rf-tinta);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: left;
+}
+
+.rf-aprovado { color: var(--rf-aprovado); }
+.rf-abaixo { color: var(--rf-abaixo); }
+
+.rf-cabecalho {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 0 28px;
+}
+
+.rf-logo {
+  max-width: 190px;
+  height: auto;
+}
+
+.rf-titulo {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--rf-tinta);
+}
+
+/* ---------- destaque: medidor + sintese ---------- */
+.rf-destaque {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 32px;
+  align-items: center;
+  background: var(--rf-superficie);
+  border: 1px solid var(--rf-linha);
+  border-radius: 14px;
+  padding: 26px 28px;
+  margin-bottom: 20px;
+}
+
+.rf-medidor {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.rf-medidor canvas {
+  width: 200px !important;
+  height: 200px !important;
+}
+
+.rf-medidor-centro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.rf-medidor-valor {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.rf-medidor-pct {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.rf-medidor-rotulo {
+  font-size: .82rem;
+  color: var(--rf-tinta-3);
+  margin-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.rf-sintese {
+  min-width: 0;
+}
+
+.rf-selo {
+  display: inline-block;
+  font-size: .74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  padding: 5px 12px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.rf-selo-aprovado {
+  background: var(--rf-aprovado-suave);
+  color: var(--rf-aprovado);
+}
+
+.rf-selo-abaixo {
+  background: var(--rf-abaixo-suave);
+  color: var(--rf-abaixo);
+}
+
+.rf-corte-texto {
+  margin: 0 0 18px;
+  font-size: .96rem;
+  color: var(--rf-tinta-2);
+  line-height: 1.5;
+}
+
+.rf-indicadores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.rf-indicador {
+  background: var(--rf-superficie-2);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rf-indicador-rotulo {
+  font-size: .66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--rf-tinta-3);
+}
+
+.rf-indicador-valor {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.02em;
+}
+
+.rf-indicador-unidade {
+  font-size: .9rem;
+  font-weight: 600;
+  margin-left: 1px;
+}
+
+.rf-indicador-sub {
+  font-size: .74rem;
+  color: var(--rf-tinta-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- painel de assuntos ---------- */
+.rf-painel {
+  background: var(--rf-superficie);
+  border: 1px solid var(--rf-linha);
+  border-radius: 14px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+
+.rf-painel-titulo {
+  margin: 0 0 4px;
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--rf-tinta);
+}
+
+.rf-painel-sub {
+  margin: 0 0 20px;
+  font-size: .88rem;
+  color: var(--rf-tinta-3);
+}
+
+
+/* ---------- acoes ---------- */
+.rf-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+}
+
+.rf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color .15s, border-color .15s;
+}
+
+.rf-btn:focus-visible {
+  outline: 3px solid var(--rf-azul);
+  outline-offset: 2px;
+}
+
+.rf-btn-primario {
+  background: var(--rf-azul);
+  color: #fff;
+}
+
+.rf-btn-primario:hover {
+  background: #005a9e;
+}
+
+.rf-btn-secundario {
+  background: var(--rf-superficie);
+  color: var(--rf-tinta);
+  border-color: var(--rf-linha);
+}
+
+.rf-btn-secundario:hover {
+  background: var(--rf-superficie-2);
+}
+
+.rf-btn-neutro {
+  background: transparent;
+  color: var(--rf-tinta-2);
+  border-color: transparent;
+}
+
+.rf-btn-neutro:hover {
+  background: var(--rf-superficie-2);
+  color: var(--rf-tinta);
+}
+
+@media (max-width: 720px) {
+  .rf-destaque {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 22px 18px;
+  }
+
+  .rf-painel {
+    padding: 20px 16px;
+  }
+
+  .rf-indicadores {
+    grid-template-columns: 1fr;
+  }
+
+  .rf-acoes .rf-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Barra de acoes da tela de revisao, no mesmo padrao do resultado final */
+.botoes-revisao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 860px;
+  margin: 28px auto 48px;
+  padding: 0 4px;
+}
+
+@media (max-width: 720px) {
+  .botoes-revisao .rf-btn {
+    flex: 1 1 100%;
+  }
+}
+
+/* Sem as sidebars, o painel de resultado ocupa a largura toda e se centraliza.
+   O max-width de 750px da coluna serve a leitura das questoes, nao a este
+   painel, que tem graficos e cartoes lado a lado. */
+.content.content-resultado {
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Aproveitamento por assunto, em barras HTML */
+.rf-dominios {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.rf-dominio-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 6px;
+}
+
+.rf-dominio-nome {
+  font-size: .92rem;
+  color: var(--rf-tinta);
+  line-height: 1.4;
+}
+
+.rf-dominio-valor {
+  font-size: .95rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+
+.rf-trilha {
+  height: 10px;
+  background: var(--rf-superficie-2);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.rf-trilha-preenchida {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.rf-fundo-aprovado { background: var(--rf-aprovado); }
+.rf-fundo-abaixo { background: var(--rf-abaixo); }
+
+.rf-dominio-detalhe {
+  display: block;
+  margin-top: 5px;
+  font-size: .76rem;
+  color: var(--rf-tinta-3);
+  font-variant-numeric: tabular-nums;
+}
