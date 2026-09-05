@@ -117,6 +117,9 @@ export function montarBadgeSessao(perfil) {
   sairBtn.style.display = 'inline-flex';
   sairBtn.style.alignItems = 'center';
   sairBtn.style.boxSizing = 'border-box';
+  // O CSS dos simulados tem uma regra generica "button { margin-top: 20px }",
+  // que empurrava este botao para baixo e o fazia transbordar da barra.
+  sairBtn.style.margin = '0';
   sairBtn.style.height = '30px';
   sairBtn.style.padding = '0 12px';
   sairBtn.style.background = 'transparent';

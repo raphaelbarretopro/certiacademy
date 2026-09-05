@@ -1442,6 +1442,10 @@ Descricao: Tela de fechamento do simulado, na mesma linguagem visual do
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  /* A regra generica "button { margin-top: 20px }" mais acima neste arquivo
+     empurrava os <button> para baixo e deixava o <a> ao lado deles fora de
+     alinhamento. Zerar aqui iguala os tres. */
+  margin: 0;
   min-height: 46px;
   font-family: inherit;
   font-size: .95rem;
