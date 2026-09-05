@@ -307,14 +307,6 @@
         {
           "nome": "04-SIMULADO",
           "caminho": "AI-901/04-SIMULADO"
-        },
-        {
-          "nome": "AI-900-bonus/01-SIMULADO",
-          "caminho": "AI-901/AI-900-bonus/01-SIMULADO"
-        },
-        {
-          "nome": "AI-900-bonus/02-SIMULADO",
-          "caminho": "AI-901/AI-900-bonus/02-SIMULADO"
         }
       ]
     },
