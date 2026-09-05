@@ -101,6 +101,9 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
         <a href="#simulados" class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
           Ir para os simulados
         </a>
+        <!-- Preenchido por header-sessao.js: avatar, saudação e sair, ou o
+             botão de entrar para quem ainda não fez login. -->
+        <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
       </nav>
     </div>
   </header>
@@ -376,7 +379,7 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
 
   <footer class="bg-gray-800 text-gray-300 py-8">
     <div class="container mx-auto px-6 text-center text-sm">
-      <p class="mb-3">© 2026 CertiAcademy &middot; não afiliado à Microsoft</p>
+      <p class="mb-3">© 2026 CertiAcademy</p>
       <div class="flex justify-center gap-6">
         <a href="../" class="hover:text-white">Início</a>
         <a href="../dashboard.html" class="hover:text-white">Meu desempenho</a>
@@ -384,6 +387,12 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
       </div>
     </div>
   </footer>
+
+  <script type="module">
+    import { montarHeaderSessao } from '../shared/simulado-engine/common/js/header-sessao.js';
+
+    montarHeaderSessao(document.getElementById('sessaoHeader'));
+  </script>
 
 </body>
 
