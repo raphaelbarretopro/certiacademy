@@ -3,7 +3,30 @@
 // Descrição: Gerencia o cronômetro do simulado
 // ==========================================
 
-export const TEMPO_TOTAL_SEGUNDOS = 45 * 60;
+// Tempo padrao, usado por todo simulado que nao declarar o seu.
+export const TEMPO_PADRAO_MINUTOS = 45;
+
+// ==========================================
+// Tempo desta prova
+// Descricao: Os simulados variam de pouco mais de dez a quase cinquenta
+//            questoes, entao um limite unico para todos distorce o tempo por
+//            questao - e o tempo passou a ser um indicador do historico. Cada
+//            banco pode declarar o seu com:
+//
+//              export const tempoMinutos = 60;
+//
+//            em js/questoes.js. Sem isso, vale o padrao de 45 minutos e nada
+//            muda em relacao ao comportamento anterior.
+// ==========================================
+function resolverTempoTotalSegundos() {
+  const declarado = window.CertiAcademyTempoMinutos;
+
+  return Number.isFinite(declarado) && declarado > 0
+    ? Math.floor(declarado * 60)
+    : TEMPO_PADRAO_MINUTOS * 60;
+}
+
+export const TEMPO_TOTAL_SEGUNDOS = resolverTempoTotalSegundos();
 
 let tempoRestante = TEMPO_TOTAL_SEGUNDOS;
 let intervaloCronometro;

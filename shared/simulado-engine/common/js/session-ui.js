@@ -84,6 +84,15 @@ export function montarBadgeSessao(perfil) {
   saudacao.title = perfil.email;
   badge.appendChild(saudacao);
 
+  const historico = document.createElement('a');
+  historico.href = urlDoSite('dashboard.html');
+  historico.textContent = 'Meu desempenho';
+  historico.style.color = '#fff';
+  historico.style.fontSize = '13px';
+  historico.style.textDecoration = 'underline';
+  historico.style.textUnderlineOffset = '3px';
+  badge.appendChild(historico);
+
   const sairBtn = document.createElement('button');
   sairBtn.type = 'button';
   sairBtn.id = 'sairBtn';

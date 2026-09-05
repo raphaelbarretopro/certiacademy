@@ -145,6 +145,7 @@ Descrição: Política de privacidade e exclusão de conta do CertiAcademy.
 
   <script type="module">
     import { aguardarSessao, excluirConta } from './shared/simulado-engine/common/js/auth.js';
+    import { apagarDadosDoAluno } from './shared/simulado-engine/common/js/store.js';
     import { firebaseConfigurado } from './shared/simulado-engine/common/js/firebase-config.js';
 
     const areaLogado = document.getElementById('areaLogado');
@@ -162,8 +163,11 @@ Descrição: Política de privacidade e exclusão de conta do CertiAcademy.
       areaDeslogado.classList.remove('hidden');
       areaDeslogado.textContent = 'O login ainda não foi configurado neste ambiente.';
     } else {
+      let usuarioAtual = null;
+
       aguardarSessao()
         .then(user => {
+          usuarioAtual = user;
           if (user) {
             emailConta.textContent = user.email || '';
             areaLogado.classList.remove('hidden');
@@ -185,11 +189,20 @@ Descrição: Política de privacidade e exclusão de conta do CertiAcademy.
         if (!confirmado) return;
 
         excluirBtn.disabled = true;
-        relatar('Excluindo sua conta...', 'text-gray-600');
 
         try {
+          // O histórico sai primeiro: depois que a conta é removida do
+          // Authentication, o aluno perde a permissão de apagar os próprios
+          // documentos e eles ficariam órfãos no banco.
+          if (usuarioAtual) {
+            relatar('Apagando seu histórico de simulados...', 'text-gray-600');
+            await apagarDadosDoAluno(usuarioAtual.uid);
+          }
+
+          relatar('Excluindo sua conta...', 'text-gray-600');
           await excluirConta();
-          relatar('Conta excluída. Redirecionando...', 'text-green-700');
+
+          relatar('Conta e histórico excluídos. Redirecionando...', 'text-green-700');
           setTimeout(() => window.location.replace('./'), 1800);
         } catch (erro) {
           console.error('Falha ao excluir a conta:', erro);

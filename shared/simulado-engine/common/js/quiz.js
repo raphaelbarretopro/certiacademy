@@ -43,6 +43,9 @@ export let simuladoFinalizado = false;
 const STORAGE_KEY = `certiacademy:quiz-state:${window.location.pathname}`;
 let tempoRestantePersistido = TEMPO_TOTAL_SEGUNDOS;
 let rascunhosRespostas = {};
+// Guarda se esta tentativa ja foi enviada ao historico, para que recarregar a
+// tela de resultado nao grave a mesma prova de novo.
+let resultadoGravado = false;
 
 const inicioSimulado = new Date();
 
@@ -174,6 +177,7 @@ function persistirEstado() {
     rascunhosRespostas,
     simuladoFinalizado,
     resultadoFinalExibido,
+    resultadoGravado,
     tempoRestante: obterTempoRestante()
   };
 
@@ -198,6 +202,7 @@ function restaurarEstadoPersistido() {
       : 0;
     simuladoFinalizado = Boolean(estado.simuladoFinalizado);
     resultadoFinalExibido = Boolean(estado.resultadoFinalExibido || estado.simuladoFinalizado);
+    resultadoGravado = Boolean(estado.resultadoGravado);
     tempoRestantePersistido = Number.isFinite(estado.tempoRestante) && estado.tempoRestante >= 0
       ? Math.floor(estado.tempoRestante)
       : TEMPO_TOTAL_SEGUNDOS;
@@ -268,6 +273,78 @@ let totalAcertosPossiveis = 0;
 });
 
 const VALOR_ACERTO = 1000 / totalAcertosPossiveis;
+
+// ==========================================
+// Funcao: acertosPossiveisDe(q)
+// Descricao: Quantos acertos a questao vale, pela mesma regra usada no total
+// ==========================================
+function acertosPossiveisDe(q) {
+  if (q.tipo === 'multipla' || q.tipo === 'simnao') return q.respostas.length;
+  if (q.tipo === 'dragdrop') return Object.keys(q.respostas).length;
+  return 1;
+}
+
+// ==========================================
+// Funcao: montarResultadoParaHistorico()
+// Descricao: Reune o que o motor ja calcula ao final da prova no formato que o
+//            historico grava. Nada aqui e recalculado de forma diferente da
+//            tela de resultado: e a mesma pontuacao, o mesmo tempo e o mesmo
+//            desempenho por dominio que alimenta o grafico de barras.
+// ==========================================
+export function montarResultadoParaHistorico() {
+  const { curso, simulado } = identificarSimuladoAtual();
+  const pontuacao = calcularPontuacao();
+
+  const porDominio = {};
+
+  // Maximo possivel de cada dominio, para o dashboard mostrar aproveitamento
+  questoes.forEach(q => {
+    if (!porDominio[q.dominio]) porDominio[q.dominio] = { pontos: 0, maximo: 0 };
+    porDominio[q.dominio].maximo += acertosPossiveisDe(q) * VALOR_ACERTO;
+  });
+
+  respostasUsuario.forEach(r => {
+    const q = questoes[r.index];
+    if (!q || !porDominio[q.dominio]) return;
+    porDominio[q.dominio].pontos += r.pontos || 0;
+  });
+
+  for (const chave of Object.keys(porDominio)) {
+    porDominio[chave].pontos = Math.round(porDominio[chave].pontos);
+    porDominio[chave].maximo = Math.round(porDominio[chave].maximo);
+  }
+
+  return {
+    curso,
+    simulado,
+    pontuacao,
+    percentual: Math.round((pontuacao / 1000) * 100),
+    acertos: Math.round(pontuacao / VALOR_ACERTO),
+    totalAcertosPossiveis,
+    tempoSegundos: Math.max(TEMPO_TOTAL_SEGUNDOS - obterTempoRestante(), 0),
+    tempoLimiteSegundos: TEMPO_TOTAL_SEGUNDOS,
+    porDominio,
+    versaoBanco: questoes.length
+  };
+}
+
+// ==========================================
+// Funcao: identificarSimuladoAtual()
+// Descricao: Deriva curso e simulado do caminho da pagina, do mesmo modo que o
+//            envio de reportes de problema
+// ==========================================
+function identificarSimuladoAtual() {
+  const segmentos = window.location.pathname.split('/').filter(Boolean);
+
+  if (segmentos.length > 0 && segmentos[segmentos.length - 1].includes('.')) {
+    segmentos.pop();
+  }
+
+  return {
+    curso: decodeURIComponent(segmentos[segmentos.length - 2] || 'desconhecido'),
+    simulado: decodeURIComponent(segmentos[segmentos.length - 1] || 'desconhecido')
+  };
+}
 
 // ==========================================
 // Inicialização dos botões
@@ -743,6 +820,34 @@ function mostrarResultadoFinal(forceRender = false) {
 
   const progressoContainer = document.getElementById('progressoContainer');
   if (progressoContainer) progressoContainer.style.display = 'none';
+
+  notificarResultadoParaHistorico();
+}
+
+// ==========================================
+// Funcao: notificarResultadoParaHistorico()
+// Descricao: Avisa quem estiver ouvindo que a prova terminou. O quiz.js nao
+//            fala com o Firestore diretamente: quem grava e o app.js, o que
+//            evita carregar o SDK do banco em quem so abriu a prova e mantem o
+//            motor funcionando mesmo sem historico configurado.
+// ==========================================
+function notificarResultadoParaHistorico() {
+  if (resultadoGravado) return;
+
+  document.dispatchEvent(new CustomEvent('certiacademy:resultado-final', {
+    detail: montarResultadoParaHistorico()
+  }));
+}
+
+// ==========================================
+// Funcao: marcarResultadoGravado()
+// Descricao: Chamada pelo app.js depois que a gravacao confirma. Enquanto nao
+//            for chamada, uma nova carga da pagina tenta gravar de novo - o
+//            que e o comportamento desejado quando a rede falha.
+// ==========================================
+export function marcarResultadoGravado() {
+  resultadoGravado = true;
+  persistirEstado();
 }
 
 
@@ -836,6 +941,7 @@ function refazerSimulado() {
   rascunhosRespostas = {};
   simuladoFinalizado = false;
   resultadoFinalExibido = false;
+  resultadoGravado = false;
   tempoRestantePersistido = TEMPO_TOTAL_SEGUNDOS;
   resultadoFinalHTML = "";
   marcadas.clear();

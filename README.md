@@ -120,6 +120,49 @@ O login usa `signInWithPopup`, e não `signInWithRedirect`: o fluxo de redirecio
 
 Com sessão garantida, o reporte deixa de ser anônimo: `report.js` inclui nome e e-mail do aluno e define `_replyto`, permitindo responder direto a quem reportou.
 
+## Histórico e Dashboard
+
+Ao finalizar um simulado, o resultado é gravado no **Cloud Firestore** e passa a alimentar o painel em `dashboard.html`.
+
+### Configuração (uma vez por ambiente)
+
+1. No console do Firebase: **Criação → Firestore Database → Criar banco de dados**
+2. Região: `southamerica-east1` (São Paulo) — **não dá para mudar depois**
+3. Modo: **produção** (as regras vêm do arquivo abaixo)
+4. Abra a aba **Regras**, cole o conteúdo de [`firestore.rules`](firestore.rules) e publique
+
+> As regras são a **única proteção real** dos dados. O site é estático e a configuração do cliente é pública, então qualquer pessoa pode chamar o banco — o que impede o acesso indevido é o que está escrito nesse arquivo.
+
+### Estrutura das coleções
+
+```
+users/{uid}                      perfil do aluno
+users/{uid}/resultados/{id}      uma prova concluída (não pode ser alterada)
+users/{uid}/resumo/agregado      médias já calculadas, lidas pelo dashboard
+```
+
+O documento de resumo existe para o dashboard custar **uma leitura** em vez de uma por prova. O custo migra da leitura, que acontece toda vez que o painel abre, para a escrita, que acontece uma vez por prova. São **duas escritas por simulado concluído** — dentro da cota gratuita, isso dá cerca de 10 mil provas por dia.
+
+### Como a gravação acontece
+
+O `quiz.js` não fala com o Firestore: ele apenas dispara o evento `certiacademy:resultado-final` com os números que já calculou para a tela de resultado. Quem escuta e grava é o `app.js`. Isso evita carregar o SDK do banco em quem só abriu a prova, e mantém o motor funcionando mesmo sem o histórico configurado.
+
+A gravação é idempotente: o estado salvo marca `resultadoGravado`, então recarregar a tela de resultado não duplica a prova. Se a gravação falhar, a marca **não** é feita e a tentativa se repete na próxima carga — o aluno continua vendo a própria nota de qualquer forma.
+
+### Tempo por simulado
+
+O limite deixou de ser fixo em 45 minutos. Um banco de questões pode declarar o seu:
+
+```js
+export const tempoMinutos = 60;
+```
+
+Sem essa linha vale o padrão de 45, e nada muda em relação ao comportamento anterior. Como o tempo virou indicador do histórico, vale ajustar os simulados cujo tamanho destoa — eles variam de 11 a 49 questões.
+
+### Exclusão de dados
+
+`privacidade.html` apaga a subárvore `users/{uid}` **antes** de remover a conta do Authentication: na ordem inversa, o aluno perderia a permissão de apagar os próprios documentos e eles ficariam órfãos no banco.
+
 ## Manifesto de Cursos
 
 O arquivo `cursos.json` na raiz é a fonte única de quais cursos e simulados existem. A estrutura é derivada do disco; os textos editoriais (`titulo`, `chamada`) e o campo `visivelNaHome` são escritos à mão e preservados entre execuções.

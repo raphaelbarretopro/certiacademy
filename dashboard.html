@@ -1,0 +1,464 @@
+<!-- ==========================================
+Arquivo: dashboard.html
+Descrição: Histórico e desempenho do aluno. Lê o documento agregado
+           users/{uid}/resumo/agregado em UMA leitura e pagina o histórico
+           sob demanda.
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu desempenho | CertiAcademy</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      visibility: hidden;
+    }
+
+    body[data-sessao="ok"] {
+      visibility: visible;
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .tile-valor {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+
+    .trilha {
+      position: relative;
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: visible;
+    }
+
+    .trilha-preenchida {
+      display: block;
+      height: 100%;
+      border-radius: 5px;
+    }
+
+    .corte {
+      position: absolute;
+      top: -4px;
+      bottom: -4px;
+      width: 2px;
+      background: #4b5563;
+      left: 70%;
+    }
+
+    .aprovado {
+      color: #0e7a52;
+    }
+
+    .abaixo {
+      color: #a96a00;
+    }
+
+    .bg-aprovado {
+      background: #0e7a52;
+    }
+
+    .bg-abaixo {
+      background: #a96a00;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center gap-4">
+      <a href="./"><img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
+      <div class="flex items-center gap-4 text-sm">
+        <span id="saudacao" class="text-gray-600"></span>
+        <button id="sairBtn" type="button" class="border border-gray-300 rounded px-3 py-1.5 hover:bg-gray-100">
+          Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-10 max-w-5xl">
+
+    <h1 class="text-3xl font-bold mb-1">Meu desempenho</h1>
+    <p class="text-gray-600 mb-8">Todos os simulados que você concluiu, e o que eles dizem sobre o seu preparo.</p>
+
+    <!-- estado: carregando -->
+    <div id="carregando" class="bg-white rounded-2xl shadow p-10 text-center text-gray-500">
+      Carregando seu histórico...
+    </div>
+
+    <!-- estado: nenhum simulado ainda -->
+    <div id="vazio" class="bg-white rounded-2xl shadow p-10 text-center oculto">
+      <h2 class="text-xl font-semibold mb-2">Você ainda não concluiu nenhum simulado</h2>
+      <p class="text-gray-600 mb-6">Assim que terminar o primeiro, o resultado aparece aqui e passamos a acompanhar sua
+        evolução.</p>
+      <a href="./#certificacoes" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700">
+        Escolher um simulado
+      </a>
+    </div>
+
+    <!-- estado: erro -->
+    <div id="erro" class="bg-white rounded-2xl shadow p-10 text-center oculto" role="alert">
+      <h2 class="text-xl font-semibold mb-2">Não foi possível carregar seu histórico</h2>
+      <p id="erroTexto" class="text-gray-600 mb-6"></p>
+      <button type="button" onclick="window.location.reload()"
+        class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700">
+        Tentar novamente
+      </button>
+    </div>
+
+    <!-- estado: com dados -->
+    <div id="conteudo" class="oculto">
+
+      <!-- indicadores -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl shadow p-5">
+          <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Simulados</div>
+          <div class="tile-valor num" id="kpiTotal">0</div>
+          <div class="text-sm text-gray-500 mt-1" id="kpiTotalSub"></div>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5">
+          <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Média geral</div>
+          <div class="tile-valor num" id="kpiMedia">0</div>
+          <div class="text-sm text-gray-500 mt-1">de 1000 pontos</div>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5">
+          <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Taxa de aprovação</div>
+          <div class="tile-valor num" id="kpiAprovacao">0%</div>
+          <div class="text-sm text-gray-500 mt-1" id="kpiAprovacaoSub"></div>
+        </div>
+        <div class="bg-white rounded-xl shadow p-5">
+          <div class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Tempo médio</div>
+          <div class="tile-valor num" id="kpiTempo">0</div>
+          <div class="text-sm text-gray-500 mt-1">por simulado</div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-6 mb-8">
+
+        <!-- prontidão -->
+        <section class="bg-white rounded-xl shadow p-6">
+          <h2 class="text-lg font-semibold mb-1">Prontidão por certificação</h2>
+          <p class="text-sm text-gray-500 mb-5">Média de todas as suas tentativas em cada exame.</p>
+          <div id="prontidao"></div>
+          <p class="text-xs text-gray-500 mt-4 flex items-center gap-2">
+            <span class="inline-block w-0.5 h-3 bg-gray-600"></span>
+            linha de corte oficial: 700 de 1000 pontos
+          </p>
+        </section>
+
+        <!-- domínios -->
+        <section class="bg-white rounded-xl shadow p-6">
+          <h2 class="text-lg font-semibold mb-1">Onde você mais erra</h2>
+          <p class="text-sm text-gray-500 mb-5">Aproveitamento por assunto, somando todas as provas.</p>
+          <div id="dominios"></div>
+        </section>
+
+      </div>
+
+      <!-- histórico -->
+      <section class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold mb-1">Histórico</h2>
+        <p class="text-sm text-gray-500 mb-5">Do mais recente para o mais antigo.</p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left text-xs uppercase tracking-wide text-gray-500 border-b">
+                <th class="py-2 pr-4">Quando</th>
+                <th class="py-2 pr-4">Simulado</th>
+                <th class="py-2 pr-4 text-right">Pontos</th>
+                <th class="py-2 pr-4 text-right">Tempo</th>
+                <th class="py-2">Situação</th>
+              </tr>
+            </thead>
+            <tbody id="historico"></tbody>
+          </table>
+        </div>
+
+        <div class="text-center mt-6">
+          <button id="maisBtn" type="button"
+            class="border border-gray-300 rounded-lg px-5 py-2 text-sm hover:bg-gray-100 oculto">
+            Carregar mais
+          </button>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer class="bg-gray-800 text-gray-300 py-8 mt-12">
+    <div class="container mx-auto px-6 text-center text-sm">
+      <a href="./privacidade.html" class="hover:text-white">Privacidade</a>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
+    import { lerResumo, lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
+
+    const el = id => document.getElementById(id);
+
+    function mostrar(qual) {
+      ['carregando', 'vazio', 'erro', 'conteudo'].forEach(nome => {
+        el(nome).classList.toggle('oculto', nome !== qual);
+      });
+    }
+
+    function falhar(texto) {
+      el('erroTexto').textContent = texto;
+      mostrar('erro');
+    }
+
+    // ==========================================
+    // Formatação
+    // ==========================================
+    function minutos(segundos) {
+      return Math.round((segundos || 0) / 60);
+    }
+
+    function dataCurta(timestamp) {
+      if (!timestamp || typeof timestamp.toDate !== 'function') return '—';
+      return timestamp.toDate().toLocaleDateString('pt-BR', {
+        day: '2-digit', month: '2-digit', year: '2-digit'
+      });
+    }
+
+    function classeSituacao(pontuacao) {
+      return pontuacao >= NOTA_DE_CORTE
+        ? { texto: 'Acima do corte', cor: 'aprovado', barra: 'bg-aprovado' }
+        : { texto: 'Abaixo do corte', cor: 'abaixo', barra: 'bg-abaixo' };
+    }
+
+    // ==========================================
+    // Blocos da tela
+    // ==========================================
+    function pintarIndicadores(resumo) {
+      const cursos = Object.keys(resumo.porCurso || {}).length;
+
+      el('kpiTotal').textContent = resumo.totalSimulados || 0;
+      el('kpiTotalSub').textContent = cursos === 1 ? 'em 1 certificação' : `em ${cursos} certificações`;
+
+      el('kpiMedia').textContent = resumo.mediaPontuacao || 0;
+
+      el('kpiAprovacao').textContent = `${resumo.taxaAprovacao || 0}%`;
+      el('kpiAprovacaoSub').textContent =
+        `${resumo.aprovados || 0} de ${resumo.totalSimulados || 0} acima de ${NOTA_DE_CORTE}`;
+
+      el('kpiTempo').innerHTML =
+        `${minutos(resumo.tempoMedioSegundos)}<span style="font-size:1rem;font-weight:600">min</span>`;
+    }
+
+    function pintarProntidao(resumo) {
+      const alvo = el('prontidao');
+      alvo.textContent = '';
+
+      const entradas = Object.entries(resumo.porCurso || {})
+        .map(([curso, dados]) => ({
+          curso,
+          media: Math.round(dados.soma / dados.n),
+          n: dados.n
+        }))
+        .sort((a, b) => b.media - a.media);
+
+      for (const item of entradas) {
+        const situacao = classeSituacao(item.media);
+        const largura = Math.min(Math.max(item.media / 10, 0), 100);
+
+        const linha = document.createElement('div');
+        linha.className = 'grid items-center gap-3 mb-3 text-sm';
+        linha.style.gridTemplateColumns = '5rem 1fr 3.2rem';
+
+        const nome = document.createElement('span');
+        nome.className = 'font-medium';
+        nome.textContent = item.curso;
+        nome.title = item.n === 1 ? '1 tentativa' : `${item.n} tentativas`;
+
+        const trilha = document.createElement('span');
+        trilha.className = 'trilha';
+        const preenchida = document.createElement('span');
+        preenchida.className = `trilha-preenchida ${situacao.barra}`;
+        preenchida.style.width = `${largura}%`;
+        const corte = document.createElement('span');
+        corte.className = 'corte';
+        trilha.append(preenchida, corte);
+
+        const valor = document.createElement('span');
+        valor.className = `num text-right font-semibold ${situacao.cor}`;
+        valor.textContent = item.media;
+
+        linha.append(nome, trilha, valor);
+        alvo.appendChild(linha);
+      }
+    }
+
+    function pintarDominios(resumo) {
+      const alvo = el('dominios');
+      alvo.textContent = '';
+
+      const entradas = Object.entries(resumo.porDominio || {})
+        .filter(([, dados]) => dados.maximo > 0)
+        .map(([dominio, dados]) => ({
+          dominio,
+          percentual: Math.round((dados.pontos / dados.maximo) * 100)
+        }))
+        .sort((a, b) => a.percentual - b.percentual)
+        .slice(0, 6);
+
+      if (entradas.length === 0) {
+        alvo.innerHTML = '<p class="text-sm text-gray-500">Sem dados por assunto ainda.</p>';
+        return;
+      }
+
+      for (const item of entradas) {
+        const bom = item.percentual >= 70;
+
+        const bloco = document.createElement('div');
+        bloco.className = 'mb-4';
+
+        const topo = document.createElement('div');
+        topo.className = 'flex justify-between items-baseline gap-3 mb-1';
+
+        const nome = document.createElement('span');
+        nome.className = 'text-sm';
+        nome.textContent = item.dominio;
+
+        const pct = document.createElement('span');
+        pct.className = `num text-sm font-semibold ${bom ? 'aprovado' : 'abaixo'}`;
+        pct.textContent = `${item.percentual}%`;
+
+        topo.append(nome, pct);
+
+        const trilha = document.createElement('div');
+        trilha.className = 'trilha';
+        const preenchida = document.createElement('span');
+        preenchida.className = `trilha-preenchida ${bom ? 'bg-aprovado' : 'bg-abaixo'}`;
+        preenchida.style.width = `${item.percentual}%`;
+        trilha.appendChild(preenchida);
+
+        bloco.append(topo, trilha);
+        alvo.appendChild(bloco);
+      }
+    }
+
+    function adicionarLinhas(itens) {
+      const corpo = el('historico');
+
+      for (const item of itens) {
+        const situacao = classeSituacao(item.pontuacao);
+        const linha = document.createElement('tr');
+        linha.className = 'border-b last:border-0';
+
+        const quando = document.createElement('td');
+        quando.className = 'py-2.5 pr-4 num text-gray-600';
+        quando.textContent = dataCurta(item.finalizadoEm);
+
+        const qual = document.createElement('td');
+        qual.className = 'py-2.5 pr-4';
+        qual.textContent = `${item.curso} · ${item.simulado}`;
+
+        const pontos = document.createElement('td');
+        pontos.className = `py-2.5 pr-4 num text-right font-semibold ${situacao.cor}`;
+        pontos.textContent = item.pontuacao;
+
+        const tempo = document.createElement('td');
+        tempo.className = 'py-2.5 pr-4 num text-right text-gray-600';
+        tempo.textContent = `${minutos(item.tempoSegundos)} min`;
+
+        const estado = document.createElement('td');
+        estado.className = `py-2.5 ${situacao.cor}`;
+        estado.textContent = situacao.texto;
+
+        linha.append(quando, qual, pontos, tempo, estado);
+        corpo.appendChild(linha);
+      }
+    }
+
+    // ==========================================
+    // Carga
+    // ==========================================
+    const perfil = await exigirSessao();
+    document.body.dataset.sessao = 'ok';
+
+    el('saudacao').textContent = `Olá, ${perfil.primeiroNome}`;
+    el('sairBtn').addEventListener('click', async () => {
+      try {
+        await sair();
+      } catch (erro) {
+        console.error('Falha ao sair:', erro);
+      }
+      window.location.replace('./login.html');
+    });
+
+    let cursor = null;
+
+    async function carregarPagina() {
+      const pagina = await lerResultados(perfil.uid, { limite: 20, cursor });
+      adicionarLinhas(pagina.itens);
+      cursor = pagina.proximoCursor;
+      el('maisBtn').classList.toggle('oculto', !cursor);
+    }
+
+    el('maisBtn').addEventListener('click', async () => {
+      el('maisBtn').disabled = true;
+      try {
+        await carregarPagina();
+      } catch (erro) {
+        console.error('Falha ao paginar o historico:', erro);
+      }
+      el('maisBtn').disabled = false;
+    });
+
+    try {
+      const resumo = await lerResumo(perfil.uid);
+
+      if (!resumo || !resumo.totalSimulados) {
+        mostrar('vazio');
+      } else {
+        pintarIndicadores(resumo);
+        pintarProntidao(resumo);
+        pintarDominios(resumo);
+        await carregarPagina();
+        mostrar('conteudo');
+      }
+    } catch (erro) {
+      console.error('Falha ao carregar o dashboard:', erro);
+
+      if (erro && erro.code === 'permission-denied') {
+        falhar('As regras de segurança do banco ainda não foram publicadas. Veja o guia de configuração do Firestore.');
+      } else if (erro && erro.code === 'failed-precondition') {
+        falhar('O banco precisa de um índice que ainda não existe. O endereço para criá-lo com um clique está no console do navegador (F12).');
+      } else if (erro && erro.code === 'unavailable') {
+        falhar('Não conseguimos falar com o banco de dados. Verifique sua conexão e tente novamente.');
+      } else {
+        falhar('Algo deu errado ao buscar seus resultados. Tente novamente em instantes.');
+      }
+    }
+  </script>
+
+</body>
+
+</html>

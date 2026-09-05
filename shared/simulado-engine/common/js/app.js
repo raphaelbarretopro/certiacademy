@@ -37,22 +37,31 @@ try {
 window.CertiAcademyPerfil = perfil;
 revelarPagina();
 
+// Registra o acesso sem bloquear a montagem da prova.
+import('./store.js')
+  .then(({ registrarAcesso }) => registrarAcesso(perfil))
+  .catch(erro => console.error('Nao foi possivel registrar o acesso:', erro));
+
 // ==========================================
 // Carga do motor e do banco de questões
 // ==========================================
-const [renderModule, timerModule, questoesModule] = await Promise.all([
-  import(renderModulePath),
-  import('./timer.js'),
-  import(questoesModulePath)
-]);
+// O banco de questões é carregado antes do timer porque pode declarar o tempo
+// desta prova, que o timer lê ao ser importado.
+const questoesModule = await import(questoesModulePath);
 
-const { questoes } = questoesModule;
+const { questoes, tempoMinutos } = questoesModule;
 
 if (!Array.isArray(questoes) || questoes.length === 0) {
   throw new Error('Banco de questoes indisponivel para este simulado.');
 }
 
 window.CertiAcademyQuestoes = questoes;
+window.CertiAcademyTempoMinutos = tempoMinutos;
+
+const [renderModule, timerModule] = await Promise.all([
+  import(renderModulePath),
+  import('./timer.js')
+]);
 
 const quizModule = await import('./quiz.js');
 
@@ -60,11 +69,30 @@ const { inicializarModalProblema } = renderModule;
 const { iniciarCronometro } = timerModule;
 const {
   finalizarPorTempoEsgotado,
+  marcarResultadoGravado,
   obterTempoInicialPersistido,
   persistirTempoRestante,
   restaurarEstadoVisual,
   simuladoFinalizado
 } = quizModule;
+
+// ==========================================
+// Histórico: grava a prova concluída
+// Descrição: O quiz.js apenas anuncia que terminou; a conversa com o Firestore
+//            fica aqui. Uma falha de gravação não pode derrubar a tela de
+//            resultado — o aluno continua vendo a própria nota, e a tentativa
+//            se repete na próxima vez que a página abrir, porque só marcamos
+//            como gravado depois da confirmação.
+// ==========================================
+document.addEventListener('certiacademy:resultado-final', async evento => {
+  try {
+    const { salvarResultado } = await import('./store.js');
+    await salvarResultado(perfil, evento.detail);
+    marcarResultadoGravado();
+  } catch (erro) {
+    console.error('Nao foi possivel gravar o resultado no historico:', erro);
+  }
+});
 
 function iniciarSimulado() {
   inicializarModalProblema();
