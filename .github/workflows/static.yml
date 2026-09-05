@@ -35,6 +35,8 @@ jobs:
         run: node scripts/migrate-shared-runtime-assets.mjs
       - name: Check shared engine sync
         run: node scripts/sync-simulado-engine.mjs
+      - name: Check course manifest
+        run: node scripts/gerar-manifesto.mjs
       - name: Validate simulados
         run: node scripts/validate-simulados.mjs
 

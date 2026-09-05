@@ -450,6 +450,97 @@ async function validateSimulado(dirPath) {
   return errors;
 }
 
+// ==========================================
+// Funcao: validateManifestoEHome()
+// Descricao: cursos.json e a fonte unica de cursos e simulados. Esta checagem
+//            garante que ele aponta para caminhos reais e que os cards da home
+//            correspondem exatamente aos cursos visiveis do manifesto - foi a
+//            ausencia disso que deixou cards apontando para pastas inexistentes.
+// ==========================================
+async function validateManifestoEHome() {
+  const errors = [];
+  const manifestoPath = path.join(rootDir, 'cursos.json');
+
+  if (!await pathExists(manifestoPath)) {
+    errors.push('cursos.json ausente na raiz do repositorio');
+    return errors;
+  }
+
+  let manifesto;
+  try {
+    manifesto = JSON.parse(await fs.readFile(manifestoPath, 'utf8'));
+  } catch (error) {
+    errors.push(`cursos.json nao e um JSON valido: ${error.message}`);
+    return errors;
+  }
+
+  const cursos = Array.isArray(manifesto.cursos) ? manifesto.cursos : [];
+
+  if (cursos.length === 0) {
+    errors.push('cursos.json nao lista nenhum curso');
+    return errors;
+  }
+
+  for (const curso of cursos) {
+    const rotulo = curso.codigo ?? '(curso sem codigo)';
+
+    for (const campo of ['codigo', 'pasta', 'titulo', 'chamada', 'curso']) {
+      if (!isNonEmptyString(curso[campo])) {
+        errors.push(`cursos.json: ${rotulo} deve conter '${campo}' como texto nao vazio`);
+      }
+    }
+
+    if (isNonEmptyString(curso.curso) && !await pathExists(path.join(rootDir, curso.curso))) {
+      errors.push(`cursos.json: ${rotulo} aponta para pagina inexistente: ${curso.curso}`);
+    }
+
+    for (const simulado of curso.simulados ?? []) {
+      if (!isNonEmptyString(simulado.caminho)) {
+        errors.push(`cursos.json: ${rotulo} possui simulado sem 'caminho'`);
+        continue;
+      }
+
+      if (!await pathExists(path.join(rootDir, simulado.caminho, 'index.html'))) {
+        errors.push(`cursos.json: ${rotulo} aponta para simulado inexistente: ${simulado.caminho}`);
+      }
+    }
+  }
+
+  const homePath = path.join(rootDir, 'index.html');
+
+  if (!await pathExists(homePath)) {
+    errors.push('index.html ausente na raiz do repositorio');
+    return errors;
+  }
+
+  const homeContent = await fs.readFile(homePath, 'utf8');
+  const linksNaHome = Array.from(homeContent.matchAll(/href="\.\/([^"]+\/curso\.html)"/g)).map(match => match[1]);
+
+  for (const link of linksNaHome) {
+    if (!await pathExists(path.join(rootDir, link))) {
+      errors.push(`index.html: card aponta para pagina inexistente: ./${link}`);
+    }
+  }
+
+  const visiveis = cursos.filter(curso => curso.visivelNaHome !== false);
+
+  for (const curso of visiveis) {
+    if (isNonEmptyString(curso.curso) && !linksNaHome.includes(curso.curso)) {
+      errors.push(`index.html: falta card para o curso ${curso.codigo} (marcado como visivel em cursos.json)`);
+    }
+  }
+
+  const caminhosConhecidos = new Set(cursos.map(curso => curso.curso));
+
+  for (const link of linksNaHome) {
+    if (!caminhosConhecidos.has(link)) {
+      errors.push(`index.html: card de ./${link} nao corresponde a nenhum curso de cursos.json`);
+    }
+  }
+
+  return errors;
+}
+
 async function main() {
   const simuladoDirs = await listSimuladoDirs();
 
@@ -465,6 +556,8 @@ async function main() {
     allErrors.push(...errors);
   }
 
+  allErrors.push(...await validateManifestoEHome());
+
   if (allErrors.length > 0) {
     console.error('Validacao falhou. Problemas encontrados:');
     for (const error of allErrors) {
@@ -473,7 +566,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Validacao concluida com sucesso: ${simuladoDirs.length} simulados verificados.`);
+  console.log(`Validacao concluida com sucesso: ${simuladoDirs.length} simulados verificados, cursos.json e index.html consistentes.`);
 }
 
 await main();

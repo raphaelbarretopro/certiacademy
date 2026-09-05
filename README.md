@@ -71,13 +71,34 @@ node scripts/validate-simulados.mjs
 
 Essa checagem valida automaticamente:
 - presença dos arquivos obrigatórios de cada simulado
-- inclusão única de `js/main.js` em cada `index.html`
+- inclusão única do script de módulo compartilhado em cada `index.html`
 - ausência de arquivos legados dentro dos simulados (como `enviar_problema.php`)
 - exportação de `questoes` nos arquivos de conteúdo
 - schema das questões por tipo (`unica`, `multipla`, `simnao`, `dragdrop`, `combobox`, `comboboxs`)
 - índices de resposta, metadados obrigatórios e links inválidos nos bancos de questões
+- consistência entre `cursos.json`, os caminhos reais em disco e os cards de `index.html`
 
 O workflow de GitHub Pages também executa essa validação antes do deploy.
+
+## Manifesto de Cursos
+
+O arquivo `cursos.json` na raiz é a fonte única de quais cursos e simulados existem. A estrutura é derivada do disco; os textos editoriais (`titulo`, `chamada`) e o campo `visivelNaHome` são escritos à mão e preservados entre execuções.
+
+Para checar se o manifesto reflete a estrutura atual:
+
+```
+node scripts/gerar-manifesto.mjs
+```
+
+Para atualizá-lo depois de criar ou remover um curso ou simulado:
+
+```
+node scripts/gerar-manifesto.mjs --write
+```
+
+A validação do repositório recusa o build quando um card de `index.html` aponta para uma página inexistente, quando um curso marcado como visível não tem card, ou quando o manifesto referencia um simulado que não está em disco. Foi a ausência dessa checagem que permitiu que cards de cursos de teste ficassem publicados apontando para 404.
+
+Para tirar um curso da home sem removê-lo do repositório, marque `"visivelNaHome": false` no manifesto e retire o card correspondente de `index.html`.
 
 ## Sincronização do Motor dos Simulados
 

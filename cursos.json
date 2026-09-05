@@ -1,0 +1,340 @@
+{
+  "cursos": [
+    {
+      "codigo": "AZ-900",
+      "pasta": "AZ-900",
+      "titulo": "Fundamentos do Azure",
+      "chamada": "Simulado completo com questões atualizadas",
+      "visivelNaHome": true,
+      "curso": "AZ-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "AZ-900/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "AZ-900/02-SIMULADO"
+        },
+        {
+          "nome": "03-SIMULADO",
+          "caminho": "AZ-900/03-SIMULADO"
+        },
+        {
+          "nome": "04-SIMULADO",
+          "caminho": "AZ-900/04-SIMULADO"
+        },
+        {
+          "nome": "05-SIMULADO",
+          "caminho": "AZ-900/05-SIMULADO"
+        },
+        {
+          "nome": "06-SIMULADO",
+          "caminho": "AZ-900/06-SIMULADO"
+        },
+        {
+          "nome": "07-SIMULADO",
+          "caminho": "AZ-900/07-SIMULADO"
+        },
+        {
+          "nome": "08-SIMULADO",
+          "caminho": "AZ-900/08-SIMULADO"
+        },
+        {
+          "nome": "09-SIMULADO",
+          "caminho": "AZ-900/09-SIMULADO"
+        },
+        {
+          "nome": "10-SIMULADO",
+          "caminho": "AZ-900/10-SIMULADO"
+        },
+        {
+          "nome": "AZ-900-bonus/01-SIMULADO",
+          "caminho": "AZ-900/AZ-900-bonus/01-SIMULADO"
+        },
+        {
+          "nome": "AZ-900-bonus/02-SIMULADO",
+          "caminho": "AZ-900/AZ-900-bonus/02-SIMULADO"
+        }
+      ]
+    },
+    {
+      "codigo": "SC-900",
+      "pasta": "SC-900",
+      "titulo": "Fundamentos de Segurança, Conformidade e Identidade",
+      "chamada": "Questões no padrão oficial Microsoft",
+      "visivelNaHome": true,
+      "curso": "SC-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "SC-900/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "SC-900/02-SIMULADO"
+        },
+        {
+          "nome": "03-SIMULADO",
+          "caminho": "SC-900/03-SIMULADO"
+        },
+        {
+          "nome": "04-SIMULADO",
+          "caminho": "SC-900/04-SIMULADO"
+        },
+        {
+          "nome": "05-SIMULADO",
+          "caminho": "SC-900/05-SIMULADO"
+        },
+        {
+          "nome": "06-SIMULADO",
+          "caminho": "SC-900/06-SIMULADO"
+        },
+        {
+          "nome": "SC-900-bonus/01-SIMULADO",
+          "caminho": "SC-900/SC-900-bonus/01-SIMULADO"
+        },
+        {
+          "nome": "SC-900-bonus/02-SIMULADO",
+          "caminho": "SC-900/SC-900-bonus/02-SIMULADO"
+        }
+      ]
+    },
+    {
+      "codigo": "MS-900",
+      "pasta": "MS-900",
+      "titulo": "Fundamentos Microsoft 365",
+      "chamada": "Prepare-se com perguntas reais de prova",
+      "visivelNaHome": true,
+      "curso": "MS-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "MS-900/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "MS-900/02-SIMULADO"
+        },
+        {
+          "nome": "03-SIMULADO",
+          "caminho": "MS-900/03-SIMULADO"
+        },
+        {
+          "nome": "04-SIMULADO",
+          "caminho": "MS-900/04-SIMULADO"
+        },
+        {
+          "nome": "05-SIMULADO",
+          "caminho": "MS-900/05-SIMULADO"
+        },
+        {
+          "nome": "06-SIMULADO",
+          "caminho": "MS-900/06-SIMULADO"
+        },
+        {
+          "nome": "MS-900-bonus/01-SIMULADO",
+          "caminho": "MS-900/MS-900-bonus/01-SIMULADO"
+        },
+        {
+          "nome": "MS-900-bonus/02-SIMULADO",
+          "caminho": "MS-900/MS-900-bonus/02-SIMULADO"
+        }
+      ]
+    },
+    {
+      "codigo": "PL-900",
+      "pasta": "PL-900",
+      "titulo": "Fundamentos Power Platform",
+      "chamada": "Teste seus conhecimentos com questões práticas",
+      "visivelNaHome": true,
+      "curso": "PL-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-Power-Plataform-I",
+          "caminho": "PL-900/01-Power-Plataform-I"
+        },
+        {
+          "nome": "02-Power-Plataform-II",
+          "caminho": "PL-900/02-Power-Plataform-II"
+        },
+        {
+          "nome": "03-Power-BI",
+          "caminho": "PL-900/03-Power-BI"
+        },
+        {
+          "nome": "04-Power-Apps-I",
+          "caminho": "PL-900/04-Power-Apps-I"
+        },
+        {
+          "nome": "05-Power-Apps-II",
+          "caminho": "PL-900/05-Power-Apps-II"
+        },
+        {
+          "nome": "06-Power-Automate-I",
+          "caminho": "PL-900/06-Power-Automate-I"
+        },
+        {
+          "nome": "07-Power-Automate-II",
+          "caminho": "PL-900/07-Power-Automate-II"
+        },
+        {
+          "nome": "08-Power-Pages",
+          "caminho": "PL-900/08-Power-Pages"
+        },
+        {
+          "nome": "09-IA-Power-Plataform",
+          "caminho": "PL-900/09-IA-Power-Plataform"
+        },
+        {
+          "nome": "PL-900-BONUS/01-BONUS",
+          "caminho": "PL-900/PL-900-BONUS/01-BONUS"
+        },
+        {
+          "nome": "PL-900-BONUS/02-BONUS",
+          "caminho": "PL-900/PL-900-BONUS/02-BONUS"
+        }
+      ]
+    },
+    {
+      "codigo": "DP-900",
+      "pasta": "DP-900",
+      "titulo": "Fundamentos de Banco de Dados Azure",
+      "chamada": "Avalie seu preparo com perguntas focadas no exame",
+      "visivelNaHome": true,
+      "curso": "DP-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "DP-900/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "DP-900/02-SIMULADO"
+        },
+        {
+          "nome": "03-SIMULADO",
+          "caminho": "DP-900/03-SIMULADO"
+        },
+        {
+          "nome": "04-SIMULADO",
+          "caminho": "DP-900/04-SIMULADO"
+        },
+        {
+          "nome": "05-SIMULADO",
+          "caminho": "DP-900/05-SIMULADO"
+        },
+        {
+          "nome": "06-SIMULADO",
+          "caminho": "DP-900/06-SIMULADO"
+        },
+        {
+          "nome": "07-SIMULADO",
+          "caminho": "DP-900/07-SIMULADO"
+        },
+        {
+          "nome": "DP-900-bonus/01-SIMULADO",
+          "caminho": "DP-900/DP-900-bonus/01-SIMULADO"
+        },
+        {
+          "nome": "DP-900-bonus/02-SIMULADO",
+          "caminho": "DP-900/DP-900-bonus/02-SIMULADO"
+        }
+      ]
+    },
+    {
+      "codigo": "AI-900",
+      "pasta": "AI-900",
+      "titulo": "Fundamentos AI no Azure",
+      "chamada": "Desafie-se com questões no estilo da certificação",
+      "visivelNaHome": true,
+      "curso": "AI-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "AI-900/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "AI-900/02-SIMULADO"
+        },
+        {
+          "nome": "03-SIMULADO",
+          "caminho": "AI-900/03-SIMULADO"
+        },
+        {
+          "nome": "04-SIMULADO",
+          "caminho": "AI-900/04-SIMULADO"
+        },
+        {
+          "nome": "05-SIMULADO",
+          "caminho": "AI-900/05-SIMULADO"
+        },
+        {
+          "nome": "06-SIMULADO",
+          "caminho": "AI-900/06-SIMULADO"
+        },
+        {
+          "nome": "AI-900-bonus/01-SIMULADO",
+          "caminho": "AI-900/AI-900-bonus/01-SIMULADO"
+        },
+        {
+          "nome": "AI-900-bonus/02-SIMULADO",
+          "caminho": "AI-900/AI-900-bonus/02-SIMULADO"
+        }
+      ]
+    },
+    {
+      "codigo": "AI-901",
+      "pasta": "AI-901",
+      "titulo": "IA no Azure com Microsoft Foundry",
+      "chamada": "Conceitos de IA e soluções com o Microsoft Foundry",
+      "visivelNaHome": true,
+      "curso": "AI-901/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "AI-901/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "AI-901/02-SIMULADO"
+        },
+        {
+          "nome": "03-SIMULADO",
+          "caminho": "AI-901/03-SIMULADO"
+        },
+        {
+          "nome": "04-SIMULADO",
+          "caminho": "AI-901/04-SIMULADO"
+        },
+        {
+          "nome": "AI-900-bonus/01-SIMULADO",
+          "caminho": "AI-901/AI-900-bonus/01-SIMULADO"
+        },
+        {
+          "nome": "AI-900-bonus/02-SIMULADO",
+          "caminho": "AI-901/AI-900-bonus/02-SIMULADO"
+        }
+      ]
+    },
+    {
+      "codigo": "AB-900",
+      "pasta": "AB-900",
+      "titulo": "Fundamentos do Microsoft 365 Copilot",
+      "chamada": "Copilot, administração e governança do Microsoft 365",
+      "visivelNaHome": true,
+      "curso": "AB-900/curso.html",
+      "simulados": [
+        {
+          "nome": "01-SIMULADO",
+          "caminho": "AB-900/01-SIMULADO"
+        },
+        {
+          "nome": "02-SIMULADO",
+          "caminho": "AB-900/02-SIMULADO"
+        }
+      ]
+    }
+  ]
+}
