@@ -112,6 +112,7 @@ async function main() {
     const timerPath = path.join(jsDir, 'timer.js');
     const utilsPath = path.join(jsDir, 'utils.js');
     const renderPath = path.join(jsDir, 'render.js');
+    const phpPath = path.join(simuladoDir, 'enviar_problema.php');
     const localCssPath = path.join(simuladoDir, 'css', 'styles.css');
     const localCssDir = path.join(simuladoDir, 'css');
 
@@ -130,6 +131,7 @@ async function main() {
     await removeIfExists(timerPath, removals);
     await removeIfExists(utilsPath, removals);
     await removeIfExists(renderPath, removals);
+    await removeIfExists(phpPath, removals);
     await removeIfExists(localCssPath, removals);
     await removeDirectoryIfEmpty(localCssDir, removals);
   }

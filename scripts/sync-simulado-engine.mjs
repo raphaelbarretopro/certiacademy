@@ -7,9 +7,11 @@ const shouldWrite = process.argv.includes('--write');
 
 const commonSourceDir = path.join(rootDir, 'shared', 'simulado-engine', 'common');
 
-const commonFiles = [
-  'enviar_problema.php'
-];
+// Arquivos do motor compartilhado que ainda precisam de uma copia fisica dentro
+// de cada simulado. Hoje nenhum precisa: o runtime inteiro e consumido direto de
+// shared/simulado-engine, e o antigo enviar_problema.php foi substituido pelo
+// envio estatico em shared/simulado-engine/common/js/report.js.
+const commonFiles = [];
 
 async function pathExists(targetPath) {
   try {

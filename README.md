@@ -72,7 +72,7 @@ node scripts/validate-simulados.mjs
 Essa checagem valida automaticamente:
 - presença dos arquivos obrigatórios de cada simulado
 - inclusão única de `js/main.js` em cada `index.html`
-- estrutura esperada de `enviar_problema.php`
+- ausência de arquivos legados dentro dos simulados (como `enviar_problema.php`)
 - exportação de `questoes` nos arquivos de conteúdo
 - schema das questões por tipo (`unica`, `multipla`, `simnao`, `dragdrop`, `combobox`, `comboboxs`)
 - índices de resposta, metadados obrigatórios e links inválidos nos bancos de questões
@@ -81,7 +81,7 @@ O workflow de GitHub Pages também executa essa validação antes do deploy.
 
 ## Sincronização do Motor dos Simulados
 
-Os simulados compartilham o mesmo motor base em arquivos como `quiz.js`, `render.js`, `timer.js`, `main.js` e `enviar_problema.php`, todos concentrados em `shared`, enquanto cada simulado mantém apenas o banco `questoes.js`.
+Os simulados compartilham o mesmo motor base em arquivos como `quiz.js`, `render.js`, `timer.js`, `report.js` e `main.js`, todos concentrados em `shared`, enquanto cada simulado mantém apenas o banco `questoes.js`.
 
 Para checar se há divergências entre as cópias locais e a base canônica:
 
@@ -113,12 +113,43 @@ O repositório agora começou a eliminar duplicação física de runtime:
 - `js/render.js` deixou de existir nos simulados e passou a ser resolvido pelo bootstrap compartilhado, com exceção visual controlada para `AB-900/01-SIMULADO`
 - `js/quiz.js` deixou de existir nos simulados e passou a ser consumido diretamente de `shared/simulado-engine/common/js/quiz.js`
 - `js/timer.js` e `js/utils.js` deixaram de existir nos simulados e passaram a ser consumidos diretamente do shared
+- `enviar_problema.php` deixou de existir em todo o repositório: o envio do "Reportar Problema" passou a ser feito pelo módulo estático `shared/simulado-engine/common/js/report.js`
 
 Para reaplicar essa migração caso novos simulados sejam adicionados:
 
 ```
 node scripts/migrate-shared-runtime-assets.mjs --write
 ```
+
+## Envio do "Reportar Problema"
+
+O botão "Reportar Problema" dependia de `enviar_problema.php` e da função `mail()` do PHP, o que nunca funcionou no GitHub Pages — a publicação é 100% estática e não executa PHP. O envio agora sai direto do navegador para o [FormSubmit](https://formsubmit.co), que entrega a mensagem por e-mail sem backend próprio e sem chave secreta no código.
+
+Toda a lógica está em `shared/simulado-engine/common/js/report.js`, consumida pelo motor comum e pela variante `ab-900-01`. O HTML do modal e o CSS dos simulados não mudaram.
+
+O destino é definido em uma única constante:
+
+```js
+export const REPORT_ENDPOINT = 'https://formsubmit.co/ajax/raphael.boliveira@gmail.com';
+```
+
+### Ativação (uma única vez)
+
+O FormSubmit só encaminha mensagens depois que o endereço é confirmado:
+
+1. publique as alterações e abra qualquer simulado;
+2. envie um reporte de teste pelo botão "Reportar Problema";
+3. o FormSubmit enviará um e-mail de ativação para o endereço configurado — abra o link de confirmação.
+
+A partir daí todos os reportes chegam normalmente. Enquanto o endereço não estiver confirmado, o modal exibe "Erro ao enviar".
+
+### Ocultando o e-mail (opcional)
+
+Após a ativação, o painel do FormSubmit disponibiliza um alias no formato `https://formsubmit.co/ajax/<hash>`. Substituir o endereço por esse alias em `REPORT_ENDPOINT` evita que o e-mail fique exposto no código publicado, sem nenhuma outra mudança.
+
+### Dados enviados
+
+Cada reporte leva curso, simulado, número da questão, texto do usuário e a URL da página. Curso e simulado são derivados do caminho da URL, reproduzindo o que o PHP fazia com `basename(dirname(__DIR__))` e `basename(__DIR__)`.
 
 ## Utilitários de Conteúdo
 
@@ -166,7 +197,7 @@ Isso cria:
 - `curso.html`
 - `arquivos/.gitkeep`
 - um conjunto inicial de pastas `NN-SIMULADO`
-- `index.html`, `enviar_problema.php`, `js/questoes.js` e `img/.gitkeep` em cada simulado
+- `index.html`, `js/questoes.js` e `img/.gitkeep` em cada simulado
 - atualização automática do card do novo curso em `index.html`
 
 Para criar apenas um novo simulado dentro de um curso existente:

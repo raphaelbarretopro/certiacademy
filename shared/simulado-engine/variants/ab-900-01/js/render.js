@@ -1,3 +1,5 @@
+import { enviarProblema } from '../../../common/js/report.js';
+
 function getQuizApi() {
   const quizApi = window.CertiAcademyQuiz;
 
@@ -241,49 +243,10 @@ export function inicializarModalProblema() {
 
 // ==========================================
 // Função: Criar a função de envio
+// Descrição: A implementação vive em report.js, compartilhada por todas as
+//            variantes de renderização
 // ==========================================
-export function enviarProblema(indexQuestao) {
-  const texto = document.getElementById("textoProblema").value.trim();
-  if (!texto) {
-    alert("⚠️ Por favor, descreva o problema antes de enviar.");
-    return;
-  }
-
-  fetch('enviar_problema.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `questao=${indexQuestao + 1}&mensagem=${encodeURIComponent(texto)}`
-  })
-    .then(response => response.text())
-    .then(data => {
-      const modalContent = document.querySelector('.modal-content');
-      if (data.trim() === "ok") {
-        modalContent.innerHTML = `
-        <h2>Problema enviado com sucesso ✅</h2>
-        <p>Obrigado por nos ajudar a melhorar!</p>
-      `;
-        setTimeout(() => fecharModalReportar(), 2000);
-      } else {
-        modalContent.innerHTML = `
-        <h2>Erro ao enviar ❌</h2>
-        <p>Tente novamente mais tarde.</p>
-        <button onclick="window.location.reload()">Recarregar Página</button>
-      `;
-      }
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-      const modalContent = document.querySelector('.modal-content');
-      modalContent.innerHTML = `
-      <h2>Erro de comunicação ❌</h2>
-      <p>Servidor indisponível. Tente novamente mais tarde.</p>
-      <button onclick="window.location.reload()">Recarregar Página</button>
-    `;
-    });
-}
-
+export { enviarProblema };
 
 
 

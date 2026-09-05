@@ -7,8 +7,14 @@ const rootDir = process.cwd();
 
 const requiredFiles = [
   'index.html',
-  'enviar_problema.php',
   path.join('js', 'questoes.js')
+];
+
+// Arquivos que nao devem mais existir dentro dos simulados. O envio do
+// "Reportar Problema" deixou de depender de PHP para funcionar em hospedagem
+// estatica; a implementacao vive em shared/simulado-engine/common/js/report.js.
+const forbiddenFiles = [
+  'enviar_problema.php'
 ];
 
 const supportedQuestionTypes = new Set(['unica', 'multipla', 'simnao', 'dragdrop', 'combobox', 'comboboxs']);
@@ -359,8 +365,14 @@ async function validateSimulado(dirPath) {
     }
   }
 
+  for (const forbiddenFile of forbiddenFiles) {
+    const targetPath = path.join(dirPath, forbiddenFile);
+    if (await pathExists(targetPath)) {
+      errors.push(`${relativeDir}: arquivo legado deve ser removido: ${forbiddenFile.replaceAll('\\', '/')}`);
+    }
+  }
+
   const indexPath = path.join(dirPath, 'index.html');
-  const phpPath = path.join(dirPath, 'enviar_problema.php');
   const questoesPath = path.join(dirPath, 'js', 'questoes.js');
   const jsDirPath = path.join(dirPath, 'js');
 
@@ -385,18 +397,6 @@ async function validateSimulado(dirPath) {
       if (!await pathExists(stylesheetPath)) {
         errors.push(`${relativeDir}: stylesheet referenciado nao existe: ${stylesheetMatch[1]}`);
       }
-    }
-  }
-
-  if (await pathExists(phpPath)) {
-    const phpContent = await fs.readFile(phpPath, 'utf8');
-
-    if (phpContent.includes('Simulado SC-900')) {
-      errors.push(`${relativeDir}: enviar_problema.php ainda contem assunto hardcoded de SC-900`);
-    }
-
-    if (!phpContent.includes('basename(dirname(__DIR__))') || !phpContent.includes('basename(__DIR__)')) {
-      errors.push(`${relativeDir}: enviar_problema.php deve montar curso e simulado dinamicamente`);
     }
   }
 
