@@ -23,23 +23,30 @@ export function renderizarLista(questoes) {
   questoes.forEach((_, i) => {
     const li = document.createElement("li");
 
-    // Quadradinho verde se respondida
+    // Só o número: com 40 e poucas questões, um grid de quadrados se varre num
+    // relance, enquanto uma lista de "Questão N" ocupa a coluna inteira.
+    li.textContent = String(i + 1);
+    li.title = `Questão ${i + 1}`;
+    li.setAttribute('role', 'button');
+    li.setAttribute('tabindex', '0');
+    li.setAttribute('aria-label', `Ir para a questão ${i + 1}`);
+
     if (quiz.respostasUsuario.some(r => r.index === i)) {
-      const quadrado = document.createElement("span");
-      quadrado.className = "quadrado-verde";
-      li.appendChild(quadrado);
+      li.classList.add('answered');
+      li.title += ' — respondida';
     }
 
-    // Texto da questão
-    const texto = document.createElement("span");
-    texto.textContent = ` Questão ${i + 1}`;
-    li.appendChild(texto);
-
-    // Navegação direta
     li.onclick = () => quiz.irParaQuestao(i);
+    li.onkeydown = evento => {
+      if (evento.key === 'Enter' || evento.key === ' ') {
+        evento.preventDefault();
+        quiz.irParaQuestao(i);
+      }
+    };
 
     if (i === quiz.questaoAtual) {
       li.classList.add('active');
+      li.setAttribute('aria-current', 'true');
     }
 
     listaQuestoes.appendChild(li);

@@ -22,6 +22,10 @@ const manifestPath = path.join(rootDir, 'cursos.json');
 
 const NOTA_DE_CORTE = 700;
 
+// Escritas assim para o proprio gerador nao virar um campo minado de escapes.
+const LF = String.fromCharCode(10);
+const CRLF = String.fromCharCode(13, 10);
+
 const ROTULO_SITUACAO = {
   desativado: { texto: 'Exame desativado', classe: 'bg-red-100 text-red-800' },
   substituido: { texto: 'Substituído por outro exame', classe: 'bg-yellow-100 text-yellow-800' }
@@ -74,7 +78,10 @@ function rotuloSimulado(nome) {
   const numerado = base.match(/^(\d+)[-_](SIMULADO|BONUS)$/i);
 
   if (numerado) {
-    const tipo = numerado[2].toUpperCase() === 'BONUS' ? 'Bônus' : 'Simulado';
+    // O tipo vem do caminho inteiro, e nao so da ultima pasta: os bonus vivem
+    // em "CURSO-bonus/01-SIMULADO", que sozinho pareceria o simulado 01 e
+    // apareceria duplicado na navegacao lateral.
+    const tipo = ehBonus(nome) || numerado[2].toUpperCase() === 'BONUS' ? 'Bônus' : 'Simulado';
     return `${tipo} ${numerado[1]}`;
   }
 
@@ -816,12 +823,148 @@ ${cartoes}
 }
 
 // ==========================================
+// Pagina do simulado
+// Descricao: Os 46 index.html eram praticamente iguais e mantidos a mao, o que
+//            fazia a navegacao lateral envelhecer sozinha a cada simulado novo.
+//            Aqui eles saem do manifesto.
+//
+//            Todo id e classe usado pelo motor e preservado: listaQuestoes,
+//            questaoContainer, quiz, feedback, os quatro botoes de navegacao,
+//            progressoContainer, sidebar, sidebarDireita, modalProblema e
+//            botaoReportar. Mudar qualquer um deles quebra o quiz.js.
+// ==========================================
+function montarPaginaSimulado(curso, simulado, todosSimulados, tituloSimulado) {
+  const profundidade = simulado.nome.split('/').length;
+  const ateRaizCurso = '../'.repeat(profundidade);
+  const ateRaizSite = '../'.repeat(profundidade + 1);
+
+  const itens = todosSimulados.map(outro => {
+    const atual = outro.nome === simulado.nome ? ' class="atual" aria-current="page"' : '';
+    return '          <li><a href="' + ateRaizCurso + escapar(outro.nome) + '/index.html"' + atual + '>' +
+      escapar(outro.rotulo) + '</a></li>';
+  }).join('\n');
+
+  return '<!-- ==========================================\n' +
+'Arquivo: index.html\n' +
+'Descrição: Simulado ' + escapar(simulado.rotulo) + ' do curso ' + escapar(curso.codigo) + '.\n' +
+'           GERADO por scripts/gerar-paginas-curso.mjs a partir de cursos.json.\n' +
+'           Não edite à mão: altere o manifesto e rode o gerador.\n' +
+'========================================== -->\n' +
+'<!DOCTYPE html>\n' +
+'<html lang="pt-BR">\n' +
+'\n' +
+'<head>\n' +
+'  <meta charset="UTF-8" />\n' +
+'  <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n' +
+'  <title>' + escapar(tituloSimulado) + ' | ' + escapar(curso.codigo) + '</title>\n' +
+'  <link rel="stylesheet" href="' + ateRaizSite + 'shared/simulado-engine/common/css/styles.css" />\n' +
+'  <meta name="robots" content="noindex, nofollow">\n' +
+'</head>\n' +
+'\n' +
+'<body data-requer-sessao>\n' +
+'\n' +
+'  <div class="container">\n' +
+'\n' +
+'    <!-- Navegação pelas questões -->\n' +
+'    <aside class="sidebar">\n' +
+'      <p class="sidebar-titulo">Questões</p>\n' +
+'      <ul id="listaQuestoes"></ul>\n' +
+'    </aside>\n' +
+'\n' +
+'    <!-- Área da prova -->\n' +
+'    <main class="content">\n' +
+'      <button id="toggleSidebar" class="toggle-sidebar" type="button" aria-label="Mostrar ou ocultar a lista de questões">\n' +
+'        <span id="arrow" class="arrow">⮜</span>\n' +
+'      </button>\n' +
+'\n' +
+'      <div id="progressoContainer">\n' +
+'        <span id="textoProgresso"></span>\n' +
+'        <div class="barra-externa">\n' +
+'          <div class="barra-interna" id="barraProgresso"></div>\n' +
+'        </div>\n' +
+'      </div>\n' +
+'\n' +
+'      <div id="quiz">\n' +
+'        <div id="questaoContainer"></div>\n' +
+'      </div>\n' +
+'\n' +
+'      <div id="feedback" class="feedback hidden"></div>\n' +
+'\n' +
+'      <div class="acoes-questao">\n' +
+'        <button id="voltarBtn" class="btn-voltar hidden" type="button">Voltar questão</button>\n' +
+'        <button id="confirmarBtn" class="btn-confirmar" type="button">Confirmar</button>\n' +
+'        <button id="proximaBtn" class="btn-proxima hidden" type="button">Próxima questão</button>\n' +
+'        <button id="finalizarBtn" class="btn-finalizar hidden" type="button">Finalizar</button>\n' +
+'      </div>\n' +
+'\n' +
+'      <div id="resultadoFinal" class="results hidden"></div>\n' +
+'    </main>\n' +
+'\n' +
+'    <!-- Outros simulados deste curso -->\n' +
+'    <aside class="sidebarDireita">\n' +
+'      <p class="sidebarDireita-titulo">' + escapar(curso.codigo) + '</p>\n' +
+'      <ul class="lista-simulados">\n' +
+itens + '\n' +
+'      </ul>\n' +
+'    </aside>\n' +
+'\n' +
+'  </div>\n' +
+'\n' +
+'  <footer class="rodape-simulado">\n' +
+'    <a href="' + ateRaizCurso + 'curso.html" class="rf-btn rf-btn-secundario">Voltar ao curso</a>\n' +
+'  </footer>\n' +
+'\n' +
+'  <button id="botaoReportar" class="btn-reportar-flutuante hidden" type="button">Reportar problema</button>\n' +
+'\n' +
+'  <div id="modalProblema" class="modal hidden">\n' +
+'    <div class="modal-content">\n' +
+'      <h2>Reportar problema</h2>\n' +
+'      <textarea id="textoProblema" placeholder="Descreva o problema encontrado..." rows="6"></textarea>\n' +
+'      <div class="botoes-modal">\n' +
+'        <button id="enviarProblemaBtn" type="button">Enviar</button>\n' +
+'        <button id="cancelarProblemaBtn" type="button">Cancelar</button>\n' +
+'      </div>\n' +
+'    </div>\n' +
+'  </div>\n' +
+'\n' +
+'  <script type="module" src="' + ateRaizSite + 'shared/simulado-engine/common/js/app.js"></script>\n' +
+'\n' +
+'  <script>\n' +
+'    // Trocar de simulado descarta a sessão atual, então vale confirmar.\n' +
+'    document.querySelectorAll(".lista-simulados a:not(.atual)").forEach(link => {\n' +
+'      link.addEventListener("click", evento => {\n' +
+'        if (!confirm("Você perderá a sessão atual do simulado e ingressará em um novo simulado. Deseja continuar?")) {\n' +
+'          evento.preventDefault();\n' +
+'        }\n' +
+'      });\n' +
+'    });\n' +
+'\n' +
+'    // Recolher a lista de questões dá mais largura ao enunciado.\n' +
+'    const alternarSidebar = document.getElementById("toggleSidebar");\n' +
+'    const listaLateral = document.querySelector(".sidebar");\n' +
+'    const areaConteudo = document.querySelector(".content");\n' +
+'\n' +
+'    alternarSidebar.addEventListener("click", () => {\n' +
+'      const oculta = listaLateral.classList.toggle("hidden");\n' +
+'      areaConteudo.classList.toggle("expandido", oculta);\n' +
+'      document.getElementById("arrow").textContent = oculta ? "⮞" : "⮜";\n' +
+'      alternarSidebar.setAttribute("aria-expanded", String(!oculta));\n' +
+'    });\n' +
+'  </script>\n' +
+'\n' +
+'</body>\n' +
+'\n' +
+'</html>\n';
+}
+
+// ==========================================
 async function main() {
   const manifesto = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
   const pendentes = [];
   const geradas = [];
   const semDados = [];
   const resumoPorCurso = new Map();
+  let simuladosGerados = 0;
 
   for (const curso of manifesto.cursos) {
     if (!curso.exame) {
@@ -843,6 +986,28 @@ async function main() {
       }
 
       simulados.push({ nome: simulado.nome, rotulo: rotuloSimulado(simulado.nome), questoes: banco.questoes });
+    }
+
+    // paginas dos simulados
+    for (const simulado of simulados) {
+      const destinoSimulado = path.join(rootDir, curso.pasta, simulado.nome, 'index.html');
+      const tituloSimulado = curso.codigo + ' - ' + simulado.rotulo;
+      const htmlSimulado = montarPaginaSimulado(curso, simulado, simulados, tituloSimulado);
+
+      const atualSimulado = await pathExists(destinoSimulado)
+        ? await fs.readFile(destinoSimulado, 'utf8')
+        : null;
+      const crlfSimulado = atualSimulado !== null && atualSimulado.includes(CRLF);
+      const conteudoSimulado = crlfSimulado ? htmlSimulado.replaceAll(LF, CRLF) : htmlSimulado;
+
+      if (atualSimulado === conteudoSimulado) continue;
+
+      if (shouldWrite) {
+        await fs.writeFile(destinoSimulado, conteudoSimulado, 'utf8');
+        simuladosGerados++;
+      } else {
+        pendentes.push(curso.pasta + '/' + simulado.nome);
+      }
     }
 
     resumoPorCurso.set(curso.codigo, {
@@ -888,9 +1053,13 @@ async function main() {
   }
 
   if (shouldWrite) {
-    console.log(geradas.length === 0
+    const partes = [];
+    if (geradas.length > 0) partes.push(`paginas: ${geradas.join(', ')}`);
+    if (simuladosGerados > 0) partes.push(`${simuladosGerados} index.html de simulado`);
+
+    console.log(partes.length === 0
       ? 'Nenhuma pagina precisava ser regerada.'
-      : `Paginas geradas: ${geradas.join(', ')}`);
+      : `Gerado -> ${partes.join(' | ')}`);
     return;
   }
 
