@@ -641,8 +641,9 @@ Descrição: Página inicial do CertiAcademy.
   <!-- Hero -->
   <section class="heroi text-white">
     <div class="container mx-auto px-6 py-20 max-w-5xl">
-      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-5 max-w-3xl">
-        Descubra o que você ainda erra antes que a prova descubra
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-5 max-w-4xl">
+        Simule o exame como ele realmente é: resposta única, múltipla escolha, Sim/Não, arrastar e soltar, lista
+        suspensa e múltiplas listas
       </h1>
       <p class="text-lg text-blue-50 mb-9 max-w-2xl">
         Simulados no formato real das certificações Microsoft, com a mesma escala de 1000 pontos e a mesma nota de
