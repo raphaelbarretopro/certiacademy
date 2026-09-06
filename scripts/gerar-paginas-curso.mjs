@@ -479,11 +479,348 @@ ${blocoPlano(exame, principais[0])}
 }
 
 // ==========================================
+// Home
+// ==========================================
+const SITUACAO_HOME = {
+  desativado: { texto: 'Exame desativado', classe: 'bg-red-100 text-red-700' },
+  substituido: { texto: 'Substituído', classe: 'bg-yellow-100 text-yellow-800' }
+};
+
+function cartaoCurso(curso, dados) {
+  const situacao = SITUACAO_HOME[curso.exame.situacao];
+  const selo = situacao
+    ? `
+          <span class="text-[10px] font-bold uppercase tracking-wide ${situacao.classe} rounded-full px-2 py-0.5 flex-none">${situacao.texto}</span>`
+    : '';
+
+  return `        <a href="./${escapar(curso.curso)}"
+          class="group bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-lg hover:border-blue-200 transition flex flex-col">
+          <div class="flex items-start justify-between gap-2 mb-3">
+            <span class="text-2xl font-bold text-blue-600">${escapar(curso.codigo)}</span>${selo}
+          </div>
+          <h3 class="font-semibold leading-snug mb-1">${escapar(curso.exame.nome)}</h3>
+          <p class="text-sm text-gray-500 mb-5 flex-grow">${escapar(curso.titulo)}</p>
+          <div class="flex items-center justify-between text-sm">
+            <span class="text-gray-500 num">${dados.questoes} questões · ${dados.simulados} simulados</span>
+            <span class="text-blue-600 font-medium group-hover:translate-x-0.5 transition-transform">→</span>
+          </div>
+        </a>`;
+}
+
+async function montarHome(manifesto, resumoPorCurso) {
+  const visiveis = manifesto.cursos.filter(c => c.visivelNaHome !== false && c.exame);
+
+  // Exames correntes primeiro; os em transição vão para o fim da grade.
+  const ordenados = [...visiveis].sort((a, b) => {
+    const peso = c => (c.exame.situacao === 'ativo' ? 0 : 1);
+    return peso(a) - peso(b);
+  });
+
+  const totalQuestoes = ordenados.reduce((s, c) => s + resumoPorCurso.get(c.codigo).questoes, 0);
+  const totalSimulados = ordenados.reduce((s, c) => s + resumoPorCurso.get(c.codigo).simulados, 0);
+
+  const cartoes = ordenados.map(c => cartaoCurso(c, resumoPorCurso.get(c.codigo))).join('\n');
+
+  return `<!-- ==========================================
+Arquivo: index.html
+Descrição: Página inicial do CertiAcademy.
+           GERADO por scripts/gerar-paginas-curso.mjs a partir de cursos.json.
+           Não edite à mão: altere o manifesto e rode o gerador.
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CertiAcademy | Simulados para certificações Microsoft</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .heroi {
+      background: linear-gradient(135deg, #0B5FA5 0%, #0078D4 55%, #2b8fe0 100%);
+    }
+
+    .heroi-numero {
+      font-size: 2.25rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+
+    /* Transparencias escritas a mao: a sintaxe de opacidade com barra, como
+       border-white/40, so existe a partir do Tailwind 3, e o projeto usa o 2. */
+    .btn-hero-secundario {
+      border: 1px solid rgba(255, 255, 255, .45);
+      transition: background-color .15s;
+    }
+
+    .btn-hero-secundario:hover {
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .heroi-divisoria {
+      border-top: 1px solid rgba(255, 255, 255, .25);
+    }
+
+    details.faq {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 0;
+    }
+
+    details.faq > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: baseline;
+    }
+
+    details.faq > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.faq > summary::after {
+      content: "+";
+      color: #0078D4;
+      font-weight: 700;
+      flex: none;
+    }
+
+    details.faq[open] > summary::after {
+      content: "−";
+    }
+
+    details.faq p {
+      margin-top: .7rem;
+      color: #4b5563;
+      line-height: 1.65;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Cabeçalho -->
+  <header class="bg-white shadow-sm sticky top-0 z-20">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center gap-4">
+      <a href="./"><img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-11"></a>
+      <nav class="flex items-center gap-3 text-sm">
+        <a href="#certificacoes" class="hidden sm:inline hover:text-blue-600">Certificações</a>
+        <a href="#como-funciona" class="hidden sm:inline hover:text-blue-600">Como funciona</a>
+        <a href="./dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
+        <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="heroi text-white">
+    <div class="container mx-auto px-6 py-20 max-w-5xl">
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-5 max-w-3xl">
+        Descubra o que você ainda erra antes que a prova descubra
+      </h1>
+      <p class="text-lg text-blue-50 mb-9 max-w-2xl">
+        Simulados no formato real das certificações Microsoft, com a mesma escala de 1000 pontos e a mesma nota de
+        corte de 700. Ao terminar, você vê exatamente em quais assuntos precisa voltar.
+      </p>
+
+      <div class="flex flex-wrap gap-3 mb-14">
+        <a href="#certificacoes"
+          class="bg-white text-blue-700 font-semibold px-7 py-3 rounded-lg shadow hover:bg-blue-50">
+          Escolher certificação
+        </a>
+        <a href="./dashboard.html"
+          class="btn-hero-secundario text-white font-semibold px-7 py-3 rounded-lg">
+          Ver meu desempenho
+        </a>
+      </div>
+
+      <dl class="grid grid-cols-3 gap-6 max-w-2xl heroi-divisoria pt-8">
+        <div>
+          <dt class="text-blue-100 text-sm mb-1">Questões</dt>
+          <dd class="heroi-numero num">${totalQuestoes.toLocaleString('pt-BR')}</dd>
+        </div>
+        <div>
+          <dt class="text-blue-100 text-sm mb-1">Simulados</dt>
+          <dd class="heroi-numero num">${totalSimulados}</dd>
+        </div>
+        <div>
+          <dt class="text-blue-100 text-sm mb-1">Certificações</dt>
+          <dd class="heroi-numero num">${ordenados.length}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Certificações -->
+  <section id="certificacoes" class="container mx-auto px-6 py-16 max-w-6xl">
+    <h2 class="text-3xl font-bold mb-2">Escolha sua certificação</h2>
+    <p class="text-gray-600 mb-10 max-w-2xl">
+      Cada curso traz as áreas oficiais do exame com seus pesos, os simulados disponíveis e o material de apoio.
+    </p>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+${cartoes}
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section id="como-funciona" class="bg-white border-t border-b border-gray-100">
+    <div class="container mx-auto px-6 py-16 max-w-6xl">
+      <h2 class="text-3xl font-bold mb-2">Por que treinar aqui</h2>
+      <p class="text-gray-600 mb-10 max-w-2xl">
+        A ideia não é decorar respostas: é chegar na prova sabendo onde você está.
+      </p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div>
+          <div class="text-blue-600 text-3xl mb-3">◧</div>
+          <h3 class="font-semibold mb-2">Os seis formatos da prova</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Resposta única, múltipla escolha, Sim/Não, arrastar e soltar, lista suspensa e múltiplas listas &mdash; os
+            mesmos tipos que aparecem no exame oficial.
+          </p>
+        </div>
+        <div>
+          <div class="text-blue-600 text-3xl mb-3">◑</div>
+          <h3 class="font-semibold mb-2">A régua é a mesma</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Escala de 1000 pontos e nota de corte em 700, como na Microsoft. Sua pontuação aqui significa a mesma coisa
+            que significaria lá.
+          </p>
+        </div>
+        <div>
+          <div class="text-blue-600 text-3xl mb-3">◔</div>
+          <h3 class="font-semibold mb-2">Resposta comentada na hora</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Cada questão traz a explicação do porquê e um link para a documentação oficial em português. Errar vira
+            estudo, não frustração.
+          </p>
+        </div>
+        <div>
+          <div class="text-blue-600 text-3xl mb-3">◕</div>
+          <h3 class="font-semibold mb-2">Seu histórico não some</h3>
+          <p class="text-sm text-gray-600 leading-relaxed">
+            Cada prova concluída entra no seu painel, com evolução no tempo e o aproveitamento por assunto. É ele que
+            diz o que revisar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Perguntas -->
+  <section class="container mx-auto px-6 py-16 max-w-3xl">
+    <h2 class="text-3xl font-bold mb-8">Perguntas frequentes</h2>
+
+    <details class="faq">
+      <summary>Preciso criar conta para fazer os simulados?</summary>
+      <p>Sim. A conta é criada com seu login do Google, sem senha nova para lembrar, e existe para guardar o seu
+        histórico: sem ela não haveria como mostrar sua evolução nem o seu aproveitamento por assunto.</p>
+    </details>
+
+    <details class="faq">
+      <summary>As questões são iguais às da prova oficial?</summary>
+      <p>Não, e nem poderiam ser: o conteúdo do exame é confidencial. As questões seguem os mesmos formatos, o mesmo
+        nível e as mesmas áreas oficiais, com os pesos que a Microsoft publica no guia de estudo de cada exame.</p>
+    </details>
+
+    <details class="faq">
+      <summary>O que significa a pontuação que eu recebo?</summary>
+      <p>A mesma coisa que na prova real. Os 1000 pontos são distribuídos entre os acertos possíveis do simulado, e 700
+        é a nota de corte oficial da Microsoft. Acima disso, você passaria.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Posso refazer um simulado?</summary>
+      <p>Quantas vezes quiser. Cada tentativa entra no histórico, então dá para ver se você está realmente melhorando
+        ou apenas repetindo as mesmas respostas.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Por que alguns exames aparecem como desativados?</summary>
+      <p>Porque a Microsoft aposenta e substitui exames de tempos em tempos. Quando isso acontece, mantemos o curso no
+        ar com um aviso na página, já que o conteúdo continua útil &mdash; mas você não conseguiria mais agendar
+        aquela prova.</p>
+    </details>
+
+    <details class="faq">
+      <summary>Como agendo o exame oficial?</summary>
+      <p>Pela página do exame no Microsoft Learn, que fica linkada em cada curso aqui. O preço varia por país, e as
+        certificações de nível fundamentals não expiram.</p>
+    </details>
+  </section>
+
+  <!-- Chamada final -->
+  <section class="bg-blue-600 text-white">
+    <div class="container mx-auto px-6 py-16 max-w-3xl text-center">
+      <h2 class="text-3xl font-bold mb-4">Comece pelo simulado, não pela apostila</h2>
+      <p class="text-blue-50 mb-8">
+        Um simulado inicial mostra em minutos onde está a sua lacuna. O estudo depois fica muito mais curto.
+      </p>
+      <a href="#certificacoes"
+        class="inline-block bg-white text-blue-700 font-semibold px-8 py-3 rounded-lg shadow hover:bg-blue-50">
+        Escolher certificação
+      </a>
+    </div>
+  </section>
+
+  <footer class="bg-gray-800 text-gray-300 py-10">
+    <div class="container mx-auto px-6 text-center text-sm">
+      <p class="mb-4">© 2026 CertiAcademy</p>
+      <div class="flex justify-center gap-6">
+        <a href="#certificacoes" class="hover:text-white">Certificações</a>
+        <a href="./dashboard.html" class="hover:text-white">Meu desempenho</a>
+        <a href="./privacidade.html" class="hover:text-white">Privacidade</a>
+        <a href="mailto:raphael.boliveira@gmail.com" class="hover:text-white">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { montarHeaderSessao } from './shared/simulado-engine/common/js/header-sessao.js';
+
+    montarHeaderSessao(document.getElementById('sessaoHeader'));
+  </script>
+
+</body>
+
+</html>
+`;
+}
+
+// ==========================================
 async function main() {
   const manifesto = JSON.parse(await fs.readFile(manifestPath, 'utf8'));
   const pendentes = [];
   const geradas = [];
   const semDados = [];
+  const resumoPorCurso = new Map();
 
   for (const curso of manifesto.cursos) {
     if (!curso.exame) {
@@ -507,6 +844,11 @@ async function main() {
       simulados.push({ nome: simulado.nome, rotulo: rotuloSimulado(simulado.nome), questoes: banco.questoes });
     }
 
+    resumoPorCurso.set(curso.codigo, {
+      questoes: simulados.reduce((soma, s) => soma + s.questoes, 0),
+      simulados: simulados.length
+    });
+
     const html = await montarPagina(curso, exame, simulados, emPreparacao);
     const destino = path.join(rootDir, curso.curso);
 
@@ -521,6 +863,22 @@ async function main() {
       geradas.push(`${curso.codigo} (${simulados.length} simulados)`);
     } else {
       pendentes.push(curso.codigo);
+    }
+  }
+
+  // ---------- home ----------
+  const htmlHome = await montarHome(manifesto, resumoPorCurso);
+  const destinoHome = path.join(rootDir, 'index.html');
+  const atualHome = await pathExists(destinoHome) ? await fs.readFile(destinoHome, 'utf8') : null;
+  const usaCrlfHome = atualHome !== null && atualHome.includes('\r\n');
+  const conteudoHome = usaCrlfHome ? htmlHome.replaceAll('\n', '\r\n') : htmlHome;
+
+  if (atualHome !== conteudoHome) {
+    if (shouldWrite) {
+      await fs.writeFile(destinoHome, conteudoHome, 'utf8');
+      geradas.push('index.html');
+    } else {
+      pendentes.push('index.html');
     }
   }
 
