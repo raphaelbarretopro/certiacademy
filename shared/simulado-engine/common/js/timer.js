@@ -59,19 +59,9 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
   if (!cronometroDiv) {
     cronometroDiv = document.createElement("div");
     cronometroDiv.id = "cronometroContainer";
-    cronometroDiv.style.position = "fixed";
-    cronometroDiv.style.top = "0";
-    cronometroDiv.style.left = "0";
-    // left+right em vez de width:100%: com barra de rolagem presente, os dois
-    // nao dao o mesmo resultado em todos os navegadores, e a barra passava por
-    // baixo dela levando o botao de sair para fora da area visivel.
-    cronometroDiv.style.right = "0";
-    // Sem border-box, o padding ainda somaria a largura resultante.
-    cronometroDiv.style.boxSizing = "border-box";
-    cronometroDiv.style.zIndex = "9999";
-    // Cor, altura, tipografia e disposicao ficam no CSS compartilhado. Em
-    // estilo inline elas venciam as media queries, e no celular o tempo,
-    // o nome do aluno e os botoes se sobrepunham na mesma linha.
+    // Posicao, cor, altura e tipografia ficam no CSS compartilhado. Em estilo
+    // inline elas venciam as media queries, e no celular a barra precisa
+    // trocar de lugar: la ela fica no rodape, ao alcance do polegar.
     cronometroDiv.innerHTML =
       "<span class='barra-tempo'>" +
       "<span class='barra-tempo-icone' aria-hidden='true'>⏳</span>" +

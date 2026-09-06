@@ -737,6 +737,15 @@ Cronômetro
    nao dependem de JavaScript. */
 #cronometroContainer,
 #sessaoContainer {
+  position: fixed;
+  top: 0;
+  /* left + right em vez de width: 100%: com barra de rolagem presente os dois
+     não dão o mesmo resultado, e a barra passava por baixo dela levando o
+     botão de sair para fora da área visível. */
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  box-sizing: border-box;
   height: var(--sim-barra-altura);
   display: flex;
   align-items: center;
@@ -747,6 +756,27 @@ Cronômetro
   background: var(--sim-barra-fundo);
   color: var(--sim-tinta);
   box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .06);
+}
+
+/* O hambúrguer só existe no celular; no desktop as mesmas ações estão à vista
+   nas colunas e no rodapé. */
+.barra-menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--sim-linha);
+  border-radius: 10px;
+  background: var(--sim-superficie);
+  color: var(--sim-tinta);
+  cursor: pointer;
+}
+
+.barra-menu:hover {
+  background: var(--sim-superficie-2);
 }
 
 /* Tempo restante */
@@ -839,6 +869,169 @@ Descricao: Montado por session-ui.js. O estilo mora aqui, e nao em estilo
 
 .sessao-sair:hover {
   background: var(--sim-superficie-2);
+}
+
+
+/* ==========================================
+Menu lateral do celular
+Descrição: Aberto pelo hambúrguer da barra inferior. Reúne o que não cabe
+           numa barra de três itens: identidade, desempenho, abortar, voltar
+           ao curso, reportar problema e privacidade.
+========================================== */
+.menu-lateral {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+}
+
+.menu-fundo {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, .45);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.menu-lateral.aberto .menu-fundo {
+  opacity: 1;
+}
+
+.menu-painel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(300px, 84vw);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  background: var(--sim-superficie);
+  box-shadow: 2px 0 16px rgba(0, 0, 0, .18);
+  transform: translateX(-100%);
+  transition: transform .2s ease;
+}
+
+.menu-lateral.aberto .menu-painel {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-fundo,
+  .menu-painel {
+    transition: none;
+  }
+}
+
+.menu-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sim-tinta-3);
+  cursor: pointer;
+}
+
+.menu-fechar:hover {
+  background: var(--sim-superficie-2);
+  color: var(--sim-tinta);
+}
+
+/* 1ª linha: a marca. */
+.menu-logo {
+  width: 150px;
+  max-width: 70%;
+  height: auto;
+}
+
+/* 2ª linha: quem está fazendo a prova. */
+.menu-aluno {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--sim-linha);
+}
+
+.menu-aluno-foto {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.menu-aluno-nome {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--sim-tinta);
+  font-size: 1rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 3ª à 7ª linha: cada ação com o seu ícone. */
+.menu-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--sim-tinta-2);
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: var(--sim-superficie-2);
+  color: var(--sim-tinta);
+}
+
+.menu-icone {
+  flex: none;
+  color: var(--sim-tinta-3);
+}
+
+.menu-item:hover .menu-icone {
+  color: var(--sim-azul);
+}
+
+/* Abortar é destrutivo: a cor avisa antes do toque. */
+.menu-item-abortar,
+.menu-item-abortar .menu-icone {
+  color: var(--sim-vermelho);
+}
+
+/* Com o menu aberto, a página atrás não rola junto. */
+body.menu-aberto {
+  overflow: hidden;
 }
 
 /* ==========================================
@@ -959,7 +1152,9 @@ Botão Reportar Problema
 .modal {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  /* Acima da barra do simulado (9999) e do menu lateral (10000): no celular a
+     barra fica no rodape, e com z-index menor ela cobria os botoes do modal. */
+  z-index: 10001;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1112,99 +1307,7 @@ select[id^="combo-"]:focus {
 /* ==========================================
 Estilo Celular e Tablets
 ========================================== */
-@media (max-width: 1180px) {
-  .container {
-    gap: 16px;
-    padding-left: 16px;
-    padding-right: 16px;
-  }
 
-  .sidebarDireita-coluna,
-  .container > .sidebarDireita {
-    flex-basis: 190px;
-  }
-}
-
-@media (max-width: 940px) {
-  /* Nas telas estreitas as colunas laterais viram blocos empilhados: manter
-     tres colunas espremeria o enunciado, que e o que importa durante a prova. */
-  .container {
-    flex-direction: column;
-    align-items: stretch;
-    padding-top: calc(var(--sim-barra-altura) + 16px);
-  }
-
-  .sidebar,
-  .sidebarDireita-coluna,
-  .container > .sidebarDireita {
-    position: static;
-    flex-basis: auto;
-    max-height: none;
-    width: 100%;
-  }
-
-  .content,
-  .content.expandido,
-  .content.content-resultado {
-    max-width: 100%;
-    padding: 22px 18px 26px;
-  }
-
-  .sidebar ul {
-    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
-  }
-
-  /* No celular a coluna comeca recolhida: quem abre o simulado quer ler o
-     enunciado, nao a grade de numeros. O estado inicial vem daqui, e nao do
-     script, para a lista nao piscar aberta antes de o JavaScript rodar. */
-  .sidebar {
-    display: none;
-  }
-
-  .sidebar[data-aberta="sim"] {
-    display: block;
-  }
-
-  /* Com a coluna recolhida, o botao deixa de ser um icone solto no canto e
-     vira o cabecalho da lista, com rotulo e area de toque de verdade. */
-  .toggle-sidebar {
-    position: static;
-    width: 100%;
-    height: 44px;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding: 0 14px;
-    color: var(--sim-tinta);
-  }
-
-  .toggle-sidebar-texto {
-    display: inline;
-  }
-
-  /* O botao ja diz "Questoes"; o titulo dentro da coluna repetiria a palavra
-     logo abaixo dele. */
-  .sidebar-titulo {
-    display: none;
-  }
-
-  /* Seta para baixo quando fechada e para cima quando aberta, a convencao de
-     qualquer bloco que expande. */
-  .toggle-sidebar .toggle-sidebar-seta {
-    transform: rotate(90deg);
-  }
-
-  .toggle-sidebar[aria-expanded="false"] .toggle-sidebar-seta {
-    transform: rotate(-90deg);
-  }
-
-  .acoes-questao .btn-voltar {
-    margin-right: 0;
-  }
-
-  .acoes-questao button {
-    flex: 1 1 auto;
-  }
-}
 
 /* ==========================================
 Barra superior no celular
@@ -1213,64 +1316,7 @@ Descricao: Em uma linha so, o tempo (centralizado) e o bloco do aluno
            linhas: aluno em cima, tempo embaixo. A altura e um token, entao o
            container ja desce sozinho.
 ========================================== */
-@media (max-width: 720px) {
-  :root {
-    --sim-barra-altura: 84px;
-  }
 
-  #cronometroContainer,
-  #sessaoContainer {
-    flex-direction: column;
-    justify-content: center;
-    gap: 4px;
-    padding: 8px 12px;
-  }
-
-  #sessaoUsuario {
-    position: static;
-    transform: none;
-    width: 100%;
-    justify-content: flex-end;
-    gap: 8px;
-  }
-
-  .sessao-nome {
-    margin-right: auto;
-  }
-
-  .sessao-desempenho {
-    padding: 0 6px;
-  }
-
-  .barra-tempo {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 560px) {
-  body {
-    font-size: 15px;
-  }
-
-  /* Nome longo mais os dois botoes nao cabem: o rotulo do tempo sai e ficam
-     a ampulheta e os digitos, que e o que precisa ser lido de relance. */
-  .barra-tempo-rotulo {
-    display: none;
-  }
-
-  .sessao-desempenho,
-  .sessao-sair {
-    padding: 0 8px;
-    font-size: .8125rem;
-  }
-
-  .btn-reportar-flutuante {
-    right: 12px;
-    bottom: 12px;
-    padding: 9px 14px;
-    font-size: .8rem;
-  }
-}
 
 /* ==========================================
 Resultado final
@@ -1796,3 +1842,205 @@ Descricao: usado no lugar do <select> nativo nas questoes de lista suspensa.
   pointer-events: none;
 }
 
+/* ==========================================
+Telas estreitas
+Descrição: Estes blocos ficam no fim do arquivo de propósito. Media query não
+           acrescenta especificidade, então uma regra declarada depois, com o
+           mesmo seletor, venceria — foi o que aconteceu com o rodapé, que
+           continuava visível no celular. Aqui embaixo, o responsivo sempre
+           vence o padrão.
+========================================== */
+@media (max-width: 1180px) {
+  .container {
+    gap: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .sidebarDireita-coluna,
+  .container > .sidebarDireita {
+    flex-basis: 190px;
+  }
+}
+
+@media (max-width: 940px) {
+  /* Nas telas estreitas as colunas laterais viram blocos empilhados: manter
+     tres colunas espremeria o enunciado, que e o que importa durante a prova. */
+  .container {
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: calc(var(--sim-barra-altura) + 16px);
+  }
+
+  .sidebar,
+  .sidebarDireita-coluna,
+  .container > .sidebarDireita {
+    position: static;
+    flex-basis: auto;
+    max-height: none;
+    width: 100%;
+  }
+
+  .content,
+  .content.expandido,
+  .content.content-resultado {
+    max-width: 100%;
+    padding: 22px 18px 26px;
+  }
+
+  .sidebar ul {
+    grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
+  }
+
+  /* No celular a coluna comeca recolhida: quem abre o simulado quer ler o
+     enunciado, nao a grade de numeros. O estado inicial vem daqui, e nao do
+     script, para a lista nao piscar aberta antes de o JavaScript rodar. */
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar[data-aberta="sim"] {
+    display: block;
+  }
+
+  /* Com a coluna recolhida, o botao deixa de ser um icone solto no canto e
+     vira o cabecalho da lista, com rotulo e area de toque de verdade. */
+  .toggle-sidebar {
+    position: static;
+    width: 100%;
+    height: 44px;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 0 14px;
+    color: var(--sim-tinta);
+  }
+
+  .toggle-sidebar-texto {
+    display: inline;
+  }
+
+  /* O botao ja diz "Questoes"; o titulo dentro da coluna repetiria a palavra
+     logo abaixo dele. */
+  .sidebar-titulo {
+    display: none;
+  }
+
+  /* Seta para baixo quando fechada e para cima quando aberta, a convencao de
+     qualquer bloco que expande. */
+  .toggle-sidebar .toggle-sidebar-seta {
+    transform: rotate(90deg);
+  }
+
+  .toggle-sidebar[aria-expanded="false"] .toggle-sidebar-seta {
+    transform: rotate(-90deg);
+  }
+
+  .acoes-questao .btn-voltar {
+    margin-right: 0;
+  }
+
+  .acoes-questao button {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --sim-barra-altura: 60px;
+  }
+
+  /* A barra troca o topo pelo rodapé: no celular o polegar alcança a base da
+     tela, e é lá que os aplicativos põem os controles. O env() reserva a faixa
+     do indicador de gestos do iPhone, senão o botão de sair fica embaixo dele. */
+  #cronometroContainer,
+  #sessaoContainer {
+    top: auto;
+    bottom: 0;
+    height: calc(var(--sim-barra-altura) + env(safe-area-inset-bottom, 0px));
+    padding: 0 12px env(safe-area-inset-bottom, 0px);
+    justify-content: space-between;
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, .1), 0 -1px 2px rgba(0, 0, 0, .06);
+  }
+
+  .barra-menu {
+    display: inline-flex;
+  }
+
+  /* Centralizado na barra, e não entre os vizinhos: assim o tempo fica no meio
+     da tela mesmo com o hambúrguer e o botão de sair tendo larguras
+     diferentes. */
+  .barra-tempo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  /* O ícone e o rótulo saem: o número sozinho, grande, se lê de relance. */
+  .barra-tempo-icone,
+  .barra-tempo-rotulo {
+    display: none;
+  }
+
+  /* Da barra sobra só o sair; foto, nome e desempenho vivem no menu lateral. */
+  #sessaoUsuario {
+    position: static;
+    transform: none;
+    gap: 8px;
+  }
+
+  .sessao-foto,
+  .sessao-nome,
+  .sessao-desempenho {
+    display: none;
+  }
+
+  .sessao-sair {
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  /* Com a barra embaixo, o conteúdo começa no topo e sobra espaço no fim. */
+  .container {
+    padding-top: 16px;
+    padding-bottom: calc(var(--sim-barra-altura) + env(safe-area-inset-bottom, 0px) + 24px);
+  }
+
+  .sidebar {
+    top: 16px;
+  }
+
+  /* Estes três passaram para o menu lateral. Continuam no DOM porque o menu
+     clica neles: o comportamento fica num lugar só. */
+  .abortar-wrapper,
+  .rodape-simulado,
+  .btn-reportar-flutuante {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  body {
+    font-size: 15px;
+  }
+
+  /* Nome longo mais os dois botoes nao cabem: o rotulo do tempo sai e ficam
+     a ampulheta e os digitos, que e o que precisa ser lido de relance. */
+  .barra-tempo-rotulo {
+    display: none;
+  }
+
+  .sessao-desempenho,
+  .sessao-sair {
+    padding: 0 8px;
+    font-size: .8125rem;
+  }
+
+  .btn-reportar-flutuante {
+    right: 12px;
+    bottom: 12px;
+    padding: 9px 14px;
+    font-size: .8rem;
+  }
+}

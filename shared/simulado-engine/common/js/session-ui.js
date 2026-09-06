@@ -30,11 +30,6 @@ function obterBarraSuperior() {
 
   const barra = document.createElement('div');
   barra.id = 'sessaoContainer';
-  barra.style.position = 'fixed';
-  barra.style.top = '0';
-  barra.style.left = '0';
-  barra.style.width = '100%';
-  barra.style.zIndex = '9999';
   document.body.prepend(barra);
 
   return barra;

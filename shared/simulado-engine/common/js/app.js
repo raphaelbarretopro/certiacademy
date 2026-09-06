@@ -11,6 +11,7 @@
 
 import { exigirSessao } from './auth.js';
 import { montarBadgeSessao, revelarPagina, mostrarFalhaDeSessao } from './session-ui.js';
+import { montarMenuMobile } from './menu-mobile.js';
 
 const pageUrl = new URL(window.location.href);
 const currentPagePath = pageUrl.pathname.replace(/\\/g, '/');
@@ -107,6 +108,10 @@ function iniciarSimulado() {
 
   // Depois do cronômetro, para que o badge entre na barra que ele cria.
   montarBadgeSessao(perfil);
+
+  // Depois do badge e do quiz: o menu do celular espelha o estado dos botões
+  // que o quiz cria (abortar) e que o render libera (reportar).
+  montarMenuMobile(perfil);
 
   restaurarEstadoVisual();
 }
