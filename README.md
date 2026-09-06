@@ -183,6 +183,23 @@ A validação do repositório recusa o build quando um card de `index.html` apon
 
 Para tirar um curso da home sem removê-lo do repositório, marque `"visivelNaHome": false` no manifesto e retire o card correspondente de `index.html`.
 
+### Páginas de curso
+
+As páginas `CURSO/curso.html` são **geradas** a partir do manifesto — não edite à mão:
+
+```
+node scripts/gerar-paginas-curso.mjs --write
+```
+
+Cada curso traz no manifesto um objeto `exame` com os dados do guia de estudo oficial: nome, resumo, data das habilidades, situação, áreas avaliadas com peso e tópicos, e a documentação recomendada. A estrutura de simulados e a contagem de questões vêm do disco, então nunca ficam desatualizadas.
+
+O gerador reconhece duas situações:
+
+- **simulado em preparação** — banco ainda com a questão de exemplo (`Conteúdo em atualização`). Fica fora da lista, e a página informa quantos estão a caminho;
+- **exame desativado ou substituído** — a página abre com um aviso explicando a situação, como no MS-900 e no AI-900.
+
+Sem `--write` o script apenas compara e falha se alguma página estiver fora de sincronia; é assim que o CI garante que ninguém edite o HTML gerado à mão.
+
 ## Sincronização do Motor dos Simulados
 
 Os simulados compartilham o mesmo motor base em arquivos como `quiz.js`, `render.js`, `timer.js`, `report.js` e `main.js`, todos concentrados em `shared`, enquanto cada simulado mantém apenas o banco `questoes.js`.

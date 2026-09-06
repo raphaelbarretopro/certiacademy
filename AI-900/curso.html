@@ -1,3 +1,9 @@
+<!-- ==========================================
+Arquivo: curso.html
+Descrição: Página do curso preparatório para o exame AI-900.
+           GERADO por scripts/gerar-paginas-curso.mjs a partir de cursos.json.
+           Não edite à mão: altere o manifesto e rode o gerador.
+========================================== -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -6,322 +12,471 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Curso Preparatório AI-900 | CertiAcademy</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    header {
-      border-bottom: 4px solid #0078D4;
+    .num {
+      font-variant-numeric: tabular-nums;
     }
 
-    .text-blue-600 {
+    .tile-valor {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+
+    .trilha {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .trilha-preenchida {
+      display: block;
+      height: 100%;
+      border-radius: 5px;
+      background: #0078D4;
+    }
+
+    .rotulo {
+      font-size: .68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #6b7280;
+    }
+
+    details.dominio > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
       color: #0078D4;
+      font-size: .88rem;
+      padding: .35rem 0;
     }
 
-    .bg-blue-600 {
-      background-color: #0078D4;
+    details.dominio > summary::-webkit-details-marker {
+      display: none;
     }
 
-    .hover\:text-blue-500:hover {
-      color: #005a9e;
-    }
-
-    a {
-      transition: color 0.3s ease;
-    }
-
-    footer {
-      background-color: #1b1b1b;
-    }
-
-    .link-simulado {
+    details.dominio > summary::before {
+      content: "▸ ";
       display: inline-block;
-      font-size: 1.25em;
-      font-weight: bold;
-      color: #fff;
-      background: #22c55e;
-      padding: 12px 28px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: background 0.2s;
-      box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
     }
 
-    .link-simulado:hover {
-      background: #16a34a;
-      color: #fff;
+    details.dominio[open] > summary::before {
+      content: "▾ ";
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
     }
   </style>
-  <meta name="robots" content="noindex, nofollow">
 </head>
 
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Cabeçalho -->
   <header class="bg-white shadow">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <a href="../"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy"
-            class="h-16"></a>
-      </div>
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center gap-4">
+      <a href="../"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
+      <nav class="flex items-center gap-3 text-sm">
+        <a href="../dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
+        <a href="#simulados" class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
+          Ir para os simulados
+        </a>
+        <!-- Preenchido por header-sessao.js: avatar, saudação e sair, ou o
+             botão de entrar para quem ainda não fez login. -->
+        <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
+      </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="bg-blue-600 text-white py-16 text-center">
-    <h2 class="text-4xl font-bold mb-4">Microsoft Azure AI Fundamentals</h2>
-    <p class="text-lg max-w-2xl mx-auto">Seja bem-vindo ao curso preparatório oficial para a certificação Microsoft
-      AI-900. Acompanhe os módulos, exercícios e materiais de referência para garantir sua aprovação!</p>
+  <section class="bg-blue-600 text-white py-14">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <p class="text-blue-200 text-sm font-semibold uppercase tracking-widest mb-2">Exame AI-900</p>
+      <h1 class="text-4xl font-bold mb-3">Microsoft Azure AI Fundamentals</h1>
+      <p class="text-lg text-blue-50 max-w-3xl">Os fundamentos de inteligência artificial no Azure: cargas de trabalho de IA, princípios de IA responsável, aprendizado de máquina, visão computacional, processamento de linguagem natural e IA generativa.</p>
+    </div>
   </section>
 
-  <!-- Conteúdo Principal -->
-  <main class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
-    <!-- Coluna Esquerda -->
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <!-- Módulos -->
-      <section id="modulos">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Módulos do Curso</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Estrutura de Conteúdo para Fundamentos de Inteligência Artificial
-          no Azure</h4>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Descrever as cargas de trabalho e considerações sobre Inteligência Artificial (15 a 20%)</li>
-          <li>Descrever os princípios fundamentais do aprendizado de máquina no Azure (15 a 20%)</li>
-          <li>Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure (15 a 20%)</li>
-          <li>Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure (15 a
-            20%)</li>
-          <li>Descrever os recursos de cargas de trabalho de IA generativas no Azure (20 a 25%)</li>
+  <main class="container mx-auto px-6 py-12 max-w-5xl">
+
+    <section class="rounded-xl border-l-4 border-yellow-500 bg-yellow-50 p-5 mb-8" role="note">
+      <div class="flex items-baseline gap-3 flex-wrap mb-2">
+        <span class="text-xs font-semibold uppercase tracking-wide bg-yellow-100 text-yellow-800 rounded-full px-3 py-1">Substituído por outro exame</span>
+      </div>
+      <p class="text-sm text-gray-800">A certificação Azure AI Fundamentals passou a ser obtida pelo exame AI-901, reconstruído em torno do Microsoft Foundry e atualizado em 15 de abril de 2026. Confirme na página oficial qual exame está disponível antes de agendar.</p>
+    </section>
+
+    <!-- Fatos do exame -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Nota de corte</div>
+        <div class="tile-valor num">700</div>
+        <div class="text-sm text-gray-500 mt-1">de 1000 pontos</div>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Áreas avaliadas</div>
+        <div class="tile-valor num">5</div>
+        <div class="text-sm text-gray-500 mt-1">pesos oficiais</div>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Questões aqui</div>
+        <div class="tile-valor num">331</div>
+        <div class="text-sm text-gray-500 mt-1">em 8 simulados</div>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Habilidades desde</div>
+        <div class="tile-valor" style="font-size:1.35rem">mai/25</div>
+        <div class="text-sm text-gray-500 mt-1">guia oficial</div>
+      </div>
+    </section>
+
+    <!-- Áreas avaliadas -->
+    <section class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-lg font-semibold mb-1">O que o exame cobra</h2>
+      <p class="text-sm text-gray-500 mb-6">
+        Pesos conforme o
+        <a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/ai-900"
+          target="_blank" rel="noopener" class="text-blue-600 hover:underline">guia de estudo oficial</a>,
+        válido a partir de 2 de maio de 2025.
+      </p>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Descrever as cargas de trabalho e considerações sobre Inteligência Artificial</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Cargas de visão computacional, linguagem natural, processamento de documentos e IA generativa</li>
+            <li>Os seis princípios de IA responsável: imparcialidade, confiabilidade e segurança, privacidade, inclusão, transparência e responsabilidade</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Descrever os princípios fundamentais do aprendizado de máquina no Azure</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Regressão, classificação, clustering, aprendizado profundo e arquitetura Transformer</li>
+            <li>Recursos e rótulos, conjuntos de treinamento e validação</li>
+            <li>Azure Machine Learning: AutoML, computação e implantação de modelos</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Classificação de imagens, detecção de objetos, OCR e análise facial</li>
+            <li>Serviços Azure AI Vision e Face</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Extração de frases-chave, entidades, sentimento, modelagem de idioma e tradução</li>
+            <li>Reconhecimento e síntese de fala</li>
+            <li>Serviços Azure AI Language e Azure AI Speech</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Descrever os recursos de cargas de trabalho de IA generativas no Azure</span>
+          <span class="num font-semibold text-blue-600 flex-none">20–25%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:22.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Características dos modelos generativos e cenários comuns</li>
+            <li>Considerações de IA responsável aplicadas à IA generativa</li>
+            <li>Azure AI Foundry, Azure OpenAI e o catálogo de modelos</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- Simulados -->
+    <section id="simulados" class="mb-8">
+      <h2 class="text-2xl font-bold mb-1">Simulados</h2>
+      <p class="text-gray-600 mb-6">
+        Cada simulado usa os mesmos formatos de questão do exame oficial e a mesma escala de 1000 pontos, com a nota de
+        corte em 700. O resultado fica salvo no seu histórico.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <a href="./01-SIMULADO/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">Simulado 01</div>
+            <div class="text-sm text-gray-500 num">39 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./02-SIMULADO/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">Simulado 02</div>
+            <div class="text-sm text-gray-500 num">40 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./03-SIMULADO/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">Simulado 03</div>
+            <div class="text-sm text-gray-500 num">41 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./04-SIMULADO/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">Simulado 04</div>
+            <div class="text-sm text-gray-500 num">39 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./05-SIMULADO/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">Simulado 05</div>
+            <div class="text-sm text-gray-500 num">42 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./06-SIMULADO/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">Simulado 06</div>
+            <div class="text-sm text-gray-500 num">41 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6 mt-6">
+        <h3 class="text-lg font-semibold mb-1">Simulados bônus</h3>
+        <p class="text-sm text-gray-600 mb-5">Rodadas extras de questões, no mesmo formato do exame.</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="./AI-900-bonus/01-SIMULADO/index.html"
+            class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex justify-between items-center gap-4">
+            <div>
+              <div class="font-semibold">Simulado 01</div>
+              <div class="text-sm text-gray-500 num">44 questões</div>
+            </div>
+            <span class="text-blue-600 text-sm font-medium flex-none">Começar →</span>
+          </a>
+          <a href="./AI-900-bonus/02-SIMULADO/index.html"
+            class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex justify-between items-center gap-4">
+            <div>
+              <div class="font-semibold">Simulado 02</div>
+              <div class="text-sm text-gray-500 num">45 questões</div>
+            </div>
+            <span class="text-blue-600 text-sm font-medium flex-none">Começar →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recursos -->
+    <section class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Recursos oficiais da Microsoft</h2>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/exams/ai-900/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Página do exame AI-900</a>
+            <p class="text-gray-500">Inscrição, idiomas disponíveis e preço por região</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/ai-900" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Guia de estudo oficial</a>
+            <p class="text-gray-500">Lista completa das habilidades avaliadas, com os pesos de cada área</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/azure-ai-fundamentals/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Página da certificação</a>
+            <p class="text-gray-500">Visão geral da credencial — fundamentos não expiram nem exigem renovação</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/training/courses/ai-900t00" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Curso AI-900T00</a>
+            <p class="text-gray-500">Treinamento oficial com instrutor</p>
+          </li>
+          <li>
+            <a href="https://aka.ms/examdemo" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Área restrita do exame</a>
+            <p class="text-gray-500">Conheça o ambiente e os formatos de questão antes do dia da prova</p>
+          </li>
         </ul>
-      </section>
+      </div>
 
-      <!-- Exercícios -->
-      <section id="exercicios" class="mt-12">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Exercícios Práticos</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Atividades Interativas para Aplicação dos Conceitos de IA no Azure
-        </h4>
-        <ul class="list-disc pl-6 space-y-2 text-blue-600">
-          <li><a
-              href="https://learn.microsoft.com/pt-br/training/modules/analyze-images-computer-vision/4-exercise?ns-enrollment-type=learningpath&ns-enrollment-id=learn.wwl.explore-computer-vision-microsoft-azure"
-              target="_blank">Exercício – Analisar imagens no portal do Azure AI Foundry</a></li>
-          <li><a
-              href="https://learn.microsoft.com/pt-br/training/modules/analyze-text-with-text-analytics-service/4-exercise?ns-enrollment-type=learningpath&ns-enrollment-id=learn.wwl.explore-natural-language-processing"
-              target="_blank">Exercício – Analisar texto no portal do Azure AI Foundry</a></li>
-          <li><a
-              href="https://learn.microsoft.com/pt-br/training/modules/analyze-receipts-form-recognizer/4-exercise?ns-enrollment-type=learningpath&ns-enrollment-id=learn.wwl.document-intelligence-knowledge-mining"
-              target="_blank">Exercício – Extrair dados de documentos no portal do Azure AI Foundry</a></li>
-
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Documentação para estudar</h2>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/azure/machine-learning/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure Machine Learning</a>
+            <p class="text-gray-500">Princípios de aprendizado de máquina</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure AI Vision</a>
+            <p class="text-gray-500">Visão computacional</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/language-service/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure AI Language</a>
+            <p class="text-gray-500">Processamento de linguagem natural</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure AI Speech</a>
+            <p class="text-gray-500">Reconhecimento e síntese de fala</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/openai/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure OpenAI</a>
+            <p class="text-gray-500">IA generativa, a maior fatia do exame</p>
+          </li>
         </ul>
-      </section>
-    </div>
+      </div>
+    </section>
 
-    <!-- Coluna Direita -->
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <!-- Referências -->
-      <section id="referencias">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Referências Oficiais</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Materiais Oficiais para Estudo e Consulta sobre Inteligência
-          Artificial no Azure</h4>
-        <ul class="list-disc pl-6 space-y-2 text-blue-600">
-          <li><a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/ai-900"
-              target="_blank">Guia de estudo AI-900</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/courses/ai-900t00" target="_blank">Microsoft Learn -
-              AI-900</a></li>
+    <section class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-lg font-semibold mb-1">Material de apoio</h2>
+      <p class="text-sm text-gray-500 mb-5">Arquivos complementares deste curso.</p>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="./arquivos/AI-900.pdf" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">AI-900.pdf</a>
+        </li>
+        <li>
+          <a href="./arquivos/Estudo-dirigido.pdf" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">Estudo-dirigido.pdf</a>
+        </li>
+        <li>
+          <a href="./arquivos/resumo.pdf" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">resumo.pdf</a>
+        </li>
+      </ul>
+    </section>
 
-        </ul>
-      </section>
+    <section class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-lg font-semibold mb-1">Sugestão de plano de estudo</h2>
+      <p class="text-sm text-gray-500 mb-6">Uma etapa por área do exame, na ordem do guia oficial.</p>
 
-      <!-- Simulado -->
-      <section id="simulado" class="mt-12">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Vídeos Training Day, PDFs e Podcasts</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Recursos Multimídia para Aprimorar o Conhecimento em IA no Azure
-        </h4>
-        <ul class="list-disc pl-6 space-y-2 text-blue-600">
-          <li><a
-              href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/APp7p4ISJmpV1JK2UXI55fQ/AI-900/Grava%C3%A7%C3%A3o%201%20-%20AI-900%20Azure%20Day%20(Professor%20IA)?dl=0&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1"
-              target="_blank">Gravação 1 - AI-900 Azure Day (Professor IA)</a></li>
-          <li><a
-              href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/AJrk8EsYQyBFs8dNDRIuD6M/AI-900/Grava%C3%A7%C3%A3o%202%20-%20AI-900%20Azure%20Day%20(Professora)?dl=0&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1"
-              target="_blank">Gravação 2 - AI-900 Azure Day (Professora)</a></li>
-          <li><a
-              href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ADjkJxmFjRumO5zDKgH6eGU/AI-900?dl=0&preview=AI-900+-+Apresentacao.pdf&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1"
-              target="_blank">PDF - Azure Data Training Day: Fundamentals (PT-BR)</a></li>
-          <li><a href="../AI-900/arquivos/AI-900.pdf" target="_blank">PDF - AI-900 Simulado de 246 Questões em
-              Inglês</a></li>
-          <li><a href="../AI-900/arquivos/Estudo-dirigido.pdf" target="_blank">Estudo Dirigido AI-900</a>
-          <li><a href="../AI-900/arquivos/resumo.pdf" target="_blank">Resumo Certificação AI-900</a>
-          <li><a
-              href="https://www.dropbox.com/scl/fo/loyv68269u9jvdr22tddq/AP6QxXapSjnFICWuuVGs4WE/Podcasts%20AI-900?dl=0&rlkey=090hv3idwo9sxt4v0ywlekvg8&subfolder_nav_tracking=1"
-              target="_blank">Podcasts baseados no Learning</a>
-          <li><a href="./01-SIMULADO/index.html" target="_blank">Realização de simulados</a>
+      <ol class="space-y-5">
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+          <div>
+            <div class="font-semibold mb-1">Descrever as cargas de trabalho e considerações sobre Inteligência Artificial</div>
+            <p class="text-sm text-gray-600">Cargas de visão computacional, linguagem natural, processamento de documentos e IA generativa. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+          <div>
+            <div class="font-semibold mb-1">Descrever os princípios fundamentais do aprendizado de máquina no Azure</div>
+            <p class="text-sm text-gray-600">Regressão, classificação, clustering, aprendizado profundo e arquitetura Transformer. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+          <div>
+            <div class="font-semibold mb-1">Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure</div>
+            <p class="text-sm text-gray-600">Classificação de imagens, detecção de objetos, OCR e análise facial. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">4</span>
+          <div>
+            <div class="font-semibold mb-1">Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure</div>
+            <p class="text-sm text-gray-600">Extração de frases-chave, entidades, sentimento, modelagem de idioma e tradução. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">5</span>
+          <div>
+            <div class="font-semibold mb-1">Descrever os recursos de cargas de trabalho de IA generativas no Azure</div>
+            <p class="text-sm text-gray-600">Características dos modelos generativos e cenários comuns. Vale 20 a 25% da prova.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="text-sm text-gray-600 mt-6 pt-5 border-t">
+        Depois de cada etapa, faça um simulado e confira o
+        <a href="../dashboard.html" class="text-blue-600 hover:underline">seu desempenho</a>: os assuntos com menor
+        aproveitamento aparecem primeiro, e são por onde vale recomeçar.
+      </p>
+    </section>
 
-        </ul>
-      </section>
-    </div>
   </main>
 
-  <section class="bg-gray-200 text-gray-800 py-16 text-center">
-    <!-- ...conteúdo repetido ou novo... -->
-    <h2 class="text-4xl font-bold mb-4">Você está pronto para testar seus conhecimentos?</h2>
-    <p class="text-lg max-w-2xl mx-auto">Descubra agora mesmo como está sua preparação!</p>
-    <br>
-    <p>
-      <a href="./01-SIMULADO/index.html" target="_blank" class="link-simulado">
-        <span>🚀 Realização de simulados</span>
-      </a>
-    </p>
-  </section>
-
-  <!-- Faixa de Bônus com Links -->
-  <section class="bg-blue-600 text-white py-10">
-    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-center text-2xl font-bold">
-      <a href="./AI-900-bonus/01-SIMULADO/index.html" target="_blank" class="hover:underline">
-        SIMULADO <BR>BONUS ESPECIAL 01
-      </a>
-      <a href="./AI-900-bonus/02-SIMULADO/index.html" target="_blank" class="hover:underline">
-        SIMULADO <BR>BONUS ESPECIAL 02
-      </a>
+  <footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-6 text-center text-sm">
+      <p class="mb-3">© 2026 CertiAcademy</p>
+      <div class="flex justify-center gap-6">
+        <a href="../" class="hover:text-white">Início</a>
+        <a href="../dashboard.html" class="hover:text-white">Meu desempenho</a>
+        <a href="../privacidade.html" class="hover:text-white">Privacidade</a>
+      </div>
     </div>
-  </section>
-
-  <!-- 
-<section id="planejamento" class="container mx-auto px-6 py-12">
-  <h3 class="text-2xl font-semibold mb-6 text-blue-600">🗓️ Sugestão de Planejamento de Estudo</h3>
-
-  
-  
-    <div class="grid md:grid-cols-2 gap-6">
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 26/05/2025</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/paths/azure-data-fundamentals-explore-core-data-concepts/" target="_blank">Learn: explorar os principais conceitos de dados</a></li>
-            <li><a href="https://drive.google.com/file/d/13npbtP6KdRqUNSXOxWsrwh5kEAlkSDfo/view" target="_blank">Podcast - DP completo</a></li>
-            <li><a href="https://drive.google.com/file/d/13tbX9NRQtqvhGdzyQsEcMTJ0JjUlotEQ/view" target="_blank">Mapa mental - DP-900 completo</a></li>
-            <li><a href="https://drive.google.com/file/d/13x7H94lc2pOBKc5J1TRVhR2KTEyaToNn/view" target="_blank">Podcast - Explorar os principais conceitos de dados</a></li>
-            <li><a href="https://drive.google.com/file/d/13xe4yZaT-JMypXvJ4M4MiSJgkHi079I5/view" target="_blank">Mapa mental - Explorar os principais conceitos de dados</a></li>
-          </ul>        
-        
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ACJKIU8Qqfztv5WRYF3AQUw/DP-900?dl=0&preview=Azure+Day+-+DP-900+-+Dia+1+-+Parte+1.mp4&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1" target="_blank">Training day – Dia 1 – parte 1 – Explore os fundamentos dos dados:</a></li>
-            <li><a href="https://www.youtube.com/watch?v=-znvy4pHy1Y" target="_blank">DP-900 - Canal da Cloud EP1</a></li>
-            <li><a href="https://www.youtube.com/watch?v=871XPRc4TFc" target="_blank">DP-900 - Henrique Eduardo Souza - Aula 01</a></li>
-            <li><a href="https://www.youtube.com/watch?v=EUS78raow_U&list=PL_yq9hmeKAk9hc_FGAKHl-hI66GRjLa4P&index=4" target="_blank">DP-900 - Henrique Eduardo Souza - Aula 02</a></li>
-            <li><a href="./01-SIMULADO/index.html" target="_blank">Realização de simulados</a>
-          </ul>             
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 27/05/2025</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-       
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/paths/azure-data-fundamentals-explore-relational-data/" target="_blank">Learn: explorar dados relacionais no Azure</a></li>
-            <li><a href="https://drive.google.com/file/d/13yycTW5CD-q_yTMAeWv8O4G9newLdxdv/view" target="_blank">Podcast - Explorar dados relacionais no Azure</a></li>
-            <li><a href="https://drive.google.com/file/d/13yBpw5j4n9BDHT3cxRPDVeoNazijVArY/view" target="_blank">Mapa mental - Explorar dados relacionais no Azure</a></li>           
-          </ul>                         
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ACJKIU8Qqfztv5WRYF3AQUw/DP-900?dl=0&preview=Azure+Day+-+DP-900+-+Dia+1+-+Parte+2.mp4&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1" target="_blank">Training day – Dia 1 – parte 2 – Explorar dados relacionais no Azure:</a></li>
-            <li><a href="https://www.youtube.com/watch?v=5xpocWtIrxM" target="_blank">DP-900 - Canal da Cloud EP2</a></li>
-            <li><a href="https://www.youtube.com/watch?v=1u3gjAx0s2A" target="_blank">DP-900 - Henrique Eduardo Souza - Aula 03</a></li>
-            <li><a href="./01-SIMULADO/index.html" target="_blank">Realização de simulados</a>
-          </ul>
-        </li>      
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 28/05/2025</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">       
-          <ul class="pl-6 list-disc">
-            <li><a href="explorar dados não relacionais no Azure" target="_blank">Learn: explorar dados não relacionais no Azure</a></li>
-            <li><a href="https://drive.google.com/file/d/148hUj0QTl1D6npWk5QjNIT35KCOrGG3l/view" target="_blank">Podcast - Explorar dados não relacionais no Azure</a></li>
-            <li><a href="https://drive.google.com/file/d/144K41iGeLMmMB1F-V2FK7KWMf0L16Sc6/view" target="_blank">Mapa mental - Explorar dados não relacionais no Azure</a></li>            
-          </ul>               
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ACJKIU8Qqfztv5WRYF3AQUw/DP-900?dl=0&preview=Azure+Day+-+DP-900+-+Dia+1+-+Parte+3.mp4&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1" target="_blank">Training day – Dia 1 – parte 3 – Explorar dados não relacionais no Azure</a></li>
-            <li><a href="https://www.youtube.com/watch?v=Dj0VxU633l0" target="_blank">DP-900 - Canal da Cloud EP3</a></li>
-            <li><a href="https://www.youtube.com/watch?v=TJwuT7vqclQ" target="_blank">DP-900 - Henrique Eduardo Souza - Aula 04</a></li>
-            <li><a href="https://www.youtube.com/watch?v=lMSuTZbw7xo" target="_blank">DP-900 - Henrique Eduardo Souza - Aula 05</a></li>
-             <li><a href="./01-SIMULADO/index.html" target="_blank">Realização de simulados</a>
-          </ul>              
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 29/05/2025</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">        
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/paths/azure-data-fundamentals-explore-data-warehouse-analytics/" target="_blank">Learn: explorar a análise de dados no Azure</a></li>
-            <li><a href="https://drive.google.com/file/d/149yrD1EMzB4CxUyGFSLHNjsscTp3K4Xk/view" target="_blank">Podcast - Explorar a análise de dados no Azure</a></li>
-            <li><a href="https://drive.google.com/file/d/14HWRXFlDT625uH9EGmXmia0-I7V8Gw9J/view" target="_blank">Mapa mental - Explorar a análise de dados no Azure</a></li>           
-          </ul>                
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ACJKIU8Qqfztv5WRYF3AQUw/DP-900?dl=0&preview=Azure+Day+-+DP-900+-+Dia+2+-+Parte+1.mp4&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1" target="_blank">Training day – Dia 2 – parte 1 – Análise de dados em larga escala</a></li>
-            <li><a href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ACJKIU8Qqfztv5WRYF3AQUw/DP-900?dl=0&preview=Azure+Day+-+DP-900+-+Dia+2+-+Parte+2.mp4&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1" target="_blank">Training day – Dia 2 – parte 2 – Análise em tempo real e streaming</a></li>
-            <li><a href="https://www.dropbox.com/scl/fo/dad9spsuqwr4bxkosrkh7/ACJKIU8Qqfztv5WRYF3AQUw/DP-900?dl=0&preview=Azure+Day+-+DP-900+-+Dia+2+-+Parte+3.mp4&rlkey=i4zfsmehdjf2xlpm5rvgvd1z9&subfolder_nav_tracking=1" target="_blank">Training day – Dia 2 – parte 3 – Explorar os fundamentos da visualização de dados</a></li>
-            <li><a href="https://www.youtube.com/watch?v=uQJKTcF2VTE" target="_blank">DP-900 - Canal da Cloud EP4</a></li>
-            <li><a href="https://www.youtube.com/watch?v=K2AvwClewfA" target="_blank">DP-900 - Henrique Eduardo Souza - Aula 06</a></li>
-            <li><a href="./01-SIMULADO/index.html" target="_blank">Realização de simulados</a>
-          </ul>              
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 30/05/2025</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">             
-          <ul class="pl-6 list-disc">            
-            <li><a href="https://www.youtube.com/watch?v=KxmgHJkPC0U" target="_blank">DP-900 - Henrique Eduardo Souza - AUla revisão</a></li>
-            <li><a href="#" target="_blank">Revisão de conteúdo</a></li>
-            <li><a href="./01-SIMULADO/index.html" target="_blank">Realização de simulados</a></li>
-          </ul>             
-      </ul>
-    </div> 
-    
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Sugestão de simulado - UDEMY</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">              
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.udemy.com/course/dp-900-azure-data-fundamentals-simulados-em-portugues/?couponCode=24T7MT260525G2" target="_blank">DP-900 Azure Data Fundamentals - Simulados em Português</a></li>            
-          </ul>             
-      </ul>
-    </div>  
-
-  </div>
-</section>
- -->
-
-
-
-  <!-- Rodapé -->
-  <footer class="text-gray-200 py-6 text-center">
-    <p>© 2025 CertiAcademy. Todos os direitos reservados.</p>
   </footer>
-  <script>
-    // Desabilita o clique direito
-    document.addEventListener('contextmenu', event => event.preventDefault());
 
-    // Desabilita seleção de texto
-    document.addEventListener('selectstart', event => event.preventDefault());
+  <script type="module">
+    import { montarHeaderSessao } from '../shared/simulado-engine/common/js/header-sessao.js';
 
-    // Bloqueia atalhos comuns de cópia e inspeção
-    document.addEventListener('keydown', function (e) {
-      if (e.ctrlKey && ['u', 's', 'c', 'x', 'a'].includes(e.key.toLowerCase())) {
-        e.preventDefault();
-      }
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i', 'j'].includes(e.key.toLowerCase()))) {
-        e.preventDefault();
-      }
-    });
+    montarHeaderSessao(document.getElementById('sessaoHeader'));
   </script>
+
 </body>
 
 </html>

@@ -7,6 +7,76 @@
       "chamada": "Simulado completo com questões atualizadas",
       "visivelNaHome": true,
       "curso": "AZ-900/curso.html",
+      "exame": {
+        "nome": "Microsoft Azure Fundamentals",
+        "resumo": "O ponto de partida da trilha Azure. Cobra os conceitos de computação em nuvem, os principais serviços do Azure e as ferramentas de governança, custo e monitoramento da plataforma.",
+        "atualizadoEm": "20 de julho de 2026",
+        "situacao": "ativo",
+        "slug": "az-900",
+        "certificacao": "azure-fundamentals",
+        "cursoOficial": "az-900t00",
+        "dominios": [
+          {
+            "nome": "Descrever os conceitos da nuvem",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Computação em nuvem, responsabilidade compartilhada e modelos público, privado e híbrido",
+              "Benefícios de alta disponibilidade, escalabilidade, confiabilidade e governança",
+              "Tipos de serviço: IaaS, PaaS e SaaS, e quando usar cada um"
+            ]
+          },
+          {
+            "nome": "Descrever a arquitetura e os serviços do Azure",
+            "peso": "35 a 40%",
+            "pesoMedio": 37.5,
+            "topicos": [
+              "Regiões, zonas de disponibilidade, assinaturas e grupos de gerenciamento",
+              "Computação e rede: máquinas virtuais, contêineres, funções, redes virtuais e VPN",
+              "Armazenamento: níveis, redundância, contas e opções de migração",
+              "Identidade e segurança: Microsoft Entra ID, MFA, acesso condicional, RBAC e Confiança Zero"
+            ]
+          },
+          {
+            "nome": "Descrever o gerenciamento e a governança do Azure",
+            "peso": "30 a 35%",
+            "pesoMedio": 32.5,
+            "topicos": [
+              "Gerenciamento de custos, calculadora de preços e tags",
+              "Governança e conformidade: Microsoft Purview, Azure Policy e bloqueios de recursos",
+              "Ferramentas de implantação: portal, CLI, PowerShell, Azure Arc e modelos ARM",
+              "Monitoramento: Azure Advisor, Service Health e Azure Monitor"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Documentação do Azure",
+            "url": "https://learn.microsoft.com/pt-br/azure/",
+            "descricao": "Referência de todos os serviços da plataforma"
+          },
+          {
+            "titulo": "Cloud Adoption Framework",
+            "url": "https://learn.microsoft.com/pt-br/azure/cloud-adoption-framework/",
+            "descricao": "Boas práticas de adoção da nuvem"
+          },
+          {
+            "titulo": "Microsoft Entra ID",
+            "url": "https://learn.microsoft.com/pt-br/entra/identity/",
+            "descricao": "Identidade e acesso, cobrados na segunda área"
+          },
+          {
+            "titulo": "Azure Monitor",
+            "url": "https://learn.microsoft.com/pt-br/azure/azure-monitor/",
+            "descricao": "Monitoramento, alertas e Log Analytics"
+          },
+          {
+            "titulo": "Gerenciamento de custos",
+            "url": "https://learn.microsoft.com/pt-br/azure/cost-management-billing/",
+            "descricao": "Orçamentos, análise de custo e otimização"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",
@@ -65,6 +135,87 @@
       "chamada": "Questões no padrão oficial Microsoft",
       "visivelNaHome": true,
       "curso": "SC-900/curso.html",
+      "exame": {
+        "nome": "Microsoft Security, Compliance and Identity Fundamentals",
+        "resumo": "Os fundamentos de segurança, conformidade e identidade nos serviços Microsoft. Vai do Microsoft Entra ao Defender, Sentinel e Purview, com foco em entender para que serve cada solução.",
+        "atualizadoEm": "28 de julho de 2026",
+        "situacao": "ativo",
+        "slug": "sc-900",
+        "certificacao": "security-compliance-and-identity-fundamentals",
+        "cursoOficial": "sc-900t00",
+        "dominios": [
+          {
+            "nome": "Descrever os conceitos de segurança, conformidade e identidade",
+            "peso": "10 a 15%",
+            "pesoMedio": 12.5,
+            "topicos": [
+              "Responsabilidade compartilhada, defesa em profundidade e Confiança Zero",
+              "Criptografia, hash e conceitos de governança, risco e conformidade",
+              "Autenticação, autorização, provedores de identidade e federação"
+            ]
+          },
+          {
+            "nome": "Descrever os recursos do Microsoft Entra",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Tipos de identidade, identidade híbrida e ID do agente",
+              "Métodos de autenticação, MFA e proteção de senha",
+              "Acesso condicional e controle de acesso baseado em função",
+              "Governança de identidade, revisões de acesso, PIM e ID Protection"
+            ]
+          },
+          {
+            "nome": "Descrever os recursos das soluções de segurança da Microsoft",
+            "peso": "35 a 40%",
+            "pesoMedio": 37.5,
+            "topicos": [
+              "Segurança de infraestrutura: DDoS Protection, Firewall, WAF, NSGs, Bastion e Key Vault",
+              "Microsoft Defender para Nuvem e gerenciamento da postura de segurança",
+              "Microsoft Sentinel, com os conceitos de SIEM e SOAR",
+              "Microsoft Defender XDR e seus serviços por carga de trabalho"
+            ]
+          },
+          {
+            "nome": "Descrever os recursos das soluções de conformidade da Microsoft",
+            "peso": "20 a 25%",
+            "pesoMedio": 22.5,
+            "topicos": [
+              "Portal de Confiança do Serviço e princípios de privacidade",
+              "Microsoft Purview: portal, Compliance Manager e pontuação de conformidade",
+              "Classificação de dados, rótulos de confidencialidade, DLP e retenção",
+              "Risco interno, Descoberta Eletrônica e auditoria"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Documentação de segurança da Microsoft",
+            "url": "https://learn.microsoft.com/pt-br/security/",
+            "descricao": "Visão geral do portfólio de segurança"
+          },
+          {
+            "titulo": "Microsoft Entra ID",
+            "url": "https://learn.microsoft.com/pt-br/entra/identity/",
+            "descricao": "A maior fatia da segunda área do exame"
+          },
+          {
+            "titulo": "Microsoft Defender XDR",
+            "url": "https://learn.microsoft.com/pt-br/defender-xdr/",
+            "descricao": "Proteção contra ameaças em endpoints, e-mail e identidades"
+          },
+          {
+            "titulo": "Microsoft Sentinel",
+            "url": "https://learn.microsoft.com/pt-br/azure/sentinel/",
+            "descricao": "SIEM e SOAR na nuvem"
+          },
+          {
+            "titulo": "Microsoft Purview",
+            "url": "https://learn.microsoft.com/pt-br/purview/",
+            "descricao": "Conformidade, proteção de informações e governança"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",
@@ -107,6 +258,80 @@
       "chamada": "Prepare-se com perguntas reais de prova",
       "visivelNaHome": true,
       "curso": "MS-900/curso.html",
+      "exame": {
+        "nome": "Microsoft 365 Fundamentals",
+        "resumo": "Os fundamentos do Microsoft 365: aplicativos e serviços de produtividade e colaboração, gerenciamento de dispositivos, segurança e conformidade, além de licenciamento e suporte.",
+        "atualizadoEm": "30 de abril de 2025",
+        "situacao": "desativado",
+        "avisoSituacao": "A Microsoft desativou este exame em 31 de março de 2026. Ele não pode mais ser agendado. O conteúdo continua útil como base de Microsoft 365, e boa parte dele reaparece no AB-900, o exame de administração de Copilot e agentes.",
+        "slug": "ms-900",
+        "certificacao": "microsoft-365-fundamentals",
+        "cursoOficial": null,
+        "dominios": [
+          {
+            "nome": "Descrever os conceitos da nuvem",
+            "peso": "5 a 10%",
+            "pesoMedio": 7.5,
+            "topicos": [
+              "SaaS, IaaS e PaaS e a diferença entre Office 365 e Microsoft 365",
+              "Modelos público, privado e híbrido, e o conceito de trabalho híbrido"
+            ]
+          },
+          {
+            "nome": "Descrever aplicativos e serviços do Microsoft 365",
+            "peso": "45 a 50%",
+            "pesoMedio": 47.5,
+            "topicos": [
+              "Produtividade: Word, Excel, PowerPoint, OneNote, Project, Planner e Copilot",
+              "Colaboração: SharePoint, OneDrive, Exchange, Outlook, Teams e Viva",
+              "Dispositivos e endpoints: Intune, Autopilot, Windows 365 e canais de atualização",
+              "Administração: centro de administração, relatórios e painel do Copilot"
+            ]
+          },
+          {
+            "nome": "Descrever a segurança, a conformidade, a privacidade e a confiança no Microsoft 365",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Identidade e acesso com Microsoft Entra ID, MFA, SSPR e acesso condicional",
+              "Proteção contra ameaças com Defender XDR e Secure Score",
+              "Confiança Zero, Microsoft Purview e Microsoft Priva"
+            ]
+          },
+          {
+            "nome": "Descrever os preços, o licenciamento e o suporte do Microsoft 365",
+            "peso": "10 a 15%",
+            "pesoMedio": 12.5,
+            "topicos": [
+              "Modelos de preço, cobrança e formas de pagamento",
+              "Licenciamento base e complementar",
+              "Solicitações de suporte, SLAs e integridade do serviço"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Documentação do Microsoft 365",
+            "url": "https://learn.microsoft.com/pt-br/microsoft-365/",
+            "descricao": "Referência completa dos serviços"
+          },
+          {
+            "titulo": "Microsoft Teams",
+            "url": "https://learn.microsoft.com/pt-br/microsoftteams/",
+            "descricao": "Colaboração e comunicação"
+          },
+          {
+            "titulo": "Microsoft Intune",
+            "url": "https://learn.microsoft.com/pt-br/mem/intune/",
+            "descricao": "Gerenciamento de dispositivos e endpoints"
+          },
+          {
+            "titulo": "Microsoft Purview",
+            "url": "https://learn.microsoft.com/pt-br/purview/",
+            "descricao": "Conformidade e proteção de informações"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",
@@ -149,6 +374,94 @@
       "chamada": "Teste seus conhecimentos com questões práticas",
       "visivelNaHome": true,
       "curso": "PL-900/curso.html",
+      "exame": {
+        "nome": "Microsoft Power Platform Fundamentals",
+        "resumo": "Os fundamentos da Power Platform: o valor de negócio de cada serviço, o Dataverse e a governança do ambiente, e a construção prática de aplicativos, fluxos e sites.",
+        "atualizadoEm": "20 de junho de 2025",
+        "situacao": "ativo",
+        "slug": "pl-900",
+        "certificacao": "power-platform-fundamentals",
+        "cursoOficial": "pl-900t00",
+        "dominios": [
+          {
+            "nome": "Descrever o valor comercial do Microsoft Power Platform",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "O valor de Power Apps, Power Automate, Power Pages, conectores e Dataverse",
+              "Copilotos, IA generativa, Copilot Studio e Power Fx",
+              "Como a Power Platform se integra ao Microsoft 365 e ao Teams"
+            ]
+          },
+          {
+            "nome": "Gerenciar o ambiente do Microsoft Power Platform",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Dataverse: tabelas, colunas, relações e lógica de negócios",
+              "Importação e exportação de dados",
+              "Modelo de segurança, ambientes e centros de administração"
+            ]
+          },
+          {
+            "nome": "Demonstrar os recursos do Power Apps",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Aplicativos de tela e aplicativos baseados em modelo",
+              "Conectores, controles comuns e páginas responsivas",
+              "Formulários, exibições e compartilhamento de aplicativos"
+            ]
+          },
+          {
+            "nome": "Demonstrar os recursos do Power Automate",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Fluxos de nuvem e de área de trabalho, gatilhos e ações",
+              "Modelos, aprovações, mineração de processos, loops e ramificação",
+              "Criar, testar, executar e compartilhar um fluxo"
+            ]
+          },
+          {
+            "nome": "Demonstrar os recursos do Power Pages",
+            "peso": "10 a 15%",
+            "pesoMedio": 12.5,
+            "topicos": [
+              "Casos de uso, métodos de criação e conceitos de segurança",
+              "Criar sites com o Copilot, espaços de trabalho do design studio",
+              "Páginas, componentes e temas"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Microsoft Power Platform",
+            "url": "https://learn.microsoft.com/pt-br/power-platform/",
+            "descricao": "Documentação geral da plataforma"
+          },
+          {
+            "titulo": "Microsoft Dataverse",
+            "url": "https://learn.microsoft.com/pt-br/power-apps/maker/data-platform/",
+            "descricao": "O banco por trás das soluções"
+          },
+          {
+            "titulo": "Power Apps",
+            "url": "https://learn.microsoft.com/pt-br/power-apps/",
+            "descricao": "A maior fatia do exame"
+          },
+          {
+            "titulo": "Power Automate",
+            "url": "https://learn.microsoft.com/pt-br/power-automate/",
+            "descricao": "Automação de processos"
+          },
+          {
+            "titulo": "Power Pages",
+            "url": "https://learn.microsoft.com/pt-br/power-pages/",
+            "descricao": "Sites externos com dados do Dataverse"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-Power-Plataform-I",
@@ -203,6 +516,84 @@
       "chamada": "Avalie seu preparo com perguntas focadas no exame",
       "visivelNaHome": true,
       "curso": "DP-900/curso.html",
+      "exame": {
+        "nome": "Microsoft Azure Data Fundamentals",
+        "resumo": "Os fundamentos de dados no Azure: como os dados são representados e armazenados, os serviços relacionais e não relacionais da plataforma e as cargas de trabalho de análise.",
+        "atualizadoEm": "1º de novembro de 2024",
+        "situacao": "ativo",
+        "slug": "dp-900",
+        "certificacao": "azure-data-fundamentals",
+        "cursoOficial": "dp-900t00",
+        "dominios": [
+          {
+            "nome": "Descrever os principais conceitos de dados",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Dados estruturados, semiestruturados e não estruturados",
+              "Formatos de arquivo e tipos de banco de dados",
+              "Cargas transacionais e analíticas",
+              "Papéis de administrador de banco de dados, engenheiro e analista de dados"
+            ]
+          },
+          {
+            "nome": "Identificar considerações sobre dados relacionais no Azure",
+            "peso": "20 a 25%",
+            "pesoMedio": 22.5,
+            "topicos": [
+              "Características de dados relacionais, normalização e SQL",
+              "Família SQL do Azure: Banco de Dados SQL, Instância Gerenciada e SQL em VMs",
+              "Serviços para bancos de dados de código aberto"
+            ]
+          },
+          {
+            "nome": "Descrever considerações sobre o trabalho com os dados não relacionais no Azure",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Armazenamento de Blobs, Arquivos e Tabelas do Azure",
+              "Azure Cosmos DB: casos de uso e APIs"
+            ]
+          },
+          {
+            "nome": "Descrever uma carga de trabalho de análise no Azure",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Ingestão e processamento, armazenamentos analíticos, Databricks e Microsoft Fabric",
+              "Diferença entre dados de lote e de streaming, e análise em tempo real",
+              "Visualização no Power BI: modelos de dados e escolha de visuais"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "SQL do Azure",
+            "url": "https://learn.microsoft.com/pt-br/azure/azure-sql/",
+            "descricao": "Banco de Dados SQL, Instância Gerenciada e SQL em VMs"
+          },
+          {
+            "titulo": "Armazenamento do Azure",
+            "url": "https://learn.microsoft.com/pt-br/azure/storage/",
+            "descricao": "Blobs, Arquivos e Tabelas"
+          },
+          {
+            "titulo": "Azure Cosmos DB",
+            "url": "https://learn.microsoft.com/pt-br/azure/cosmos-db/",
+            "descricao": "Banco não relacional distribuído"
+          },
+          {
+            "titulo": "Microsoft Fabric",
+            "url": "https://learn.microsoft.com/pt-br/fabric/",
+            "descricao": "Plataforma unificada de análise"
+          },
+          {
+            "titulo": "Power BI",
+            "url": "https://learn.microsoft.com/pt-br/power-bi/",
+            "descricao": "Visualização, cobrada na quarta área"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",
@@ -249,6 +640,93 @@
       "chamada": "Desafie-se com questões no estilo da certificação",
       "visivelNaHome": true,
       "curso": "AI-900/curso.html",
+      "exame": {
+        "nome": "Microsoft Azure AI Fundamentals",
+        "resumo": "Os fundamentos de inteligência artificial no Azure: cargas de trabalho de IA, princípios de IA responsável, aprendizado de máquina, visão computacional, processamento de linguagem natural e IA generativa.",
+        "atualizadoEm": "2 de maio de 2025",
+        "situacao": "substituido",
+        "avisoSituacao": "A certificação Azure AI Fundamentals passou a ser obtida pelo exame AI-901, reconstruído em torno do Microsoft Foundry e atualizado em 15 de abril de 2026. Confirme na página oficial qual exame está disponível antes de agendar.",
+        "slug": "ai-900",
+        "certificacao": "azure-ai-fundamentals",
+        "cursoOficial": "ai-900t00",
+        "dominios": [
+          {
+            "nome": "Descrever as cargas de trabalho e considerações sobre Inteligência Artificial",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Cargas de visão computacional, linguagem natural, processamento de documentos e IA generativa",
+              "Os seis princípios de IA responsável: imparcialidade, confiabilidade e segurança, privacidade, inclusão, transparência e responsabilidade"
+            ]
+          },
+          {
+            "nome": "Descrever os princípios fundamentais do aprendizado de máquina no Azure",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Regressão, classificação, clustering, aprendizado profundo e arquitetura Transformer",
+              "Recursos e rótulos, conjuntos de treinamento e validação",
+              "Azure Machine Learning: AutoML, computação e implantação de modelos"
+            ]
+          },
+          {
+            "nome": "Descrever os recursos das cargas de trabalho de pesquisa visual computacional no Azure",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Classificação de imagens, detecção de objetos, OCR e análise facial",
+              "Serviços Azure AI Vision e Face"
+            ]
+          },
+          {
+            "nome": "Descrever os recursos das cargas de trabalho de PLN (Processamento de Linguagem Natural) no Azure",
+            "peso": "15 a 20%",
+            "pesoMedio": 17.5,
+            "topicos": [
+              "Extração de frases-chave, entidades, sentimento, modelagem de idioma e tradução",
+              "Reconhecimento e síntese de fala",
+              "Serviços Azure AI Language e Azure AI Speech"
+            ]
+          },
+          {
+            "nome": "Descrever os recursos de cargas de trabalho de IA generativas no Azure",
+            "peso": "20 a 25%",
+            "pesoMedio": 22.5,
+            "topicos": [
+              "Características dos modelos generativos e cenários comuns",
+              "Considerações de IA responsável aplicadas à IA generativa",
+              "Azure AI Foundry, Azure OpenAI e o catálogo de modelos"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Azure Machine Learning",
+            "url": "https://learn.microsoft.com/pt-br/azure/machine-learning/",
+            "descricao": "Princípios de aprendizado de máquina"
+          },
+          {
+            "titulo": "Azure AI Vision",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/",
+            "descricao": "Visão computacional"
+          },
+          {
+            "titulo": "Azure AI Language",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/language-service/",
+            "descricao": "Processamento de linguagem natural"
+          },
+          {
+            "titulo": "Azure AI Speech",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/",
+            "descricao": "Reconhecimento e síntese de fala"
+          },
+          {
+            "titulo": "Azure OpenAI",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/",
+            "descricao": "IA generativa, a maior fatia do exame"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",
@@ -291,6 +769,70 @@
       "chamada": "Conceitos de IA e soluções com o Microsoft Foundry",
       "visivelNaHome": true,
       "curso": "AI-901/curso.html",
+      "exame": {
+        "nome": "Microsoft Azure AI Fundamentals",
+        "resumo": "O exame de fundamentos de inteligência artificial da Microsoft, construído em torno do Microsoft Foundry. Cobra tanto os conceitos e a responsabilidade em IA quanto a implementação prática de aplicativos e agentes generativos no Azure.",
+        "atualizadoEm": "15 de abril de 2026",
+        "situacao": "ativo",
+        "slug": "ai-901",
+        "certificacao": "azure-ai-fundamentals",
+        "cursoOficial": "ai-901t00",
+        "dominios": [
+          {
+            "nome": "Identificar os conceitos e os recursos de IA",
+            "peso": "40 a 45%",
+            "pesoMedio": 42.5,
+            "topicos": [
+              "Princípios da IA responsável: imparcialidade, confiabilidade e segurança, privacidade, inclusão, transparência e responsabilidade",
+              "Componentes e configurações do modelo: como modelos generativos funcionam, escolha por funcionalidade e opções de implantação",
+              "Cargas de trabalho de IA: generativa e agentes, análise de texto, fala, visão computacional e extração de informações"
+            ]
+          },
+          {
+            "nome": "Implementar soluções de IA usando Microsoft Foundry",
+            "peso": "55 a 60%",
+            "pesoMedio": 57.5,
+            "topicos": [
+              "Aplicativos e agentes generativos: prompts de sistema, implantação de modelos, SDK do Foundry e agente único",
+              "Texto e fala: análise de texto, prompts falados com modelo multimodal e Azure Speech nas Foundry Tools",
+              "Visão computacional e geração de imagem a partir de prompts",
+              "Extração de informações de documentos, imagens, áudio e vídeo com o Azure Content Understanding"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Microsoft Foundry",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-foundry/",
+            "descricao": "O centro do exame: portal, SDK, implantação de modelos e agentes"
+          },
+          {
+            "titulo": "Azure Content Understanding",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/content-understanding/",
+            "descricao": "Extração de informações de documentos, imagens, áudio e vídeo"
+          },
+          {
+            "titulo": "Azure AI Speech",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/",
+            "descricao": "Reconhecimento e síntese de fala"
+          },
+          {
+            "titulo": "Azure AI Vision",
+            "url": "https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/",
+            "descricao": "Análise de imagens e recursos de visão computacional"
+          },
+          {
+            "titulo": "Azure Machine Learning",
+            "url": "https://learn.microsoft.com/pt-br/azure/machine-learning/",
+            "descricao": "Princípios de aprendizado de máquina"
+          },
+          {
+            "titulo": "IA Responsável no Azure",
+            "url": "https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai",
+            "descricao": "Os seis princípios cobrados na primeira área"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",
@@ -317,6 +859,76 @@
       "chamada": "Copilot, administração e governança do Microsoft 365",
       "visivelNaHome": true,
       "curso": "AB-900/curso.html",
+      "exame": {
+        "nome": "Microsoft 365 Copilot and Agent Administration Fundamentals",
+        "resumo": "A administração de um ambiente Microsoft 365 com IA: os objetos e recursos de segurança do M365, a proteção e governança de dados com o Purview, e as tarefas de administração de Copilot e agentes.",
+        "atualizadoEm": "22 de julho de 2026",
+        "situacao": "ativo",
+        "slug": "ab-900",
+        "certificacao": "copilot-and-agent-administration-fundamentals",
+        "cursoOficial": null,
+        "dominios": [
+          {
+            "nome": "Identificar os principais recursos e objetos dos serviços do Microsoft 365",
+            "peso": "30 a 35%",
+            "pesoMedio": 32.5,
+            "topicos": [
+              "Licenças, domínios e configurações da organização no centro de administração",
+              "Objetos do Exchange, SharePoint e Teams: caixas de correio, sites, bibliotecas, equipes e canais",
+              "Confiança Zero, autenticação, autorização e Defender XDR",
+              "Microsoft Entra ID, acesso condicional, SSO, PIM e logs de auditoria"
+            ]
+          },
+          {
+            "nome": "Entender as tarefas de proteção e governança de dados para Microsoft 365 e Copilot",
+            "peso": "35 a 40%",
+            "pesoMedio": 37.5,
+            "topicos": [
+              "Purview: proteção de informações, DLP, risco interno, conformidade de comunicações e DSPM para IA",
+              "Como o Copilot acessa dados e como o Microsoft Graph influencia as respostas",
+              "Identificar riscos com Compliance Manager, Data Explorer e alertas de DLP",
+              "Compartilhamento excessivo no SharePoint e governança de acesso a dados"
+            ]
+          },
+          {
+            "nome": "Executar tarefas administrativas básicas para Copilot e agentes",
+            "peso": "25 a 30%",
+            "pesoMedio": 27.5,
+            "topicos": [
+              "Recursos do Copilot e dos agentes, licenciamento mensal e pagamento conforme o uso",
+              "Atribuir licenças, monitorar uso e adoção, gerenciar prompts",
+              "Criar agentes, configurar acesso, aprovação e ciclo de vida"
+            ]
+          }
+        ],
+        "documentacao": [
+          {
+            "titulo": "Microsoft 365 Copilot",
+            "url": "https://learn.microsoft.com/pt-br/copilot/microsoft-365/",
+            "descricao": "O centro do exame"
+          },
+          {
+            "titulo": "Centro de administração do Microsoft 365",
+            "url": "https://learn.microsoft.com/pt-br/microsoft-365/admin/",
+            "descricao": "Onde as tarefas administrativas acontecem"
+          },
+          {
+            "titulo": "Microsoft Purview",
+            "url": "https://learn.microsoft.com/pt-br/purview/",
+            "descricao": "Proteção e governança de dados, a maior fatia"
+          },
+          {
+            "titulo": "Microsoft Entra ID",
+            "url": "https://learn.microsoft.com/pt-br/entra/identity/",
+            "descricao": "Identidade, acesso condicional e PIM"
+          },
+          {
+            "titulo": "Documentação do Microsoft 365",
+            "url": "https://learn.microsoft.com/pt-br/microsoft-365/",
+            "descricao": "Referência dos serviços da plataforma"
+          }
+        ]
+      },
       "simulados": [
         {
           "nome": "01-SIMULADO",

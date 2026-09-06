@@ -103,6 +103,9 @@ async function build() {
       chamada: anterior.chamada ?? '',
       visivelNaHome: anterior.visivelNaHome ?? true,
       curso: toPosix(path.join(pasta, 'curso.html')),
+      // Dados do exame (areas avaliadas, pesos, links) sao escritos a mao e
+      // alimentam scripts/gerar-paginas-curso.mjs; preservados como estao.
+      ...(anterior.exame ? { exame: anterior.exame } : {}),
       simulados: simuladoDirs.map(dir => {
         const relativo = toPosix(path.relative(rootDir, dir));
         return {

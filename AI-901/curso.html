@@ -1,8 +1,8 @@
 <!-- ==========================================
 Arquivo: curso.html
-Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
-           AI Fundamentals). Domínios e pesos conforme o guia de estudo
-           oficial, atualizado em 15 de abril de 2026.
+Descrição: Página do curso preparatório para o exame AI-901.
+           GERADO por scripts/gerar-paginas-curso.mjs a partir de cursos.json.
+           Não edite à mão: altere o manifesto e rode o gerador.
 ========================================== -->
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -67,7 +67,6 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
     details.dominio > summary::before {
       content: "▸ ";
       display: inline-block;
-      transition: transform .15s;
     }
 
     details.dominio[open] > summary::before {
@@ -113,11 +112,7 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
     <div class="container mx-auto px-6 max-w-5xl">
       <p class="text-blue-200 text-sm font-semibold uppercase tracking-widest mb-2">Exame AI-901</p>
       <h1 class="text-4xl font-bold mb-3">Microsoft Azure AI Fundamentals</h1>
-      <p class="text-lg text-blue-50 max-w-3xl">
-        O exame de fundamentos de inteligência artificial da Microsoft, construído em torno do
-        <strong>Microsoft Foundry</strong>. Cobra tanto os conceitos e a responsabilidade em IA quanto a implementação
-        prática de aplicativos e agentes generativos no Azure.
-      </p>
+      <p class="text-lg text-blue-50 max-w-3xl">O exame de fundamentos de inteligência artificial da Microsoft, construído em torno do Microsoft Foundry. Cobra tanto os conceitos e a responsabilidade em IA quanto a implementação prática de aplicativos e agentes generativos no Azure.</p>
     </div>
   </section>
 
@@ -133,21 +128,21 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
       <div class="bg-white rounded-xl shadow p-5">
         <div class="rotulo mb-1">Áreas avaliadas</div>
         <div class="tile-valor num">2</div>
-        <div class="text-sm text-gray-500 mt-1">conceitos e Foundry</div>
+        <div class="text-sm text-gray-500 mt-1">pesos oficiais</div>
       </div>
       <div class="bg-white rounded-xl shadow p-5">
         <div class="rotulo mb-1">Questões aqui</div>
-        <div class="tile-valor num">128</div>
+        <div class="tile-valor num">98</div>
         <div class="text-sm text-gray-500 mt-1">em 4 simulados</div>
       </div>
       <div class="bg-white rounded-xl shadow p-5">
-        <div class="rotulo mb-1">Exame atualizado</div>
-        <div class="tile-valor">abr<span class="text-base font-semibold">/26</span></div>
-        <div class="text-sm text-gray-500 mt-1">versão em inglês</div>
+        <div class="rotulo mb-1">Habilidades desde</div>
+        <div class="tile-valor" style="font-size:1.35rem">abr/26</div>
+        <div class="text-sm text-gray-500 mt-1">guia oficial</div>
       </div>
     </section>
 
-    <!-- Domínios oficiais -->
+    <!-- Áreas avaliadas -->
     <section class="bg-white rounded-xl shadow p-6 mb-8">
       <h2 class="text-lg font-semibold mb-1">O que o exame cobra</h2>
       <p class="text-sm text-gray-500 mb-6">
@@ -157,51 +152,38 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
         válido a partir de 15 de abril de 2026.
       </p>
 
-      <div class="mb-7">
+      <div class="mb-7 last:mb-0">
         <div class="flex justify-between items-baseline gap-4 mb-1">
           <span class="font-medium">Identificar os conceitos e os recursos de IA</span>
-          <span class="num font-semibold text-blue-600 flex-none">40&ndash;45%</span>
+          <span class="num font-semibold text-blue-600 flex-none">40–45%</span>
         </div>
         <div class="trilha mb-3"><span class="trilha-preenchida" style="width:42.5%"></span></div>
         <details class="dominio">
           <summary>Ver os tópicos desta área</summary>
           <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
-            <li><strong>Princípios da IA responsável</strong> &mdash; imparcialidade, confiabilidade e segurança,
-              privacidade e segurança, inclusão, transparência e responsabilidade</li>
-            <li><strong>Componentes e configurações do modelo de IA</strong> &mdash; como modelos generativos
-              funcionam, escolha de modelo por funcionalidade, opções de implantação e parâmetros</li>
-            <li><strong>Cargas de trabalho de IA</strong> &mdash; IA generativa e agentes, análise de texto, fala,
-              visão computacional e extração de informações</li>
+            <li>Princípios da IA responsável: imparcialidade, confiabilidade e segurança, privacidade, inclusão, transparência e responsabilidade</li>
+            <li>Componentes e configurações do modelo: como modelos generativos funcionam, escolha por funcionalidade e opções de implantação</li>
+            <li>Cargas de trabalho de IA: generativa e agentes, análise de texto, fala, visão computacional e extração de informações</li>
           </ul>
         </details>
       </div>
 
-      <div>
+      <div class="mb-7 last:mb-0">
         <div class="flex justify-between items-baseline gap-4 mb-1">
           <span class="font-medium">Implementar soluções de IA usando Microsoft Foundry</span>
-          <span class="num font-semibold text-blue-600 flex-none">55&ndash;60%</span>
+          <span class="num font-semibold text-blue-600 flex-none">55–60%</span>
         </div>
         <div class="trilha mb-3"><span class="trilha-preenchida" style="width:57.5%"></span></div>
         <details class="dominio">
           <summary>Ver os tópicos desta área</summary>
           <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
-            <li><strong>Aplicativos e agentes generativos</strong> &mdash; prompts de sistema e de usuário, implantar
-              e testar modelos no portal do Foundry, cliente de chat com o SDK do Foundry, solução de agente único</li>
-            <li><strong>Texto e fala</strong> &mdash; análise de texto, respostas a prompts falados com modelo
-              multimodal, aplicativos com o Azure Speech nas Foundry Tools</li>
-            <li><strong>Visão computacional e geração de imagem</strong> &mdash; interpretar dados visuais em prompts,
-              gerar novas saídas visuais, aplicativos com recursos de visão</li>
-            <li><strong>Extração de informações</strong> &mdash; documentos, formulários, imagens, áudio e vídeo com o
-              Azure Content Understanding</li>
+            <li>Aplicativos e agentes generativos: prompts de sistema, implantação de modelos, SDK do Foundry e agente único</li>
+            <li>Texto e fala: análise de texto, prompts falados com modelo multimodal e Azure Speech nas Foundry Tools</li>
+            <li>Visão computacional e geração de imagem a partir de prompts</li>
+            <li>Extração de informações de documentos, imagens, áudio e vídeo com o Azure Content Understanding</li>
           </ul>
         </details>
       </div>
-
-      <p class="text-sm text-gray-500 mt-6 pt-5 border-t">
-        <strong class="text-gray-700">Pré-requisitos sugeridos pela Microsoft:</strong> conhecimento conceitual de
-        soluções de IA no Azure, noções de sintaxe e técnicas de programação em Python e familiaridade com recursos do
-        Azure. Não é exigida experiência em ciência de dados.
-      </p>
     </section>
 
     <!-- Simulados -->
@@ -212,12 +194,12 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
         corte em 700. O resultado fica salvo no seu histórico.
       </p>
 
-      <div class="grid md:grid-cols-2 gap-4 mb-8">
+      <div class="grid md:grid-cols-2 gap-4">
         <a href="./01-SIMULADO/index.html"
           class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
           <div>
             <div class="font-semibold text-lg">Simulado 01</div>
-            <div class="text-sm text-gray-500 num">32 questões</div>
+            <div class="text-sm text-gray-500 num">2 questões</div>
           </div>
           <span class="text-blue-600 font-medium flex-none">Começar →</span>
         </a>
@@ -246,34 +228,31 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
           <span class="text-blue-600 font-medium flex-none">Começar →</span>
         </a>
       </div>
-
     </section>
 
-    <!-- Recursos oficiais -->
+    <!-- Recursos -->
     <section class="grid md:grid-cols-2 gap-6 mb-8">
       <div class="bg-white rounded-xl shadow p-6">
         <h2 class="text-lg font-semibold mb-4">Recursos oficiais da Microsoft</h2>
         <ul class="space-y-3 text-sm">
           <li>
-            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/exams/ai-901/" target="_blank"
-              rel="noopener" class="text-blue-600 hover:underline font-medium">Página do exame AI-901</a>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/exams/ai-901/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Página do exame AI-901</a>
             <p class="text-gray-500">Inscrição, idiomas disponíveis e preço por região</p>
           </li>
           <li>
-            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/ai-901"
-              target="_blank" rel="noopener" class="text-blue-600 hover:underline font-medium">Guia de estudo
-              oficial</a>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/ai-901" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Guia de estudo oficial</a>
             <p class="text-gray-500">Lista completa das habilidades avaliadas, com os pesos de cada área</p>
           </li>
           <li>
-            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/azure-ai-fundamentals/"
-              target="_blank" rel="noopener" class="text-blue-600 hover:underline font-medium">Certificação Azure AI
-              Fundamentals</a>
-            <p class="text-gray-500">Visão geral da credencial &mdash; fundamentos não expiram nem exigem renovação</p>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/azure-ai-fundamentals/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Página da certificação</a>
+            <p class="text-gray-500">Visão geral da credencial — fundamentos não expiram nem exigem renovação</p>
           </li>
           <li>
             <a href="https://learn.microsoft.com/pt-br/training/courses/ai-901t00" target="_blank" rel="noopener"
-              class="text-blue-600 hover:underline font-medium">Curso AI-901T00-A: Introduction to AI in Azure</a>
+              class="text-blue-600 hover:underline font-medium">Curso AI-901T00</a>
             <p class="text-gray-500">Treinamento oficial com instrutor</p>
           </li>
           <li>
@@ -293,86 +272,61 @@ Descrição: Página do curso preparatório para o exame AI-901 (Microsoft Azure
             <p class="text-gray-500">O centro do exame: portal, SDK, implantação de modelos e agentes</p>
           </li>
           <li>
-            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/content-understanding/" target="_blank"
-              rel="noopener" class="text-blue-600 hover:underline font-medium">Azure Content Understanding</a>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/content-understanding/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure Content Understanding</a>
             <p class="text-gray-500">Extração de informações de documentos, imagens, áudio e vídeo</p>
           </li>
           <li>
-            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/" target="_blank"
-              rel="noopener" class="text-blue-600 hover:underline font-medium">Azure AI Speech</a>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/speech-service/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure AI Speech</a>
             <p class="text-gray-500">Reconhecimento e síntese de fala</p>
           </li>
           <li>
-            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/" target="_blank"
-              rel="noopener" class="text-blue-600 hover:underline font-medium">Azure AI Vision</a>
+            <a href="https://learn.microsoft.com/pt-br/azure/ai-services/computer-vision/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Azure AI Vision</a>
             <p class="text-gray-500">Análise de imagens e recursos de visão computacional</p>
           </li>
           <li>
             <a href="https://learn.microsoft.com/pt-br/azure/machine-learning/" target="_blank" rel="noopener"
               class="text-blue-600 hover:underline font-medium">Azure Machine Learning</a>
-            <p class="text-gray-500">Princípios de aprendizado de máquina cobrados na primeira área</p>
+            <p class="text-gray-500">Princípios de aprendizado de máquina</p>
           </li>
           <li>
-            <a href="https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai" target="_blank"
-              rel="noopener" class="text-blue-600 hover:underline font-medium">IA Responsável no Azure</a>
-            <p class="text-gray-500">Os seis princípios cobrados na primeira área do exame</p>
-          </li>
-          <li>
-            <a href="https://learn.microsoft.com/pt-br/training/modules/get-started-ai-fundamentals/" target="_blank"
-              rel="noopener" class="text-blue-600 hover:underline font-medium">Módulo introdutório de IA no Learn</a>
-            <p class="text-gray-500">Bom ponto de partida para quem está começando do zero</p>
+            <a href="https://learn.microsoft.com/pt-br/azure/machine-learning/concept-responsible-ai" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">IA Responsável no Azure</a>
+            <p class="text-gray-500">Os seis princípios cobrados na primeira área</p>
           </li>
         </ul>
       </div>
     </section>
 
-    <!-- Plano de estudo -->
     <section class="bg-white rounded-xl shadow p-6">
       <h2 class="text-lg font-semibold mb-1">Sugestão de plano de estudo</h2>
-      <p class="text-sm text-gray-500 mb-6">
-        Três semanas, com o peso de cada etapa espelhando o peso no exame.
-      </p>
+      <p class="text-sm text-gray-500 mb-6">Uma etapa por área do exame, na ordem do guia oficial.</p>
 
       <ol class="space-y-5">
         <li class="flex gap-4">
           <span
             class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
           <div>
-            <div class="font-semibold mb-1">Semana 1 &mdash; Conceitos e IA responsável</div>
-            <p class="text-sm text-gray-600">
-              Os seis princípios de IA responsável, como modelos generativos funcionam e como escolher um modelo por
-              funcionalidade. Feche com o <a href="./01-SIMULADO/index.html" class="text-blue-600 hover:underline">Simulado
-                01</a> e veja seu aproveitamento por assunto.
-            </p>
+            <div class="font-semibold mb-1">Identificar os conceitos e os recursos de IA</div>
+            <p class="text-sm text-gray-600">Princípios da IA responsável: imparcialidade, confiabilidade e segurança, privacidade, inclusão, transparência e responsabilidade. Vale 40 a 45% da prova.</p>
           </div>
         </li>
         <li class="flex gap-4">
           <span
             class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
           <div>
-            <div class="font-semibold mb-1">Semana 2 &mdash; Foundry na prática</div>
-            <p class="text-sm text-gray-600">
-              A maior fatia do exame. Implante um modelo no portal do Foundry, escreva prompts de sistema, monte um
-              agente único e um cliente de chat com o SDK. Depois faça os
-              <a href="./02-SIMULADO/index.html" class="text-blue-600 hover:underline">Simulados 02</a> e
-              <a href="./03-SIMULADO/index.html" class="text-blue-600 hover:underline">03</a>.
-            </p>
-          </div>
-        </li>
-        <li class="flex gap-4">
-          <span
-            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
-          <div>
-            <div class="font-semibold mb-1">Semana 3 &mdash; Multimodal e revisão</div>
-            <p class="text-sm text-gray-600">
-              Fala, visão, geração de imagem e extração de informações com o Content Understanding. Faça o
-              <a href="./04-SIMULADO/index.html" class="text-blue-600 hover:underline">Simulado 04</a> e use o
-              <a href="../dashboard.html" class="text-blue-600 hover:underline">seu desempenho</a> para decidir o que
-              revisar: os assuntos com menor aproveitamento aparecem primeiro.
-            </p>
+            <div class="font-semibold mb-1">Implementar soluções de IA usando Microsoft Foundry</div>
+            <p class="text-sm text-gray-600">Aplicativos e agentes generativos: prompts de sistema, implantação de modelos, SDK do Foundry e agente único. Vale 55 a 60% da prova.</p>
           </div>
         </li>
       </ol>
+      <p class="text-sm text-gray-600 mt-6 pt-5 border-t">
+        Depois de cada etapa, faça um simulado e confira o
+        <a href="../dashboard.html" class="text-blue-600 hover:underline">seu desempenho</a>: os assuntos com menor
+        aproveitamento aparecem primeiro, e são por onde vale recomeçar.
+      </p>
     </section>
 
   </main>

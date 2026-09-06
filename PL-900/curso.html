@@ -1,353 +1,509 @@
+<!-- ==========================================
+Arquivo: curso.html
+Descrição: Página do curso preparatório para o exame PL-900.
+           GERADO por scripts/gerar-paginas-curso.mjs a partir de cursos.json.
+           Não edite à mão: altere o manifesto e rode o gerador.
+========================================== -->
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Curso Preparatório PL-900 | CertiAcademy</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
   <style>
-  body {
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    header {
-      border-bottom: 4px solid #0078D4;
+    .num {
+      font-variant-numeric: tabular-nums;
     }
 
-    .text-blue-600 {
+    .tile-valor {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+
+    .trilha {
+      height: 10px;
+      background: #e5e7eb;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .trilha-preenchida {
+      display: block;
+      height: 100%;
+      border-radius: 5px;
+      background: #0078D4;
+    }
+
+    .rotulo {
+      font-size: .68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #6b7280;
+    }
+
+    details.dominio > summary {
+      cursor: pointer;
+      list-style: none;
+      font-weight: 600;
       color: #0078D4;
+      font-size: .88rem;
+      padding: .35rem 0;
     }
 
-    .bg-blue-600 {
-      background-color: #0078D4;
+    details.dominio > summary::-webkit-details-marker {
+      display: none;
     }
 
-    .hover\:text-blue-500:hover {
-      color: #005a9e;
+    details.dominio > summary::before {
+      content: "▸ ";
+      display: inline-block;
     }
 
-    a {
-      transition: color 0.3s ease;
+    details.dominio[open] > summary::before {
+      content: "▾ ";
     }
 
-    footer {
-      background-color: #1b1b1b;
+    a:focus-visible,
+    button:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+      border-radius: 4px;
     }
-  .link-simulado {
-    display: inline-block;
-    font-size: 1.25em;
-    font-weight: bold;
-    color: #fff;
-    background: #22c55e;
-    padding: 12px 28px;
-    border-radius: 6px;
-    text-decoration: none;
-    transition: background 0.2s;
-    box-shadow: 0 2px 6px rgba(34, 197, 94, 0.15);
-  }
 
-  .link-simulado:hover {
-    background: #16a34a;
-    color: #fff;
-  }
-</style>
-  <meta name="robots" content="noindex, nofollow">
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+      }
+    }
+  </style>
 </head>
+
 <body class="bg-gray-50 text-gray-800">
 
-   <!-- Cabeçalho -->
+  <!-- Cabeçalho -->
   <header class="bg-white shadow">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <a href="../"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy"
-            class="h-16"></a>
-      </div>      
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center gap-4">
+      <a href="../"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
+      <nav class="flex items-center gap-3 text-sm">
+        <a href="../dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
+        <a href="#simulados" class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
+          Ir para os simulados
+        </a>
+        <!-- Preenchido por header-sessao.js: avatar, saudação e sair, ou o
+             botão de entrar para quem ainda não fez login. -->
+        <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
+      </nav>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="bg-blue-600 text-white py-16 text-center">
-    <h2 class="text-4xl font-bold mb-4">PL-900: Power Platform Fundamentals</h2>
-    <p class="text-lg max-w-2xl mx-auto">Seja bem-vindo ao curso preparatório oficial para a certificação Microsoft PL-900. Acompanhe os módulos, exercícios e materiais de referência para garantir sua aprovação!</p>
+  <section class="bg-blue-600 text-white py-14">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <p class="text-blue-200 text-sm font-semibold uppercase tracking-widest mb-2">Exame PL-900</p>
+      <h1 class="text-4xl font-bold mb-3">Microsoft Power Platform Fundamentals</h1>
+      <p class="text-lg text-blue-50 max-w-3xl">Os fundamentos da Power Platform: o valor de negócio de cada serviço, o Dataverse e a governança do ambiente, e a construção prática de aplicativos, fluxos e sites.</p>
+    </div>
   </section>
 
-  <!-- Conteúdo Principal -->
-  <main class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-2 gap-10">
-    <!-- Coluna Esquerda -->
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <!-- Módulos -->
-      <section id="modulos">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Módulos do Curso</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Estrutura de Conteúdo para Fundamentos da Power Platform</h4>
-        <ul class="list-disc pl-6 space-y-2">
-          <li>Descrever o valor de negócios do Microsoft Power Platform (20 a 25%)</li>
-          <li>Identificar os componentes básicos do Microsoft Power Platform (10 a 15%)</li>
-          <li>Demonstrar as funcionalidades do Power BI (10 a 15%)</li>
-          <li>Demonstrar as funcionalidades do Power Apps (20 a 25%)</li>
-          <li>Demonstrar os recursos do Power Automate (10 a 15%)</li>
-          <li>Demonstrar as funcionalidades do Power Pages (1 a 5%)</li>
-          <li>Descrever a experiência de criação de IA no Microsoft Power Platform (10 a 15%)</li>
-        </ul>
-      </section>
+  <main class="container mx-auto px-6 py-12 max-w-5xl">
 
-      <!-- Exercícios -->
-      <section id="exercicios" class="mt-12">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Exercícios Práticos</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Atividades Interativas para Aplicação dos Conceitos da Power Platform</h4>
-        <ul class="list-disc pl-6 space-y-2 text-blue-600">
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/identify-foundational-components-microsoft-power-platfor/6-exercise-build-basic-dataverse-data-model" target="_blank">Criar modelo de dados no Dataverse</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-apps/7-exercise-build-canvas-app" target="_blank">Criar aplicativo de tela</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-apps/9-exercise-build-basic-model-driven-app" target="_blank">Criar aplicativo baseado em modelo</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-automate/10-exercise-build-basic-power-automate-flow" target="_blank">Criar fluxo básico com Power Automate</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-bi/6-build-basic-dashboard" target="_blank">Compilar painel básico Power BI</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/demonstrate-capabilities-power-pages/4-build-power-pages-site" target="_blank">Criar site com Power Pages</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/demonstrate-capabilities-power-pages/5-create-power-pages-site-copilot" target="_blank">Usar Copilot no Power Pages</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/describe-ai-authoring-experience-power-platform/4-create-topic-using-copilot-studio" target="_blank">Criar copiloto básico</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/training/modules/describe-ai-authoring-experience-power-platform/5-describe-use-cases-generative-ai-power-virtual-agents-bots" target="_blank">Casos de uso com IA generativa</a></li>
-        </ul>
-      </section>
-    </div>
+    <!-- Fatos do exame -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Nota de corte</div>
+        <div class="tile-valor num">700</div>
+        <div class="text-sm text-gray-500 mt-1">de 1000 pontos</div>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Áreas avaliadas</div>
+        <div class="tile-valor num">5</div>
+        <div class="text-sm text-gray-500 mt-1">pesos oficiais</div>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Questões aqui</div>
+        <div class="tile-valor num">379</div>
+        <div class="text-sm text-gray-500 mt-1">em 11 simulados</div>
+      </div>
+      <div class="bg-white rounded-xl shadow p-5">
+        <div class="rotulo mb-1">Habilidades desde</div>
+        <div class="tile-valor" style="font-size:1.35rem">jun/25</div>
+        <div class="text-sm text-gray-500 mt-1">guia oficial</div>
+      </div>
+    </section>
 
-    <!-- Coluna Direita -->
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <!-- Referências -->
-      <section id="referencias">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Referências Oficiais</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Materiais Oficiais para Estudo e Consulta sobre Power Platform</h4>
-        <ul class="list-disc pl-6 space-y-2 text-blue-600">
-          <li><a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/pl-900" target="_blank">Guia de estudo PL-900</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/credentials/certifications/power-platform-fundamentals/" target="_blank">Microsoft Learn - PL-900</a></li>
-          <li><a href="https://www.microsoft.com/pt-br/power-platform" target="_blank">Power Platform</a></li>
-          <li><a href="https://www.microsoft.com/pt-br/power-platform/products/power-apps/" target="_blank">Power Apps</a></li>
-          <li><a href="https://www.microsoft.com/pt-br/power-platform/products/power-automate/" target="_blank">Power Automate</a></li>
-          <li><a href="https://www.microsoft.com/pt-br/power-platform/products/power-bi" target="_blank">Power BI</a></li>
-          <li><a href="https://www.microsoft.com/pt-br/power-platform/products/power-pages" target="_blank">Power Pages</a></li>
-          <li><a href="https://learn.microsoft.com/pt-br/power-apps/maker/data-platform/data-platform-intro" target="_blank">Microsoft Dataverse</a></li>
-          <li><a href="https://www.microsoft.com/pt-br/microsoft-copilot/microsoft-copilot-studio" target="_blank">Microsoft Copilot Studio</a></li>
-          
-        </ul>
-      </section>
+    <!-- Áreas avaliadas -->
+    <section class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-lg font-semibold mb-1">O que o exame cobra</h2>
+      <p class="text-sm text-gray-500 mb-6">
+        Pesos conforme o
+        <a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/pl-900"
+          target="_blank" rel="noopener" class="text-blue-600 hover:underline">guia de estudo oficial</a>,
+        válido a partir de 20 de junho de 2025.
+      </p>
 
-      <!-- Simulado -->
-      <section id="simulado" class="mt-12">
-        <h3 class="text-2xl font-semibold mb-6 text-blue-600">Vídeos Training Day, PDFs e Podcasts</h3>
-        <h4 class="text-lg font-medium mb-4 gray-600">Recursos Multimídia para Aprimorar o Conhecimento em Power Platform</h4>
-        <ul class="list-disc pl-6 space-y-2 text-blue-600">
-          <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">Acessar Simulado PL-900</a></li>
-          <li><a href="https://www.youtube.com/watch?v=TXnIVUzyvOk" target="_blank">Video - Training Day Parte 1</a></li>
-          <li><a href="https://www.youtube.com/watch?v=otBV4gJBOiQ" target="_blank">Video - Training Day Parte 2</a></li>
-          <li><a href="https://www.youtube.com/watch?v=y9R9b9LslOA" target="_blank">Video - Training Day Parte 3</a></li>
-          <li><a href="https://www.youtube.com/watch?v=Dz35ZCmqHn8" target="_blank">Video - Training Day Parte 4</a></li>
-          <li><a href="../PL-900/arquivos/PL-900-Apresentacao.pdf" target="_blank">PDF - Microsoft Power Platform Virtual Training Day: Fundamentals</a></li>
-          <li><a href="../PL-900/arquivos/PL-900-Simulado-Ingles.pdf" target="_blank">PDF - PL-900 Simulado de 310 Questões em Inglês</a></li>
-          <li><a href="../PL-900/arquivos/bizu.pdf" target="_blank">Bizu</a></li>
-          <li><a href="https://youtu.be/hDapSMFXMMA?si=fc5XEejnRNvjFGHB" target="_blank">Aula Gravada - Criação de um App utilizando Dataverse, Power Automate e Power BI</a></li>
-          <li><a href="#" target="_blank">Podcast Power Plataform</a></li>
-            <audio controls>
-              <source src="../PL-900/arquivos/podcast.mp3" type="audio/mp3">
-              Seu navegador não suporta o elemento de áudio.
-            </audio>
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Descrever o valor comercial do Microsoft Power Platform</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>O valor de Power Apps, Power Automate, Power Pages, conectores e Dataverse</li>
+            <li>Copilotos, IA generativa, Copilot Studio e Power Fx</li>
+            <li>Como a Power Platform se integra ao Microsoft 365 e ao Teams</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Gerenciar o ambiente do Microsoft Power Platform</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Dataverse: tabelas, colunas, relações e lógica de negócios</li>
+            <li>Importação e exportação de dados</li>
+            <li>Modelo de segurança, ambientes e centros de administração</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Demonstrar os recursos do Power Apps</span>
+          <span class="num font-semibold text-blue-600 flex-none">25–30%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:27.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Aplicativos de tela e aplicativos baseados em modelo</li>
+            <li>Conectores, controles comuns e páginas responsivas</li>
+            <li>Formulários, exibições e compartilhamento de aplicativos</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Demonstrar os recursos do Power Automate</span>
+          <span class="num font-semibold text-blue-600 flex-none">15–20%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:17.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Fluxos de nuvem e de área de trabalho, gatilhos e ações</li>
+            <li>Modelos, aprovações, mineração de processos, loops e ramificação</li>
+            <li>Criar, testar, executar e compartilhar um fluxo</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="mb-7 last:mb-0">
+        <div class="flex justify-between items-baseline gap-4 mb-1">
+          <span class="font-medium">Demonstrar os recursos do Power Pages</span>
+          <span class="num font-semibold text-blue-600 flex-none">10–15%</span>
+        </div>
+        <div class="trilha mb-3"><span class="trilha-preenchida" style="width:12.5%"></span></div>
+        <details class="dominio">
+          <summary>Ver os tópicos desta área</summary>
+          <ul class="list-disc pl-5 mt-2 text-sm text-gray-700 space-y-1">
+            <li>Casos de uso, métodos de criação e conceitos de segurança</li>
+            <li>Criar sites com o Copilot, espaços de trabalho do design studio</li>
+            <li>Páginas, componentes e temas</li>
+          </ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- Simulados -->
+    <section id="simulados" class="mb-8">
+      <h2 class="text-2xl font-bold mb-1">Simulados</h2>
+      <p class="text-gray-600 mb-6">
+        Cada simulado usa os mesmos formatos de questão do exame oficial e a mesma escala de 1000 pontos, com a nota de
+        corte em 700. O resultado fica salvo no seu histórico.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <a href="./01-Power-Plataform-I/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">01. Power Plataform I</div>
+            <div class="text-sm text-gray-500 num">11 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./02-Power-Plataform-II/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">02. Power Plataform II</div>
+            <div class="text-sm text-gray-500 num">45 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./03-Power-BI/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">03. Power BI</div>
+            <div class="text-sm text-gray-500 num">46 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./04-Power-Apps-I/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">04. Power Apps I</div>
+            <div class="text-sm text-gray-500 num">43 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./05-Power-Apps-II/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">05. Power Apps II</div>
+            <div class="text-sm text-gray-500 num">42 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./06-Power-Automate-I/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">06. Power Automate I</div>
+            <div class="text-sm text-gray-500 num">29 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./07-Power-Automate-II/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">07. Power Automate II</div>
+            <div class="text-sm text-gray-500 num">27 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./08-Power-Pages/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">08. Power Pages</div>
+            <div class="text-sm text-gray-500 num">13 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+        <a href="./09-IA-Power-Plataform/index.html"
+          class="bg-white rounded-xl shadow p-5 hover:shadow-lg transition flex justify-between items-center gap-4">
+          <div>
+            <div class="font-semibold text-lg">09. IA Power Plataform</div>
+            <div class="text-sm text-gray-500 num">44 questões</div>
+          </div>
+          <span class="text-blue-600 font-medium flex-none">Começar →</span>
+        </a>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6 mt-6">
+        <h3 class="text-lg font-semibold mb-1">Simulados bônus</h3>
+        <p class="text-sm text-gray-600 mb-5">Rodadas extras de questões, no mesmo formato do exame.</p>
+        <div class="grid md:grid-cols-2 gap-4">
+          <a href="./PL-900-BONUS/01-BONUS/index.html"
+            class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex justify-between items-center gap-4">
+            <div>
+              <div class="font-semibold">Bônus 01</div>
+              <div class="text-sm text-gray-500 num">40 questões</div>
+            </div>
+            <span class="text-blue-600 text-sm font-medium flex-none">Começar →</span>
+          </a>
+          <a href="./PL-900-BONUS/02-BONUS/index.html"
+            class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex justify-between items-center gap-4">
+            <div>
+              <div class="font-semibold">Bônus 02</div>
+              <div class="text-sm text-gray-500 num">39 questões</div>
+            </div>
+            <span class="text-blue-600 text-sm font-medium flex-none">Começar →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recursos -->
+    <section class="grid md:grid-cols-2 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Recursos oficiais da Microsoft</h2>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/exams/pl-900/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Página do exame PL-900</a>
+            <p class="text-gray-500">Inscrição, idiomas disponíveis e preço por região</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/resources/study-guides/pl-900" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Guia de estudo oficial</a>
+            <p class="text-gray-500">Lista completa das habilidades avaliadas, com os pesos de cada área</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/credentials/certifications/power-platform-fundamentals/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Página da certificação</a>
+            <p class="text-gray-500">Visão geral da credencial — fundamentos não expiram nem exigem renovação</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/training/courses/pl-900t00" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Curso PL-900T00</a>
+            <p class="text-gray-500">Treinamento oficial com instrutor</p>
+          </li>
+          <li>
+            <a href="https://aka.ms/examdemo" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Área restrita do exame</a>
+            <p class="text-gray-500">Conheça o ambiente e os formatos de questão antes do dia da prova</p>
+          </li>
         </ul>
-      </section>
-    </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold mb-4">Documentação para estudar</h2>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/power-platform/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Microsoft Power Platform</a>
+            <p class="text-gray-500">Documentação geral da plataforma</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/power-apps/maker/data-platform/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Microsoft Dataverse</a>
+            <p class="text-gray-500">O banco por trás das soluções</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/power-apps/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Power Apps</a>
+            <p class="text-gray-500">A maior fatia do exame</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/power-automate/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Power Automate</a>
+            <p class="text-gray-500">Automação de processos</p>
+          </li>
+          <li>
+            <a href="https://learn.microsoft.com/pt-br/power-pages/" target="_blank" rel="noopener"
+              class="text-blue-600 hover:underline font-medium">Power Pages</a>
+            <p class="text-gray-500">Sites externos com dados do Dataverse</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6 mb-8">
+      <h2 class="text-lg font-semibold mb-1">Material de apoio</h2>
+      <p class="text-sm text-gray-500 mb-5">Arquivos complementares deste curso.</p>
+      <ul class="space-y-2 text-sm">
+        <li>
+          <a href="./arquivos/01-podcast.mp3" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">01-podcast.mp3</a>
+        </li>
+        <li>
+          <a href="./arquivos/PL-900-Apresentacao.pdf" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">PL-900-Apresentacao.pdf</a>
+        </li>
+        <li>
+          <a href="./arquivos/PL-900-Simulado-Ingles.pdf" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">PL-900-Simulado-Ingles.pdf</a>
+        </li>
+        <li>
+          <a href="./arquivos/bizu.pdf" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">bizu.pdf</a>
+        </li>
+        <li>
+          <a href="./arquivos/podcast.mp3" target="_blank" rel="noopener"
+            class="text-blue-600 hover:underline">podcast.mp3</a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-lg font-semibold mb-1">Sugestão de plano de estudo</h2>
+      <p class="text-sm text-gray-500 mb-6">Uma etapa por área do exame, na ordem do guia oficial.</p>
+
+      <ol class="space-y-5">
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+          <div>
+            <div class="font-semibold mb-1">Descrever o valor comercial do Microsoft Power Platform</div>
+            <p class="text-sm text-gray-600">O valor de Power Apps, Power Automate, Power Pages, conectores e Dataverse. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+          <div>
+            <div class="font-semibold mb-1">Gerenciar o ambiente do Microsoft Power Platform</div>
+            <p class="text-sm text-gray-600">Dataverse: tabelas, colunas, relações e lógica de negócios. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+          <div>
+            <div class="font-semibold mb-1">Demonstrar os recursos do Power Apps</div>
+            <p class="text-sm text-gray-600">Aplicativos de tela e aplicativos baseados em modelo. Vale 25 a 30% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">4</span>
+          <div>
+            <div class="font-semibold mb-1">Demonstrar os recursos do Power Automate</div>
+            <p class="text-sm text-gray-600">Fluxos de nuvem e de área de trabalho, gatilhos e ações. Vale 15 a 20% da prova.</p>
+          </div>
+        </li>
+        <li class="flex gap-4">
+          <span
+            class="flex-none w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-sm">5</span>
+          <div>
+            <div class="font-semibold mb-1">Demonstrar os recursos do Power Pages</div>
+            <p class="text-sm text-gray-600">Casos de uso, métodos de criação e conceitos de segurança. Vale 10 a 15% da prova.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="text-sm text-gray-600 mt-6 pt-5 border-t">
+        Depois de cada etapa, faça um simulado e confira o
+        <a href="../dashboard.html" class="text-blue-600 hover:underline">seu desempenho</a>: os assuntos com menor
+        aproveitamento aparecem primeiro, e são por onde vale recomeçar.
+      </p>
+    </section>
+
   </main>
 
-  <section class="bg-gray-200 text-gray-800 py-16 text-center">
-    <!-- ...conteúdo repetido ou novo... -->
-    <h2 class="text-4xl font-bold mb-4">Você está pronto para testar seus conhecimentos?</h2>
-    <p class="text-lg max-w-2xl mx-auto">Descubra agora mesmo como está sua preparação!</p>
-    <br>
-    <p>
-      <a href="./01-Power-Plataform-I/index.html" target="_blank" class="link-simulado">
-        <span>🚀 Realização de simulados</span>
-      </a>
-    </p>
-  </section>
-<!-- Faixa de Bônus com Links -->
-<section class="bg-blue-600 text-white py-10">
-  <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-center text-2xl font-bold">
-    <a href="../PL-900/PL-900-BONUS/01-BONUS/index.html" target="_blank" class="hover:underline">
-      SIMULADO <BR>BONUS ESPECIAL 01
-    </a>
-    <a href="../PL-900/PL-900-BONUS/02-BONUS/index.html" target="_blank" class="hover:underline">
-      SIMULADO <BR>BONUS ESPECIAL 02
-    </a>
-  </div>
-</section>  
-
-<!-- Planejamento de Estudos -->
-<section id="planejamento" class="container mx-auto px-6 py-12">
-  <h3 class="text-2xl font-semibold mb-6 text-blue-600">🗓️ Sugestão de Planejamento de Estudo</h3>
-
-  <div class="grid md:grid-cols-2 gap-6">
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 01</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        <li>Leia os Módulos:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-platform/" target="_blank">Descrever o valor de negócios do Microsoft Power Platform</a></li>
-             <audio controls>
-              <source src="../PL-900/arquivos/01-podcast.mp3" type="audio/mp3">
-              Seu navegador não suporta o elemento de áudio.
-            </audio>
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/identify-foundational-components-microsoft-power-platfor/" target="_blank">Identificar os componentes básicos do Microsoft Power Platform</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Assista o Vídeo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.youtube.com/watch?v=TXnIVUzyvOk" target="_blank">Training Day Parte 1</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Faça os Simulados:
-          <ul class="pl-6 list-disc">
-            <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">01 e 02 - Power Platform</a></li>
-          </ul>
-        </li>
-      </ul>
+  <footer class="bg-gray-800 text-gray-300 py-8">
+    <div class="container mx-auto px-6 text-center text-sm">
+      <p class="mb-3">© 2026 CertiAcademy</p>
+      <div class="flex justify-center gap-6">
+        <a href="../" class="hover:text-white">Início</a>
+        <a href="../dashboard.html" class="hover:text-white">Meu desempenho</a>
+        <a href="../privacidade.html" class="hover:text-white">Privacidade</a>
+      </div>
     </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 02</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        <li>Leia o Módulo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-apps/" target="_blank">Descrever como criar aplicativos com o Microsoft Power Apps</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Assista o Vídeo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.youtube.com/watch?v=otBV4gJBOiQ" target="_blank">Training Day Parte 2</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Faça os Simulados:
-          <ul class="pl-6 list-disc">
-            <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">04 e 05 - Power Apps</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 03</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        <li>Leia o Módulo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-automate/" target="_blank">Descrever a criação de automação com o Microsoft Power Automate</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Assista o Vídeo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.youtube.com/watch?v=y9R9b9LslOA" target="_blank">Training Day Parte 3</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Faça os Simulados:
-          <ul class="pl-6 list-disc">
-            <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">06 e 07 - Power Automate</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 04</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        <li>Leia o Módulo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/introduction-power-bi/" target="_blank">Descrever os recursos do Microsoft Power BI</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Assista o Vídeo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.youtube.com/watch?v=Dz35ZCmqHn8" target="_blank">Training Day Parte 4 (início)</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Faça o Simulado:
-          <ul class="pl-6 list-disc">
-            <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">03 - Power BI</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 05</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        <li>Leia o Módulo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/demonstrate-capabilities-power-pages/" target="_blank">Demonstrar os recursos do Microsoft Power Pages</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Assista o Vídeo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://www.youtube.com/watch?v=Dz35ZCmqHn8" target="_blank">Training Day Parte 4 (22:01 Power Pages)</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Faça o Simulado:
-          <ul class="pl-6 list-disc">
-            <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">08 - Power Pages</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
-      <h4 class="font-bold text-lg">Dia 06</h4>
-      <br>
-      <ul class="list-disc pl-6 text-blue-600">
-        <li>Leia o Módulo:
-          <ul class="pl-6 list-disc">
-            <li><a href="https://learn.microsoft.com/pt-br/training/modules/describe-ai-authoring-experience-power-platform/" target="_blank">Descrever a experiência de criação de IA no Power Platform</a></li>
-          </ul>
-        </li>
-        <br>
-        <li>Faça o Simulado:
-          <ul class="pl-6 list-disc">
-            <li><a href="../PL-900/01-Power-Plataform-I/index.html" target="_blank">09 - IA Power Platform</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-
-  <!-- Rodapé -->
-  <footer class="text-gray-200 py-6 text-center">
-    <p>© 2025 CertiAcademy. Todos os direitos reservados.</p>
   </footer>
-<script>
-    // Desabilita o clique direito
-    document.addEventListener('contextmenu', event => event.preventDefault());
 
-    // Desabilita seleção de texto
-    document.addEventListener('selectstart', event => event.preventDefault());
+  <script type="module">
+    import { montarHeaderSessao } from '../shared/simulado-engine/common/js/header-sessao.js';
 
-    // Bloqueia atalhos comuns de cópia e inspeção
-    document.addEventListener('keydown', function(e) {
-      if (e.ctrlKey && ['u', 's', 'c', 'x', 'a'].includes(e.key.toLowerCase())) {
-        e.preventDefault();
-      }
-      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && ['i', 'j'].includes(e.key.toLowerCase()))) {
-        e.preventDefault();
-      }
-    });
-    </script>
+    montarHeaderSessao(document.getElementById('sessaoHeader'));
+  </script>
+
 </body>
+
 </html>
