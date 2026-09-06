@@ -31,8 +31,8 @@ function obterBarraSuperior() {
   barra.style.top = '0';
   barra.style.left = '0';
   barra.style.width = '100%';
-  barra.style.backgroundColor = '#000';
-  barra.style.color = '#fff';
+  barra.style.backgroundColor = '#fff';
+  barra.style.color = '#1F2937';
   barra.style.padding = '10px';
   barra.style.minHeight = '44px';
   barra.style.zIndex = '9999';
@@ -63,7 +63,7 @@ export function montarBadgeSessao(perfil) {
   badge.style.display = 'flex';
   badge.style.alignItems = 'center';
   badge.style.gap = '12px';
-  badge.style.fontSize = '14px';
+  badge.style.fontSize = '.875rem';
   // Sem line-height uniforme, o link e o botao assentam em linhas de base
   // diferentes e ficam visivelmente desalinhados dentro da barra.
   badge.style.lineHeight = '1.2';
@@ -85,6 +85,7 @@ export function montarBadgeSessao(perfil) {
   const saudacao = document.createElement('span');
   saudacao.textContent = `Olá, ${perfil.primeiroNome}`;
   saudacao.title = perfil.email;
+  saudacao.style.color = '#4B5563';
   badge.appendChild(saudacao);
 
   const historico = document.createElement('a');
@@ -95,16 +96,18 @@ export function montarBadgeSessao(perfil) {
   historico.style.boxSizing = 'border-box';
   historico.style.height = '30px';
   historico.style.padding = '0 10px';
-  historico.style.color = '#fff';
-  historico.style.fontSize = '13px';
+  historico.style.color = '#4B5563';
+  historico.style.fontSize = '.875rem';
   historico.style.borderRadius = '4px';
   historico.style.border = '1px solid transparent';
   historico.style.textDecoration = 'none';
   historico.addEventListener('mouseenter', () => {
-    historico.style.background = 'rgba(255,255,255,.12)';
+    historico.style.background = '#F3F4F6';
+    historico.style.color = '#1F2937';
   });
   historico.addEventListener('mouseleave', () => {
     historico.style.background = 'transparent';
+    historico.style.color = '#4B5563';
   });
   badge.appendChild(historico);
 
@@ -122,12 +125,12 @@ export function montarBadgeSessao(perfil) {
   sairBtn.style.margin = '0';
   sairBtn.style.height = '30px';
   sairBtn.style.padding = '0 12px';
-  sairBtn.style.background = 'transparent';
-  sairBtn.style.color = '#fff';
-  sairBtn.style.border = '1px solid rgba(255,255,255,.55)';
-  sairBtn.style.borderRadius = '4px';
+  sairBtn.style.background = '#fff';
+  sairBtn.style.color = '#1F2937';
+  sairBtn.style.border = '1px solid #D1D5DB';
+  sairBtn.style.borderRadius = '8px';
   sairBtn.style.fontFamily = 'inherit';
-  sairBtn.style.fontSize = '13px';
+  sairBtn.style.fontSize = '.875rem';
   sairBtn.style.lineHeight = '1.2';
   sairBtn.style.cursor = 'pointer';
   sairBtn.addEventListener('click', encerrarSessao);

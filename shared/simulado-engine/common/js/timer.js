@@ -68,8 +68,10 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
     cronometroDiv.style.right = "0";
     // Sem border-box, o padding ainda somaria a largura resultante.
     cronometroDiv.style.boxSizing = "border-box";
-    cronometroDiv.style.backgroundColor = "#000";
-    cronometroDiv.style.color = "#fff";
+    // Barra clara, como o cabecalho do dashboard e das paginas de curso. O CSS
+    // compartilhado refina altura, sombra e tipografia.
+    cronometroDiv.style.backgroundColor = "#fff";
+    cronometroDiv.style.color = "#1F2937";
     cronometroDiv.style.padding = "10px";
     cronometroDiv.style.textAlign = "center";
     cronometroDiv.style.fontSize = "24px";

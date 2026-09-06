@@ -9,14 +9,16 @@ Descricao: mesma paleta do dashboard e das paginas de curso, para que a prova
            nao pareca outro produto.
 ========================================== */
 :root {
-  --sim-fundo: #F2F5F9;
+  /* Espelham as classes que o dashboard usa: bg-gray-50, text-gray-800,
+     text-gray-600, text-gray-500 e as bordas gray-200/300. */
+  --sim-fundo: #F9FAFB;
   --sim-superficie: #FFFFFF;
-  --sim-superficie-2: #EDF1F6;
-  --sim-tinta: #101826;
-  --sim-tinta-2: #4B5B70;
-  --sim-tinta-3: #74839A;
-  --sim-linha: #D9E1EA;
-  --sim-linha-forte: #B4C1D2;
+  --sim-superficie-2: #F3F4F6;
+  --sim-tinta: #1F2937;
+  --sim-tinta-2: #4B5563;
+  --sim-tinta-3: #6B7280;
+  --sim-linha: #E5E7EB;
+  --sim-linha-forte: #D1D5DB;
   --sim-azul: #0078D4;
   --sim-azul-escuro: #005A9E;
   --sim-azul-suave: #E3EFF9;
@@ -26,7 +28,8 @@ Descricao: mesma paleta do dashboard e das paginas de curso, para que a prova
   --sim-ambar: #A96A00;
   --sim-vermelho: #A8322A;
   --sim-vermelho-suave: #F7E3E1;
-  --sim-barra-fundo: #101826;
+  /* A barra e clara, como o cabecalho do dashboard: fundo branco e sombra. */
+  --sim-barra-fundo: #FFFFFF;
   --sim-barra-altura: 52px;
   /* Larga o bastante para o grid de numeros formar quatro colunas. */
   --sim-sidebar-largura: 208px;
@@ -142,12 +145,10 @@ Sidebar
 }
 
 .sidebar-titulo {
-  margin: 0 0 12px;
-  font-size: .7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .09em;
-  color: var(--sim-tinta-3);
+  margin: 0 0 14px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--sim-tinta);
 }
 
 .sidebar ul {
@@ -231,12 +232,10 @@ Sidebar da direita
 }
 
 .sidebarDireita-titulo {
-  margin: 0 0 12px;
-  font-size: .7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: .09em;
-  color: var(--sim-tinta-3);
+  margin: 0 0 14px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--sim-tinta);
 }
 
 .lista-simulados {
@@ -253,7 +252,7 @@ Sidebar da direita
   padding: 8px 10px;
   border-radius: 8px;
   color: var(--sim-tinta-2);
-  font-size: .86rem;
+  font-size: .9rem;
   text-decoration: none;
   transition: background-color .15s, color .15s;
 }
@@ -719,7 +718,8 @@ Cronômetro
   font-weight: 600;
   letter-spacing: .01em;
   background: var(--sim-barra-fundo) !important;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, .08) inset;
+  color: var(--sim-tinta) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .06);
 }
 
 #cronometro {
@@ -784,8 +784,8 @@ Barra de Progresso das questões
 #textoProgresso {
   display: block;
   margin-bottom: 8px;
-  font-size: .78rem;
-  font-weight: 600;
+  font-size: .875rem;
+  font-weight: 500;
   color: var(--sim-tinta-3);
   font-variant-numeric: tabular-nums;
 }
