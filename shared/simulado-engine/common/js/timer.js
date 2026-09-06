@@ -68,15 +68,16 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
     cronometroDiv.style.right = "0";
     // Sem border-box, o padding ainda somaria a largura resultante.
     cronometroDiv.style.boxSizing = "border-box";
-    // Barra clara, como o cabecalho do dashboard e das paginas de curso. O CSS
-    // compartilhado refina altura, sombra e tipografia.
-    cronometroDiv.style.backgroundColor = "#fff";
-    cronometroDiv.style.color = "#1F2937";
-    cronometroDiv.style.padding = "10px";
-    cronometroDiv.style.textAlign = "center";
-    cronometroDiv.style.fontSize = "24px";
     cronometroDiv.style.zIndex = "9999";
-    cronometroDiv.innerHTML = "⏳ Tempo restante: <span id='cronometro'></span>";
+    // Cor, altura, tipografia e disposicao ficam no CSS compartilhado. Em
+    // estilo inline elas venciam as media queries, e no celular o tempo,
+    // o nome do aluno e os botoes se sobrepunham na mesma linha.
+    cronometroDiv.innerHTML =
+      "<span class='barra-tempo'>" +
+      "<span class='barra-tempo-icone' aria-hidden='true'>⏳</span>" +
+      "<span class='barra-tempo-rotulo'>Tempo restante:</span>" +
+      "<span id='cronometro'></span>" +
+      "</span>";
     document.body.prepend(cronometroDiv);
   }
 

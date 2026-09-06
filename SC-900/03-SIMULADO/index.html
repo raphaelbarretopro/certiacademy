@@ -27,8 +27,11 @@ Descrição: Simulado Simulado 03 do curso SC-900.
 
     <!-- Área da prova -->
     <main class="content">
-      <button id="toggleSidebar" class="toggle-sidebar" type="button" aria-label="Mostrar ou ocultar a lista de questões">
-        <span id="arrow" class="arrow">⮜</span>
+      <button id="toggleSidebar" class="toggle-sidebar" type="button" aria-controls="listaQuestoes" aria-label="Mostrar ou ocultar a lista de questões">
+        <span class="toggle-sidebar-texto">Questões</span>
+        <svg class="toggle-sidebar-seta" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
       </button>
 
       <div id="progressoContainer">
@@ -100,17 +103,36 @@ Descrição: Simulado Simulado 03 do curso SC-900.
       });
     });
 
-    // Recolher a lista de questões dá mais largura ao enunciado.
+    // Recolher a lista de questões dá mais largura ao enunciado. No celular
+    // ela já começa recolhida: quem abre o simulado quer ler o enunciado, e
+    // não a grade de números. Quem manda no estado inicial é o CSS, então a
+    // lista não pisca aberta antes deste script rodar.
     const alternarSidebar = document.getElementById("toggleSidebar");
     const listaLateral = document.querySelector(".sidebar");
     const areaConteudo = document.querySelector(".content");
+    const telaEstreita = window.matchMedia("(max-width: 940px)");
+
+    function colunaAberta() {
+      // Sem escolha do aluno, vale o padrão da largura atual.
+      if (!listaLateral.dataset.aberta) return !telaEstreita.matches;
+      return listaLateral.dataset.aberta === "sim";
+    }
+
+    function sincronizar() {
+      const aberta = colunaAberta();
+      alternarSidebar.setAttribute("aria-expanded", String(aberta));
+      // Alargar o enunciado só faz sentido no desktop, onde a coluna some
+      // do lado; no celular ela some de cima e a largura não muda.
+      areaConteudo.classList.toggle("expandido", !aberta && !telaEstreita.matches);
+    }
 
     alternarSidebar.addEventListener("click", () => {
-      const oculta = listaLateral.classList.toggle("hidden");
-      areaConteudo.classList.toggle("expandido", oculta);
-      document.getElementById("arrow").textContent = oculta ? "⮞" : "⮜";
-      alternarSidebar.setAttribute("aria-expanded", String(!oculta));
+      listaLateral.dataset.aberta = colunaAberta() ? "nao" : "sim";
+      sincronizar();
     });
+
+    telaEstreita.addEventListener("change", sincronizar);
+    sincronizar();
   </script>
 
 </body>

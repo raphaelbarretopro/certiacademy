@@ -12,6 +12,9 @@
 import { sair, urlDoSite } from './auth.js';
 import { LOGIN_PATH } from './firebase-config.js';
 
+// O estilo do badge vive no CSS compartilhado (#sessaoUsuario e classes
+// sessao-*). Mante-lo em estilos inline impedia as media queries de
+// reorganizar a barra no celular, onde nome, tempo e botoes se sobrepunham.
 const BADGE_ID = 'sessaoUsuario';
 
 // ==========================================
@@ -31,10 +34,6 @@ function obterBarraSuperior() {
   barra.style.top = '0';
   barra.style.left = '0';
   barra.style.width = '100%';
-  barra.style.backgroundColor = '#fff';
-  barra.style.color = '#1F2937';
-  barra.style.padding = '10px';
-  barra.style.minHeight = '44px';
   barra.style.zIndex = '9999';
   document.body.prepend(barra);
 
@@ -52,87 +51,37 @@ export function montarBadgeSessao(perfil) {
   if (anterior) anterior.remove();
 
   const barra = obterBarraSuperior();
-  barra.style.position = 'fixed';
 
   const badge = document.createElement('div');
   badge.id = BADGE_ID;
-  badge.style.position = 'absolute';
-  badge.style.right = '16px';
-  badge.style.top = '50%';
-  badge.style.transform = 'translateY(-50%)';
-  badge.style.display = 'flex';
-  badge.style.alignItems = 'center';
-  badge.style.gap = '12px';
-  badge.style.fontSize = '.875rem';
-  // Sem line-height uniforme, o link e o botao assentam em linhas de base
-  // diferentes e ficam visivelmente desalinhados dentro da barra.
-  badge.style.lineHeight = '1.2';
-  badge.style.whiteSpace = 'nowrap';
 
   if (perfil.fotoUrl) {
     const foto = document.createElement('img');
     foto.src = perfil.fotoUrl;
     foto.alt = '';
+    foto.className = 'sessao-foto';
     foto.referrerPolicy = 'no-referrer';
-    foto.style.width = '28px';
-    foto.style.height = '28px';
-    foto.style.borderRadius = '50%';
-    foto.style.flex = 'none';
     foto.onerror = () => foto.remove();
     badge.appendChild(foto);
   }
 
   const saudacao = document.createElement('span');
+  saudacao.className = 'sessao-nome';
   saudacao.textContent = `Olá, ${perfil.primeiroNome}`;
   saudacao.title = perfil.email;
-  saudacao.style.color = '#4B5563';
   badge.appendChild(saudacao);
 
   const historico = document.createElement('a');
+  historico.className = 'sessao-desempenho';
   historico.href = urlDoSite('dashboard.html');
   historico.textContent = 'Meu desempenho';
-  historico.style.display = 'inline-flex';
-  historico.style.alignItems = 'center';
-  historico.style.boxSizing = 'border-box';
-  historico.style.height = '30px';
-  historico.style.padding = '0 10px';
-  historico.style.color = '#4B5563';
-  historico.style.fontSize = '.875rem';
-  historico.style.borderRadius = '4px';
-  historico.style.border = '1px solid transparent';
-  historico.style.textDecoration = 'none';
-  historico.addEventListener('mouseenter', () => {
-    historico.style.background = '#F3F4F6';
-    historico.style.color = '#1F2937';
-  });
-  historico.addEventListener('mouseleave', () => {
-    historico.style.background = 'transparent';
-    historico.style.color = '#4B5563';
-  });
   badge.appendChild(historico);
 
   const sairBtn = document.createElement('button');
   sairBtn.type = 'button';
   sairBtn.id = 'sairBtn';
+  sairBtn.className = 'sessao-sair';
   sairBtn.textContent = 'Sair';
-  // Mesma altura e caixa do link ao lado, para os dois assentarem na mesma
-  // linha dentro da barra.
-  sairBtn.style.display = 'inline-flex';
-  sairBtn.style.alignItems = 'center';
-  sairBtn.style.boxSizing = 'border-box';
-  // O CSS dos simulados tem uma regra generica "button { margin-top: 20px }",
-  // que empurrava este botao para baixo e o fazia transbordar da barra.
-  sairBtn.style.margin = '0';
-  sairBtn.style.height = '30px';
-  sairBtn.style.padding = '0 12px';
-  sairBtn.style.background = '#fff';
-  sairBtn.style.color = '#1F2937';
-  sairBtn.style.border = '1px solid #D1D5DB';
-  sairBtn.style.borderRadius = '8px';
-  sairBtn.style.fontFamily = 'inherit';
-  sairBtn.style.fontSize = '.875rem';
-  sairBtn.style.lineHeight = '1.2';
-  sairBtn.style.cursor = 'pointer';
   sairBtn.addEventListener('click', encerrarSessao);
   badge.appendChild(sairBtn);
 

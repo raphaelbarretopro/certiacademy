@@ -873,8 +873,11 @@ function montarPaginaSimulado(curso, simulado, todosSimulados, tituloSimulado) {
 '\n' +
 '    <!-- Área da prova -->\n' +
 '    <main class="content">\n' +
-'      <button id="toggleSidebar" class="toggle-sidebar" type="button" aria-label="Mostrar ou ocultar a lista de questões">\n' +
-'        <span id="arrow" class="arrow">⮜</span>\n' +
+'      <button id="toggleSidebar" class="toggle-sidebar" type="button" aria-controls="listaQuestoes" aria-label="Mostrar ou ocultar a lista de questões">\n' +
+'        <span class="toggle-sidebar-texto">Questões</span>\n' +
+'        <svg class="toggle-sidebar-seta" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">\n' +
+'          <path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />\n' +
+'        </svg>\n' +
 '      </button>\n' +
 '\n' +
 '      <div id="progressoContainer">\n' +
@@ -939,17 +942,36 @@ itens + '\n' +
 '      });\n' +
 '    });\n' +
 '\n' +
-'    // Recolher a lista de questões dá mais largura ao enunciado.\n' +
+'    // Recolher a lista de questões dá mais largura ao enunciado. No celular\n' +
+'    // ela já começa recolhida: quem abre o simulado quer ler o enunciado, e\n' +
+'    // não a grade de números. Quem manda no estado inicial é o CSS, então a\n' +
+'    // lista não pisca aberta antes deste script rodar.\n' +
 '    const alternarSidebar = document.getElementById("toggleSidebar");\n' +
 '    const listaLateral = document.querySelector(".sidebar");\n' +
 '    const areaConteudo = document.querySelector(".content");\n' +
+'    const telaEstreita = window.matchMedia("(max-width: 940px)");\n' +
+'\n' +
+'    function colunaAberta() {\n' +
+'      // Sem escolha do aluno, vale o padrão da largura atual.\n' +
+'      if (!listaLateral.dataset.aberta) return !telaEstreita.matches;\n' +
+'      return listaLateral.dataset.aberta === "sim";\n' +
+'    }\n' +
+'\n' +
+'    function sincronizar() {\n' +
+'      const aberta = colunaAberta();\n' +
+'      alternarSidebar.setAttribute("aria-expanded", String(aberta));\n' +
+'      // Alargar o enunciado só faz sentido no desktop, onde a coluna some\n' +
+'      // do lado; no celular ela some de cima e a largura não muda.\n' +
+'      areaConteudo.classList.toggle("expandido", !aberta && !telaEstreita.matches);\n' +
+'    }\n' +
 '\n' +
 '    alternarSidebar.addEventListener("click", () => {\n' +
-'      const oculta = listaLateral.classList.toggle("hidden");\n' +
-'      areaConteudo.classList.toggle("expandido", oculta);\n' +
-'      document.getElementById("arrow").textContent = oculta ? "⮞" : "⮜";\n' +
-'      alternarSidebar.setAttribute("aria-expanded", String(!oculta));\n' +
+'      listaLateral.dataset.aberta = colunaAberta() ? "nao" : "sim";\n' +
+'      sincronizar();\n' +
 '    });\n' +
+'\n' +
+'    telaEstreita.addEventListener("change", sincronizar);\n' +
+'    sincronizar();\n' +
 '  </script>\n' +
 '\n' +
 '</body>\n' +

@@ -359,10 +359,12 @@ Bandeira de marcação
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border: 1px solid var(--sim-linha);
   border-radius: 8px;
   background: var(--sim-superficie);
   color: var(--sim-tinta-3);
+  font-family: inherit;
   font-size: .8rem;
   cursor: pointer;
   transition: background-color .15s, color .15s;
@@ -373,9 +375,33 @@ Bandeira de marcação
   color: var(--sim-tinta);
 }
 
-.arrow {
-  margin: 0;
-  line-height: 1;
+/* O rotulo so aparece no celular, onde a coluna comeca recolhida e um botao
+   apenas com seta nao diria o que ele abre. */
+.toggle-sidebar-texto {
+  display: none;
+  font-weight: 600;
+}
+
+/* A seta aponta para a esquerda no desenho; a rotacao abaixo diz o resto.
+   No desktop a coluna recolhe para o lado, no celular para cima. */
+.toggle-sidebar-seta {
+  flex: none;
+  transition: transform .2s;
+}
+
+.toggle-sidebar[aria-expanded="false"] .toggle-sidebar-seta {
+  transform: rotate(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toggle-sidebar-seta {
+    transition: none;
+  }
+}
+
+/* Coluna recolhida pelo aluno: vale em qualquer largura. */
+.sidebar[data-aberta="nao"] {
+  display: none;
 }
 
 /* ==========================================
@@ -715,17 +741,104 @@ Cronômetro
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.05rem !important;
+  padding: 0 16px;
   font-weight: 600;
   letter-spacing: .01em;
-  background: var(--sim-barra-fundo) !important;
-  color: var(--sim-tinta) !important;
+  background: var(--sim-barra-fundo);
+  color: var(--sim-tinta);
   box-shadow: 0 1px 3px rgba(0, 0, 0, .1), 0 1px 2px rgba(0, 0, 0, .06);
+}
+
+/* Tempo restante */
+.barra-tempo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.05rem;
+  white-space: nowrap;
 }
 
 #cronometro {
   font-variant-numeric: tabular-nums;
-  margin-left: 4px;
+}
+
+/* ==========================================
+Aluno na barra superior
+Descricao: Montado por session-ui.js. O estilo mora aqui, e nao em estilo
+           inline, porque so assim as media queries conseguem reorganizar a
+           barra nas telas estreitas.
+========================================== */
+#sessaoUsuario {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  font-size: .875rem;
+  font-weight: 400;
+  /* Sem line-height uniforme, o link e o botao assentam em linhas de base
+     diferentes e ficam visivelmente desalinhados dentro da barra. */
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.sessao-foto {
+  width: 28px;
+  height: 28px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.sessao-nome {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--sim-tinta-2);
+  text-overflow: ellipsis;
+}
+
+.sessao-desempenho {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--sim-tinta-2);
+  font-size: .875rem;
+  text-decoration: none;
+  transition: background-color .15s, color .15s;
+}
+
+.sessao-desempenho:hover {
+  background: var(--sim-superficie-2);
+  color: var(--sim-tinta);
+}
+
+.sessao-sair {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  /* O CSS dos simulados tem uma regra generica de margem para button, que
+     empurrava este botao para baixo e o fazia transbordar da barra. */
+  margin: 0;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--sim-linha-forte);
+  border-radius: 8px;
+  background: var(--sim-superficie);
+  color: var(--sim-tinta);
+  font-family: inherit;
+  font-size: .875rem;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.sessao-sair:hover {
+  background: var(--sim-superficie-2);
 }
 
 /* ==========================================
@@ -1041,6 +1154,49 @@ Estilo Celular e Tablets
     grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
   }
 
+  /* No celular a coluna comeca recolhida: quem abre o simulado quer ler o
+     enunciado, nao a grade de numeros. O estado inicial vem daqui, e nao do
+     script, para a lista nao piscar aberta antes de o JavaScript rodar. */
+  .sidebar {
+    display: none;
+  }
+
+  .sidebar[data-aberta="sim"] {
+    display: block;
+  }
+
+  /* Com a coluna recolhida, o botao deixa de ser um icone solto no canto e
+     vira o cabecalho da lista, com rotulo e area de toque de verdade. */
+  .toggle-sidebar {
+    position: static;
+    width: 100%;
+    height: 44px;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding: 0 14px;
+    color: var(--sim-tinta);
+  }
+
+  .toggle-sidebar-texto {
+    display: inline;
+  }
+
+  /* O botao ja diz "Questoes"; o titulo dentro da coluna repetiria a palavra
+     logo abaixo dele. */
+  .sidebar-titulo {
+    display: none;
+  }
+
+  /* Seta para baixo quando fechada e para cima quando aberta, a convencao de
+     qualquer bloco que expande. */
+  .toggle-sidebar .toggle-sidebar-seta {
+    transform: rotate(90deg);
+  }
+
+  .toggle-sidebar[aria-expanded="false"] .toggle-sidebar-seta {
+    transform: rotate(-90deg);
+  }
+
   .acoes-questao .btn-voltar {
     margin-right: 0;
   }
@@ -1050,9 +1206,62 @@ Estilo Celular e Tablets
   }
 }
 
+/* ==========================================
+Barra superior no celular
+Descricao: Em uma linha so, o tempo (centralizado) e o bloco do aluno
+           (ancorado a direita) se sobrepunham. Aqui a barra passa a ter duas
+           linhas: aluno em cima, tempo embaixo. A altura e um token, entao o
+           container ja desce sozinho.
+========================================== */
+@media (max-width: 720px) {
+  :root {
+    --sim-barra-altura: 84px;
+  }
+
+  #cronometroContainer,
+  #sessaoContainer {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 12px;
+  }
+
+  #sessaoUsuario {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .sessao-nome {
+    margin-right: auto;
+  }
+
+  .sessao-desempenho {
+    padding: 0 6px;
+  }
+
+  .barra-tempo {
+    font-size: 1rem;
+  }
+}
+
 @media (max-width: 560px) {
   body {
     font-size: 15px;
+  }
+
+  /* Nome longo mais os dois botoes nao cabem: o rotulo do tempo sai e ficam
+     a ampulheta e os digitos, que e o que precisa ser lido de relance. */
+  .barra-tempo-rotulo {
+    display: none;
+  }
+
+  .sessao-desempenho,
+  .sessao-sair {
+    padding: 0 8px;
+    font-size: .8125rem;
   }
 
   .btn-reportar-flutuante {
