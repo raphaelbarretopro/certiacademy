@@ -7,8 +7,14 @@ const rootDir = process.cwd();
 
 const requiredFiles = [
   'index.html',
-  'enviar_problema.php',
   path.join('js', 'questoes.js')
+];
+
+// Arquivos que nao devem mais existir dentro dos simulados. O envio do
+// "Reportar Problema" deixou de depender de PHP para funcionar em hospedagem
+// estatica; a implementacao vive em shared/simulado-engine/common/js/report.js.
+const forbiddenFiles = [
+  'enviar_problema.php'
 ];
 
 const supportedQuestionTypes = new Set(['unica', 'multipla', 'simnao', 'dragdrop', 'combobox', 'comboboxs']);
@@ -359,8 +365,14 @@ async function validateSimulado(dirPath) {
     }
   }
 
+  for (const forbiddenFile of forbiddenFiles) {
+    const targetPath = path.join(dirPath, forbiddenFile);
+    if (await pathExists(targetPath)) {
+      errors.push(`${relativeDir}: arquivo legado deve ser removido: ${forbiddenFile.replaceAll('\\', '/')}`);
+    }
+  }
+
   const indexPath = path.join(dirPath, 'index.html');
-  const phpPath = path.join(dirPath, 'enviar_problema.php');
   const questoesPath = path.join(dirPath, 'js', 'questoes.js');
   const jsDirPath = path.join(dirPath, 'js');
 
@@ -386,17 +398,31 @@ async function validateSimulado(dirPath) {
         errors.push(`${relativeDir}: stylesheet referenciado nao existe: ${stylesheetMatch[1]}`);
       }
     }
-  }
 
-  if (await pathExists(phpPath)) {
-    const phpContent = await fs.readFile(phpPath, 'utf8');
-
-    if (phpContent.includes('Simulado SC-900')) {
-      errors.push(`${relativeDir}: enviar_problema.php ainda contem assunto hardcoded de SC-900`);
+    // O portao de sessao e obrigatorio: sem o atributo, quem nao esta logado ve
+    // a estrutura da prova aparecer antes do redirecionamento para o login.
+    if (!/<body[^>]*\sdata-requer-sessao/.test(indexContent)) {
+      errors.push(`${relativeDir}: index.html deve declarar 'data-requer-sessao' no body`);
     }
 
-    if (!phpContent.includes('basename(dirname(__DIR__))') || !phpContent.includes('basename(__DIR__)')) {
-      errors.push(`${relativeDir}: enviar_problema.php deve montar curso e simulado dinamicamente`);
+    // Toda dependencia de CDN sem versao fixa entra em producao sozinha na
+    // proxima versao maior e pode quebrar a pagina sem aviso.
+    const cdnSemVersao = indexContent.match(/src="(https:\/\/cdn\.jsdelivr\.net\/npm\/[^"@]+)"/);
+    if (cdnSemVersao) {
+      errors.push(`${relativeDir}: index.html carrega dependencia de CDN sem versao fixa: ${cdnSemVersao[1]}`);
+    }
+
+    // Link comecando com "/" aponta para a raiz do dominio, e nao para a do
+    // site: em Project Pages do GitHub, onde tudo vive sob /<repositorio>/,
+    // esses caminhos levam a 404 sem dar nenhum sinal em desenvolvimento.
+    const linkAbsoluto = indexContent.match(/(?:href|src)="(\/(?!\/)[^"]*)"/);
+    if (linkAbsoluto) {
+      errors.push(`${relativeDir}: index.html usa caminho absoluto, que quebra fora da raiz do dominio: ${linkAbsoluto[1]}`);
+    }
+
+    // O rodape deve usar o botao padrao, e nao o link solto de antes.
+    if (indexContent.includes('Voltar ao curso') && !/class="rodape-simulado"/.test(indexContent)) {
+      errors.push(`${relativeDir}: index.html deve usar <footer class="rodape-simulado"> no rodape`);
     }
   }
 
@@ -450,6 +476,97 @@ async function validateSimulado(dirPath) {
   return errors;
 }
 
+// ==========================================
+// Funcao: validateManifestoEHome()
+// Descricao: cursos.json e a fonte unica de cursos e simulados. Esta checagem
+//            garante que ele aponta para caminhos reais e que os cards da home
+//            correspondem exatamente aos cursos visiveis do manifesto - foi a
+//            ausencia disso que deixou cards apontando para pastas inexistentes.
+// ==========================================
+async function validateManifestoEHome() {
+  const errors = [];
+  const manifestoPath = path.join(rootDir, 'cursos.json');
+
+  if (!await pathExists(manifestoPath)) {
+    errors.push('cursos.json ausente na raiz do repositorio');
+    return errors;
+  }
+
+  let manifesto;
+  try {
+    manifesto = JSON.parse(await fs.readFile(manifestoPath, 'utf8'));
+  } catch (error) {
+    errors.push(`cursos.json nao e um JSON valido: ${error.message}`);
+    return errors;
+  }
+
+  const cursos = Array.isArray(manifesto.cursos) ? manifesto.cursos : [];
+
+  if (cursos.length === 0) {
+    errors.push('cursos.json nao lista nenhum curso');
+    return errors;
+  }
+
+  for (const curso of cursos) {
+    const rotulo = curso.codigo ?? '(curso sem codigo)';
+
+    for (const campo of ['codigo', 'pasta', 'titulo', 'chamada', 'curso']) {
+      if (!isNonEmptyString(curso[campo])) {
+        errors.push(`cursos.json: ${rotulo} deve conter '${campo}' como texto nao vazio`);
+      }
+    }
+
+    if (isNonEmptyString(curso.curso) && !await pathExists(path.join(rootDir, curso.curso))) {
+      errors.push(`cursos.json: ${rotulo} aponta para pagina inexistente: ${curso.curso}`);
+    }
+
+    for (const simulado of curso.simulados ?? []) {
+      if (!isNonEmptyString(simulado.caminho)) {
+        errors.push(`cursos.json: ${rotulo} possui simulado sem 'caminho'`);
+        continue;
+      }
+
+      if (!await pathExists(path.join(rootDir, simulado.caminho, 'index.html'))) {
+        errors.push(`cursos.json: ${rotulo} aponta para simulado inexistente: ${simulado.caminho}`);
+      }
+    }
+  }
+
+  const homePath = path.join(rootDir, 'index.html');
+
+  if (!await pathExists(homePath)) {
+    errors.push('index.html ausente na raiz do repositorio');
+    return errors;
+  }
+
+  const homeContent = await fs.readFile(homePath, 'utf8');
+  const linksNaHome = Array.from(homeContent.matchAll(/href="\.\/([^"]+\/curso\.html)"/g)).map(match => match[1]);
+
+  for (const link of linksNaHome) {
+    if (!await pathExists(path.join(rootDir, link))) {
+      errors.push(`index.html: card aponta para pagina inexistente: ./${link}`);
+    }
+  }
+
+  const visiveis = cursos.filter(curso => curso.visivelNaHome !== false);
+
+  for (const curso of visiveis) {
+    if (isNonEmptyString(curso.curso) && !linksNaHome.includes(curso.curso)) {
+      errors.push(`index.html: falta card para o curso ${curso.codigo} (marcado como visivel em cursos.json)`);
+    }
+  }
+
+  const caminhosConhecidos = new Set(cursos.map(curso => curso.curso));
+
+  for (const link of linksNaHome) {
+    if (!caminhosConhecidos.has(link)) {
+      errors.push(`index.html: card de ./${link} nao corresponde a nenhum curso de cursos.json`);
+    }
+  }
+
+  return errors;
+}
+
 async function main() {
   const simuladoDirs = await listSimuladoDirs();
 
@@ -465,6 +582,8 @@ async function main() {
     allErrors.push(...errors);
   }
 
+  allErrors.push(...await validateManifestoEHome());
+
   if (allErrors.length > 0) {
     console.error('Validacao falhou. Problemas encontrados:');
     for (const error of allErrors) {
@@ -473,7 +592,7 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`Validacao concluida com sucesso: ${simuladoDirs.length} simulados verificados.`);
+  console.log(`Validacao concluida com sucesso: ${simuladoDirs.length} simulados verificados, cursos.json e index.html consistentes.`);
 }
 
 await main();

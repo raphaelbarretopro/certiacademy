@@ -386,12 +386,11 @@ Descricao: Pagina principal do simulado ${courseCode}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${simuladoTitle}</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="${sharedCssHref}" />
   <meta name="robots" content="noindex, nofollow">
 </head>
 
-<body>
+<body data-requer-sessao>
   <div class="container">
     <div class="sidebar">
       <ul id="listaQuestoes"></ul>
@@ -430,8 +429,8 @@ Descricao: Pagina principal do simulado ${courseCode}
 ${sidebarHtml}
   </div>
 
-  <footer class="text-gray-200 py-6 text-center">
-    <center><a href="${courseLink}">Voltar ao curso</a></center>
+  <footer class="rodape-simulado">
+    <a href="${courseLink}" class="rf-btn rf-btn-secundario">Voltar ao curso</a>
   </footer>
 
   <script>
@@ -529,11 +528,6 @@ export const questoes = [
 `;
 }
 
-async function readCanonicalPhp() {
-  const phpPath = path.join(workspaceRoot, 'shared', 'simulado-engine', 'common', 'enviar_problema.php');
-  return fs.readFile(phpPath, 'utf8');
-}
-
 async function ensureCanCreate(targetPath, collisions) {
   if (await pathExists(targetPath)) {
     collisions.push(toPosix(path.relative(workspaceRoot, targetPath)));
@@ -615,7 +609,6 @@ async function scaffoldCourse() {
   await ensureCanCreate(courseDir, collisions);
 
   const simuladoDirs = Array.from({ length: simuladoCount }, (_, index) => buildSimuladoDirName(index + 1));
-  const phpTemplate = await readCanonicalPhp();
   const filesToCreate = [];
 
   filesToCreate.push({
@@ -635,7 +628,6 @@ async function scaffoldCourse() {
         simuladoTitle: `${courseCode} - ${simuladoDirName}`
       })
     });
-    filesToCreate.push({ path: path.join(courseDir, simuladoDirName, 'enviar_problema.php'), content: phpTemplate });
     filesToCreate.push({ path: path.join(courseDir, simuladoDirName, 'js', 'questoes.js'), content: buildQuestoesTemplate({ courseCode, simuladoDirName }) });
     filesToCreate.push({ path: path.join(courseDir, simuladoDirName, 'img', '.gitkeep'), content: '' });
   }
@@ -690,14 +682,12 @@ async function scaffoldSimulado() {
   }
 
   const simuladoTitle = ensureNonEmpty(getArgValue('--title'), `${courseCode} - ${simuladoDirName}`);
-  const phpTemplate = await readCanonicalPhp();
   const simuladoDirs = [...existingSimulados, simuladoDirName].sort();
   const filesToCreate = [
     {
       path: path.join(simuladoDir, 'index.html'),
       content: buildSimuladoIndexHtml({ courseCode, courseDir, simuladoDirName, simuladoDirs, simuladoTitle })
     },
-    { path: path.join(simuladoDir, 'enviar_problema.php'), content: phpTemplate },
     { path: path.join(simuladoDir, 'js', 'questoes.js'), content: buildQuestoesTemplate({ courseCode, simuladoDirName }) },
     { path: path.join(simuladoDir, 'img', '.gitkeep'), content: '' }
   ];

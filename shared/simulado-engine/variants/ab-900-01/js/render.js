@@ -1,3 +1,5 @@
+import { enviarProblema } from '../../../common/js/report.js';
+
 function getQuizApi() {
   const quizApi = window.CertiAcademyQuiz;
 
@@ -21,23 +23,30 @@ export function renderizarLista(questoes) {
   questoes.forEach((_, i) => {
     const li = document.createElement("li");
 
-    // Quadradinho verde se respondida
+    // Só o número: com 40 e poucas questões, um grid de quadrados se varre num
+    // relance, enquanto uma lista de "Questão N" ocupa a coluna inteira.
+    li.textContent = String(i + 1);
+    li.title = `Questão ${i + 1}`;
+    li.setAttribute('role', 'button');
+    li.setAttribute('tabindex', '0');
+    li.setAttribute('aria-label', `Ir para a questão ${i + 1}`);
+
     if (quiz.respostasUsuario.some(r => r.index === i)) {
-      const quadrado = document.createElement("span");
-      quadrado.className = "quadrado-verde";
-      li.appendChild(quadrado);
+      li.classList.add('answered');
+      li.title += ' — respondida';
     }
 
-    // Texto da questão
-    const texto = document.createElement("span");
-    texto.textContent = ` Questão ${i + 1}`;
-    li.appendChild(texto);
-
-    // Navegação direta
     li.onclick = () => quiz.irParaQuestao(i);
+    li.onkeydown = evento => {
+      if (evento.key === 'Enter' || evento.key === ' ') {
+        evento.preventDefault();
+        quiz.irParaQuestao(i);
+      }
+    };
 
     if (i === quiz.questaoAtual) {
       li.classList.add('active');
+      li.setAttribute('aria-current', 'true');
     }
 
     listaQuestoes.appendChild(li);
@@ -241,49 +250,10 @@ export function inicializarModalProblema() {
 
 // ==========================================
 // Função: Criar a função de envio
+// Descrição: A implementação vive em report.js, compartilhada por todas as
+//            variantes de renderização
 // ==========================================
-export function enviarProblema(indexQuestao) {
-  const texto = document.getElementById("textoProblema").value.trim();
-  if (!texto) {
-    alert("⚠️ Por favor, descreva o problema antes de enviar.");
-    return;
-  }
-
-  fetch('enviar_problema.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `questao=${indexQuestao + 1}&mensagem=${encodeURIComponent(texto)}`
-  })
-    .then(response => response.text())
-    .then(data => {
-      const modalContent = document.querySelector('.modal-content');
-      if (data.trim() === "ok") {
-        modalContent.innerHTML = `
-        <h2>Problema enviado com sucesso ✅</h2>
-        <p>Obrigado por nos ajudar a melhorar!</p>
-      `;
-        setTimeout(() => fecharModalReportar(), 2000);
-      } else {
-        modalContent.innerHTML = `
-        <h2>Erro ao enviar ❌</h2>
-        <p>Tente novamente mais tarde.</p>
-        <button onclick="window.location.reload()">Recarregar Página</button>
-      `;
-      }
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-      const modalContent = document.querySelector('.modal-content');
-      modalContent.innerHTML = `
-      <h2>Erro de comunicação ❌</h2>
-      <p>Servidor indisponível. Tente novamente mais tarde.</p>
-      <button onclick="window.location.reload()">Recarregar Página</button>
-    `;
-    });
-}
-
+export { enviarProblema };
 
 
 

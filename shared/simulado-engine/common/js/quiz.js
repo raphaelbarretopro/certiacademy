@@ -22,13 +22,14 @@ function getRenderApi() {
   return renderApi;
 }
 
-function getRepositorioAssetUrl(relativeAssetPath) {
-  const pageUrl = new URL(window.location.href);
-  const pathSegments = pageUrl.pathname.split('/').filter(Boolean);
-  const directoryDepth = Math.max(pathSegments.length - 1, 0);
-  const prefix = '../'.repeat(directoryDepth);
+// Este modulo mora em <raiz>/shared/simulado-engine/common/js/, entao a raiz do
+// site sai da propria URL do modulo. Contar segmentos do caminho da pagina
+// levava ate a raiz do dominio, o que quebra a imagem em Project Pages do
+// GitHub, onde o site comeca dentro de /<repositorio>/.
+const REPOSITORIO_ROOT = new URL('../../../../', import.meta.url);
 
-  return new URL(`${prefix}${relativeAssetPath}`, pageUrl).toString();
+function getRepositorioAssetUrl(relativeAssetPath) {
+  return new URL(relativeAssetPath, REPOSITORIO_ROOT).toString();
 }
 
 // ==========================================
@@ -42,6 +43,9 @@ export let simuladoFinalizado = false;
 const STORAGE_KEY = `certiacademy:quiz-state:${window.location.pathname}`;
 let tempoRestantePersistido = TEMPO_TOTAL_SEGUNDOS;
 let rascunhosRespostas = {};
+// Guarda se esta tentativa ja foi enviada ao historico, para que recarregar a
+// tela de resultado nao grave a mesma prova de novo.
+let resultadoGravado = false;
 
 const inicioSimulado = new Date();
 
@@ -173,6 +177,7 @@ function persistirEstado() {
     rascunhosRespostas,
     simuladoFinalizado,
     resultadoFinalExibido,
+    resultadoGravado,
     tempoRestante: obterTempoRestante()
   };
 
@@ -197,6 +202,7 @@ function restaurarEstadoPersistido() {
       : 0;
     simuladoFinalizado = Boolean(estado.simuladoFinalizado);
     resultadoFinalExibido = Boolean(estado.resultadoFinalExibido || estado.simuladoFinalizado);
+    resultadoGravado = Boolean(estado.resultadoGravado);
     tempoRestantePersistido = Number.isFinite(estado.tempoRestante) && estado.tempoRestante >= 0
       ? Math.floor(estado.tempoRestante)
       : TEMPO_TOTAL_SEGUNDOS;
@@ -267,6 +273,87 @@ let totalAcertosPossiveis = 0;
 });
 
 const VALOR_ACERTO = 1000 / totalAcertosPossiveis;
+
+// Nota de corte oficial dos exames Microsoft, na escala de 1000 pontos.
+const NOTA_DE_CORTE_PONTOS = 700;
+
+// Paleta dos graficos, alinhada a do dashboard: verde quando o desempenho
+// alcanca o corte, ambar quando fica abaixo, e um cinza neutro para o restante.
+const COR_APROVADO = '#0E7A52';
+const COR_ABAIXO = '#A96A00';
+const COR_NEUTRA = '#E2E8F0';
+
+// ==========================================
+// Funcao: acertosPossiveisDe(q)
+// Descricao: Quantos acertos a questao vale, pela mesma regra usada no total
+// ==========================================
+function acertosPossiveisDe(q) {
+  if (q.tipo === 'multipla' || q.tipo === 'simnao') return q.respostas.length;
+  if (q.tipo === 'dragdrop') return Object.keys(q.respostas).length;
+  return 1;
+}
+
+// ==========================================
+// Funcao: montarResultadoParaHistorico()
+// Descricao: Reune o que o motor ja calcula ao final da prova no formato que o
+//            historico grava. Nada aqui e recalculado de forma diferente da
+//            tela de resultado: e a mesma pontuacao, o mesmo tempo e o mesmo
+//            desempenho por dominio que alimenta o grafico de barras.
+// ==========================================
+export function montarResultadoParaHistorico() {
+  const { curso, simulado } = identificarSimuladoAtual();
+  const pontuacao = calcularPontuacao();
+
+  const porDominio = {};
+
+  // Maximo possivel de cada dominio, para o dashboard mostrar aproveitamento
+  questoes.forEach(q => {
+    if (!porDominio[q.dominio]) porDominio[q.dominio] = { pontos: 0, maximo: 0 };
+    porDominio[q.dominio].maximo += acertosPossiveisDe(q) * VALOR_ACERTO;
+  });
+
+  respostasUsuario.forEach(r => {
+    const q = questoes[r.index];
+    if (!q || !porDominio[q.dominio]) return;
+    porDominio[q.dominio].pontos += r.pontos || 0;
+  });
+
+  for (const chave of Object.keys(porDominio)) {
+    porDominio[chave].pontos = Math.round(porDominio[chave].pontos);
+    porDominio[chave].maximo = Math.round(porDominio[chave].maximo);
+  }
+
+  return {
+    curso,
+    simulado,
+    pontuacao,
+    percentual: Math.round((pontuacao / 1000) * 100),
+    acertos: Math.round(pontuacao / VALOR_ACERTO),
+    totalAcertosPossiveis,
+    tempoSegundos: Math.max(TEMPO_TOTAL_SEGUNDOS - obterTempoRestante(), 0),
+    tempoLimiteSegundos: TEMPO_TOTAL_SEGUNDOS,
+    porDominio,
+    versaoBanco: questoes.length
+  };
+}
+
+// ==========================================
+// Funcao: identificarSimuladoAtual()
+// Descricao: Deriva curso e simulado do caminho da pagina, do mesmo modo que o
+//            envio de reportes de problema
+// ==========================================
+function identificarSimuladoAtual() {
+  const segmentos = window.location.pathname.split('/').filter(Boolean);
+
+  if (segmentos.length > 0 && segmentos[segmentos.length - 1].includes('.')) {
+    segmentos.pop();
+  }
+
+  return {
+    curso: decodeURIComponent(segmentos[segmentos.length - 2] || 'desconhecido'),
+    simulado: decodeURIComponent(segmentos[segmentos.length - 1] || 'desconhecido')
+  };
+}
 
 // ==========================================
 // Inicialização dos botões
@@ -680,46 +767,89 @@ function mostrarResultadoFinal(forceRender = false) {
 
   const sidebar = document.querySelector(".sidebar");
   if (sidebar) sidebar.style.display = "none";
-  // Oculta a sidebar direita
+  // Oculta a sidebar direita e a coluna que a envolve. Esconder so a sidebar
+  // deixava a coluna ocupando espaco no flex e empurrava o painel para a
+  // esquerda, em vez de centraliza-lo.
   const sidebarDireita = document.querySelector(".sidebarDireita");
   if (sidebarDireita) sidebarDireita.style.display = "none";
+
+  const colunaDireita = document.querySelector(".sidebarDireita-coluna");
+  if (colunaDireita) colunaDireita.style.display = "none";
   const container = document.querySelector(".container");
   if (container) container.style.justifyContent = "center";
+
+  // Sem as sidebars, a coluna de conteudo pode ocupar a largura toda e se
+  // centralizar; o max-width de 750px serve a leitura das questoes, nao ao
+  // painel de resultado.
+  const content = document.querySelector(".content");
+  if (content) content.classList.add("content-resultado");
 
   const quiz = document.getElementById("quiz");
   quiz.innerHTML = ""; // Limpa o quiz para mostrar só o resultado
   const logoUrl = getRepositorioAssetUrl('imagens/certiacademy_logo.svg');
-
-  // Adiciona a imagem no topo
-  quiz.innerHTML += `
-    <div style="text-align:center; margin-top:30px;">
-      <img src="${logoUrl}" alt="CertiAcademy" style="max-width:250px;">
-    </div>
-  `;
+  const dashboardUrl = getRepositorioAssetUrl('dashboard.html');
 
   const resultado = document.createElement('div');
   resultado.className = "resultado-final";
 
   const tempoDecorrido = calcularTempoDecorrido();
   const pontuacaoTotal = calcularPontuacao();
-
   const percentual = Math.round((pontuacaoTotal / 1000) * 100);
 
+  const aprovado = pontuacaoTotal >= NOTA_DE_CORTE_PONTOS;
+  const estado = aprovado ? 'aprovado' : 'abaixo';
+  const rotuloEstado = aprovado ? 'Acima da nota de corte' : 'Abaixo da nota de corte';
+  const acertos = Math.round(pontuacaoTotal / VALOR_ACERTO);
+  const faltam = Math.max(NOTA_DE_CORTE_PONTOS - pontuacaoTotal, 0);
+
+  const resumoCorte = aprovado
+    ? `Você superou os ${NOTA_DE_CORTE_PONTOS} pontos exigidos no exame oficial.`
+    : `Faltaram ${faltam} pontos para os ${NOTA_DE_CORTE_PONTOS} exigidos no exame oficial.`;
+
   resultado.innerHTML = `
-    <center><h1>Resultado Final</h1>
-    <h2>${percentual}% de acertos</h2>
-    <p><strong>Pontuação:</strong> ${pontuacaoTotal} de 1000 pontos</p>
-    <p><strong>Tempo decorrido:</strong> ${tempoDecorrido} minutos</p>
+    <div class="rf-cabecalho">
+      <img class="rf-logo" src="${logoUrl}" alt="CertiAcademy">
+      <h1 class="rf-titulo">Resultado final</h1>
+    </div>
 
+    <div class="rf-destaque">
+      <div class="rf-medidor">${montarAnel(percentual, aprovado)}</div>
 
-    <canvas id="graficoResultado" style="margin-top:20px;"></canvas>
-    <h1>Desempenho por seção do simulado</h1>
-    <canvas id="graficoDominio" style="margin-top:40px;"></canvas>
+      <div class="rf-sintese">
+        <span class="rf-selo rf-selo-${estado}">${rotuloEstado}</span>
+        <p class="rf-corte-texto">${resumoCorte}</p>
 
-    <div style="margin-top: 30px;">
-      <button id="refazerBtn" class="btn-reiniciar">Refazer Simulado</button>
-      <button id="revisarBtn" class="btn-revisar">Revisar Questões</button>
-    </div></center>
+        <div class="rf-indicadores">
+          <div class="rf-indicador">
+            <span class="rf-indicador-rotulo">Pontuação</span>
+            <span class="rf-indicador-valor rf-${estado}">${pontuacaoTotal}</span>
+            <span class="rf-indicador-sub">de 1000 pontos</span>
+          </div>
+          <div class="rf-indicador">
+            <span class="rf-indicador-rotulo">Acertos</span>
+            <span class="rf-indicador-valor">${acertos}</span>
+            <span class="rf-indicador-sub">de ${totalAcertosPossiveis} possíveis</span>
+          </div>
+          <div class="rf-indicador">
+            <span class="rf-indicador-rotulo">Tempo</span>
+            <span class="rf-indicador-valor">${tempoDecorrido}<span class="rf-indicador-unidade">min</span></span>
+            <span class="rf-indicador-sub">de ${Math.round(TEMPO_TOTAL_SEGUNDOS / 60)} disponíveis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rf-painel">
+      <h2 class="rf-painel-titulo">Aproveitamento por assunto</h2>
+      <p class="rf-painel-sub">Quanto você aproveitou dos pontos disponíveis em cada seção do exame.</p>
+      <div id="listaDominios" class="rf-dominios"></div>
+    </div>
+
+    <div class="rf-acoes">
+      <button id="revisarBtn" type="button" class="rf-btn rf-btn-primario">Revisar questões</button>
+      <button id="refazerBtn" type="button" class="rf-btn rf-btn-secundario">Refazer simulado</button>
+      <a href="${dashboardUrl}" class="rf-btn rf-btn-neutro">Ver meu histórico</a>
+    </div>
   `;
 
   quiz.appendChild(resultado);
@@ -735,13 +865,41 @@ function mostrarResultadoFinal(forceRender = false) {
   // Botões
   document.getElementById('refazerBtn').onclick = refazerSimulado;
   document.getElementById('revisarBtn').onclick = revisarQuestoes;
-  
+
 
   const toggleSidebarBtn = document.getElementById('toggleSidebar');
   if (toggleSidebarBtn) toggleSidebarBtn.style.display = 'none';
 
   const progressoContainer = document.getElementById('progressoContainer');
   if (progressoContainer) progressoContainer.style.display = 'none';
+
+  notificarResultadoParaHistorico();
+}
+
+// ==========================================
+// Funcao: notificarResultadoParaHistorico()
+// Descricao: Avisa quem estiver ouvindo que a prova terminou. O quiz.js nao
+//            fala com o Firestore diretamente: quem grava e o app.js, o que
+//            evita carregar o SDK do banco em quem so abriu a prova e mantem o
+//            motor funcionando mesmo sem historico configurado.
+// ==========================================
+function notificarResultadoParaHistorico() {
+  if (resultadoGravado) return;
+
+  document.dispatchEvent(new CustomEvent('certiacademy:resultado-final', {
+    detail: montarResultadoParaHistorico()
+  }));
+}
+
+// ==========================================
+// Funcao: marcarResultadoGravado()
+// Descricao: Chamada pelo app.js depois que a gravacao confirma. Enquanto nao
+//            for chamada, uma nova carga da pagina tenta gravar de novo - o
+//            que e o comportamento desejado quando a rede falha.
+// ==========================================
+export function marcarResultadoGravado() {
+  resultadoGravado = true;
+  persistirEstado();
 }
 
 
@@ -752,70 +910,91 @@ function mostrarResultadoFinal(forceRender = false) {
 //             - Gráfico de Barras: Pontuação por Domínio
 //             - Utiliza Chart.js para renderizar os gráficos
 // ==========================================
+// ==========================================
+// Funcao: montarAnel(percentual, aprovado)
+// Descricao: Medidor de acerto em SVG. Antes era um doughnut do Chart.js com o
+//            numero posicionado por CSS sobre o canvas, e os dois centros nao
+//            coincidiam. Aqui o texto vive dentro do proprio SVG, ancorado no
+//            centro do viewBox, entao o alinhamento e exato por construcao - e
+//            o desenho nunca deforma, porque o viewBox e quadrado.
+// ==========================================
+function montarAnel(percentual, aprovado) {
+  const raio = 86;
+  const circunferencia = 2 * Math.PI * raio;
+  const fracao = Math.min(Math.max(percentual, 0), 100) / 100;
+  const preenchido = circunferencia * fracao;
+  const cor = aprovado ? COR_APROVADO : COR_ABAIXO;
+
+  return `
+    <svg class="rf-anel" viewBox="0 0 200 200" role="img"
+         aria-label="${percentual}% de acerto no simulado">
+      <circle cx="100" cy="100" r="${raio}" fill="none"
+              stroke="${COR_NEUTRA}" stroke-width="16"></circle>
+      <circle cx="100" cy="100" r="${raio}" fill="none"
+              stroke="${cor}" stroke-width="16" stroke-linecap="round"
+              stroke-dasharray="${preenchido.toFixed(2)} ${(circunferencia - preenchido).toFixed(2)}"
+              transform="rotate(-90 100 100)"></circle>
+      <text class="rf-anel-valor" x="100" y="98" text-anchor="middle" fill="${cor}">${percentual}<tspan class="rf-anel-pct">%</tspan></text>
+      <text class="rf-anel-rotulo" x="100" y="124" text-anchor="middle">DE ACERTO</text>
+    </svg>`;
+}
+
 function desenharGraficos() {
-  // Gráfico de pizza (pontuação geral)
-  const ctxResultado = document.getElementById('graficoResultado').getContext('2d');
-  const pontosObtidos = calcularPontuacao();
-  const pontosRestantes = 1000 - pontosObtidos;
+  // ---------- aproveitamento por assunto ----------
+  // Barras em HTML, e nao um grafico do Chart.js: os nomes de dominio da
+  // Microsoft sao longos e, num eixo de grafico, ou sao truncados ou colidem
+  // entre si. Em HTML o texto quebra naturalmente e a leitura fica igual a do
+  // dashboard.
+  const alvoDominios = document.getElementById('listaDominios');
+  if (!alvoDominios) return;
 
-  new Chart(ctxResultado, {
-    type: 'doughnut',
-    data: {
-      labels: ['Percentual de acerto', 'Percentual de erros'],
-      datasets: [{
-        data: [pontosObtidos, pontosRestantes],
-        backgroundColor: ['#28a745', '#dc3545']
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          position: 'bottom'
-        }
-      }
-    }
-  });
+  const porDominio = montarResultadoParaHistorico().porDominio;
 
-  // Gráfico de barras (pontuação por domínio)
-  const ctxDominio = document.getElementById('graficoDominio').getContext('2d');
+  const entradas = Object.entries(porDominio)
+    .filter(([, valores]) => valores.maximo > 0)
+    .map(([dominio, valores]) => ({
+      dominio,
+      percentual: Math.round((valores.pontos / valores.maximo) * 100),
+      pontos: valores.pontos,
+      maximo: valores.maximo
+    }))
+    .sort((a, b) => a.percentual - b.percentual);
 
-  const dominios = {}; // Inicializa contador de pontos por domínio
+  alvoDominios.textContent = '';
 
-  respostasUsuario.forEach(r => {
-    const q = questoes[r.index];
-    if (!dominios[q.dominio]) {
-      dominios[q.dominio] = 0;
-    }
-    dominios[q.dominio] += r.pontos || 0;
-  });
+  entradas.forEach(item => {
+    const bom = item.percentual >= 70;
 
-  const labels = Object.keys(dominios);
-  const dados = Object.values(dominios);
+    const linha = document.createElement('div');
+    linha.className = 'rf-dominio';
 
-  new Chart(ctxDominio, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Pontuação por Domínio',
-        data: dados,
-        backgroundColor: '#007bff'
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      scales: {
-        x: {
-          beginAtZero: true,
-          max: 1000
-        }
-      },
-      plugins: {
-        legend: {
-          display: false
-        }
-      }
-    }
+    const topo = document.createElement('div');
+    topo.className = 'rf-dominio-topo';
+
+    const nome = document.createElement('span');
+    nome.className = 'rf-dominio-nome';
+    nome.textContent = item.dominio;
+
+    const valor = document.createElement('span');
+    valor.className = `rf-dominio-valor ${bom ? 'rf-aprovado' : 'rf-abaixo'}`;
+    valor.textContent = `${item.percentual}%`;
+
+    topo.append(nome, valor);
+
+    const trilha = document.createElement('div');
+    trilha.className = 'rf-trilha';
+
+    const preenchida = document.createElement('span');
+    preenchida.className = `rf-trilha-preenchida ${bom ? 'rf-fundo-aprovado' : 'rf-fundo-abaixo'}`;
+    preenchida.style.width = `${item.percentual}%`;
+    trilha.appendChild(preenchida);
+
+    const detalhe = document.createElement('span');
+    detalhe.className = 'rf-dominio-detalhe';
+    detalhe.textContent = `${item.pontos} de ${item.maximo} pontos`;
+
+    linha.append(topo, trilha, detalhe);
+    alvoDominios.appendChild(linha);
   });
 }
 
@@ -835,6 +1014,7 @@ function refazerSimulado() {
   rascunhosRespostas = {};
   simuladoFinalizado = false;
   resultadoFinalExibido = false;
+  resultadoGravado = false;
   tempoRestantePersistido = TEMPO_TOTAL_SEGUNDOS;
   resultadoFinalHTML = "";
   marcadas.clear();
@@ -859,10 +1039,10 @@ function revisarQuestoes() {
   if (abortarBtn) abortarBtn.classList.add('hidden');
   const logoUrl = getRepositorioAssetUrl('imagens/certiacademy_logo.svg');
   quiz.innerHTML = `
-    <div style="text-align:center; margin-top:30px;">
-      <img src="${logoUrl}" alt="CertiAcademy" style="max-width:250px;">
+    <div class="rf-cabecalho">
+      <img class="rf-logo" src="${logoUrl}" alt="CertiAcademy">
+      <h1 class="rf-titulo">Revisão de questões</h1>
     </div>
-    <h2>Revisão de Questões</h2>
   `;
 
   questoes.forEach((q, index) => {
@@ -964,17 +1144,16 @@ function revisarQuestoes() {
   botoesContainer.className = 'botoes-revisao';
 
   botoesContainer.innerHTML = `
-    <button id="refazerBtn" class="btn-reiniciar">Refazer Simulado</button>
-    <button id="voltarResultadoBtn" class="btn-revisar">Voltar Resultado Final</button>
+    <button id="voltarResultadoBtn" type="button" class="rf-btn rf-btn-primario">Voltar ao resultado</button>
+    <button id="refazerBtn" type="button" class="rf-btn rf-btn-secundario">Refazer simulado</button>
   `;
 
   // Criação do botão "Imprimir em PDF"
   const imprimirBtn = document.createElement('button');
   imprimirBtn.textContent = 'Imprimir em PDF';
   imprimirBtn.id = 'btnImprimirPDF';
-  imprimirBtn.className = 'btn-reiniciar'; // ou 'btn-revisar', conforme o padrão dos outros
-  imprimirBtn.style.background = '#e53935'; // vermelho
-  imprimirBtn.style.color = '#fff';
+  imprimirBtn.type = 'button';
+  imprimirBtn.className = 'rf-btn rf-btn-neutro';
   imprimirBtn.onclick = () => window.print();
 
   // Adicione o botão ao container dos botões de ação da revisão
@@ -992,31 +1171,17 @@ function voltarResultadoFinal() {
   const quiz = document.getElementById("quiz");
   quiz.innerHTML = resultadoFinalHTML; // 🛠️ Restaura o Resultado Final salvo
 
-  // Reatribui eventos
-  document.getElementById('refazerBtn').onclick = refazerSimulado;
-  document.getElementById('revisarBtn').onclick = revisarQuestoes;
-
-  // Redesenha os gráficos
-  setTimeout(() => {
-    desenharGraficos();
-  }, 50);
-
-  // 🛠️ Corrige layout dos botões
+  // Reatribui eventos: o innerHTML recria os elementos e descarta os handlers
   const refazerBtn = document.getElementById('refazerBtn');
   const revisarBtn = document.getElementById('revisarBtn');
 
-  // Cria novo container flexível
-  const botoesContainer = document.createElement('div');
-  botoesContainer.className = 'botoes-resultado-final'; // Aplicando a nova classe padrão
+  if (refazerBtn) refazerBtn.onclick = refazerSimulado;
+  if (revisarBtn) revisarBtn.onclick = revisarQuestoes;
 
-  botoesContainer.appendChild(refazerBtn);
-  botoesContainer.appendChild(revisarBtn);
-
-  const botaoContainerAntigo = document.querySelector('center > div');
-  if (botaoContainerAntigo) botaoContainerAntigo.remove();
-
-  const resultadoFinalDiv = document.querySelector('.resultado-final center');
-  resultadoFinalDiv.appendChild(botoesContainer);
+  // Os canvas restaurados vem vazios, entao os graficos sao redesenhados
+  setTimeout(() => {
+    desenharGraficos();
+  }, 50);
 }
 
 // Permite navegação direta ao clicar na lista lateral

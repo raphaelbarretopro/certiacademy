@@ -1,0 +1,102 @@
+rules_version = '2';
+
+// ==========================================
+// Arquivo: firestore.rules
+// Descricao: Regras de seguranca do historico do CertiAcademy.
+//
+//            Estas regras sao a UNICA protecao real dos dados: a configuracao
+//            do cliente e publica e o site e estatico, entao qualquer pessoa
+//            pode chamar o banco. O que impede o acesso indevido e o que esta
+//            escrito aqui.
+//
+//            O que elas garantem:
+//              - cada aluno so le e escreve a propria subarvore users/{uid}
+//              - resultado gravado nao pode ser ALTERADO
+//              - pontuacao fica na faixa valida de 0 a 1000
+//              - a data de conclusao vem do relogio do servidor
+//
+//            O que elas NAO garantem: que a pontuacao seja verdadeira. A nota e
+//            calculada no navegador, e validar isso exigiria Cloud Functions,
+//            que sao do plano pago. Como o historico e pessoal e nao alimenta
+//            ranking, forjar um resultado so distorce o proprio painel. Se um
+//            dia houver turma, ranking ou certificado, esta decisao precisa ser
+//            revista.
+//
+//            ATENCAO ao editar: no Firestore as permissoes de regras diferentes
+//            se SOMAM (OR). Um match curinga como /{documento=**} colocado
+//            dentro de users/{uid} tornaria inutil qualquer restricao das
+//            colecoes internas, incluindo o bloqueio de alteracao dos
+//            resultados. Por isso cada colecao e declarada explicitamente.
+//
+//            Publique com: Firestore Database -> Regras -> colar -> Publicar
+// ==========================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function ehDono(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // ----- perfil do aluno -----
+    match /users/{uid} {
+      allow read: if ehDono(uid);
+      allow create, update: if ehDono(uid)
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 320;
+      allow delete: if ehDono(uid);
+    }
+
+    // ----- provas concluidas -----
+    match /users/{uid}/resultados/{resultadoId} {
+      allow read: if ehDono(uid);
+
+      allow create: if ehDono(uid)
+        && request.resource.data.curso is string
+        && request.resource.data.curso.size() > 0
+        && request.resource.data.curso.size() <= 80
+        && request.resource.data.simulado is string
+        && request.resource.data.simulado.size() > 0
+        && request.resource.data.simulado.size() <= 120
+        && request.resource.data.pontuacao is int
+        && request.resource.data.pontuacao >= 0
+        && request.resource.data.pontuacao <= 1000
+        && request.resource.data.percentual is int
+        && request.resource.data.percentual >= 0
+        && request.resource.data.percentual <= 100
+        && request.resource.data.tempoSegundos is int
+        && request.resource.data.tempoSegundos >= 0
+        && request.resource.data.tempoSegundos <= 86400
+        && request.resource.data.aprovado is bool
+        && request.resource.data.finalizadoEm == request.time
+        && request.resource.data.keys().hasAll([
+             'curso', 'simulado', 'pontuacao', 'percentual',
+             'aprovado', 'tempoSegundos', 'finalizadoEm'
+           ]);
+
+      // Uma nota gravada nao pode ser reescrita.
+      allow update: if false;
+
+      // A exclusao fica liberada porque a LGPD garante ao aluno o direito de
+      // apagar os proprios dados, e a pagina de privacidade apaga a subarvore
+      // inteira antes de remover a conta. O efeito colateral aceito e que o
+      // aluno tambem consegue apagar uma prova isolada.
+      allow delete: if ehDono(uid);
+    }
+
+    // ----- agregado que o dashboard le em uma unica leitura -----
+    match /users/{uid}/resumo/{documento} {
+      allow read, write: if ehDono(uid);
+    }
+
+    // ----- sessoes retomaveis entre dispositivos (fase seguinte) -----
+    match /users/{uid}/sessoes/{documento} {
+      allow read, write: if ehDono(uid);
+    }
+
+    // Nada fora do que esta declarado acima e acessivel.
+    match /{documento=**} {
+      allow read, write: if false;
+    }
+  }
+}

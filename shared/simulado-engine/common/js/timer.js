@@ -3,7 +3,30 @@
 // Descrição: Gerencia o cronômetro do simulado
 // ==========================================
 
-export const TEMPO_TOTAL_SEGUNDOS = 45 * 60;
+// Tempo padrao, usado por todo simulado que nao declarar o seu.
+export const TEMPO_PADRAO_MINUTOS = 45;
+
+// ==========================================
+// Tempo desta prova
+// Descricao: Os simulados variam de pouco mais de dez a quase cinquenta
+//            questoes, entao um limite unico para todos distorce o tempo por
+//            questao - e o tempo passou a ser um indicador do historico. Cada
+//            banco pode declarar o seu com:
+//
+//              export const tempoMinutos = 60;
+//
+//            em js/questoes.js. Sem isso, vale o padrao de 45 minutos e nada
+//            muda em relacao ao comportamento anterior.
+// ==========================================
+function resolverTempoTotalSegundos() {
+  const declarado = window.CertiAcademyTempoMinutos;
+
+  return Number.isFinite(declarado) && declarado > 0
+    ? Math.floor(declarado * 60)
+    : TEMPO_PADRAO_MINUTOS * 60;
+}
+
+export const TEMPO_TOTAL_SEGUNDOS = resolverTempoTotalSegundos();
 
 let tempoRestante = TEMPO_TOTAL_SEGUNDOS;
 let intervaloCronometro;
@@ -39,9 +62,16 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
     cronometroDiv.style.position = "fixed";
     cronometroDiv.style.top = "0";
     cronometroDiv.style.left = "0";
-    cronometroDiv.style.width = "100%";
-    cronometroDiv.style.backgroundColor = "#000";
-    cronometroDiv.style.color = "#fff";
+    // left+right em vez de width:100%: com barra de rolagem presente, os dois
+    // nao dao o mesmo resultado em todos os navegadores, e a barra passava por
+    // baixo dela levando o botao de sair para fora da area visivel.
+    cronometroDiv.style.right = "0";
+    // Sem border-box, o padding ainda somaria a largura resultante.
+    cronometroDiv.style.boxSizing = "border-box";
+    // Barra clara, como o cabecalho do dashboard e das paginas de curso. O CSS
+    // compartilhado refina altura, sombra e tipografia.
+    cronometroDiv.style.backgroundColor = "#fff";
+    cronometroDiv.style.color = "#1F2937";
     cronometroDiv.style.padding = "10px";
     cronometroDiv.style.textAlign = "center";
     cronometroDiv.style.fontSize = "24px";
