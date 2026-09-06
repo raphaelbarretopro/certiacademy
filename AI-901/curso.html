@@ -86,6 +86,67 @@ Descrição: Página do curso preparatório para o exame AI-901.
         transition: none !important;
       }
     }
+
+    /* ==========================================
+    Cabeçalho no celular
+    Descrição: Em uma linha só, logo, navegação e bloco do aluno disputam a
+               largura de 390px: o logo era espremido de 98px para 32px e os
+               links quebravam no meio da palavra. Abaixo de 640px o logo e o
+               aluno dividem a primeira faixa e a navegação desce para a
+               segunda.
+    ========================================== */
+    .cabecalho-logo {
+      /* Sem isto o flex espreme a imagem: ela tem altura fixa e largura
+         flexível, então encolhia até o logo virar um risco. */
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+      .cabecalho-faixa {
+        flex-wrap: wrap;
+        gap: 10px 12px;
+      }
+
+      .cabecalho-logo img {
+        height: 36px;
+      }
+
+      /* Primeira faixa: logo à esquerda, aluno à direita. */
+      #sessaoHeader {
+        order: 1;
+        margin-left: auto;
+        padding-left: 0;
+        /* A divisória separava o aluno de um vizinho que não está mais na
+           mesma linha. */
+        border-left: 0;
+      }
+
+      /* Segunda faixa, ocupando a largura toda. */
+      .cabecalho-nav {
+        order: 2;
+        width: 100%;
+        margin-left: 0;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 8px 16px;
+      }
+
+      /* Na home o cabeçalho é fixo no topo: uma segunda faixa comeria uma
+         fatia da tela em todas as rolagens. Os links dela estão logo abaixo,
+         nos botões do topo e no rodapé, então aqui eles saem. Nas páginas de
+         curso o cabeçalho rola junto e a faixa não custa nada. */
+      .cabecalho-nav-fixo {
+        display: none;
+      }
+    }
+
+    @media (max-width: 380px) {
+      /* Nome grande mais o botão de sair não cabem ao lado do logo; a foto
+         segura a identidade e o nome volta assim que houver largura. */
+      #sessaoHeader .cabecalho-saudacao {
+        display: none;
+      }
+    }
   </style>
 </head>
 
@@ -93,17 +154,18 @@ Descrição: Página do curso preparatório para o exame AI-901.
 
   <!-- Cabeçalho -->
   <header class="bg-white shadow">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center gap-4">
-      <a href="../"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
-      <nav class="flex items-center gap-3 text-sm">
+    <div class="cabecalho-faixa container mx-auto px-6 py-4 flex items-center gap-4">
+      <a href="../" class="cabecalho-logo"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
+      <nav class="cabecalho-nav flex items-center gap-3 text-sm ml-auto">
         <a href="../dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
         <a href="#simulados" class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
-          Ir para os simulados
+          <span class="hidden sm:inline">Ir para os simulados</span>
+          <span class="sm:hidden">Simulados</span>
         </a>
-        <!-- Preenchido por header-sessao.js: avatar, saudação e sair, ou o
-             botão de entrar para quem ainda não fez login. -->
-        <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
       </nav>
+      <!-- Preenchido por header-sessao.js: avatar, saudação e sair, ou o
+           botão de entrar para quem ainda não fez login. -->
+      <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
     </div>
   </header>
 

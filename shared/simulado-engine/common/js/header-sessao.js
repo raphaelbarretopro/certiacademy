@@ -49,7 +49,9 @@ function montarBlocoUsuario(alvo, perfil) {
   }
 
   const saudacao = document.createElement('span');
-  saudacao.className = 'font-semibold whitespace-nowrap';
+  // A classe cabecalho-saudacao deixa o CSS esconder so o nome nas telas
+  // mais estreitas, mantendo a foto como identidade.
+  saudacao.className = 'cabecalho-saudacao font-semibold whitespace-nowrap';
   saudacao.textContent = `Olá, ${perfil.primeiroNome}`;
   saudacao.title = perfil.email;
   bloco.appendChild(saudacao);
