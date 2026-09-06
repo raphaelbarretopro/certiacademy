@@ -132,12 +132,13 @@ Container principal
 Sidebar
 ========================================== */
 /* Navegação pelas questões */
+/* Sem rolagem propria: a coluna acompanha a pagina, como o conteudo e a
+   coluna da direita. Com max-height ela ganhava uma barra de rolagem interna
+   quando as questoes nao cabiam na tela, o que destoava do resto do layout. */
 .sidebar {
   flex: 0 0 var(--sim-sidebar-largura);
   position: sticky;
   top: calc(var(--sim-barra-altura) + 24px);
-  max-height: calc(100vh - var(--sim-barra-altura) - 48px);
-  overflow-y: auto;
   background: var(--sim-superficie);
   border: 1px solid var(--sim-linha);
   border-radius: 14px;
