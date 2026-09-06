@@ -28,6 +28,11 @@ function resolverTempoTotalSegundos() {
 
 export const TEMPO_TOTAL_SEGUNDOS = resolverTempoTotalSegundos();
 
+// A ampulheta e um GIF na raiz do repositorio. O caminho sai de import.meta.url
+// porque os simulados vivem em profundidades diferentes (CURSO/NN-SIMULADO e
+// CURSO/CURSO-bonus/NN-SIMULADO), e um caminho fixo quebraria em uma delas.
+const AMPULHETA = new URL('../../../../imagens/ampulheta.gif', import.meta.url).toString();
+
 let tempoRestante = TEMPO_TOTAL_SEGUNDOS;
 let intervaloCronometro;
 let alerta15MinutosExibido = false;
@@ -64,7 +69,7 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
     // trocar de lugar: la ela fica no rodape, ao alcance do polegar.
     cronometroDiv.innerHTML =
       "<span class='barra-tempo'>" +
-      "<span class='barra-tempo-icone' aria-hidden='true'>⏳</span>" +
+      "<img class='barra-tempo-icone' src='" + AMPULHETA + "' alt='' aria-hidden='true'>" +
       "<span class='barra-tempo-rotulo'>Tempo restante:</span>" +
       "<span id='cronometro'></span>" +
       "</span>";

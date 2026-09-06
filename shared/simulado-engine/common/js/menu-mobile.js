@@ -4,10 +4,9 @@
 //            barra inferior.
 //
 //            No celular a barra do simulado fica embaixo, ao alcance do polegar,
-//            e só cabem três coisas nela: o hambúrguer, o tempo e o botão de
-//            sair. Tudo o mais que antes ficava espalhado pela tela — o nome do
-//            aluno, "Meu desempenho", abortar, voltar ao curso, reportar
-//            problema — se junta aqui dentro.
+//            e leva só o hambúrguer e o tempo. Tudo o mais — identidade, ir para
+//            a home ou para o curso, abortar, reportar problema, privacidade e
+//            sair — se junta aqui dentro.
 //
 //            Os itens que já existem como botão na página não são
 //            reimplementados: o menu clica no botão original, que segue
@@ -51,8 +50,12 @@ function icone(...caminhos) {
 }
 
 const ICONES = {
-  // Colunas de um gráfico: desempenho.
-  desempenho: () => icone('M4 20V10', 'M10 20V4', 'M16 20v-6', 'M22 20H2'),
+  // Telhado e porta: a página inicial.
+  home: () => icone('M3 10.5 12 3l9 7.5', 'M5 9.5V21h14V9.5', 'M10 21v-6h4v6'),
+  // Livro aberto: a página do curso.
+  curso: () => icone('M12 6.5C10.5 5 8 4.5 4 5v13c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5c-4-.5-6.5 0-8 1.5Z', 'M12 6.5v13'),
+  // Porta com seta saindo: encerrar a sessão.
+  sair: () => icone('M15 4h4v16h-4', 'M10 8l-4 4 4 4', 'M6 12h9'),
   // Círculo cortado: interromper.
   abortar: () => icone('M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z', 'M6 6l12 12'),
   // Seta voltando para a esquerda.
@@ -140,14 +143,7 @@ export function montarMenuMobile(perfil) {
   fechar.appendChild(ICONES.fechar());
   painel.appendChild(fechar);
 
-  // 1. Logo
-  const logo = document.createElement('img');
-  logo.className = 'menu-logo';
-  logo.src = urlDoSite('imagens/certiacademy_logo.svg');
-  logo.alt = 'CertiAcademy';
-  painel.appendChild(logo);
-
-  // 2. Saudação
+  // 1. Quem está fazendo a prova.
   const identidade = document.createElement('div');
   identidade.className = 'menu-aluno';
 
@@ -167,22 +163,37 @@ export function montarMenuMobile(perfil) {
   identidade.appendChild(nome);
   painel.appendChild(identidade);
 
-  // 3 a 7. Itens
+  // 2 a 7. Navegação e ações.
   const lista = document.createElement('div');
   lista.className = 'menu-lista';
 
-  lista.appendChild(criarItem('Meu desempenho', ICONES.desempenho, {
-    href: urlDoSite('dashboard.html')
+  lista.appendChild(criarItem('Home', ICONES.home, {
+    href: urlDoSite('index.html')
   }));
 
-  // Os três seguintes acionam controles que já existem na página. Guardamos a
-  // referência ao item para poder espelhar o estado do original ao abrir.
+  // O rodapé da página aponta para o curso e o título da coluna direita traz o
+  // código dele. Os dois já estão na página, então o menu não precisa receber
+  // nada por parâmetro nem duplicar o caminho.
+  const linkDoCurso = document.querySelector('.rodape-simulado a');
+  const codigoDoCurso = (document.querySelector('.sidebarDireita-titulo') || {}).textContent;
+
+  if (linkDoCurso) {
+    lista.appendChild(criarItem(
+      codigoDoCurso ? `Curso ${codigoDoCurso.trim()}` : 'Voltar ao curso',
+      ICONES.curso,
+      { href: linkDoCurso.getAttribute('href') }
+    ));
+  }
+
+  // Abortar, reportar e sair acionam controles que já existem na página.
+  // Guardamos a referência para poder espelhar o estado do original ao abrir.
   const original = {
     abortar: document.getElementById('abortarBtn'),
-    reportar: document.getElementById('botaoReportar')
+    reportar: document.getElementById('botaoReportar'),
+    sair: document.getElementById('sairBtn')
   };
 
-  const itemAbortar = criarItem('Abortar', ICONES.abortar, {
+  const itemAbortar = criarItem('Abortar simulado', ICONES.abortar, {
     aoClicar: () => {
       fecharMenu();
       if (original.abortar) original.abortar.click();
@@ -190,13 +201,6 @@ export function montarMenuMobile(perfil) {
   });
   itemAbortar.classList.add('menu-item-abortar');
   lista.appendChild(itemAbortar);
-
-  const linkDoCurso = document.querySelector('.rodape-simulado a');
-  if (linkDoCurso) {
-    lista.appendChild(criarItem('Voltar ao curso', ICONES.voltar, {
-      href: linkDoCurso.getAttribute('href')
-    }));
-  }
 
   const itemReportar = criarItem('Reportar problema', ICONES.reportar, {
     aoClicar: () => {
@@ -210,7 +214,25 @@ export function montarMenuMobile(perfil) {
     href: urlDoSite('privacidade.html')
   }));
 
+  // 7. Sair, com cara de botão: encerra a sessão, não navega.
+  const itemSair = criarItem('Sair', ICONES.sair, {
+    aoClicar: () => {
+      fecharMenu();
+      if (original.sair) original.sair.click();
+    }
+  });
+  itemSair.classList.add('menu-item-sair');
+  lista.appendChild(itemSair);
+
   painel.appendChild(lista);
+
+  // 8. A marca fecha o menu, centralizada e um pouco abaixo do resto.
+  const logo = document.createElement('img');
+  logo.className = 'menu-logo';
+  logo.src = urlDoSite('imagens/certiacademy_logo.svg');
+  logo.alt = 'CertiAcademy';
+  painel.appendChild(logo);
+
   document.body.appendChild(menu);
 
   // ----------------------------------------

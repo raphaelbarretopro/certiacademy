@@ -783,9 +783,17 @@ Cronômetro
 .barra-tempo {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   font-size: 1.05rem;
   white-space: nowrap;
+}
+
+/* O GIF tem 640x640; sem tamanho declarado ele entraria em tamanho natural e
+   estouraria a barra antes de o navegador terminar de baixá-lo. */
+.barra-tempo-icone {
+  width: 24px;
+  height: 24px;
+  flex: none;
 }
 
 #cronometro {
@@ -948,18 +956,21 @@ Descrição: Aberto pelo hambúrguer da barra inferior. Reúne o que não cabe
   color: var(--sim-tinta);
 }
 
-/* 1ª linha: a marca. */
+/* Último item: a marca fecha a lista, centralizada e afastada do resto. */
 .menu-logo {
-  width: 150px;
-  max-width: 70%;
+  width: 132px;
+  max-width: 60%;
   height: auto;
+  margin: 14px auto 0;
 }
 
-/* 2ª linha: quem está fazendo a prova. */
+/* Primeiro item: quem está fazendo a prova. O espaço à direita evita que um
+   nome comprido corra por baixo do X de fechar. */
 .menu-aluno {
   display: flex;
   align-items: center;
   gap: 10px;
+  padding-right: 40px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--sim-linha);
 }
@@ -1027,6 +1038,20 @@ Descrição: Aberto pelo hambúrguer da barra inferior. Reúne o que não cabe
 .menu-item-abortar,
 .menu-item-abortar .menu-icone {
   color: var(--sim-vermelho);
+}
+
+/* Sair encerra a sessão em vez de navegar, então ganha contorno de botão e um
+   respiro que o separa dos itens de navegação acima. */
+.menu-item-sair {
+  margin-top: 14px;
+  justify-content: center;
+  border: 1px solid var(--sim-linha-forte);
+  color: var(--sim-tinta);
+  font-weight: 600;
+}
+
+.menu-item-sair:hover {
+  background: var(--sim-superficie-2);
 }
 
 /* Com o menu aberto, a página atrás não rola junto. */
@@ -1892,47 +1917,56 @@ Descrição: Estes blocos ficam no fim do arquivo de propósito. Media query nã
     grid-template-columns: repeat(auto-fill, minmax(42px, 1fr));
   }
 
-  /* No celular a coluna comeca recolhida: quem abre o simulado quer ler o
-     enunciado, nao a grade de numeros. O estado inicial vem daqui, e nao do
-     script, para a lista nao piscar aberta antes de o JavaScript rodar. */
-  .sidebar {
-    display: none;
+  /* Ordem da coluna única: progresso e pergunta primeiro, depois a grade de
+     números e por fim os outros simulados do curso. O que decide a prova fica
+     no alto; o que serve para navegar vem depois dela. */
+  .content {
+    order: 1;
   }
 
-  .sidebar[data-aberta="sim"] {
+  .sidebar {
+    order: 2;
+  }
+
+  .sidebarDireita-coluna,
+  .container > .sidebarDireita {
+    order: 3;
+  }
+
+  /* A grade não é mais recolhida. Ela vinha antes da pergunta e a empurrava
+     para baixo, e por isso começava fechada; agora que vem depois, não
+     atrapalha nada e aparece sempre. O segundo seletor cobre quem recolheu a
+     coluna no desktop e depois estreitou a janela: sem ele a grade sumiria
+     aqui, e sem o botão não haveria como trazê-la de volta. */
+  .sidebar,
+  .sidebar[data-aberta="nao"] {
     display: block;
   }
 
-  /* Com a coluna recolhida, o botao deixa de ser um icone solto no canto e
-     vira o cabecalho da lista, com rotulo e area de toque de verdade. */
+  /* Sem recolhimento não há o que alternar, e o botão ficaria no topo do
+     cartão da pergunta, longe da lista que comanda. */
   .toggle-sidebar {
-    position: static;
-    width: 100%;
-    height: 44px;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding: 0 14px;
-    color: var(--sim-tinta);
-  }
-
-  .toggle-sidebar-texto {
-    display: inline;
-  }
-
-  /* O botao ja diz "Questoes"; o titulo dentro da coluna repetiria a palavra
-     logo abaixo dele. */
-  .sidebar-titulo {
     display: none;
   }
 
-  /* Seta para baixo quando fechada e para cima quando aberta, a convencao de
-     qualquer bloco que expande. */
-  .toggle-sidebar .toggle-sidebar-seta {
-    transform: rotate(90deg);
+  /* Com o botão fora, o título volta a nomear a grade. */
+  .sidebar-titulo {
+    display: block;
   }
 
-  .toggle-sidebar[aria-expanded="false"] .toggle-sidebar-seta {
-    transform: rotate(-90deg);
+  /* A barra de progresso abre a página: sem o botão acima dela, o espaço que
+     existia para não passar por baixo dele deixa de fazer sentido. */
+  #progressoContainer {
+    padding-right: 0;
+  }
+
+  .barra-externa {
+    height: 12px;
+    border-radius: 6px;
+  }
+
+  .barra-interna {
+    border-radius: 6px;
   }
 
   .acoes-questao .btn-voltar {
@@ -1966,39 +2000,25 @@ Descrição: Estes blocos ficam no fim do arquivo de propósito. Media query nã
     display: inline-flex;
   }
 
-  /* Centralizado na barra, e não entre os vizinhos: assim o tempo fica no meio
-     da tela mesmo com o hambúrguer e o botão de sair tendo larguras
-     diferentes. */
+  /* Centralizado na barra, e não entre os vizinhos: com o hambúrguer ocupando
+     a esquerda, centralizar entre eles jogaria o tempo para a direita. */
   .barra-tempo {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 1.5rem;
+    gap: 7px;
+    font-size: 1rem;
+  }
+
+  #cronometro {
+    font-size: 1.375rem;
     font-weight: 700;
   }
 
-  /* O ícone e o rótulo saem: o número sozinho, grande, se lê de relance. */
-  .barra-tempo-icone,
-  .barra-tempo-rotulo {
-    display: none;
-  }
-
-  /* Da barra sobra só o sair; foto, nome e desempenho vivem no menu lateral. */
+  /* A barra fica só com o hambúrguer e o tempo. Todo o bloco do aluno —
+     inclusive o sair — vive no menu lateral, que o aciona por este botão. */
   #sessaoUsuario {
-    position: static;
-    transform: none;
-    gap: 8px;
-  }
-
-  .sessao-foto,
-  .sessao-nome,
-  .sessao-desempenho {
     display: none;
-  }
-
-  .sessao-sair {
-    height: 40px;
-    padding: 0 14px;
   }
 
   /* Com a barra embaixo, o conteúdo começa no topo e sobra espaço no fim. */
@@ -2025,17 +2045,9 @@ Descrição: Estes blocos ficam no fim do arquivo de propósito. Media query nã
     font-size: 15px;
   }
 
-  /* Nome longo mais os dois botoes nao cabem: o rotulo do tempo sai e ficam
-     a ampulheta e os digitos, que e o que precisa ser lido de relance. */
-  .barra-tempo-rotulo {
-    display: none;
-  }
-
-  .sessao-desempenho,
-  .sessao-sair {
-    padding: 0 8px;
-    font-size: .8125rem;
-  }
+  /* O bloco do aluno saiu da barra no celular, entao as regras que o
+     encolhiam aqui deixaram de valer. O rotulo do tempo tambem volta: com a
+     barra so com hamburguer e tempo, ha largura de sobra. */
 
   .btn-reportar-flutuante {
     right: 12px;
