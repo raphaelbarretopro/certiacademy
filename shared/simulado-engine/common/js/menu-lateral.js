@@ -105,6 +105,7 @@ export function montarMenuLateral({
   idBotao = 'menuLateralBtn',
   rotulo = 'Menu',
   logoUrl,
+  entrarUrl,
   aoAbrir
 }) {
   if (!barra || document.getElementById(id)) return null;
@@ -140,25 +141,34 @@ export function montarMenuLateral({
   fechar.appendChild(ICONES.fechar());
   painel.appendChild(fechar);
 
-  // 1º item: quem está usando.
-  const identidade = document.createElement('div');
-  identidade.className = 'menu-aluno';
+  // 1º item: quem está usando. Sem sessão não há quem saudar — um "Olá!" sem
+  // nome não diz nada —, então o lugar recebe o convite para entrar.
+  if (perfil) {
+    const identidade = document.createElement('div');
+    identidade.className = 'menu-aluno';
 
-  if (perfil && perfil.fotoUrl) {
-    const foto = document.createElement('img');
-    foto.className = 'menu-aluno-foto';
-    foto.src = perfil.fotoUrl;
-    foto.alt = '';
-    foto.referrerPolicy = 'no-referrer';
-    foto.onerror = () => foto.remove();
-    identidade.appendChild(foto);
+    if (perfil.fotoUrl) {
+      const foto = document.createElement('img');
+      foto.className = 'menu-aluno-foto';
+      foto.src = perfil.fotoUrl;
+      foto.alt = '';
+      foto.referrerPolicy = 'no-referrer';
+      foto.onerror = () => foto.remove();
+      identidade.appendChild(foto);
+    }
+
+    const nome = document.createElement('span');
+    nome.className = 'menu-aluno-nome';
+    nome.textContent = `Olá, ${perfil.primeiroNome}!`;
+    identidade.appendChild(nome);
+    painel.appendChild(identidade);
+  } else if (entrarUrl) {
+    const entrar = document.createElement('a');
+    entrar.className = 'menu-entrar';
+    entrar.href = entrarUrl;
+    entrar.textContent = 'Entrar';
+    painel.appendChild(entrar);
   }
-
-  const nome = document.createElement('span');
-  nome.className = 'menu-aluno-nome';
-  nome.textContent = perfil ? `Olá, ${perfil.primeiroNome}!` : 'Olá!';
-  identidade.appendChild(nome);
-  painel.appendChild(identidade);
 
   const lista = document.createElement('div');
   lista.className = 'menu-lista';

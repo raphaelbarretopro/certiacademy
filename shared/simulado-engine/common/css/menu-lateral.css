@@ -160,6 +160,29 @@ Descrição: Aberto pelo hambúrguer da barra inferior. Reúne o que não cabe
   white-space: nowrap;
 }
 
+/* Sem sessão, o lugar da saudação recebe o convite para entrar. É a ação
+   principal de quem chega deslogado, então vem em botão cheio. */
+.menu-entrar {
+  /* Para o botão largo não passar por baixo do X, que fica no canto. */
+  margin-right: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: var(--sim-azul);
+  color: #fff;
+  font-size: .9375rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.menu-entrar:hover {
+  filter: brightness(.94);
+}
+
 /* 3ª à 7ª linha: cada ação com o seu ícone. */
 .menu-lista {
   display: flex;
@@ -304,11 +327,11 @@ Descrição: Hambúrguer à esquerda, marca ao centro e a lupa à direita. A hom
   outline-offset: 1px;
 }
 
-/* Os cartões carregam a classe .flex do Tailwind, cuja especificidade vence
-   o [hidden] do navegador: sem esta regra o filtro marcava o cartão como
-   oculto e ele continuava desenhado. O id mais o atributo passam à frente. */
-#certificacoes a[hidden] {
-  display: none;
+/* Os cartões carregam utilitárias do Tailwind como .flex, que vencem tanto o
+   [hidden] do navegador quanto uma classe simples: sem o !important o filtro
+   marcava o cartão como oculto e ele continuava desenhado. */
+.busca-oculto {
+  display: none !important;
 }
 
 /* Aviso de "nada encontrado", escrito por menu-home.js. */

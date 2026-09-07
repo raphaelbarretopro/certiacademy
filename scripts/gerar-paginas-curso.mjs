@@ -319,6 +319,7 @@ Descrição: Página do curso preparatório para o exame ${exame.codigo}.
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Curso Preparatório ${escapar(exame.codigo)} | CertiAcademy</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../shared/simulado-engine/common/css/menu-lateral.css">
   <meta name="robots" content="noindex, nofollow">
   <style>
     body {
@@ -454,6 +455,25 @@ Descrição: Página do curso preparatório para o exame ${exame.codigo}.
         display: none;
       }
     }
+
+    /* ==========================================
+    Cabeçalho no celular
+    Descrição: Abaixo de 720px quem comanda é a barra inferior, montada por
+               menu-curso.js: hambúrguer, marca e busca. O cabeçalho de cima
+               sai de vista, mas continua no DOM — o menu clica no botão de
+               sair que header-sessao.js escreve dentro dele, em vez de repetir
+               a lógica de encerrar a sessão.
+    ========================================== */
+    @media (max-width: 720px) {
+      body > header {
+        display: none;
+      }
+
+      /* Espaço para a barra fixa não cobrir o fim do rodapé. */
+      body {
+        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+      }
+    }
   </style>
 </head>
 
@@ -537,8 +557,12 @@ ${blocoPlano(exame, principais[0])}
 
   <script type="module">
     import { montarHeaderSessao } from '../shared/simulado-engine/common/js/header-sessao.js';
+    import { montarMenuCurso } from '../shared/simulado-engine/common/js/menu-curso.js';
 
-    montarHeaderSessao(document.getElementById('sessaoHeader'));
+    // O cabeçalho primeiro: o menu do celular reaproveita o botão de sair que
+    // ele escreve, em vez de repetir a lógica de encerrar a sessão.
+    await montarHeaderSessao(document.getElementById('sessaoHeader'));
+    montarMenuCurso();
   </script>
 
 </body>
