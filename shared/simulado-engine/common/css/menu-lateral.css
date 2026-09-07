@@ -1,0 +1,340 @@
+/* ==========================================
+Arquivo: menu-lateral.css
+Descrição: A barra inferior do celular e a gaveta que ela abre.
+
+           Carregado pelas páginas de simulado e pela home. As duas mostram a
+           mesma gaveta com listas diferentes, então o visual dela mora aqui e
+           não em styles.css, que estiliza a prova e a home não carrega.
+
+           Os tokens abaixo repetem os de styles.css com os mesmos valores: a
+           home precisa deles e não carrega aquele arquivo. Quando as duas
+           folhas se encontram numa página de simulado, valores iguais tornam
+           a ordem irrelevante.
+========================================== */
+:root {
+  --sim-superficie: #FFFFFF;
+  --sim-superficie-2: #F3F4F6;
+  --sim-tinta: #1F2937;
+  --sim-tinta-2: #4B5563;
+  --sim-tinta-3: #6B7280;
+  --sim-linha: #E5E7EB;
+  --sim-linha-forte: #D1D5DB;
+  --sim-azul: #0078D4;
+  --sim-vermelho: #A8322A;
+  --sim-barra-altura: 60px;
+}
+
+/* ==========================================
+Hambúrguer
+========================================== */
+/* O hambúrguer só existe no celular; no desktop as mesmas ações estão à vista
+   nas colunas e no rodapé. */
+.barra-menu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--sim-linha);
+  border-radius: 10px;
+  background: var(--sim-superficie);
+  color: var(--sim-tinta);
+  cursor: pointer;
+}
+
+.barra-menu:hover {
+  background: var(--sim-superficie-2);
+}
+
+/* ==========================================
+Menu lateral do celular
+Descrição: Aberto pelo hambúrguer da barra inferior. Reúne o que não cabe
+           numa barra de três itens: identidade, desempenho, abortar, voltar
+           ao curso, reportar problema e privacidade.
+========================================== */
+.menu-lateral {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+}
+
+.menu-fundo {
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 24, 39, .45);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.menu-lateral.aberto .menu-fundo {
+  opacity: 1;
+}
+
+.menu-painel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(300px, 84vw);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px 18px calc(22px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  background: var(--sim-superficie);
+  box-shadow: 2px 0 16px rgba(0, 0, 0, .18);
+  transform: translateX(-100%);
+  transition: transform .2s ease;
+}
+
+.menu-lateral.aberto .menu-painel {
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-fundo,
+  .menu-painel {
+    transition: none;
+  }
+}
+
+.menu-fechar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sim-tinta-3);
+  cursor: pointer;
+}
+
+.menu-fechar:hover {
+  background: var(--sim-superficie-2);
+  color: var(--sim-tinta);
+}
+
+/* Último item: a marca fecha a lista, centralizada e afastada do resto. */
+.menu-logo {
+  width: 132px;
+  max-width: 60%;
+  height: auto;
+  margin: 14px auto 0;
+}
+
+/* Primeiro item: quem está fazendo a prova. O espaço à direita evita que um
+   nome comprido corra por baixo do X de fechar. */
+.menu-aluno {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 40px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--sim-linha);
+}
+
+.menu-aluno-foto {
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: 50%;
+}
+
+.menu-aluno-nome {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--sim-tinta);
+  font-size: 1rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 3ª à 7ª linha: cada ação com o seu ícone. */
+.menu-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 12px 10px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--sim-tinta-2);
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 500;
+  line-height: 1.3;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: var(--sim-superficie-2);
+  color: var(--sim-tinta);
+}
+
+.menu-icone {
+  flex: none;
+  color: var(--sim-tinta-3);
+}
+
+.menu-item:hover .menu-icone {
+  color: var(--sim-azul);
+}
+
+/* Abortar é destrutivo: a cor avisa antes do toque. */
+.menu-item-abortar,
+.menu-item-abortar .menu-icone {
+  color: var(--sim-vermelho);
+}
+
+/* Sair encerra a sessão em vez de navegar, então ganha contorno de botão e um
+   respiro que o separa dos itens de navegação acima. */
+.menu-item-sair {
+  margin-top: 14px;
+  justify-content: center;
+  border: 1px solid var(--sim-linha-forte);
+  color: var(--sim-tinta);
+  font-weight: 600;
+}
+
+.menu-item-sair:hover {
+  background: var(--sim-superficie-2);
+}
+
+/* Com o menu aberto, a página atrás não rola junto. */
+body.menu-aberto {
+  overflow: hidden;
+}
+
+/* ==========================================
+Barra inferior da home
+Descrição: Hambúrguer à esquerda, marca ao centro e a lupa à direita. A home
+           não tem cronômetro, então esta barra é montada por menu-home.js em
+           vez de aproveitar a do simulado.
+========================================== */
+.barra-inferior {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  box-sizing: border-box;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(var(--sim-barra-altura) + env(safe-area-inset-bottom, 0px));
+  padding: 0 12px env(safe-area-inset-bottom, 0px);
+  background: var(--sim-superficie);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, .1), 0 -1px 2px rgba(0, 0, 0, .06);
+}
+
+/* Centralizada na barra, e não entre os vizinhos: o hambúrguer e a lupa têm
+   larguras diferentes, e centralizar entre eles sairia do meio da tela. */
+.barra-inferior-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 30px;
+  width: auto;
+}
+
+.barra-inferior .barra-menu {
+  margin-left: 0;
+}
+
+/* Campo de busca: sobe acima da barra quando a lupa é tocada. */
+.barra-busca {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--sim-barra-altura) + env(safe-area-inset-bottom, 0px));
+  z-index: 9998;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--sim-superficie);
+  border-top: 1px solid var(--sim-linha);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, .06);
+}
+
+.barra-busca[hidden] {
+  display: none;
+}
+
+.barra-busca input {
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  height: 42px;
+  margin: 0;
+  padding: 0 12px;
+  border: 1px solid var(--sim-linha-forte);
+  border-radius: 10px;
+  background: var(--sim-superficie);
+  color: var(--sim-tinta);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.barra-busca input:focus {
+  outline: 2px solid var(--sim-azul);
+  outline-offset: 1px;
+}
+
+/* Os cartões carregam a classe .flex do Tailwind, cuja especificidade vence
+   o [hidden] do navegador: sem esta regra o filtro marcava o cartão como
+   oculto e ele continuava desenhado. O id mais o atributo passam à frente. */
+#certificacoes a[hidden] {
+  display: none;
+}
+
+/* Aviso de "nada encontrado", escrito por menu-home.js. */
+.busca-vazia {
+  margin: 0;
+  padding: 24px 0;
+  color: var(--sim-tinta-3);
+  text-align: center;
+}
+
+.busca-vazia[hidden] {
+  display: none;
+}
+
+/* ==========================================
+Telas estreitas
+Descrição: A barra e o hambúrguer só existem no celular. No mesmo limite de
+           720px usado pelo simulado, para as duas páginas trocarem de forma
+           juntas.
+========================================== */
+@media (max-width: 720px) {
+  .barra-menu {
+    display: inline-flex;
+  }
+
+  .barra-inferior {
+    display: flex;
+  }
+}

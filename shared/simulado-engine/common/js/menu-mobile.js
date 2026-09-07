@@ -1,288 +1,111 @@
 // ==========================================
 // Arquivo: menu-mobile.js
-// Descrição: Menu lateral do simulado no celular, aberto pelo hambúrguer da
-//            barra inferior.
+// Descrição: Menu lateral do simulado, aberto pelo hambúrguer da barra
+//            inferior. A gaveta em si vem de menu-lateral.js, que a home
+//            também usa; aqui ficam só os itens da prova.
 //
-//            No celular a barra do simulado fica embaixo, ao alcance do polegar,
-//            e leva só o hambúrguer e o tempo. Tudo o mais — identidade, ir para
-//            a home ou para o curso, abortar, reportar problema, privacidade e
-//            sair — se junta aqui dentro.
+//            No celular a barra do simulado fica embaixo, ao alcance do
+//            polegar, e leva só o hambúrguer e o tempo. Tudo o mais —
+//            identidade, ir para a home ou para o curso, abortar, reportar
+//            problema, privacidade e sair — se junta aqui dentro.
 //
 //            Os itens que já existem como botão na página não são
 //            reimplementados: o menu clica no botão original, que segue
 //            escondido pelo CSS. Assim a regra de negócio (confirmar antes de
-//            abortar, abrir o modal na questão certa) continua num lugar só, e
-//            o menu não envelhece quando ela mudar.
+//            abortar, abrir o modal na questão certa, encerrar a sessão)
+//            continua num lugar só, e o menu não envelhece quando ela mudar.
 // ==========================================
 
 import { urlDoSite } from './auth.js';
-
-const ID_BOTAO = 'menuSimuladoBtn';
-const ID_MENU = 'menuSimulado';
-
-// ==========================================
-// Função: icone(caminhos)
-// Descrição: SVG de 24x24 herdando a cor do texto. Caracteres de símbolo não
-//            servem aqui: as setas do menu antigo caíam no glifo substituto do
-//            iOS, que desenhava outra coisa.
-// ==========================================
-function icone(...caminhos) {
-  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('viewBox', '0 0 24 24');
-  svg.setAttribute('width', '20');
-  svg.setAttribute('height', '20');
-  svg.setAttribute('fill', 'none');
-  svg.setAttribute('stroke', 'currentColor');
-  svg.setAttribute('stroke-width', '1.8');
-  svg.setAttribute('stroke-linecap', 'round');
-  svg.setAttribute('stroke-linejoin', 'round');
-  svg.setAttribute('aria-hidden', 'true');
-  svg.setAttribute('focusable', 'false');
-  svg.classList.add('menu-icone');
-
-  for (const d of caminhos) {
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', d);
-    svg.appendChild(path);
-  }
-
-  return svg;
-}
-
-const ICONES = {
-  // Telhado e porta: a página inicial.
-  home: () => icone('M3 10.5 12 3l9 7.5', 'M5 9.5V21h14V9.5', 'M10 21v-6h4v6'),
-  // Livro aberto: a página do curso.
-  curso: () => icone('M12 6.5C10.5 5 8 4.5 4 5v13c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5c-4-.5-6.5 0-8 1.5Z', 'M12 6.5v13'),
-  // Porta com seta saindo: encerrar a sessão.
-  sair: () => icone('M15 4h4v16h-4', 'M10 8l-4 4 4 4', 'M6 12h9'),
-  // Círculo cortado: interromper.
-  abortar: () => icone('M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Z', 'M6 6l12 12'),
-  // Seta voltando para a esquerda.
-  voltar: () => icone('M19 12H5', 'M11 18l-6-6 6-6'),
-  // Triângulo de atenção: reportar.
-  reportar: () => icone('M12 4 2.5 20h19L12 4Z', 'M12 10v4', 'M12 17.5v.5'),
-  // Escudo: privacidade.
-  privacidade: () => icone('M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3Z'),
-  // Hambúrguer.
-  hamburguer: () => icone('M3 6h18', 'M3 12h18', 'M3 18h18'),
-  // X de fechar.
-  fechar: () => icone('M6 6l12 12', 'M18 6L6 18')
-};
-
-// ==========================================
-// Função: criarItem(rotulo, criarIcone)
-// Descrição: Uma linha do menu. Vira <a> quando recebe destino e <button>
-//            quando aciona algo na própria página.
-// ==========================================
-function criarItem(rotulo, criarIcone, { href, aoClicar } = {}) {
-  const item = document.createElement(href ? 'a' : 'button');
-  item.className = 'menu-item';
-
-  if (href) {
-    item.href = href;
-  } else {
-    item.type = 'button';
-    item.addEventListener('click', aoClicar);
-  }
-
-  item.appendChild(criarIcone());
-
-  const texto = document.createElement('span');
-  texto.textContent = rotulo;
-  item.appendChild(texto);
-
-  return item;
-}
+import { ICONES, criarItem, montarMenuLateral } from './menu-lateral.js';
 
 // ==========================================
 // Função: montarMenuMobile(perfil)
 // ==========================================
 export function montarMenuMobile(perfil) {
-  if (document.getElementById(ID_MENU)) return;
-
   const barra = document.getElementById('cronometroContainer')
     || document.getElementById('sessaoContainer');
 
   if (!barra) return;
 
-  // ----------------------------------------
-  // Hambúrguer, na ponta esquerda da barra
-  // ----------------------------------------
-  const botao = document.createElement('button');
-  botao.id = ID_BOTAO;
-  botao.type = 'button';
-  botao.className = 'barra-menu';
-  botao.setAttribute('aria-label', 'Abrir o menu do simulado');
-  botao.setAttribute('aria-expanded', 'false');
-  botao.setAttribute('aria-controls', ID_MENU);
-  botao.appendChild(ICONES.hamburguer());
-  barra.prepend(botao);
-
-  // ----------------------------------------
-  // Painel
-  // ----------------------------------------
-  const menu = document.createElement('div');
-  menu.id = ID_MENU;
-  menu.className = 'menu-lateral';
-  menu.hidden = true;
-
-  const fundo = document.createElement('div');
-  fundo.className = 'menu-fundo';
-  menu.appendChild(fundo);
-
-  const painel = document.createElement('nav');
-  painel.className = 'menu-painel';
-  painel.setAttribute('aria-label', 'Menu do simulado');
-  menu.appendChild(painel);
-
-  const fechar = document.createElement('button');
-  fechar.type = 'button';
-  fechar.className = 'menu-fechar';
-  fechar.setAttribute('aria-label', 'Fechar o menu');
-  fechar.appendChild(ICONES.fechar());
-  painel.appendChild(fechar);
-
-  // 1. Quem está fazendo a prova.
-  const identidade = document.createElement('div');
-  identidade.className = 'menu-aluno';
-
-  if (perfil && perfil.fotoUrl) {
-    const foto = document.createElement('img');
-    foto.className = 'menu-aluno-foto';
-    foto.src = perfil.fotoUrl;
-    foto.alt = '';
-    foto.referrerPolicy = 'no-referrer';
-    foto.onerror = () => foto.remove();
-    identidade.appendChild(foto);
-  }
-
-  const nome = document.createElement('span');
-  nome.className = 'menu-aluno-nome';
-  nome.textContent = perfil ? `Olá, ${perfil.primeiroNome}!` : 'Olá!';
-  identidade.appendChild(nome);
-  painel.appendChild(identidade);
-
-  // 2 a 7. Navegação e ações.
-  const lista = document.createElement('div');
-  lista.className = 'menu-lista';
-
-  lista.appendChild(criarItem('Home', ICONES.home, {
-    href: urlDoSite('index.html')
-  }));
-
-  // O rodapé da página aponta para o curso e o título da coluna direita traz o
-  // código dele. Os dois já estão na página, então o menu não precisa receber
-  // nada por parâmetro nem duplicar o caminho.
-  const linkDoCurso = document.querySelector('.rodape-simulado a');
-  const codigoDoCurso = (document.querySelector('.sidebarDireita-titulo') || {}).textContent;
-
-  if (linkDoCurso) {
-    lista.appendChild(criarItem(
-      codigoDoCurso ? `Curso ${codigoDoCurso.trim()}` : 'Voltar ao curso',
-      ICONES.curso,
-      { href: linkDoCurso.getAttribute('href') }
-    ));
-  }
-
-  // Abortar, reportar e sair acionam controles que já existem na página.
-  // Guardamos a referência para poder espelhar o estado do original ao abrir.
+  // Os três controles que o menu aciona em vez de reimplementar.
   const original = {
     abortar: document.getElementById('abortarBtn'),
     reportar: document.getElementById('botaoReportar'),
     sair: document.getElementById('sairBtn')
   };
 
-  const itemAbortar = criarItem('Abortar simulado', ICONES.abortar, {
-    aoClicar: () => {
-      fecharMenu();
-      if (original.abortar) original.abortar.click();
-    }
-  });
-  itemAbortar.classList.add('menu-item-abortar');
-  lista.appendChild(itemAbortar);
+  let itemAbortar;
+  let itemReportar;
 
-  const itemReportar = criarItem('Reportar problema', ICONES.reportar, {
-    aoClicar: () => {
-      fecharMenu();
-      if (original.reportar) original.reportar.click();
-    }
-  });
-  lista.appendChild(itemReportar);
+  montarMenuLateral({
+    barra,
+    perfil,
+    id: 'menuSimulado',
+    idBotao: 'menuSimuladoBtn',
+    rotulo: 'Menu do simulado',
+    logoUrl: urlDoSite('imagens/certiacademy_logo.svg'),
 
-  lista.appendChild(criarItem('Privacidade', ICONES.privacidade, {
-    href: urlDoSite('privacidade.html')
-  }));
-
-  // 7. Sair, com cara de botão: encerra a sessão, não navega.
-  const itemSair = criarItem('Sair', ICONES.sair, {
-    aoClicar: () => {
-      fecharMenu();
-      if (original.sair) original.sair.click();
-    }
-  });
-  itemSair.classList.add('menu-item-sair');
-  lista.appendChild(itemSair);
-
-  painel.appendChild(lista);
-
-  // 8. A marca fecha o menu, centralizada e um pouco abaixo do resto.
-  const logo = document.createElement('img');
-  logo.className = 'menu-logo';
-  logo.src = urlDoSite('imagens/certiacademy_logo.svg');
-  logo.alt = 'CertiAcademy';
-  painel.appendChild(logo);
-
-  document.body.appendChild(menu);
-
-  // ----------------------------------------
-  // Abrir e fechar
-  // ----------------------------------------
-  function espelharDisponibilidade() {
     // O quiz esconde "Abortar" ao finalizar e ao revisar, e o "Reportar" só
     // aparece depois que a primeira questão é desenhada. O menu segue o
     // original em vez de manter uma segunda regra sobre quando cada um vale.
-    const disponivel = elemento => Boolean(elemento) && !elemento.classList.contains('hidden');
+    aoAbrir() {
+      const disponivel = elemento => Boolean(elemento) && !elemento.classList.contains('hidden');
+      if (itemAbortar) itemAbortar.hidden = !disponivel(original.abortar);
+      if (itemReportar) itemReportar.hidden = !disponivel(original.reportar);
+    },
 
-    itemAbortar.hidden = !disponivel(original.abortar);
-    itemReportar.hidden = !disponivel(original.reportar);
-  }
+    itens({ fechar }) {
+      const lista = [];
 
-  function abrirMenu() {
-    espelharDisponibilidade();
-    menu.hidden = false;
-    // Um quadro depois, para a transicao partir do estado fechado.
-    requestAnimationFrame(() => menu.classList.add('aberto'));
-    botao.setAttribute('aria-expanded', 'true');
-    document.body.classList.add('menu-aberto');
-    fechar.focus();
-  }
+      lista.push(criarItem('Home', ICONES.home, {
+        href: urlDoSite('index.html')
+      }));
 
-  function fecharMenu({ devolverFoco = false } = {}) {
-    menu.classList.remove('aberto');
-    botao.setAttribute('aria-expanded', 'false');
-    document.body.classList.remove('menu-aberto');
+      // O rodapé da página aponta para o curso e o título da coluna direita
+      // traz o código dele. Os dois já estão na página, então o menu não
+      // precisa receber nada por parâmetro nem duplicar o caminho.
+      const linkDoCurso = document.querySelector('.rodape-simulado a');
+      const codigoDoCurso = (document.querySelector('.sidebarDireita-titulo') || {}).textContent;
 
-    // Só some do fluxo depois da transição, senão ela não chega a aparecer.
-    const esconder = () => { menu.hidden = true; };
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      esconder();
-    } else {
-      setTimeout(esconder, 200);
+      if (linkDoCurso) {
+        lista.push(criarItem(
+          codigoDoCurso ? `Curso ${codigoDoCurso.trim()}` : 'Voltar ao curso',
+          ICONES.curso,
+          { href: linkDoCurso.getAttribute('href') }
+        ));
+      }
+
+      itemAbortar = criarItem('Abortar simulado', ICONES.abortar, {
+        classe: 'menu-item-abortar',
+        aoClicar: () => {
+          fechar();
+          if (original.abortar) original.abortar.click();
+        }
+      });
+      lista.push(itemAbortar);
+
+      itemReportar = criarItem('Reportar problema', ICONES.reportar, {
+        aoClicar: () => {
+          fechar();
+          if (original.reportar) original.reportar.click();
+        }
+      });
+      lista.push(itemReportar);
+
+      lista.push(criarItem('Privacidade', ICONES.privacidade, {
+        href: urlDoSite('privacidade.html')
+      }));
+
+      lista.push(criarItem('Sair', ICONES.sair, {
+        classe: 'menu-item-sair',
+        aoClicar: () => {
+          fechar();
+          if (original.sair) original.sair.click();
+        }
+      }));
+
+      return lista;
     }
-
-    if (devolverFoco) botao.focus();
-  }
-
-  botao.addEventListener('click', () => {
-    if (menu.hidden) abrirMenu();
-    else fecharMenu({ devolverFoco: true });
-  });
-
-  fechar.addEventListener('click', () => fecharMenu({ devolverFoco: true }));
-  fundo.addEventListener('click', () => fecharMenu({ devolverFoco: true }));
-
-  document.addEventListener('keydown', evento => {
-    if (evento.key === 'Escape' && !menu.hidden) fecharMenu({ devolverFoco: true });
   });
 }

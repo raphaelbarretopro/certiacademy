@@ -604,6 +604,7 @@ Descrição: Página inicial do CertiAcademy.
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CertiAcademy | Simulados para certificações Microsoft</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./shared/simulado-engine/common/css/menu-lateral.css">
   <meta name="robots" content="noindex, nofollow">
   <style>
     body {
@@ -748,6 +749,25 @@ Descrição: Página inicial do CertiAcademy.
          segura a identidade e o nome volta assim que houver largura. */
       #sessaoHeader .cabecalho-saudacao {
         display: none;
+      }
+    }
+
+    /* ==========================================
+    Cabeçalho no celular
+    Descrição: Abaixo de 720px quem comanda é a barra inferior, montada por
+               menu-home.js: hambúrguer, marca e busca. O cabeçalho de cima
+               sai de vista, mas continua no DOM — o menu clica no botão de
+               sair que header-sessao.js escreve dentro dele, em vez de repetir
+               a lógica de encerrar a sessão.
+    ========================================== */
+    @media (max-width: 720px) {
+      body > header {
+        display: none;
+      }
+
+      /* Espaço para a barra fixa não cobrir o fim do rodapé. */
+      body {
+        padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px));
       }
     }
   </style>
@@ -934,8 +954,12 @@ ${cartoes}
 
   <script type="module">
     import { montarHeaderSessao } from './shared/simulado-engine/common/js/header-sessao.js';
+    import { montarMenuHome } from './shared/simulado-engine/common/js/menu-home.js';
 
-    montarHeaderSessao(document.getElementById('sessaoHeader'));
+    // O cabeçalho primeiro: o menu do celular reaproveita o botão de sair que
+    // ele escreve, em vez de repetir a lógica de encerrar a sessão.
+    await montarHeaderSessao(document.getElementById('sessaoHeader'));
+    montarMenuHome();
   </script>
 
 </body>
@@ -980,6 +1004,7 @@ function montarPaginaSimulado(curso, simulado, todosSimulados, tituloSimulado) {
 '  <meta name="viewport" content="width=device-width, initial-scale=1.0" />\n' +
 '  <title>' + escapar(tituloSimulado) + ' | ' + escapar(curso.codigo) + '</title>\n' +
 '  <link rel="stylesheet" href="' + ateRaizSite + 'shared/simulado-engine/common/css/styles.css" />\n' +
+'  <link rel="stylesheet" href="' + ateRaizSite + 'shared/simulado-engine/common/css/menu-lateral.css" />\n' +
 '  <meta name="robots" content="noindex, nofollow">\n' +
 '</head>\n' +
 '\n' +
