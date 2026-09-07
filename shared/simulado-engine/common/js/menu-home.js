@@ -9,6 +9,7 @@
 
 import { urlDoSite } from './auth.js';
 import { LOGIN_PATH } from './firebase-config.js';
+import { ehAdmin } from './acesso.js';
 import { ICONES, criarItem, montarMenuLateral } from './menu-lateral.js';
 import {
   botaoSairDoCabecalho,
@@ -40,6 +41,7 @@ export async function montarMenuHome() {
 
   const perfil = await resolverPerfil();
   const sairOriginal = botaoSairDoCabecalho();
+  const admin = perfil ? await ehAdmin(perfil.uid) : false;
 
   montarMenuLateral({
     barra,
@@ -56,6 +58,13 @@ export async function montarMenuHome() {
         ICONES.curso,
         { href: curso.href }
       ));
+
+      // O painel so entra no menu de quem e administrador.
+      if (admin) {
+        lista.push(criarItem('Painel do administrador', ICONES.desempenho, {
+          href: urlDoSite('admin.html')
+        }));
+      }
 
       lista.push(criarItem('Privacidade', ICONES.privacidade, {
         href: urlDoSite('privacidade.html')

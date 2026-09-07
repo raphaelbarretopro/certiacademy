@@ -9,7 +9,7 @@
 //            que evita o conteúdo piscar antes do redirecionamento.
 // ==========================================
 
-import { exigirSessao } from './auth.js';
+import { exigirAcesso } from './acesso.js';
 import { montarBadgeSessao, revelarPagina, mostrarFalhaDeSessao } from './session-ui.js';
 import { montarMenuMobile } from './menu-mobile.js';
 
@@ -21,12 +21,15 @@ const renderModulePath = currentPagePath.includes('/AB-900/01-SIMULADO/')
 const questoesModulePath = new URL('./js/questoes.js', pageUrl);
 
 // ==========================================
-// Portão de sessão
+// Portão de sessão e de acesso
+// Descrição: exigirAcesso() confere as duas coisas: estar logado e estar
+//            liberado. Quem está logado sem liberação vai para liberar.html.
+//            Administrador passa sempre — ele precisa alcançar o painel.
 // ==========================================
 let perfil;
 
 try {
-  perfil = await exigirSessao();
+  perfil = await exigirAcesso();
 } catch (erro) {
   console.error('Falha ao verificar a sessao:', erro);
   mostrarFalhaDeSessao(

@@ -1,0 +1,173 @@
+<!-- ==========================================
+Arquivo: liberar.html
+Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
+
+           Esta página usa exigirSessao() e NÃO exigirAcesso(): ela é
+           justamente o destino de quem não passou no segundo. Usar o portão
+           completo aqui faria um laço de redirecionamento.
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liberar acesso | CertiAcademy</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      visibility: hidden;
+    }
+
+    body[data-sessao="ok"] {
+      visibility: visible;
+    }
+
+    #codigo {
+      font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <main class="container mx-auto px-6 py-16 max-w-lg text-center">
+
+    <img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-14 mx-auto mb-8">
+
+    <h1 class="text-2xl font-bold mb-2">Falta liberar o seu acesso</h1>
+    <p id="explicacao" class="text-gray-600 mb-8">
+      Sua conta está criada, mas o acesso aos simulados ainda não foi liberado.
+      Se você recebeu um código, informe abaixo.
+    </p>
+
+    <div class="bg-white rounded-2xl shadow p-6 text-left">
+      <label for="codigo" class="block text-sm font-semibold mb-2">Código de acesso</label>
+      <input id="codigo" type="text" inputmode="latin" autocomplete="off" maxlength="16"
+        placeholder="XXXXXXXXXXXX"
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg mb-3">
+
+      <p id="aviso" class="text-sm mb-4 oculto" role="alert"></p>
+
+      <button id="resgatarBtn" type="button"
+        class="w-full bg-blue-600 text-white font-semibold rounded-lg px-6 py-3 hover:bg-blue-700 disabled:opacity-60">
+        Liberar acesso
+      </button>
+    </div>
+
+    <p class="text-sm text-gray-500 mt-8">
+      Entrou com a conta errada?
+      <button id="sairBtn" type="button" class="underline hover:text-gray-700">Sair</button>
+    </p>
+
+    <p class="text-sm text-gray-500 mt-2">
+      <a href="./" class="underline hover:text-gray-700">Voltar para a página inicial</a>
+    </p>
+
+  </main>
+
+  <script type="module">
+    import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
+    import { lerVoucher, normalizarCodigo, resgatarVoucher } from './shared/simulado-engine/common/js/acesso.js';
+
+    const el = id => document.getElementById(id);
+
+    function avisar(texto, tom = 'erro') {
+      const aviso = el('aviso');
+      aviso.textContent = texto;
+      aviso.className = tom === 'erro'
+        ? 'text-sm mb-4 text-red-700'
+        : 'text-sm mb-4 text-green-700';
+    }
+
+    const perfil = await exigirSessao();
+    document.body.dataset.sessao = 'ok';
+
+    el('explicacao').textContent =
+      `Olá, ${perfil.primeiroNome}. Sua conta está criada, mas o acesso aos simulados ainda não foi liberado. Se você recebeu um código, informe abaixo.`;
+
+    el('sairBtn').addEventListener('click', async () => {
+      try {
+        await sair();
+      } catch (erro) {
+        console.error('Falha ao sair:', erro);
+      }
+      window.location.replace('./login.html');
+    });
+
+    async function resgatar() {
+      const codigo = normalizarCodigo(el('codigo').value);
+
+      if (codigo.length < 8) {
+        avisar('Informe o código completo que você recebeu.');
+        return;
+      }
+
+      el('resgatarBtn').disabled = true;
+      avisar('Conferindo...', 'ok');
+
+      try {
+        // A conferência antes do resgate existe só para dar um motivo claro
+        // quando falha. Quem decide se o código vale é a regra do Firestore.
+        const { situacao } = await lerVoucher(codigo);
+
+        if (situacao === 'inexistente') {
+          avisar('Código não encontrado. Confira as letras e os números.');
+          el('resgatarBtn').disabled = false;
+          return;
+        }
+
+        if (situacao === 'usado') {
+          avisar('Este código já foi usado.');
+          el('resgatarBtn').disabled = false;
+          return;
+        }
+
+        if (situacao === 'expirado') {
+          avisar('Este código expirou.');
+          el('resgatarBtn').disabled = false;
+          return;
+        }
+
+        await resgatarVoucher(perfil.uid, codigo);
+        avisar('Acesso liberado. Redirecionando...', 'ok');
+        window.location.replace('./#certificacoes');
+      } catch (erro) {
+        console.error('Falha ao resgatar o voucher:', erro);
+
+        // Duas abas resgatando o mesmo código ao mesmo tempo: a segunda cai
+        // aqui, porque a regra recusa um voucher que já saiu de não usado.
+        if (erro && erro.code === 'permission-denied') {
+          avisar('Não foi possível usar este código. Ele pode ter sido usado por outra pessoa agora mesmo.');
+        } else {
+          avisar('Falha de conexão. Tente novamente.');
+        }
+
+        el('resgatarBtn').disabled = false;
+      }
+    }
+
+    el('resgatarBtn').addEventListener('click', resgatar);
+    el('codigo').addEventListener('keydown', evento => {
+      if (evento.key === 'Enter') resgatar();
+    });
+  </script>
+
+</body>
+
+</html>
