@@ -1,0 +1,321 @@
+<!-- ==========================================
+Arquivo: liberar.html
+Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
+
+           Esta página usa exigirSessao() e NÃO exigirAcesso(): ela é
+           justamente o destino de quem não passou no segundo. Usar o portão
+           completo aqui faria um laço de redirecionamento.
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liberar acesso | CertiAcademy</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      visibility: hidden;
+    }
+
+    body[data-sessao="ok"] {
+      visibility: visible;
+    }
+
+    #codigo {
+      font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <main class="container mx-auto px-6 py-16 max-w-lg text-center">
+
+    <img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-14 mx-auto mb-8">
+
+    <h1 class="text-2xl font-bold mb-2">Falta liberar o seu acesso</h1>
+    <p id="explicacao" class="text-gray-600 mb-8">
+      Sua conta está criada, mas o acesso aos simulados ainda não foi liberado.
+      Se você recebeu um código, informe abaixo.
+    </p>
+
+    <div class="bg-white rounded-2xl shadow p-6 text-left">
+      <label for="codigo" class="block text-sm font-semibold mb-2">Código de acesso</label>
+      <input id="codigo" type="text" inputmode="latin" autocomplete="off" maxlength="16"
+        placeholder="XXXXXXXXXXXX"
+        class="w-full border border-gray-300 rounded-lg px-4 py-3 text-lg mb-3">
+
+      <p id="aviso" class="text-sm mb-4 oculto" role="alert"></p>
+
+      <button id="resgatarBtn" type="button"
+        class="w-full bg-blue-600 text-white font-semibold rounded-lg px-6 py-3 hover:bg-blue-700 disabled:opacity-60">
+        Liberar acesso
+      </button>
+    </div>
+
+    <!-- Quem não recebeu código nenhum precisava de uma saída daqui. Sem ela a
+         página é um beco: pede algo que a pessoa não tem e não diz como obter. -->
+    <div class="bg-white rounded-2xl shadow p-6 text-left mt-6">
+      <h2 class="text-lg font-semibold mb-1">Não tem um código?</h2>
+      <p class="text-sm text-gray-600 mb-5">
+        Peça o acesso à administração. Seu pedido aparece no painel e você recebe a
+        resposta por e-mail.
+      </p>
+
+      <!-- estado: pedido já enviado -->
+      <div id="pedidoEnviado" class="oculto bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <p id="pedidoTexto" class="text-sm text-blue-900 m-0"></p>
+        <button id="reenviarBtn" type="button"
+          class="mt-3 text-sm font-semibold text-blue-800 underline oculto">
+          Editar e enviar de novo
+        </button>
+      </div>
+
+      <!-- estado: formulário -->
+      <form id="formPedido" class="oculto">
+        <label for="nome" class="block text-sm font-semibold mb-1">Seu nome</label>
+        <input id="nome" type="text" maxlength="120" autocomplete="name"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mb-4">
+
+        <label for="email" class="block text-sm font-semibold mb-1">Seu e-mail</label>
+        <input id="email" type="email" maxlength="320" readonly
+          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mb-1 bg-gray-50 text-gray-600">
+        <p class="text-xs text-gray-500 mb-4">
+          É o e-mail da conta com que você entrou. O pedido precisa vir dele.
+        </p>
+
+        <label for="mensagem" class="block text-sm font-semibold mb-1">Mensagem</label>
+        <textarea id="mensagem" rows="3" maxlength="500"
+          placeholder="Conte quem indicou você, ou para qual certificação está estudando."
+          class="w-full border border-gray-300 rounded-lg px-4 py-2.5 mb-2"></textarea>
+        <p class="text-xs text-gray-500 mb-4"><span id="contador">0</span>/500</p>
+
+        <p id="avisoPedido" class="text-sm mb-4 oculto" role="alert"></p>
+
+        <button id="pedirBtn" type="button"
+          class="w-full border border-blue-600 text-blue-700 font-semibold rounded-lg px-6 py-3 hover:bg-blue-50 disabled:opacity-60">
+          Enviar pedido de acesso
+        </button>
+      </form>
+    </div>
+
+    <p class="text-sm text-gray-500 mt-8">
+      Entrou com a conta errada?
+      <button id="sairBtn" type="button" class="underline hover:text-gray-700">Sair</button>
+    </p>
+
+    <p class="text-sm text-gray-500 mt-2">
+      <a href="./" class="underline hover:text-gray-700">Voltar para a página inicial</a>
+    </p>
+
+  </main>
+
+  <script type="module">
+    import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
+    import {
+      enviarSolicitacao,
+      lerSolicitacao,
+      lerVoucher,
+      mensagemDeFalha,
+      normalizarCodigo,
+      resgatarVoucher
+    } from './shared/simulado-engine/common/js/acesso.js';
+
+    const el = id => document.getElementById(id);
+
+    function avisar(texto, tom = 'erro') {
+      const aviso = el('aviso');
+      aviso.textContent = texto;
+      aviso.className = tom === 'erro'
+        ? 'text-sm mb-4 text-red-700'
+        : 'text-sm mb-4 text-green-700';
+    }
+
+    let perfil;
+
+    try {
+      perfil = await exigirSessao();
+    } catch (erro) {
+      console.error('Falha ao confirmar a sessao:', erro);
+      document.body.dataset.sessao = 'ok';
+      avisar(mensagemDeFalha(erro));
+      document.getElementById('resgatarBtn').disabled = true;
+      throw erro;
+    }
+
+    document.body.dataset.sessao = 'ok';
+
+    el('explicacao').textContent =
+      `Olá, ${perfil.primeiroNome}. Sua conta está criada, mas o acesso aos simulados ainda não foi liberado. Se você recebeu um código, informe abaixo.`;
+
+    el('sairBtn').addEventListener('click', async () => {
+      try {
+        await sair();
+      } catch (erro) {
+        console.error('Falha ao sair:', erro);
+      }
+      window.location.replace('./login.html');
+    });
+
+    async function resgatar() {
+      const codigo = normalizarCodigo(el('codigo').value);
+
+      if (codigo.length < 8) {
+        avisar('Informe o código completo que você recebeu.');
+        return;
+      }
+
+      el('resgatarBtn').disabled = true;
+      avisar('Conferindo...', 'ok');
+
+      try {
+        // A conferência antes do resgate existe só para dar um motivo claro
+        // quando falha. Quem decide se o código vale é a regra do Firestore.
+        const { situacao } = await lerVoucher(codigo);
+
+        if (situacao === 'inexistente') {
+          avisar('Código não encontrado. Confira as letras e os números.');
+          el('resgatarBtn').disabled = false;
+          return;
+        }
+
+        if (situacao === 'usado') {
+          avisar('Este código já foi usado.');
+          el('resgatarBtn').disabled = false;
+          return;
+        }
+
+        if (situacao === 'expirado') {
+          avisar('Este código expirou.');
+          el('resgatarBtn').disabled = false;
+          return;
+        }
+
+        await resgatarVoucher(perfil.uid, codigo);
+        avisar('Acesso liberado. Redirecionando...', 'ok');
+        window.location.replace('./#certificacoes');
+      } catch (erro) {
+        console.error('Falha ao resgatar o voucher:', erro);
+
+        // Duas abas resgatando o mesmo código ao mesmo tempo: a segunda cai
+        // aqui, porque a regra recusa um voucher que já saiu de não usado.
+        if (erro && erro.code === 'permission-denied') {
+          avisar('Não foi possível usar este código. Ele pode ter sido usado por outra pessoa agora mesmo.');
+        } else {
+          avisar('Falha de conexão. Tente novamente.');
+        }
+
+        el('resgatarBtn').disabled = false;
+      }
+    }
+
+    el('resgatarBtn').addEventListener('click', resgatar);
+    el('codigo').addEventListener('keydown', evento => {
+      if (evento.key === 'Enter') resgatar();
+    });
+
+    // ==========================================
+    // Pedido de acesso
+    // ==========================================
+    function avisarPedido(texto, tom = 'erro') {
+      const aviso = el('avisoPedido');
+      aviso.textContent = texto;
+      aviso.className = tom === 'erro'
+        ? 'text-sm mb-4 text-red-700'
+        : 'text-sm mb-4 text-green-700';
+    }
+
+    function mostrarFormulario() {
+      el('formPedido').classList.remove('oculto');
+      el('pedidoEnviado').classList.add('oculto');
+    }
+
+    function mostrarSituacao(solicitacao) {
+      el('formPedido').classList.add('oculto');
+      el('pedidoEnviado').classList.remove('oculto');
+
+      const recusada = solicitacao.situacao === 'recusada';
+
+      el('pedidoTexto').textContent = recusada
+        ? 'Seu pedido foi recusado. Se acha que houve engano, envie de novo explicando melhor.'
+        : 'Seu pedido foi enviado e está aguardando resposta da administração.';
+
+      // Reenviar só faz sentido enquanto ninguém aceitou: uma solicitação já
+      // aceita não volta atrás, e a regra do banco recusaria de todo jeito.
+      el('reenviarBtn').classList.toggle('oculto', solicitacao.situacao === 'aceita');
+    }
+
+    el('mensagem').addEventListener('input', () => {
+      el('contador').textContent = String(el('mensagem').value.length);
+    });
+
+    el('reenviarBtn').addEventListener('click', mostrarFormulario);
+
+    el('pedirBtn').addEventListener('click', async () => {
+      const nome = el('nome').value.trim();
+
+      if (nome.length < 2) {
+        avisarPedido('Informe o seu nome.');
+        return;
+      }
+
+      el('pedirBtn').disabled = true;
+      avisarPedido('Enviando...', 'ok');
+
+      try {
+        await enviarSolicitacao(perfil.uid, {
+          nome,
+          email: perfil.email,
+          mensagem: el('mensagem').value
+        });
+
+        mostrarSituacao({ situacao: 'pendente' });
+      } catch (erro) {
+        console.error('Falha ao enviar o pedido:', erro);
+        avisarPedido(mensagemDeFalha(erro));
+        el('pedirBtn').disabled = false;
+      }
+    });
+
+    // Estado inicial do bloco de pedido.
+    try {
+      const solicitacao = await lerSolicitacao(perfil.uid);
+
+      el('nome').value = perfil.nomeCompleto || perfil.primeiroNome || '';
+      el('email').value = perfil.email || '';
+
+      if (solicitacao) {
+        el('mensagem').value = solicitacao.mensagem || '';
+        el('contador').textContent = String((solicitacao.mensagem || '').length);
+        mostrarSituacao(solicitacao);
+      } else {
+        mostrarFormulario();
+      }
+    } catch (erro) {
+      console.error('Falha ao ler a solicitacao:', erro);
+      // O resgate por código continua valendo mesmo se esta leitura falhar,
+      // então o bloco aparece em branco em vez de derrubar a página.
+      mostrarFormulario();
+    }
+  </script>
+
+</body>
+
+</html>

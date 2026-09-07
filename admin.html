@@ -1,0 +1,651 @@
+<!-- ==========================================
+Arquivo: admin.html
+Descrição: Painel do administrador — alunos cadastrados, papéis, liberação de
+           acesso e vouchers.
+
+           Esta página não é secreta: qualquer pessoa consegue abri-la, e é
+           assim mesmo. O que impede alguém de usá-la é o Firestore recusar
+           toda leitura e escrita de quem não tem papeis/{uid} == 'admin'. A
+           checagem que existe aqui embaixo serve para redirecionar quem chegou
+           por engano, não para proteger dado nenhum.
+========================================== -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel do administrador | CertiAcademy</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      visibility: hidden;
+    }
+
+    body[data-sessao="ok"] {
+      visibility: visible;
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .codigo {
+      font-family: 'Cascadia Mono', Consolas, 'Courier New', monospace;
+      letter-spacing: .04em;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 3px solid #0078D4;
+      outline-offset: 2px;
+    }
+
+    .oculto {
+      display: none !important;
+    }
+
+    .etiqueta {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <header class="bg-white shadow">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center gap-4">
+      <a href="./"><img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
+      <div class="flex items-center gap-3 text-sm">
+        <span id="saudacao" class="text-gray-600 hidden sm:inline"></span>
+        <a href="./dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
+        <button id="sairBtn" type="button" class="border border-gray-300 rounded-lg px-3 py-2 hover:bg-gray-100">
+          Sair
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container mx-auto px-6 py-10 max-w-6xl">
+
+    <h1 class="text-3xl font-bold mb-1">Painel do administrador</h1>
+    <p class="text-gray-600 mb-8">Alunos cadastrados, perfis de acesso e vouchers.</p>
+
+    <!-- estado: carregando -->
+    <div id="carregando" class="bg-white rounded-2xl shadow p-10 text-center text-gray-500">
+      Carregando...
+    </div>
+
+    <!-- estado: erro -->
+    <div id="erro" class="bg-white rounded-2xl shadow p-10 text-center oculto" role="alert">
+      <h2 class="text-xl font-semibold mb-2">Não foi possível carregar o painel</h2>
+      <p id="erroTexto" class="text-gray-600 mb-6"></p>
+      <button type="button" onclick="window.location.reload()"
+        class="bg-blue-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700">
+        Tentar novamente
+      </button>
+    </div>
+
+    <div id="conteudo" class="oculto">
+
+      <!-- ===== Solicitações ===== -->
+      <section id="secaoPedidos" class="bg-white rounded-xl shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-1">
+          Solicitações de acesso
+          <span id="contaPedidos" class="etiqueta bg-amber-100 text-amber-800 align-middle ml-1"></span>
+        </h2>
+        <p class="text-sm text-gray-500 mb-5">
+          Quem entrou sem voucher e pediu acesso. Aceitar libera na hora.
+        </p>
+
+        <div id="semPedidos" class="text-sm text-gray-500 oculto">
+          Nenhuma solicitação pendente.
+        </div>
+
+        <div id="listaPedidos" class="space-y-4"></div>
+      </section>
+
+      <!-- ===== Alunos ===== -->
+      <section class="bg-white rounded-xl shadow p-6 mb-6">
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-1">
+          <h2 class="text-lg font-semibold">Alunos cadastrados</h2>
+          <button id="migrarBtn" type="button"
+            class="border border-gray-300 rounded-lg px-3 py-2 text-sm hover:bg-gray-100">
+            Liberar todos sem acesso
+          </button>
+        </div>
+        <p class="text-sm text-gray-500 mb-5">
+          Do acesso mais recente para o mais antigo. Clique no nome para ver o desempenho.
+        </p>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left text-xs uppercase tracking-wide text-gray-500 border-b">
+                <th class="py-2 pr-4">Aluno</th>
+                <th class="py-2 pr-4">Último acesso</th>
+                <th class="py-2 pr-4">Perfil</th>
+                <th class="py-2 pr-4">Acesso</th>
+                <th class="py-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="listaAlunos" class="divide-y"></tbody>
+          </table>
+        </div>
+
+        <button id="maisBtn" type="button"
+          class="mt-5 border border-gray-300 rounded-lg px-4 py-2 text-sm hover:bg-gray-100 oculto">
+          Carregar mais
+        </button>
+      </section>
+
+      <!-- ===== Vouchers ===== -->
+      <section class="bg-white rounded-xl shadow p-6">
+        <h2 class="text-lg font-semibold mb-1">Vouchers</h2>
+        <p class="text-sm text-gray-500 mb-5">
+          Cada código libera um aluno, uma única vez. Só aparece aqui — o código não é
+          recuperável depois se você não anotar.
+        </p>
+
+        <div class="flex flex-wrap items-end gap-3 mb-6">
+          <label class="text-sm">
+            <span class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Quantidade</span>
+            <input id="qtdVoucher" type="number" min="1" max="50" value="5"
+              class="border border-gray-300 rounded-lg px-3 py-2 w-28 num">
+          </label>
+          <label class="text-sm flex-1 min-w-[200px]">
+            <span class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Nota (opcional)</span>
+            <input id="notaVoucher" type="text" maxlength="80" placeholder="turma de setembro"
+              class="border border-gray-300 rounded-lg px-3 py-2 w-full">
+          </label>
+          <button id="gerarBtn" type="button"
+            class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
+            Gerar
+          </button>
+        </div>
+
+        <div id="recemGerados" class="oculto mb-6 bg-green-50 border border-green-300 rounded-xl p-4">
+          <p class="text-sm font-semibold text-green-900 mb-2">
+            Gerados agora — copie antes de sair desta tela:
+          </p>
+          <pre id="listaGerados" class="codigo text-sm text-green-900 whitespace-pre-wrap m-0"></pre>
+          <button id="copiarBtn" type="button"
+            class="mt-3 border border-green-400 rounded-lg px-3 py-1.5 text-sm text-green-900 hover:bg-green-100">
+            Copiar
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="text-left text-xs uppercase tracking-wide text-gray-500 border-b">
+                <th class="py-2 pr-4">Código</th>
+                <th class="py-2 pr-4">Situação</th>
+                <th class="py-2 pr-4">Nota</th>
+                <th class="py-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="listaVouchers" class="divide-y"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script type="module">
+    import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
+    import {
+      concederAcesso,
+      criarVouchers,
+      decidirSolicitacao,
+      definirPapel,
+      ehAdmin,
+      listarAlunos,
+      listarSolicitacoes,
+      listarVouchers,
+      mensagemDeFalha,
+      mapaDeAcessos,
+      mapaDePapeis,
+      revogarAcesso,
+      revogarVoucher
+    } from './shared/simulado-engine/common/js/acesso.js';
+
+    const el = id => document.getElementById(id);
+
+    function mostrar(qual) {
+      for (const estado of ['carregando', 'erro', 'conteudo']) {
+        el(estado).classList.toggle('oculto', estado !== qual);
+      }
+    }
+
+    function falhar(texto) {
+      el('erroTexto').textContent = texto;
+      mostrar('erro');
+    }
+
+    function dataCurta(carimbo) {
+      if (!carimbo || !carimbo.toDate) return '—';
+      return carimbo.toDate().toLocaleDateString('pt-BR', {
+        day: '2-digit', month: '2-digit', year: '2-digit'
+      });
+    }
+
+    // ==========================================
+    // Portão
+    // Descrição: Redireciona quem não é administrador. Não é proteção — é
+    //            cortesia. A proteção está nas regras do Firestore.
+    //
+    //            O try é o que impede a tela branca: sem ele, uma leitura
+    //            recusada morre no topo do módulo, o corpo nunca ganha
+    //            data-sessao e a página fica invisível, sem dizer o motivo.
+    // ==========================================
+    let perfil;
+
+    try {
+      perfil = await exigirSessao();
+
+      if (!await ehAdmin(perfil.uid)) {
+        window.location.replace('./dashboard.html');
+        throw new Error('__redirecionando__');
+      }
+    } catch (erro) {
+      if (erro && erro.message === '__redirecionando__') {
+        throw erro;
+      }
+
+      console.error('Falha no portao do painel:', erro);
+      document.body.dataset.sessao = 'ok';
+      falhar(mensagemDeFalha(erro));
+      throw erro;
+    }
+
+    document.body.dataset.sessao = 'ok';
+    el('saudacao').textContent = `Olá, ${perfil.primeiroNome}`;
+
+    el('sairBtn').addEventListener('click', async () => {
+      try {
+        await sair();
+      } catch (erro) {
+        console.error('Falha ao sair:', erro);
+      }
+      window.location.replace('./login.html');
+    });
+
+    // ==========================================
+    // Alunos
+    // ==========================================
+    let papeis = new Map();
+    let acessos = new Map();
+    let cursor = null;
+
+    function etiquetaPapel(uid) {
+      const papel = (papeis.get(uid) || {}).papel;
+      return papel === 'admin'
+        ? '<span class="etiqueta bg-blue-100 text-blue-800">administrador</span>'
+        : '<span class="etiqueta bg-gray-100 text-gray-700">aluno</span>';
+    }
+
+    function etiquetaAcesso(uid) {
+      const acesso = acessos.get(uid);
+      if (!acesso) return '<span class="etiqueta bg-amber-100 text-amber-800">bloqueado</span>';
+
+      return `<span class="etiqueta bg-green-100 text-green-800">${acesso.origem || 'liberado'}</span>`;
+    }
+
+    function linhaDoAluno(aluno) {
+      const linha = document.createElement('tr');
+      const ehEu = aluno.uid === perfil.uid;
+      const admin = (papeis.get(aluno.uid) || {}).papel === 'admin';
+      const liberado = acessos.has(aluno.uid);
+
+      linha.innerHTML = `
+        <td class="py-3 pr-4">
+          <a href="./dashboard.html?aluno=${encodeURIComponent(aluno.uid)}"
+             class="font-medium text-blue-700 hover:underline">
+            ${aluno.nomeCompleto || aluno.primeiroNome || '(sem nome)'}
+          </a>
+          <div class="text-xs text-gray-500">${aluno.email || ''}</div>
+        </td>
+        <td class="py-3 pr-4 num text-gray-600">${dataCurta(aluno.ultimoAcessoEm)}</td>
+        <td class="py-3 pr-4">${etiquetaPapel(aluno.uid)}</td>
+        <td class="py-3 pr-4">${etiquetaAcesso(aluno.uid)}</td>
+        <td class="py-3 whitespace-nowrap"></td>
+      `;
+
+      const acoes = linha.lastElementChild;
+
+      // Ninguém edita o próprio papel — a regra recusa, e esconder o botão
+      // evita oferecer uma ação que sempre falharia.
+      if (!ehEu) {
+        const botaoPapel = document.createElement('button');
+        botaoPapel.type = 'button';
+        botaoPapel.className = 'border border-gray-300 rounded px-2 py-1 text-xs hover:bg-gray-100 mr-2';
+        botaoPapel.textContent = admin ? 'Tornar aluno' : 'Tornar administrador';
+        botaoPapel.addEventListener('click', async () => {
+          const novo = admin ? 'aluno' : 'admin';
+          if (!confirm(`Definir ${aluno.email} como ${novo}?`)) return;
+
+          botaoPapel.disabled = true;
+          try {
+            await definirPapel(aluno.uid, novo, perfil.uid);
+            await recarregar();
+          } catch (erro) {
+            console.error('Falha ao definir papel:', erro);
+            alert('Não foi possível alterar o perfil.');
+            botaoPapel.disabled = false;
+          }
+        });
+        acoes.appendChild(botaoPapel);
+      }
+
+      const botaoAcesso = document.createElement('button');
+      botaoAcesso.type = 'button';
+      botaoAcesso.className = 'border border-gray-300 rounded px-2 py-1 text-xs hover:bg-gray-100';
+      botaoAcesso.textContent = liberado ? 'Revogar acesso' : 'Liberar acesso';
+      botaoAcesso.addEventListener('click', async () => {
+        if (liberado && !confirm(`Revogar o acesso de ${aluno.email}?`)) return;
+
+        botaoAcesso.disabled = true;
+        try {
+          if (liberado) await revogarAcesso(aluno.uid);
+          else await concederAcesso(aluno.uid, perfil.uid);
+          await recarregar();
+        } catch (erro) {
+          console.error('Falha ao alterar o acesso:', erro);
+          alert('Não foi possível alterar o acesso.');
+          botaoAcesso.disabled = false;
+        }
+      });
+      acoes.appendChild(botaoAcesso);
+
+      return linha;
+    }
+
+    async function carregarPagina() {
+      const pagina = await listarAlunos({ limite: 25, cursor });
+      for (const aluno of pagina.itens) el('listaAlunos').appendChild(linhaDoAluno(aluno));
+
+      cursor = pagina.proximoCursor;
+      el('maisBtn').classList.toggle('oculto', !cursor);
+    }
+
+    async function recarregar() {
+      [papeis, acessos] = await Promise.all([mapaDePapeis(), mapaDeAcessos()]);
+      el('listaAlunos').innerHTML = '';
+      cursor = null;
+      await carregarPagina();
+    }
+
+    el('maisBtn').addEventListener('click', async () => {
+      el('maisBtn').disabled = true;
+      try {
+        await carregarPagina();
+      } catch (erro) {
+        console.error('Falha ao paginar:', erro);
+      }
+      el('maisBtn').disabled = false;
+    });
+
+    // ==========================================
+    // Migração
+    // Descrição: Quem já usava o site antes do bloqueio existir precisa ser
+    //            liberado, senão perde o acesso no dia da publicação. Marca
+    //            origem 'migracao' para ficar claro que não foi venda.
+    // ==========================================
+    el('migrarBtn').addEventListener('click', async () => {
+      const sem = [];
+      let pagina = await listarAlunos({ limite: 500 });
+      for (const aluno of pagina.itens) {
+        if (!acessos.has(aluno.uid)) sem.push(aluno);
+      }
+
+      if (!sem.length) {
+        alert('Todos os alunos já estão liberados.');
+        return;
+      }
+
+      if (!confirm(`Liberar o acesso de ${sem.length} aluno(s) sem liberação?`)) return;
+
+      el('migrarBtn').disabled = true;
+      try {
+        for (const aluno of sem) {
+          await concederAcesso(aluno.uid, perfil.uid, { origem: 'migracao' });
+        }
+        await recarregar();
+        alert(`${sem.length} aluno(s) liberado(s).`);
+      } catch (erro) {
+        console.error('Falha na migracao:', erro);
+        alert('A migração falhou no meio. Recarregue e tente de novo — quem já foi liberado continua liberado.');
+      }
+      el('migrarBtn').disabled = false;
+    });
+
+    // ==========================================
+    // Solicitações de acesso
+    // ==========================================
+    function cartaoDoPedido(pedido) {
+      const cartao = document.createElement('div');
+      cartao.className = 'border border-gray-200 rounded-xl p-4';
+
+      cartao.innerHTML = `
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+          <div>
+            <div class="font-semibold">${pedido.nome || '(sem nome)'}</div>
+            <div class="text-xs text-gray-500">${pedido.email || ''}</div>
+          </div>
+          <div class="text-xs text-gray-500 num">${dataCurta(pedido.criadaEm)}</div>
+        </div>
+        <p class="text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3 whitespace-pre-wrap">${
+          pedido.mensagem ? pedido.mensagem : '<span class="text-gray-400">Sem mensagem.</span>'
+        }</p>
+        <div class="flex flex-wrap gap-2"></div>
+      `;
+
+      const acoes = cartao.lastElementChild;
+
+      function botao(rotulo, classe, aceita) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = classe;
+        b.textContent = rotulo;
+        b.addEventListener('click', async () => {
+          if (!aceita && !confirm(`Recusar o acesso de ${pedido.email}?`)) return;
+
+          for (const outro of acoes.children) outro.disabled = true;
+
+          try {
+            await decidirSolicitacao(pedido.uid, aceita, perfil.uid);
+            await Promise.all([recarregar(), carregarPedidos()]);
+          } catch (erro) {
+            console.error('Falha ao decidir a solicitacao:', erro);
+            alert('Não foi possível registrar a decisão.');
+            for (const outro of acoes.children) outro.disabled = false;
+          }
+        });
+        return b;
+      }
+
+      acoes.appendChild(botao(
+        'Aceitar', 'bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 text-sm hover:bg-blue-700', true));
+      acoes.appendChild(botao(
+        'Recusar', 'border border-gray-300 rounded-lg px-4 py-2 text-sm hover:bg-gray-100', false));
+
+      return cartao;
+    }
+
+    async function carregarPedidos() {
+      const pedidos = await listarSolicitacoes('pendente');
+
+      el('listaPedidos').innerHTML = '';
+      for (const pedido of pedidos) el('listaPedidos').appendChild(cartaoDoPedido(pedido));
+
+      el('semPedidos').classList.toggle('oculto', pedidos.length > 0);
+      el('contaPedidos').textContent = pedidos.length ? String(pedidos.length) : '';
+      el('contaPedidos').classList.toggle('oculto', pedidos.length === 0);
+    }
+
+    // ==========================================
+    // Vouchers
+    // ==========================================
+    function linhaDoVoucher(voucher) {
+      const linha = document.createElement('tr');
+      const usado = voucher.usado;
+
+      linha.innerHTML = `
+        <td class="py-3 pr-4 codigo font-medium">${voucher.codigo}</td>
+        <td class="py-3 pr-4">
+          ${usado
+            ? '<span class="etiqueta bg-gray-100 text-gray-700">usado</span>'
+            : '<span class="etiqueta bg-green-100 text-green-800">disponível</span>'}
+        </td>
+        <td class="py-3 pr-4 text-gray-600">${voucher.nota || '—'}</td>
+        <td class="py-3 whitespace-nowrap"></td>
+      `;
+
+      if (!usado) {
+        const botao = document.createElement('button');
+        botao.type = 'button';
+        botao.className = 'border border-gray-300 rounded px-2 py-1 text-xs hover:bg-gray-100';
+        botao.textContent = 'Revogar';
+        botao.addEventListener('click', async () => {
+          if (!confirm(`Revogar o voucher ${voucher.codigo}?`)) return;
+          botao.disabled = true;
+          try {
+            await revogarVoucher(voucher.codigo);
+            await carregarVouchers();
+          } catch (erro) {
+            console.error('Falha ao revogar:', erro);
+            botao.disabled = false;
+          }
+        });
+        linha.lastElementChild.appendChild(botao);
+      }
+
+      return linha;
+    }
+
+    async function carregarVouchers() {
+      const vouchers = await listarVouchers(100);
+      el('listaVouchers').innerHTML = '';
+      for (const voucher of vouchers) el('listaVouchers').appendChild(linhaDoVoucher(voucher));
+    }
+
+    el('gerarBtn').addEventListener('click', async () => {
+      const quantidade = Math.min(50, Math.max(1, Number(el('qtdVoucher').value) || 1));
+
+      el('gerarBtn').disabled = true;
+      try {
+        const codigos = await criarVouchers(quantidade, perfil.uid, {
+          nota: el('notaVoucher').value.trim()
+        });
+
+        el('listaGerados').textContent = codigos.join('\n');
+        el('recemGerados').classList.remove('oculto');
+        await carregarVouchers();
+      } catch (erro) {
+        console.error('Falha ao gerar vouchers:', erro);
+        alert('Não foi possível gerar os vouchers.');
+      }
+      el('gerarBtn').disabled = false;
+    });
+
+    el('copiarBtn').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(el('listaGerados').textContent);
+        el('copiarBtn').textContent = 'Copiado';
+        setTimeout(() => { el('copiarBtn').textContent = 'Copiar'; }, 1500);
+      } catch {
+        // Sem permissão de área de transferência os códigos continuam à vista
+        // para seleção manual, então não vale interromper com um alerta.
+      }
+    });
+
+    // ==========================================
+    // Carga
+    // Descrição: Cada seção carrega por conta própria.
+    //
+    //            Antes as três estavam num try só, e bastava uma falhar para o
+    //            painel inteiro sumir — foi o que aconteceu quando a coleção de
+    //            solicitações passou a existir no código antes de existir nas
+    //            regras publicadas: alunos e vouchers funcionavam e ninguém via.
+    // ==========================================
+    function explicar(erro) {
+      if (erro && erro.code === 'permission-denied') {
+        return 'O Firestore recusou a leitura. Publique a versão mais recente de firestore.rules — é o que acontece quando uma coleção existe no código mas ainda não nas regras.';
+      }
+      if (erro && erro.code === 'failed-precondition') {
+        return 'O banco precisa de um índice que ainda não existe. O endereço para criá-lo com um clique está no console do navegador (F12).';
+      }
+      return 'Tente novamente em instantes.';
+    }
+
+    async function carregarSecao(nome, carregar, aoFalhar) {
+      try {
+        await carregar();
+        return true;
+      } catch (erro) {
+        console.error(`Falha ao carregar ${nome}:`, erro);
+        aoFalhar(erro);
+        return false;
+      }
+    }
+
+    function avisoNaSecao(seletor, texto) {
+      const alvo = document.querySelector(seletor);
+      if (!alvo) return;
+
+      alvo.innerHTML = '';
+
+      // Dentro de um tbody o aviso precisa ser uma linha: um <p> solto ali é
+      // HTML inválido e o navegador o joga para fora da tabela.
+      if (alvo.tagName === 'TBODY') {
+        const linha = document.createElement('tr');
+        const celula = document.createElement('td');
+        celula.colSpan = 4;
+        celula.className = 'py-4 text-sm text-amber-800';
+        celula.setAttribute('role', 'alert');
+        celula.textContent = texto;
+        linha.appendChild(celula);
+        alvo.appendChild(linha);
+        return;
+      }
+
+      const aviso = document.createElement('p');
+      aviso.className = 'text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-3';
+      aviso.setAttribute('role', 'alert');
+      aviso.textContent = texto;
+      alvo.appendChild(aviso);
+    }
+
+    // A lista de alunos é o painel; sem ela não há o que mostrar.
+    const alunosOk = await carregarSecao('os alunos', recarregar, erro => falhar(explicar(erro)));
+
+    if (alunosOk) {
+      mostrar('conteudo');
+
+      // Estas duas são complementares: se falharem, avisam no próprio lugar e
+      // o resto do painel continua utilizável.
+      await carregarSecao('as solicitacoes', carregarPedidos, erro => {
+        el('semPedidos').classList.add('oculto');
+        avisoNaSecao('#listaPedidos', explicar(erro));
+      });
+
+      await carregarSecao('os vouchers', carregarVouchers, erro => {
+        avisoNaSecao('#listaVouchers', explicar(erro));
+      });
+    }
+  </script>
+
+</body>
+
+</html>

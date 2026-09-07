@@ -17,6 +17,7 @@
 // ==========================================
 
 import { aguardarSessao, perfilDe, sair, urlDoSite } from './auth.js';
+import { ehAdmin } from './acesso.js';
 import { firebaseConfigurado, LOGIN_PATH } from './firebase-config.js';
 
 // ==========================================
@@ -79,6 +80,28 @@ function montarBlocoUsuario(alvo, perfil) {
 }
 
 // ==========================================
+// Função: revelarAdministracao(uid)
+// Descrição: O link de administração existe no HTML de todas as páginas
+//            públicas, escondido. Aqui ele aparece para quem é administrador.
+//
+//            Esconder não protege nada — quem digitar /admin.html chega lá, e
+//            é o Firestore que recusa. Isto é só para não oferecer a quem não
+//            tem o que fazer com o link.
+// ==========================================
+async function revelarAdministracao(uid) {
+  const link = document.getElementById('linkAdmin');
+  if (!link) return;
+
+  try {
+    if (await ehAdmin(uid)) link.classList.remove('hidden');
+  } catch (erro) {
+    // Uma leitura recusada não pode derrubar o cabeçalho inteiro por causa de
+    // um link que só o administrador vê.
+    console.error('Nao foi possivel verificar o papel:', erro);
+  }
+}
+
+// ==========================================
 // Função: montarHeaderSessao(alvo)
 // Descrição: Preenche o container assim que a sessão resolve. Enquanto isso o
 //            espaço fica vazio, para nao piscar "Entrar" na cara de quem ja
@@ -95,6 +118,7 @@ export async function montarHeaderSessao(alvo) {
 
     if (user) {
       montarBlocoUsuario(alvo, perfilDe(user));
+      await revelarAdministracao(user.uid);
     } else {
       montarBotaoEntrar(alvo);
     }

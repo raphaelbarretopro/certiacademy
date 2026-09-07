@@ -9,6 +9,7 @@
 
 import { urlDoSite } from './auth.js';
 import { LOGIN_PATH } from './firebase-config.js';
+import { ehAdmin } from './acesso.js';
 import { ICONES, criarItem, montarMenuLateral } from './menu-lateral.js';
 import {
   botaoSairDoCabecalho,
@@ -40,6 +41,17 @@ export async function montarMenuHome() {
 
   const perfil = await resolverPerfil();
   const sairOriginal = botaoSairDoCabecalho();
+  // Se a leitura do papel falhar - regras nao publicadas, rede fora - o menu
+  // segue sem o item do painel. Derrubar a navegacao inteira por causa de um
+  // item que so o administrador ve seria desproporcional.
+  let admin = false;
+  if (perfil) {
+    try {
+      admin = await ehAdmin(perfil.uid);
+    } catch (erro) {
+      console.error('Nao foi possivel verificar o papel:', erro);
+    }
+  }
 
   montarMenuLateral({
     barra,
@@ -56,6 +68,13 @@ export async function montarMenuHome() {
         ICONES.curso,
         { href: curso.href }
       ));
+
+      // O painel so entra no menu de quem e administrador.
+      if (admin) {
+        lista.push(criarItem('Administração', ICONES.desempenho, {
+          href: urlDoSite('admin.html')
+        }));
+      }
 
       lista.push(criarItem('Privacidade', ICONES.privacidade, {
         href: urlDoSite('privacidade.html')

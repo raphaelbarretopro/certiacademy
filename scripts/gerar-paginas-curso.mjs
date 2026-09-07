@@ -485,6 +485,8 @@ Descrição: Página do curso preparatório para o exame ${exame.codigo}.
       <a href="../" class="cabecalho-logo"><img src="../imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-12"></a>
       <nav class="cabecalho-nav flex items-center gap-3 text-sm ml-auto">
         <a href="../dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
+        <!-- Revelado por header-sessao.js quando o visitante e administrador. -->
+        <a id="linkAdmin" href="../admin.html" class="hidden font-semibold text-blue-700 hover:text-blue-800">Administração</a>
         <a href="#simulados" class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
           <span class="hidden sm:inline">Ir para os simulados</span>
           <span class="sm:hidden">Simulados</span>
@@ -807,6 +809,8 @@ Descrição: Página inicial do CertiAcademy.
         <a href="#certificacoes" class="hidden sm:inline hover:text-blue-600">Certificações</a>
         <a href="#como-funciona" class="hidden sm:inline hover:text-blue-600">Como funciona</a>
         <a href="./dashboard.html" class="hover:text-blue-600">Meu desempenho</a>
+        <!-- Revelado por header-sessao.js quando o visitante e administrador. -->
+        <a id="linkAdmin" href="./admin.html" class="hidden font-semibold text-blue-700 hover:text-blue-800">Administração</a>
       </nav>
       <div id="sessaoHeader" class="flex items-center gap-3 pl-3 ml-1 border-l border-gray-200"></div>
     </div>

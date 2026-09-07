@@ -164,6 +164,19 @@ async function atualizarResumo(fs, db, uid, documento) {
 }
 
 // ==========================================
+// Função: lerAluno(uid)
+// Descrição: O cadastro do aluno. O administrador usa para nomear de quem sao
+//            os dados que esta vendo; o proprio aluno nunca precisa disto,
+//            porque o nome dele ja vem do token.
+// ==========================================
+export async function lerAluno(uid) {
+  const { db, fs } = await obterDb();
+  const documento = await fs.getDoc(fs.doc(db, 'users', uid));
+
+  return documento.exists() ? { uid, ...documento.data() } : null;
+}
+
+// ==========================================
 // Função: lerResumo(uid)
 // Descrição: Uma leitura, que alimenta todos os indicadores do dashboard
 // ==========================================

@@ -95,6 +95,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
           <img id="fotoUsuario" class="h-8 w-8 rounded-full flex-none oculto" alt="" referrerpolicy="no-referrer">
           <span id="saudacao" class="text-gray-600"></span>
         </span>
+        <a id="linkAdmin" href="./admin.html" class="oculto hover:text-blue-600">Painel</a>
         <a href="./#certificacoes"
           class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
           Ir para os simulados
@@ -108,8 +109,18 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
 
   <main class="container mx-auto px-6 py-10 max-w-5xl">
 
-    <h1 class="text-3xl font-bold mb-1">Meu desempenho</h1>
-    <p class="text-gray-600 mb-8">Todos os simulados que você concluiu, e o que eles dizem sobre o seu preparo.</p>
+    <!-- Faixa de administrador: sem ela é fácil confundir o desempenho de um
+         aluno com o próprio, já que o painel é exatamente o mesmo. -->
+    <div id="faixaAdmin" class="oculto bg-amber-50 border border-amber-300 rounded-xl px-5 py-4 mb-6 flex flex-wrap items-center justify-between gap-3">
+      <p class="text-sm text-amber-900 m-0">
+        Você está vendo o desempenho de <strong id="alunoObservado"></strong>,
+        como administrador.
+      </p>
+      <a href="./admin.html" class="text-sm font-semibold text-amber-900 underline">Voltar ao painel</a>
+    </div>
+
+    <h1 id="tituloPainel" class="text-3xl font-bold mb-1">Meu desempenho</h1>
+    <p id="subtituloPainel" class="text-gray-600 mb-8">Todos os simulados que você concluiu, e o que eles dizem sobre o seu preparo.</p>
 
     <!-- estado: carregando -->
     <div id="carregando" class="bg-white rounded-2xl shadow p-10 text-center text-gray-500">
@@ -224,8 +235,9 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
   </footer>
 
   <script type="module">
-    import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
-    import { lerResumo, lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
+    import { sair } from './shared/simulado-engine/common/js/auth.js';
+    import { lerAluno, lerResumo, lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
+    import { ehAdmin, exigirAcesso, mensagemDeFalha } from './shared/simulado-engine/common/js/acesso.js';
 
     const el = id => document.getElementById(id);
 
@@ -407,10 +419,54 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     // ==========================================
     // Carga
     // ==========================================
-    const perfil = await exigirSessao();
+    // O try e o que impede a tela branca: sem ele, uma leitura recusada morre
+    // no topo do modulo e o corpo nunca ganha data-sessao.
+    let perfil;
+
+    try {
+      perfil = await exigirAcesso();
+    } catch (erro) {
+      console.error('Falha no portao do painel:', erro);
+      document.body.dataset.sessao = 'ok';
+      falhar(mensagemDeFalha(erro));
+      throw erro;
+    }
+
     document.body.dataset.sessao = 'ok';
 
+    // ==========================================
+    // De quem é o desempenho nesta tela
+    // Descrição: Sem ?aluno, o próprio. Com ?aluno e sendo administrador, o do
+    //            aluno indicado — é o mesmo painel, só muda a origem do uid.
+    //
+    //            A checagem aqui é de interface: mostrar a faixa e o nome
+    //            certos. Quem realmente decide é a regra do Firestore, que
+    //            recusa a leitura se quem pediu não for administrador. Trocar
+    //            o parâmetro na barra de endereços não leva a lugar nenhum.
+    // ==========================================
+    const pedido = new URLSearchParams(location.search).get('aluno');
+    let alvoUid = perfil.uid;
+    let alvoNome = perfil.primeiroNome;
+
+    if (pedido && pedido !== perfil.uid && await ehAdmin(perfil.uid)) {
+      const aluno = await lerAluno(pedido);
+
+      alvoUid = pedido;
+      alvoNome = aluno ? (aluno.nomeCompleto || aluno.primeiroNome || aluno.email) : pedido;
+
+      el('alunoObservado').textContent = alvoNome;
+      el('faixaAdmin').classList.remove('oculto');
+      el('tituloPainel').textContent = 'Desempenho do aluno';
+      el('subtituloPainel').textContent =
+        `Todos os simulados que ${alvoNome} concluiu, e o que eles dizem sobre o preparo.`;
+      document.title = `${alvoNome} | CertiAcademy`;
+    }
+
     el('saudacao').textContent = `Olá, ${perfil.primeiroNome}`;
+
+    // O link so aparece para quem e administrador. Esconder nao protege nada:
+    // quem digitar o endereco chega la, e quem nao for e devolvido pela pagina.
+    if (await ehAdmin(perfil.uid)) el('linkAdmin').classList.remove('oculto');
 
     // A foto do Google pode não existir ou falhar ao carregar; nesses casos a
     // saudação segue sozinha, sem deixar um quadrado quebrado no cabeçalho.
@@ -432,7 +488,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     let cursor = null;
 
     async function carregarPagina() {
-      const pagina = await lerResultados(perfil.uid, { limite: 20, cursor });
+      const pagina = await lerResultados(alvoUid, { limite: 20, cursor });
       adicionarLinhas(pagina.itens);
       cursor = pagina.proximoCursor;
       el('maisBtn').classList.toggle('oculto', !cursor);
@@ -449,7 +505,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     });
 
     try {
-      const resumo = await lerResumo(perfil.uid);
+      const resumo = await lerResumo(alvoUid);
 
       if (!resumo || !resumo.totalSimulados) {
         mostrar('vazio');

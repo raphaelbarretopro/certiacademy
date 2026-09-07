@@ -2,25 +2,29 @@ rules_version = '2';
 
 // ==========================================
 // Arquivo: firestore.rules
-// Descricao: Regras de seguranca do historico do CertiAcademy.
+// Descricao: Regras de seguranca do CertiAcademy.
 //
 //            Estas regras sao a UNICA protecao real dos dados: a configuracao
 //            do cliente e publica e o site e estatico, entao qualquer pessoa
-//            pode chamar o banco. O que impede o acesso indevido e o que esta
-//            escrito aqui.
+//            pode chamar o banco. Esconder admin.html nao protege nada - o que
+//            impede um aluno de ler os dados de outro, ou de se promover a
+//            administrador, e exclusivamente o que esta escrito aqui.
 //
 //            O que elas garantem:
-//              - cada aluno so le e escreve a propria subarvore users/{uid}
+//              - cada aluno so escreve a propria subarvore users/{uid}
+//              - administrador le a de todos, mas nao escreve por eles
+//              - ninguem edita o proprio papel, administrador incluido
 //              - resultado gravado nao pode ser ALTERADO
-//              - pontuacao fica na faixa valida de 0 a 1000
-//              - a data de conclusao vem do relogio do servidor
+//              - voucher so vai de nao usado para usado, uma vez, por quem o resgatou
+//              - liberacao de acesso so nasce de voucher resgatado ou da mao do administrador
 //
 //            O que elas NAO garantem: que a pontuacao seja verdadeira. A nota e
 //            calculada no navegador, e validar isso exigiria Cloud Functions,
-//            que sao do plano pago. Como o historico e pessoal e nao alimenta
-//            ranking, forjar um resultado so distorce o proprio painel. Se um
-//            dia houver turma, ranking ou certificado, esta decisao precisa ser
-//            revista.
+//            que desde 3 de fevereiro de 2026 saiu do plano gratuito. Enquanto
+//            o historico era pessoal, forjar um resultado so distorcia o
+//            proprio painel. Com administrador acompanhando alunos e curso
+//            vendido, isso deixa de ser inofensivo - esta na fase de
+//            endurecimento do plano.
 //
 //            ATENCAO ao editar: no Firestore as permissoes de regras diferentes
 //            se SOMAM (OR). Um match curinga como /{documento=**} colocado
@@ -38,18 +42,188 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == uid;
     }
 
-    // ----- perfil do aluno -----
+    // O papel mora em papeis/{uid}, FORA de users/{uid}: aquela subarvore e
+    // gravavel pelo proprio aluno, e papel nao pode ser.
+    function papel(uid) {
+      return get(/databases/$(database)/documents/papeis/$(uid)).data.papel;
+    }
+
+    function ehAdmin() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/papeis/$(request.auth.uid))
+        && papel(request.auth.uid) == 'admin';
+    }
+
+    function voucherResgatado(codigo) {
+      return exists(/databases/$(database)/documents/vouchers/$(codigo))
+        && get(/databases/$(database)/documents/vouchers/$(codigo)).data.usadoPor == request.auth.uid;
+    }
+
+    // data.get(campo, padrao) em vez de data.campo: um voucher criado a mao no
+    // Console, sem este campo, faria a regra ERRAR em vez de reprovar - e o
+    // aluno veria uma recusa sem explicacao.
+    function expiracaoDoVoucher(codigo) {
+      return get(/databases/$(database)/documents/vouchers/$(codigo)).data.get('acessoExpiraEm', null);
+    }
+
+    // ==========================================
+    // Papeis
+    // Descricao: quem e administrador e quem e aluno.
+    //
+    //            O primeiro administrador nao pode ser criado pelo sistema -
+    //            nao ha administrador para cria-lo. Ele nasce a mao no Console:
+    //            papeis/<uid> com { papel: "admin" }.
+    // ==========================================
+    match /papeis/{uid} {
+      // O dono le o proprio para a interface saber o que mostrar.
+      allow get: if ehDono(uid) || ehAdmin();
+      allow list: if ehAdmin();
+
+      // Ninguem edita o proprio papel, administrador incluido. Sem a segunda
+      // metade, uma conta de administrador comprometida seria irreversivel de
+      // dentro do sistema.
+      allow create, update: if ehAdmin()
+        && request.auth.uid != uid
+        && request.resource.data.papel in ['admin', 'aluno']
+        && request.resource.data.definidoPor == request.auth.uid
+        && request.resource.data.definidoEm == request.time;
+
+      allow delete: if ehAdmin() && request.auth.uid != uid;
+    }
+
+    // ==========================================
+    // Acessos
+    // Descricao: quem esta liberado para usar o sistema.
+    //
+    //            expiraEm nulo significa vitalicio. O campo existe desde ja
+    //            para que passar a vender acesso anual nao exija migrar dado
+    //            nenhum - so mudar o que o voucher concede.
+    // ==========================================
+    match /acessos/{uid} {
+      allow get: if ehDono(uid) || ehAdmin();
+      allow list: if ehAdmin();
+
+      // Duas origens possiveis: a mao do administrador, ou um voucher que ja
+      // esta marcado como resgatado por quem esta pedindo. O aluno nao
+      // consegue inventar uma liberacao sem passar por um dos dois.
+      allow create: if
+        (ehAdmin()
+          && request.resource.data.origem in ['admin', 'migracao', 'solicitacao']
+          && request.resource.data.concedidoPor == request.auth.uid)
+        ||
+        (ehDono(uid)
+          && request.resource.data.origem == 'voucher'
+          && request.resource.data.voucher is string
+          && voucherResgatado(request.resource.data.voucher)
+          // O que o acesso vale vem do voucher, nao do que o cliente mandou.
+          && request.resource.data.expiraEm == expiracaoDoVoucher(request.resource.data.voucher));
+
+      // Estender o proprio acesso seria o caminho mais obvio de burla.
+      allow update, delete: if ehAdmin();
+    }
+
+    // ==========================================
+    // Solicitacoes de acesso
+    // Descricao: o aluno que entrou e nao tem voucher pede acesso ao
+    //            administrador. O id do documento e o uid de quem pede, e nao
+    //            um id automatico: assim cada pessoa tem no maximo uma
+    //            solicitacao aberta, e reenviar sobrescreve em vez de encher a
+    //            fila do administrador de copias.
+    // ==========================================
+    match /solicitacoes/{uid} {
+      allow get: if ehDono(uid) || ehAdmin();
+      allow list: if ehAdmin();
+
+      // O proprio aluno abre e reenquadra a sua solicitacao enquanto ela nao
+      // foi aceita. Uma ja aceita nao pode ser reaberta por ele - seria um
+      // caminho para pedir acesso de novo depois de ter sido revogado.
+      allow create, update: if ehDono(uid)
+        && (resource == null || resource.data.situacao != 'aceita')
+        && request.resource.data.situacao == 'pendente'
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() > 0
+        && request.resource.data.nome.size() <= 120
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 320
+        && (request.auth.token.get('email', null) == null
+            || request.resource.data.email == request.auth.token.email)
+        && request.resource.data.mensagem is string
+        && request.resource.data.mensagem.size() <= 500
+        && request.resource.data.criadaEm == request.time;
+
+      // A decisao e do administrador, e fica registrada com autor e hora.
+      allow update: if ehAdmin()
+        && request.resource.data.situacao in ['aceita', 'recusada']
+        && request.resource.data.decididaPor == request.auth.uid
+        && request.resource.data.decididaEm == request.time;
+
+      allow delete: if ehAdmin();
+    }
+
+    // ==========================================
+    // Vouchers
+    // Descricao: o codigo E o identificador do documento. E o que permite
+    //            resgatar sem expor a lista: o aluno nao pode listar a colecao,
+    //            mas alcanca um documento cujo id ja conhece. O segredo e o
+    //            proprio codigo, e por isso ele precisa de entropia - 12
+    //            caracteres de um alfabeto de 32 dao 2^60 combinacoes.
+    // ==========================================
+    match /vouchers/{codigo} {
+      // Ler um codigo que ja se tem em maos serve para avisar antes do resgate
+      // que ele nao existe ou ja foi usado. Listar, so administrador.
+      allow get: if request.auth != null;
+      allow list: if ehAdmin();
+
+      allow create: if ehAdmin()
+        && request.resource.data.usado == false
+        && request.resource.data.usadoPor == null
+        && request.resource.data.criadoPor == request.auth.uid
+        && request.resource.data.criadoEm == request.time;
+
+      // Caminho unico do resgate: de nao usado para usado, por quem esta
+      // pedindo, uma vez so. Nenhum outro campo pode mudar junto.
+      allow update: if request.auth != null
+        && resource.data.usado == false
+        && (resource.data.get('expiraEm', null) == null || request.time < resource.data.expiraEm)
+        && request.resource.data.usado == true
+        && request.resource.data.usadoPor == request.auth.uid
+        && request.resource.data.usadoEm == request.time
+        && request.resource.data.diff(resource.data)
+             .affectedKeys().hasOnly(['usado', 'usadoPor', 'usadoEm']);
+
+      // Revogar um voucher ainda nao usado.
+      allow delete: if ehAdmin() && resource.data.usado == false;
+    }
+
+    // ==========================================
+    // Perfil do aluno
+    // ==========================================
     match /users/{uid} {
-      allow read: if ehDono(uid);
+      allow get: if ehDono(uid) || ehAdmin();
+
+      // O painel do administrador lista os alunos cadastrados.
+      allow list: if ehAdmin();
+
+      // Escrita continua so do dono: administrador acompanha, nao edita no
+      // lugar do aluno.
       allow create, update: if ehDono(uid)
         && request.resource.data.email is string
-        && request.resource.data.email.size() <= 320;
+        && request.resource.data.email.size() <= 320
+        // O e-mail vem do token, e nao do que o cliente mandou - senao o aluno
+        // gravaria o e-mail de outra pessoa no proprio cadastro. A tolerancia
+        // ao token sem e-mail evita travar o cadastro de um provedor que nao o
+        // forneca; hoje Google e senha sempre fornecem.
+        && (request.auth.token.get('email', null) == null
+            || request.resource.data.email == request.auth.token.email);
+
       allow delete: if ehDono(uid);
     }
 
-    // ----- provas concluidas -----
+    // ==========================================
+    // Provas concluidas
+    // ==========================================
     match /users/{uid}/resultados/{resultadoId} {
-      allow read: if ehDono(uid);
+      allow get, list: if ehDono(uid) || ehAdmin();
 
       allow create: if ehDono(uid)
         && request.resource.data.curso is string
@@ -84,12 +258,17 @@ service cloud.firestore {
       allow delete: if ehDono(uid);
     }
 
-    // ----- agregado que o dashboard le em uma unica leitura -----
+    // ==========================================
+    // Agregado que o painel le em uma unica leitura
+    // ==========================================
     match /users/{uid}/resumo/{documento} {
-      allow read, write: if ehDono(uid);
+      allow get, list: if ehDono(uid) || ehAdmin();
+      allow write: if ehDono(uid);
     }
 
-    // ----- sessoes retomaveis entre dispositivos (fase seguinte) -----
+    // ==========================================
+    // Sessoes retomaveis entre dispositivos (fase seguinte)
+    // ==========================================
     match /users/{uid}/sessoes/{documento} {
       allow read, write: if ehDono(uid);
     }
