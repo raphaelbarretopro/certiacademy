@@ -167,11 +167,16 @@ service cloud.firestore {
       allow list: if ehAdmin();
 
       // Escrita continua so do dono: administrador acompanha, nao edita no
-      // lugar do aluno. O e-mail vem do token, e nao do que o cliente mandou.
+      // lugar do aluno.
       allow create, update: if ehDono(uid)
         && request.resource.data.email is string
         && request.resource.data.email.size() <= 320
-        && request.resource.data.email == request.auth.token.email;
+        // O e-mail vem do token, e nao do que o cliente mandou - senao o aluno
+        // gravaria o e-mail de outra pessoa no proprio cadastro. A tolerancia
+        // ao token sem e-mail evita travar o cadastro de um provedor que nao o
+        // forneca; hoje Google e senha sempre fornecem.
+        && (request.auth.token.get('email', null) == null
+            || request.resource.data.email == request.auth.token.email);
 
       allow delete: if ehDono(uid);
     }
