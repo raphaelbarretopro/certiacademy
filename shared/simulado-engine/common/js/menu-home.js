@@ -41,7 +41,17 @@ export async function montarMenuHome() {
 
   const perfil = await resolverPerfil();
   const sairOriginal = botaoSairDoCabecalho();
-  const admin = perfil ? await ehAdmin(perfil.uid) : false;
+  // Se a leitura do papel falhar - regras nao publicadas, rede fora - o menu
+  // segue sem o item do painel. Derrubar a navegacao inteira por causa de um
+  // item que so o administrador ve seria desproporcional.
+  let admin = false;
+  if (perfil) {
+    try {
+      admin = await ehAdmin(perfil.uid);
+    } catch (erro) {
+      console.error('Nao foi possivel verificar o papel:', erro);
+    }
+  }
 
   montarMenuLateral({
     barra,

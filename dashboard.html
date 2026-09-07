@@ -237,7 +237,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
   <script type="module">
     import { sair } from './shared/simulado-engine/common/js/auth.js';
     import { lerAluno, lerResumo, lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
-    import { ehAdmin, exigirAcesso } from './shared/simulado-engine/common/js/acesso.js';
+    import { ehAdmin, exigirAcesso, mensagemDeFalha } from './shared/simulado-engine/common/js/acesso.js';
 
     const el = id => document.getElementById(id);
 
@@ -419,7 +419,19 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     // ==========================================
     // Carga
     // ==========================================
-    const perfil = await exigirAcesso();
+    // O try e o que impede a tela branca: sem ele, uma leitura recusada morre
+    // no topo do modulo e o corpo nunca ganha data-sessao.
+    let perfil;
+
+    try {
+      perfil = await exigirAcesso();
+    } catch (erro) {
+      console.error('Falha no portao do painel:', erro);
+      document.body.dataset.sessao = 'ok';
+      falhar(mensagemDeFalha(erro));
+      throw erro;
+    }
+
     document.body.dataset.sessao = 'ok';
 
     // ==========================================

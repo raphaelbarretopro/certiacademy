@@ -187,7 +187,6 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
 
   <script type="module">
     import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
-    import { lerAluno } from './shared/simulado-engine/common/js/store.js';
     import {
       concederAcesso,
       criarVouchers,
@@ -195,6 +194,7 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       ehAdmin,
       listarAlunos,
       listarVouchers,
+      mensagemDeFalha,
       mapaDeAcessos,
       mapaDePapeis,
       revogarAcesso,
@@ -225,12 +225,29 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
     // Portão
     // Descrição: Redireciona quem não é administrador. Não é proteção — é
     //            cortesia. A proteção está nas regras do Firestore.
+    //
+    //            O try é o que impede a tela branca: sem ele, uma leitura
+    //            recusada morre no topo do módulo, o corpo nunca ganha
+    //            data-sessao e a página fica invisível, sem dizer o motivo.
     // ==========================================
-    const perfil = await exigirSessao();
+    let perfil;
 
-    if (!await ehAdmin(perfil.uid)) {
-      window.location.replace('./dashboard.html');
-      throw new Error('acesso restrito a administradores');
+    try {
+      perfil = await exigirSessao();
+
+      if (!await ehAdmin(perfil.uid)) {
+        window.location.replace('./dashboard.html');
+        throw new Error('__redirecionando__');
+      }
+    } catch (erro) {
+      if (erro && erro.message === '__redirecionando__') {
+        throw erro;
+      }
+
+      console.error('Falha no portao do painel:', erro);
+      document.body.dataset.sessao = 'ok';
+      falhar(mensagemDeFalha(erro));
+      throw erro;
     }
 
     document.body.dataset.sessao = 'ok';

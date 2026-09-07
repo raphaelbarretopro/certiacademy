@@ -83,6 +83,29 @@ export async function estaLiberado(uid) {
 }
 
 // ==========================================
+// Função: mensagemDeFalha(erro)
+// Descrição: Traduz a falha de leitura para algo acionável.
+//
+//            'permission-denied' aqui quase sempre significa uma coisa só: as
+//            regras novas ainda não foram publicadas no Console, e o Firestore
+//            está recusando papeis/ e acessos/, que as regras antigas nem
+//            conheciam. Dizer isso poupa uma caçada.
+// ==========================================
+export function mensagemDeFalha(erro) {
+  const codigo = erro && erro.code;
+
+  if (codigo === 'permission-denied') {
+    return 'O banco recusou a leitura do seu perfil de acesso. Se as regras novas do Firestore ainda não foram publicadas no Console, é isso: publique firestore.rules e recarregue.';
+  }
+
+  if (codigo === 'unavailable' || codigo === 'auth/network-request-failed') {
+    return 'Não conseguimos falar com o servidor. Verifique sua conexão e tente novamente.';
+  }
+
+  return 'Não foi possível confirmar seu acesso agora. Tente novamente em instantes.';
+}
+
+// ==========================================
 // Função: exigirAcesso()
 // Descrição: O portão completo: sessão E liberação. Substitui exigirSessao()
 //            nas páginas que exigem as duas coisas.

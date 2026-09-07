@@ -83,7 +83,7 @@ Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
 
   <script type="module">
     import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
-    import { lerVoucher, normalizarCodigo, resgatarVoucher } from './shared/simulado-engine/common/js/acesso.js';
+    import { lerVoucher, mensagemDeFalha, normalizarCodigo, resgatarVoucher } from './shared/simulado-engine/common/js/acesso.js';
 
     const el = id => document.getElementById(id);
 
@@ -95,7 +95,18 @@ Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
         : 'text-sm mb-4 text-green-700';
     }
 
-    const perfil = await exigirSessao();
+    let perfil;
+
+    try {
+      perfil = await exigirSessao();
+    } catch (erro) {
+      console.error('Falha ao confirmar a sessao:', erro);
+      document.body.dataset.sessao = 'ok';
+      avisar(mensagemDeFalha(erro));
+      document.getElementById('resgatarBtn').disabled = true;
+      throw erro;
+    }
+
     document.body.dataset.sessao = 'ok';
 
     el('explicacao').textContent =
