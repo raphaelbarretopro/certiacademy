@@ -108,7 +108,7 @@ service cloud.firestore {
       // consegue inventar uma liberacao sem passar por um dos dois.
       allow create: if
         (ehAdmin()
-          && request.resource.data.origem in ['admin', 'migracao']
+          && request.resource.data.origem in ['admin', 'migracao', 'solicitacao']
           && request.resource.data.concedidoPor == request.auth.uid)
         ||
         (ehDono(uid)
@@ -120,6 +120,44 @@ service cloud.firestore {
 
       // Estender o proprio acesso seria o caminho mais obvio de burla.
       allow update, delete: if ehAdmin();
+    }
+
+    // ==========================================
+    // Solicitacoes de acesso
+    // Descricao: o aluno que entrou e nao tem voucher pede acesso ao
+    //            administrador. O id do documento e o uid de quem pede, e nao
+    //            um id automatico: assim cada pessoa tem no maximo uma
+    //            solicitacao aberta, e reenviar sobrescreve em vez de encher a
+    //            fila do administrador de copias.
+    // ==========================================
+    match /solicitacoes/{uid} {
+      allow get: if ehDono(uid) || ehAdmin();
+      allow list: if ehAdmin();
+
+      // O proprio aluno abre e reenquadra a sua solicitacao enquanto ela nao
+      // foi aceita. Uma ja aceita nao pode ser reaberta por ele - seria um
+      // caminho para pedir acesso de novo depois de ter sido revogado.
+      allow create, update: if ehDono(uid)
+        && (resource == null || resource.data.situacao != 'aceita')
+        && request.resource.data.situacao == 'pendente'
+        && request.resource.data.nome is string
+        && request.resource.data.nome.size() > 0
+        && request.resource.data.nome.size() <= 120
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 320
+        && (request.auth.token.get('email', null) == null
+            || request.resource.data.email == request.auth.token.email)
+        && request.resource.data.mensagem is string
+        && request.resource.data.mensagem.size() <= 500
+        && request.resource.data.criadaEm == request.time;
+
+      // A decisao e do administrador, e fica registrada com autor e hora.
+      allow update: if ehAdmin()
+        && request.resource.data.situacao in ['aceita', 'recusada']
+        && request.resource.data.decididaPor == request.auth.uid
+        && request.resource.data.decididaEm == request.time;
+
+      allow delete: if ehAdmin();
     }
 
     // ==========================================

@@ -71,7 +71,7 @@ export async function montarMenuHome() {
 
       // O painel so entra no menu de quem e administrador.
       if (admin) {
-        lista.push(criarItem('Painel do administrador', ICONES.desempenho, {
+        lista.push(criarItem('Administração', ICONES.desempenho, {
           href: urlDoSite('admin.html')
         }));
       }

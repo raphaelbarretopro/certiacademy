@@ -221,6 +221,32 @@ export async function resgatarVoucher(uid, codigo) {
 }
 
 // ==========================================
+// Solicitações de acesso
+// Descrição: o caminho de quem entrou e não recebeu voucher nenhum. O id do
+//            documento é o uid de quem pede — cada pessoa tem no máximo uma
+//            solicitação, e reenviar sobrescreve em vez de encher a fila do
+//            administrador de cópias.
+// ==========================================
+export async function lerSolicitacao(uid) {
+  const { db, fs } = await obterDb();
+  const snap = await fs.getDoc(fs.doc(db, 'solicitacoes', uid));
+
+  return snap.exists() ? { uid, ...snap.data() } : null;
+}
+
+export async function enviarSolicitacao(uid, { nome, email, mensagem }) {
+  const { db, fs } = await obterDb();
+
+  await fs.setDoc(fs.doc(db, 'solicitacoes', uid), {
+    nome: String(nome || '').trim().slice(0, 120),
+    email: String(email || '').trim().slice(0, 320),
+    mensagem: String(mensagem || '').trim().slice(0, 500),
+    situacao: 'pendente',
+    criadaEm: fs.serverTimestamp()
+  });
+}
+
+// ==========================================
 // Operações do administrador
 // Descrição: Daqui para baixo tudo depende de papeis/{uid} dizer 'admin'. As
 //            funções não conferem isso: quem confere é a regra, e é ela que
@@ -306,6 +332,45 @@ export async function revogarAcesso(uid) {
   const { db, fs } = await obterDb();
   await fs.deleteDoc(fs.doc(db, 'acessos', uid));
   esquecerCache(uid);
+}
+
+// ==========================================
+// Função: listarSolicitacoes(situacao)
+// Descrição: A fila do administrador. Sem índice composto: filtra por situação
+//            em memória, porque a fila é curta e um índice a mais é uma peça a
+//            mais para manter.
+// ==========================================
+export async function listarSolicitacoes(situacao = 'pendente') {
+  const { db, fs } = await obterDb();
+  const paginas = await fs.getDocs(fs.collection(db, 'solicitacoes'));
+
+  return paginas.docs
+    .map(d => ({ uid: d.id, ...d.data() }))
+    .filter(s => !situacao || s.situacao === situacao);
+}
+
+// ==========================================
+// Função: decidirSolicitacao(uid, aceita, adminUid)
+// Descrição: Aceitar libera o acesso e marca a solicitação; recusar só marca.
+//
+//            A liberação vem PRIMEIRO. Se a segunda escrita falhar, o aluno
+//            fica com acesso e a solicitação pendente na fila — o
+//            administrador vê e resolve. Na ordem inversa a solicitação
+//            sumiria da fila sem o aluno ter sido liberado, e ninguém ficaria
+//            sabendo.
+// ==========================================
+export async function decidirSolicitacao(uid, aceita, adminUid) {
+  if (aceita) {
+    await concederAcesso(uid, adminUid, { origem: 'solicitacao' });
+  }
+
+  const { db, fs } = await obterDb();
+
+  await fs.updateDoc(fs.doc(db, 'solicitacoes', uid), {
+    situacao: aceita ? 'aceita' : 'recusada',
+    decididaPor: adminUid,
+    decididaEm: fs.serverTimestamp()
+  });
 }
 
 // ==========================================

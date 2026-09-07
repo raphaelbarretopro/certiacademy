@@ -9,6 +9,7 @@
 
 import { urlDoSite } from './auth.js';
 import { LOGIN_PATH } from './firebase-config.js';
+import { ehAdmin } from './acesso.js';
 import { ICONES, criarItem, montarMenuLateral } from './menu-lateral.js';
 import {
   botaoSairDoCabecalho,
@@ -42,6 +43,17 @@ export async function montarMenuCurso() {
   const perfil = await resolverPerfil();
   const sairOriginal = botaoSairDoCabecalho();
 
+  // Uma leitura recusada nao pode derrubar o menu inteiro por causa de um item
+  // que so o administrador ve.
+  let admin = false;
+  if (perfil) {
+    try {
+      admin = await ehAdmin(perfil.uid);
+    } catch (erro) {
+      console.error('Nao foi possivel verificar o papel:', erro);
+    }
+  }
+
   montarMenuLateral({
     barra,
     perfil,
@@ -62,6 +74,12 @@ export async function montarMenuCurso() {
       for (const simulado of simulados) {
         lista.push(criarItem(simulado.titulo.trim(), ICONES.curso, {
           href: simulado.href
+        }));
+      }
+
+      if (admin) {
+        lista.push(criarItem('Administração', ICONES.desempenho, {
+          href: urlDoSite('admin.html')
         }));
       }
 

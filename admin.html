@@ -97,6 +97,23 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
 
     <div id="conteudo" class="oculto">
 
+      <!-- ===== Solicitações ===== -->
+      <section id="secaoPedidos" class="bg-white rounded-xl shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-1">
+          Solicitações de acesso
+          <span id="contaPedidos" class="etiqueta bg-amber-100 text-amber-800 align-middle ml-1"></span>
+        </h2>
+        <p class="text-sm text-gray-500 mb-5">
+          Quem entrou sem voucher e pediu acesso. Aceitar libera na hora.
+        </p>
+
+        <div id="semPedidos" class="text-sm text-gray-500 oculto">
+          Nenhuma solicitação pendente.
+        </div>
+
+        <div id="listaPedidos" class="space-y-4"></div>
+      </section>
+
       <!-- ===== Alunos ===== -->
       <section class="bg-white rounded-xl shadow p-6 mb-6">
         <div class="flex flex-wrap items-start justify-between gap-3 mb-1">
@@ -190,9 +207,11 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
     import {
       concederAcesso,
       criarVouchers,
+      decidirSolicitacao,
       definirPapel,
       ehAdmin,
       listarAlunos,
+      listarSolicitacoes,
       listarVouchers,
       mensagemDeFalha,
       mapaDeAcessos,
@@ -412,6 +431,70 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
     });
 
     // ==========================================
+    // Solicitações de acesso
+    // ==========================================
+    function cartaoDoPedido(pedido) {
+      const cartao = document.createElement('div');
+      cartao.className = 'border border-gray-200 rounded-xl p-4';
+
+      cartao.innerHTML = `
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+          <div>
+            <div class="font-semibold">${pedido.nome || '(sem nome)'}</div>
+            <div class="text-xs text-gray-500">${pedido.email || ''}</div>
+          </div>
+          <div class="text-xs text-gray-500 num">${dataCurta(pedido.criadaEm)}</div>
+        </div>
+        <p class="text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3 whitespace-pre-wrap">${
+          pedido.mensagem ? pedido.mensagem : '<span class="text-gray-400">Sem mensagem.</span>'
+        }</p>
+        <div class="flex flex-wrap gap-2"></div>
+      `;
+
+      const acoes = cartao.lastElementChild;
+
+      function botao(rotulo, classe, aceita) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = classe;
+        b.textContent = rotulo;
+        b.addEventListener('click', async () => {
+          if (!aceita && !confirm(`Recusar o acesso de ${pedido.email}?`)) return;
+
+          for (const outro of acoes.children) outro.disabled = true;
+
+          try {
+            await decidirSolicitacao(pedido.uid, aceita, perfil.uid);
+            await Promise.all([recarregar(), carregarPedidos()]);
+          } catch (erro) {
+            console.error('Falha ao decidir a solicitacao:', erro);
+            alert('Não foi possível registrar a decisão.');
+            for (const outro of acoes.children) outro.disabled = false;
+          }
+        });
+        return b;
+      }
+
+      acoes.appendChild(botao(
+        'Aceitar', 'bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 text-sm hover:bg-blue-700', true));
+      acoes.appendChild(botao(
+        'Recusar', 'border border-gray-300 rounded-lg px-4 py-2 text-sm hover:bg-gray-100', false));
+
+      return cartao;
+    }
+
+    async function carregarPedidos() {
+      const pedidos = await listarSolicitacoes('pendente');
+
+      el('listaPedidos').innerHTML = '';
+      for (const pedido of pedidos) el('listaPedidos').appendChild(cartaoDoPedido(pedido));
+
+      el('semPedidos').classList.toggle('oculto', pedidos.length > 0);
+      el('contaPedidos').textContent = pedidos.length ? String(pedidos.length) : '';
+      el('contaPedidos').classList.toggle('oculto', pedidos.length === 0);
+    }
+
+    // ==========================================
     // Vouchers
     // ==========================================
     function linhaDoVoucher(voucher) {
@@ -489,21 +572,77 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
 
     // ==========================================
     // Carga
+    // Descrição: Cada seção carrega por conta própria.
+    //
+    //            Antes as três estavam num try só, e bastava uma falhar para o
+    //            painel inteiro sumir — foi o que aconteceu quando a coleção de
+    //            solicitações passou a existir no código antes de existir nas
+    //            regras publicadas: alunos e vouchers funcionavam e ninguém via.
     // ==========================================
-    try {
-      await recarregar();
-      await carregarVouchers();
-      mostrar('conteudo');
-    } catch (erro) {
-      console.error('Falha ao carregar o painel:', erro);
-
+    function explicar(erro) {
       if (erro && erro.code === 'permission-denied') {
-        falhar('O Firestore recusou a leitura. Confirme que as regras novas foram publicadas e que seu usuário tem papeis/<uid> com papel "admin".');
-      } else if (erro && erro.code === 'failed-precondition') {
-        falhar('O banco precisa de um índice que ainda não existe. O endereço para criá-lo com um clique está no console do navegador (F12).');
-      } else {
-        falhar('Tente novamente em instantes.');
+        return 'O Firestore recusou a leitura. Publique a versão mais recente de firestore.rules — é o que acontece quando uma coleção existe no código mas ainda não nas regras.';
       }
+      if (erro && erro.code === 'failed-precondition') {
+        return 'O banco precisa de um índice que ainda não existe. O endereço para criá-lo com um clique está no console do navegador (F12).';
+      }
+      return 'Tente novamente em instantes.';
+    }
+
+    async function carregarSecao(nome, carregar, aoFalhar) {
+      try {
+        await carregar();
+        return true;
+      } catch (erro) {
+        console.error(`Falha ao carregar ${nome}:`, erro);
+        aoFalhar(erro);
+        return false;
+      }
+    }
+
+    function avisoNaSecao(seletor, texto) {
+      const alvo = document.querySelector(seletor);
+      if (!alvo) return;
+
+      alvo.innerHTML = '';
+
+      // Dentro de um tbody o aviso precisa ser uma linha: um <p> solto ali é
+      // HTML inválido e o navegador o joga para fora da tabela.
+      if (alvo.tagName === 'TBODY') {
+        const linha = document.createElement('tr');
+        const celula = document.createElement('td');
+        celula.colSpan = 4;
+        celula.className = 'py-4 text-sm text-amber-800';
+        celula.setAttribute('role', 'alert');
+        celula.textContent = texto;
+        linha.appendChild(celula);
+        alvo.appendChild(linha);
+        return;
+      }
+
+      const aviso = document.createElement('p');
+      aviso.className = 'text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-3';
+      aviso.setAttribute('role', 'alert');
+      aviso.textContent = texto;
+      alvo.appendChild(aviso);
+    }
+
+    // A lista de alunos é o painel; sem ela não há o que mostrar.
+    const alunosOk = await carregarSecao('os alunos', recarregar, erro => falhar(explicar(erro)));
+
+    if (alunosOk) {
+      mostrar('conteudo');
+
+      // Estas duas são complementares: se falharem, avisam no próprio lugar e
+      // o resto do painel continua utilizável.
+      await carregarSecao('as solicitacoes', carregarPedidos, erro => {
+        el('semPedidos').classList.add('oculto');
+        avisoNaSecao('#listaPedidos', explicar(erro));
+      });
+
+      await carregarSecao('os vouchers', carregarVouchers, erro => {
+        avisoNaSecao('#listaVouchers', explicar(erro));
+      });
     }
   </script>
 
