@@ -214,7 +214,18 @@ service cloud.firestore {
         // ao token sem e-mail evita travar o cadastro de um provedor que nao o
         // forneca; hoje Google e senha sempre fornecem.
         && (request.auth.token.get('email', null) == null
-            || request.resource.data.email == request.auth.token.email);
+            || request.resource.data.email == request.auth.token.email)
+        // Os campos livres precisam de tipo e teto. Sem isso o aluno grava o
+        // que quiser no proprio cadastro, e o painel do administrador exibe:
+        // era por aqui que passava um HTML malicioso, e continua sendo por aqui
+        // que passaria um megabyte de texto inflando custo e travando a lista.
+        // Escapar na exibicao e a defesa principal; isto e a segunda camada.
+        && request.resource.data.get('nomeCompleto', '') is string
+        && request.resource.data.get('nomeCompleto', '').size() <= 200
+        && request.resource.data.get('primeiroNome', '') is string
+        && request.resource.data.get('primeiroNome', '').size() <= 100
+        && request.resource.data.get('fotoUrl', '') is string
+        && request.resource.data.get('fotoUrl', '').size() <= 500;
 
       allow delete: if ehDono(uid);
     }

@@ -222,6 +222,23 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
 
     const el = id => document.getElementById(id);
 
+    // ==========================================
+    // Função: escapar(valor)
+    // Descrição: Todo dado vindo do banco passa por aqui antes de virar HTML.
+    //
+    //            Nome, e-mail e mensagem são escritos pelo próprio aluno, e as
+    //            regras validam tamanho, não conteúdo. Sem escapar, um aluno
+    //            gravaria HTML no próprio cadastro e o script rodaria AQUI, na
+    //            sessão do administrador, com poder de promover a si mesmo e
+    //            ler a base inteira. É o pior caminho de ataque que este painel
+    //            poderia ter, e ele começa numa interpolação inocente.
+    // ==========================================
+    const MAPA_HTML = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+
+    function escapar(valor) {
+      return String(valor ?? '').replace(/[&<>"']/g, caractere => MAPA_HTML[caractere]);
+    }
+
     function mostrar(qual) {
       for (const estado of ['carregando', 'erro', 'conteudo']) {
         el(estado).classList.toggle('oculto', estado !== qual);
@@ -312,9 +329,9 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
         <td class="py-3 pr-4">
           <a href="./dashboard.html?aluno=${encodeURIComponent(aluno.uid)}"
              class="font-medium text-blue-700 hover:underline">
-            ${aluno.nomeCompleto || aluno.primeiroNome || '(sem nome)'}
+            ${escapar(aluno.nomeCompleto || aluno.primeiroNome) || '(sem nome)'}
           </a>
-          <div class="text-xs text-gray-500">${aluno.email || ''}</div>
+          <div class="text-xs text-gray-500">${escapar(aluno.email)}</div>
         </td>
         <td class="py-3 pr-4 num text-gray-600">${dataCurta(aluno.ultimoAcessoEm)}</td>
         <td class="py-3 pr-4">${etiquetaPapel(aluno.uid)}</td>
@@ -440,13 +457,13 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       cartao.innerHTML = `
         <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
           <div>
-            <div class="font-semibold">${pedido.nome || '(sem nome)'}</div>
-            <div class="text-xs text-gray-500">${pedido.email || ''}</div>
+            <div class="font-semibold">${escapar(pedido.nome) || '(sem nome)'}</div>
+            <div class="text-xs text-gray-500">${escapar(pedido.email)}</div>
           </div>
           <div class="text-xs text-gray-500 num">${dataCurta(pedido.criadaEm)}</div>
         </div>
         <p class="text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3 whitespace-pre-wrap">${
-          pedido.mensagem ? pedido.mensagem : '<span class="text-gray-400">Sem mensagem.</span>'
+          pedido.mensagem ? escapar(pedido.mensagem) : '<span class="text-gray-400">Sem mensagem.</span>'
         }</p>
         <div class="flex flex-wrap gap-2"></div>
       `;
@@ -502,13 +519,13 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       const usado = voucher.usado;
 
       linha.innerHTML = `
-        <td class="py-3 pr-4 codigo font-medium">${voucher.codigo}</td>
+        <td class="py-3 pr-4 codigo font-medium">${escapar(voucher.codigo)}</td>
         <td class="py-3 pr-4">
           ${usado
             ? '<span class="etiqueta bg-gray-100 text-gray-700">usado</span>'
             : '<span class="etiqueta bg-green-100 text-green-800">disponível</span>'}
         </td>
-        <td class="py-3 pr-4 text-gray-600">${voucher.nota || '—'}</td>
+        <td class="py-3 pr-4 text-gray-600">${escapar(voucher.nota) || '—'}</td>
         <td class="py-3 whitespace-nowrap"></td>
       `;
 
