@@ -70,8 +70,11 @@ const [renderModule, timerModule] = await Promise.all([
 const quizModule = await import('./quiz.js');
 
 const { inicializarModalProblema } = renderModule;
-const { iniciarCronometro } = timerModule;
+const { iniciarCronometro, TEMPO_TOTAL_SEGUNDOS } = timerModule;
 const {
+  definirModo,
+  ehPratica,
+  obterModo,
   finalizarPorTempoEsgotado,
   marcarResultadoGravado,
   obterTempoInicialPersistido,
@@ -98,14 +101,23 @@ document.addEventListener('certiacademy:resultado-final', async evento => {
   }
 });
 
-function iniciarSimulado() {
+async function iniciarSimulado() {
   inicializarModalProblema();
+
+  // A pergunta vem antes de tudo: o modo decide se o cronometro conta para
+  // cima ou para baixo, e trocar isso com a prova andando nao faria sentido.
+  // Uma prova ja finalizada nao pergunta nada - so mostra o resultado.
+  if (!simuladoFinalizado && !obterModo()) {
+    const { perguntarModo } = await import('./escolha-modo.js');
+    definirModo(await perguntarModo(Math.round(TEMPO_TOTAL_SEGUNDOS / 60)));
+  }
 
   if (!simuladoFinalizado) {
     iniciarCronometro(
       obterTempoInicialPersistido(),
       persistirTempoRestante,
-      finalizarPorTempoEsgotado
+      finalizarPorTempoEsgotado,
+      { pratica: ehPratica() }
     );
   }
 
@@ -119,4 +131,10 @@ function iniciarSimulado() {
   restaurarEstadoVisual();
 }
 
-iniciarSimulado();
+// A montagem agora e assincrona por causa da pergunta do modo. Sem o catch,
+// uma falha aqui viraria uma rejeicao silenciosa e a prova ficaria pela metade
+// sem dizer o motivo.
+iniciarSimulado().catch(erro => {
+  console.error('Falha ao montar o simulado:', erro);
+  mostrarFalhaDeSessao('Nao foi possivel abrir o simulado. Recarregue a pagina.');
+});

@@ -42,6 +42,28 @@ export const marcadas = new Set();
 export let simuladoFinalizado = false;
 const STORAGE_KEY = `certiacademy:quiz-state:${window.location.pathname}`;
 let tempoRestantePersistido = TEMPO_TOTAL_SEGUNDOS;
+
+// ==========================================
+// Modo da tentativa
+// Descrição: 'exame' reproduz a prova real — 45 minutos corridos, e acabou o
+//            tempo, acabou a prova. 'pratica' tira o limite: o aluno finaliza
+//            quando quiser e o sistema conta quanto tempo ele levou.
+//
+//            A diferença que importa está em COMO o tempo é contado. Na
+//            prática, o cronômetro acumula o tempo com a página aberta, então
+//            fechar a aba realmente pausa — é treino, e pausar faz parte.
+//
+//            No exame o tempo é de relógio: guardamos o instante em que a prova
+//            começou e calculamos o que sobrou a partir de agora. Sem isso,
+//            fechar a aba pausaria o cronômetro, e "não dá para pausar" seria
+//            só uma frase na tela.
+// ==========================================
+export const MODO_EXAME = 'exame';
+export const MODO_PRATICA = 'pratica';
+
+let modo = null;
+let iniciadoEmMs = null;      // exame: instante do inicio, em relogio
+let decorridoPratica = 0;     // pratica: segundos acumulados com a pagina aberta
 let rascunhosRespostas = {};
 // Guarda se esta tentativa ja foi enviada ao historico, para que recarregar a
 // tela de resultado nao grave a mesma prova de novo.
@@ -178,7 +200,10 @@ function persistirEstado() {
     simuladoFinalizado,
     resultadoFinalExibido,
     resultadoGravado,
-    tempoRestante: obterTempoRestante()
+    tempoRestante: obterTempoRestante(),
+    modo,
+    iniciadoEmMs,
+    decorridoPratica
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
@@ -206,6 +231,12 @@ function restaurarEstadoPersistido() {
     tempoRestantePersistido = Number.isFinite(estado.tempoRestante) && estado.tempoRestante >= 0
       ? Math.floor(estado.tempoRestante)
       : TEMPO_TOTAL_SEGUNDOS;
+
+    modo = estado.modo === MODO_EXAME || estado.modo === MODO_PRATICA ? estado.modo : null;
+    iniciadoEmMs = Number.isFinite(estado.iniciadoEmMs) ? estado.iniciadoEmMs : null;
+    decorridoPratica = Number.isFinite(estado.decorridoPratica) && estado.decorridoPratica >= 0
+      ? Math.floor(estado.decorridoPratica)
+      : 0;
   } catch {
     localStorage.removeItem(STORAGE_KEY);
   }
@@ -215,13 +246,79 @@ function limparEstadoPersistido() {
   localStorage.removeItem(STORAGE_KEY);
 }
 
+// ==========================================
+// Função: obterModo()
+// Descrição: Nulo quando o aluno ainda não escolheu. É o que faz a tela de
+//            escolha aparecer só uma vez por tentativa: depois de escolhido, o
+//            modo fica no estado persistido e recarregar não pergunta de novo.
+// ==========================================
+export function obterModo() {
+  return modo;
+}
+
+export function ehPratica() {
+  return modo === MODO_PRATICA;
+}
+
+// ==========================================
+// Função: definirModo(novoModo)
+// Descrição: Grava a escolha. No exame, marca o instante de início — é dele
+//            que sai todo o cálculo de tempo daqui em diante.
+// ==========================================
+export function definirModo(novoModo) {
+  modo = novoModo === MODO_PRATICA ? MODO_PRATICA : MODO_EXAME;
+
+  if (modo === MODO_EXAME && !iniciadoEmMs) iniciadoEmMs = Date.now();
+
+  persistirEstado();
+}
+
+// ==========================================
+// Função: obterTempoInicialPersistido()
+// Descrição: Com que valor o cronômetro recomeça ao abrir a página.
+//
+//            Na prática é o total já acumulado, e a contagem segue de onde
+//            parou. No exame é o que sobra do relógio: se o aluno fechou a aba
+//            por vinte minutos, esses vinte minutos foram embora.
+// ==========================================
 export function obterTempoInicialPersistido() {
+  if (modo === MODO_PRATICA) return decorridoPratica;
+
+  if (modo === MODO_EXAME && iniciadoEmMs) {
+    const gastos = Math.floor((Date.now() - iniciadoEmMs) / 1000);
+    return Math.max(TEMPO_TOTAL_SEGUNDOS - gastos, 0);
+  }
+
   return tempoRestantePersistido;
 }
 
-export function persistirTempoRestante(tempoRestante) {
-  tempoRestantePersistido = tempoRestante;
+// ==========================================
+// Função: persistirTempoRestante(valor)
+// Descrição: Chamada pelo cronômetro a cada segundo. O que o valor significa
+//            depende do modo: na prática é quanto já se passou, no exame é
+//            quanto falta.
+// ==========================================
+export function persistirTempoRestante(valor) {
+  if (modo === MODO_PRATICA) decorridoPratica = valor;
+  else tempoRestantePersistido = valor;
+
   persistirEstado();
+}
+
+// ==========================================
+// Função: tempoDecorridoSegundos()
+// Descrição: Quanto tempo o aluno levou, nos dois modos.
+//
+//            O teto de 24 horas existe porque a regra do Firestore recusa
+//            tempoSegundos acima disso, e na prática nada impede alguém de
+//            deixar a aba aberta o dia inteiro.
+// ==========================================
+export function tempoDecorridoSegundos() {
+  const bruto = modo === MODO_PRATICA
+    ? decorridoPratica
+    : TEMPO_TOTAL_SEGUNDOS - obterTempoRestante();
+
+  return Math.min(Math.max(bruto, 0), 86400);
 }
 
 export function salvarRascunhoResposta(index, selecionadas) {
@@ -330,8 +427,11 @@ export function montarResultadoParaHistorico() {
     percentual: Math.round((pontuacao / 1000) * 100),
     acertos: Math.round(pontuacao / VALOR_ACERTO),
     totalAcertosPossiveis,
-    tempoSegundos: Math.max(TEMPO_TOTAL_SEGUNDOS - obterTempoRestante(), 0),
-    tempoLimiteSegundos: TEMPO_TOTAL_SEGUNDOS,
+    tempoSegundos: tempoDecorridoSegundos(),
+    // Na pratica nao ha limite; guardar o dos 45 minutos daria a entender que
+    // houve um, e distorceria qualquer leitura futura do historico.
+    tempoLimiteSegundos: ehPratica() ? null : TEMPO_TOTAL_SEGUNDOS,
+    modo: modo || MODO_EXAME,
     porDominio,
     versaoBanco: questoes.length
   };
@@ -833,7 +933,7 @@ function mostrarResultadoFinal(forceRender = false) {
           <div class="rf-indicador">
             <span class="rf-indicador-rotulo">Tempo</span>
             <span class="rf-indicador-valor">${tempoDecorrido}<span class="rf-indicador-unidade">min</span></span>
-            <span class="rf-indicador-sub">de ${Math.round(TEMPO_TOTAL_SEGUNDOS / 60)} disponíveis</span>
+            <span class="rf-indicador-sub">${ehPratica() ? 'em modo prática' : `de ${Math.round(TEMPO_TOTAL_SEGUNDOS / 60)} disponíveis`}</span>
           </div>
         </div>
       </div>
@@ -1016,6 +1116,11 @@ function refazerSimulado() {
   resultadoFinalExibido = false;
   resultadoGravado = false;
   tempoRestantePersistido = TEMPO_TOTAL_SEGUNDOS;
+  // Zerar o modo faz a tela de escolha aparecer de novo: refazer e uma
+  // tentativa nova, e o aluno pode querer o outro modo desta vez.
+  modo = null;
+  iniciadoEmMs = null;
+  decorridoPratica = 0;
   resultadoFinalHTML = "";
   marcadas.clear();
 
@@ -1197,8 +1302,7 @@ export function irParaQuestao(index) {
 // ==========================================
 
 function calcularTempoDecorrido() {
-  const segundosDecorridos = TEMPO_TOTAL_SEGUNDOS - obterTempoRestante();
-  return Math.floor(segundosDecorridos / 60);
+  return Math.floor(tempoDecorridoSegundos() / 60);
 }
 
 // ==========================================

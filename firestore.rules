@@ -253,6 +253,11 @@ service cloud.firestore {
         && request.resource.data.tempoSegundos >= 0
         && request.resource.data.tempoSegundos <= 86400
         && request.resource.data.aprovado is bool
+        // 'modo' distingue treino de simulacao da prova. Validado com padrao em
+        // vez de exigido: uma pagina em cache que ainda nao conhece o campo
+        // continua gravando, e publicar esta regra antes do codigo nao quebra
+        // ninguem.
+        && request.resource.data.get('modo', 'exame') in ['pratica', 'exame']
         && request.resource.data.finalizadoEm == request.time
         && request.resource.data.keys().hasAll([
              'curso', 'simulado', 'pontuacao', 'percentual',

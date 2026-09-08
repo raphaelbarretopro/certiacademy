@@ -36,6 +36,7 @@ const AMPULHETA = new URL('../../../../imagens/ampulheta.gif', import.meta.url).
 let tempoRestante = TEMPO_TOTAL_SEGUNDOS;
 let intervaloCronometro;
 let alerta15MinutosExibido = false;
+let contandoParaCima = false;
 
 function atualizarCronometroElemento() {
   const cronometroElemento = document.getElementById("cronometro");
@@ -51,8 +52,12 @@ function atualizarCronometroElemento() {
 // Função: iniciarCronometro()
 // Descrição: Inicia o cronômetro e atualiza a cada segundo
 // ==========================================
-export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = () => {}, onTimeout = () => {}) {
+export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = () => {}, onTimeout = () => {}, { pratica = false } = {}) {
   pararCronometro();
+
+  // Na pratica o mesmo mostrador conta para cima: nao ha limite a esgotar, e o
+  // que interessa ao aluno e quanto tempo ja levou.
+  contandoParaCima = pratica;
 
   tempoRestante = Number.isFinite(tempoInicial) && tempoInicial >= 0
     ? Math.floor(tempoInicial)
@@ -70,7 +75,7 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
     cronometroDiv.innerHTML =
       "<span class='barra-tempo'>" +
       "<img class='barra-tempo-icone' src='" + AMPULHETA + "' alt='' aria-hidden='true'>" +
-      "<span class='barra-tempo-rotulo'>Tempo restante:</span>" +
+      "<span class='barra-tempo-rotulo'>" + (pratica ? 'Tempo decorrido:' : 'Tempo restante:') + "</span>" +
       "<span id='cronometro'></span>" +
       "</span>";
     document.body.prepend(cronometroDiv);
@@ -80,19 +85,21 @@ export function iniciarCronometro(tempoInicial = TEMPO_TOTAL_SEGUNDOS, onTick = 
   onTick(tempoRestante);
 
   intervaloCronometro = setInterval(() => {
-    if (tempoRestante === 900 && !alerta15MinutosExibido) {
+    if (!contandoParaCima && tempoRestante === 900 && !alerta15MinutosExibido) {
       alerta15MinutosExibido = true;
       exibirAlerta("⏰ Atenção: faltam apenas 15 minutos para o término!");
     }
 
-    if (tempoRestante <= 0) {
+    // Na pratica nao ha o que esgotar: o cronometro sobe e quem encerra e o
+    // aluno, pelo botao de finalizar.
+    if (!contandoParaCima && tempoRestante <= 0) {
       pararCronometro();
       exibirAlerta("⛔ Tempo esgotado! Simulado encerrado.");
       onTimeout();
       return;
     }
 
-    tempoRestante--;
+    tempoRestante += contandoParaCima ? 1 : -1;
     atualizarCronometroElemento();
     onTick(tempoRestante);
   }, 1000);

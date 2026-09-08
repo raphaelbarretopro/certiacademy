@@ -1667,6 +1667,173 @@ Descricao: usado no lugar do <select> nativo nas questoes de lista suspensa.
   pointer-events: none;
 }
 
+
+/* ==========================================
+Escolha do modo
+Descrição: A pergunta que abre o simulado, montada por escolha-modo.js. Cobre
+           a tela inteira de propósito: começar a prova sem saber se o relógio
+           conta seria pior do que insistir na pergunta.
+========================================== */
+.modo-tela {
+  position: fixed;
+  inset: 0;
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+  background: rgba(17, 24, 39, .55);
+}
+
+body.modo-escolhendo {
+  overflow: hidden;
+}
+
+.modo-painel {
+  width: 100%;
+  max-width: 760px;
+  box-sizing: border-box;
+  padding: 32px 28px;
+  border-radius: 16px;
+  background: var(--sim-superficie);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .25);
+}
+
+.modo-titulo {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--sim-tinta);
+  text-align: center;
+}
+
+.modo-subtitulo {
+  margin: 0 0 26px;
+  font-size: .9375rem;
+  color: var(--sim-tinta-3);
+  text-align: center;
+}
+
+.modo-cartoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.modo-cartao {
+  display: flex;
+  flex-direction: column;
+  padding: 22px 20px;
+  border: 1px solid var(--sim-linha);
+  border-radius: 14px;
+  background: var(--sim-superficie);
+}
+
+/* O modo que reproduz a prova é o que o aluno vem buscar; o contorno azul diz
+   isso sem tirar a prática do páreo. */
+.modo-cartao-destaque {
+  border-color: var(--sim-azul);
+}
+
+.modo-cartao-topo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.modo-icone {
+  flex: none;
+  color: var(--sim-azul);
+}
+
+.modo-cartao-titulo {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--sim-tinta);
+}
+
+.modo-cartao-resumo {
+  margin: 0 0 14px;
+  font-size: .9375rem;
+  color: var(--sim-tinta-2);
+}
+
+.modo-cartao-lista {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  flex: 1 1 auto;
+}
+
+.modo-cartao-lista li {
+  position: relative;
+  margin-bottom: 8px;
+  padding-left: 18px;
+  font-size: .875rem;
+  line-height: 1.45;
+  color: var(--sim-tinta-2);
+}
+
+.modo-cartao-lista li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sim-linha-forte);
+}
+
+.modo-cartao-botao {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid var(--sim-linha-forte);
+  border-radius: 10px;
+  background: var(--sim-superficie);
+  color: var(--sim-tinta);
+  font-family: inherit;
+  font-size: .9375rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modo-cartao-botao:hover {
+  background: var(--sim-superficie-2);
+}
+
+.modo-cartao-botao-destaque {
+  border-color: var(--sim-azul);
+  background: var(--sim-azul);
+  color: #fff;
+}
+
+.modo-cartao-botao-destaque:hover {
+  background: var(--sim-azul);
+  filter: brightness(.94);
+}
+
+@media (max-width: 720px) {
+  .modo-painel {
+    padding: 24px 18px;
+  }
+
+  .modo-titulo {
+    font-size: 1.25rem;
+  }
+
+  /* Lado a lado em 390px espremeria os dois a ponto de nenhum ser legível. */
+  .modo-cartoes {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ==========================================
 Telas estreitas
 Descrição: Estes blocos ficam no fim do arquivo de propósito. Media query não
