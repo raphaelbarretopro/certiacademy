@@ -781,18 +781,30 @@ export function mostrarFeedback(q, respostaUsuario) {
           feedbackClass = "partial";
       }
   } else if (q.tipo === "dragdrop") {
-      let corretas = 0;
+      // Duas contagens, e nao uma. O grupo inteiro certo decide o verde; o item
+      // solto no lugar certo decide o amarelo.
+      //
+      // Antes so os grupos eram contados: quem acertava alguns itens sem fechar
+      // nenhum grupo caia em zero e via vermelho, como se tivesse errado tudo.
+      let gruposCertos = 0;
+      let itensCertos = 0;
+      
       for (const grupo in q.respostas) {
-          const respostaCorreta = q.respostas[grupo];
-          const respostaUsuarioGrupo = respostaUsuario[grupo] || [];
-          if (JSON.stringify(respostaCorreta.sort()) === JSON.stringify(respostaUsuarioGrupo.sort())) {
-              corretas++;
-          }
+        const corretas = q.respostas[grupo] || [];
+        const doAluno = respostaUsuario[grupo] || [];
+      
+        itensCertos += doAluno.filter(item => corretas.includes(item)).length;
+      
+        // Copia antes de ordenar: sort() ordena no lugar, e ordenar o gabarito
+        // alteraria o banco de questoes carregado em memoria.
+        const gabarito = JSON.stringify([...corretas].sort());
+        if (gabarito === JSON.stringify([...doAluno].sort())) gruposCertos++;
       }
-      if (corretas === Object.keys(q.respostas).length) {
-          feedbackClass = "correct";
-      } else if (corretas > 0) {
-          feedbackClass = "partial";
+      
+      if (gruposCertos === Object.keys(q.respostas).length) {
+        feedbackClass = "correct";
+      } else if (itensCertos > 0) {
+        feedbackClass = "partial";
       }
   } else if (q.tipo === "comboboxs") {
       const corretas = q.pares.map(p => p.resposta);
@@ -1182,17 +1194,29 @@ function revisarQuestoes() {
         feedbackClass = "partial";
       }
     } else if (q.tipo === "dragdrop") {
-      let corretas = 0;
+      // Duas contagens, e nao uma. O grupo inteiro certo decide o verde; o item
+      // solto no lugar certo decide o amarelo.
+      //
+      // Antes so os grupos eram contados: quem acertava alguns itens sem fechar
+      // nenhum grupo caia em zero e via vermelho, como se tivesse errado tudo.
+      let gruposCertos = 0;
+      let itensCertos = 0;
+      
       for (const grupo in q.respostas) {
-        const respostaCorreta = q.respostas[grupo];
-        const respostaUsuarioGrupo = respostaSalva.selecionadas[grupo] || [];
-        if (JSON.stringify(respostaCorreta.sort()) === JSON.stringify(respostaUsuarioGrupo.sort())) {
-          corretas++;
-        }
+        const corretas = q.respostas[grupo] || [];
+        const doAluno = respostaSalva.selecionadas[grupo] || [];
+      
+        itensCertos += doAluno.filter(item => corretas.includes(item)).length;
+      
+        // Copia antes de ordenar: sort() ordena no lugar, e ordenar o gabarito
+        // alteraria o banco de questoes carregado em memoria.
+        const gabarito = JSON.stringify([...corretas].sort());
+        if (gabarito === JSON.stringify([...doAluno].sort())) gruposCertos++;
       }
-      if (corretas === Object.keys(q.respostas).length) {
+      
+      if (gruposCertos === Object.keys(q.respostas).length) {
         feedbackClass = "correct";
-      } else if (corretas > 0) {
+      } else if (itensCertos > 0) {
         feedbackClass = "partial";
       }
     } else if (q.tipo === "comboboxs") {
