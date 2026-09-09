@@ -513,7 +513,7 @@ export const questoes = [
     "opcoes": [
       "Escolha uma opção",
       "Regras de aplicativo",
-      "Regras de NAT (Conversão de Endereços de Rede)",
+      "Regras DNAT (Conversão de Endereços de Rede)",
       "Regras de rede",
       "Marcas de serviço"
     ],
