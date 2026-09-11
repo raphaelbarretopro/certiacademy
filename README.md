@@ -1,376 +1,348 @@
-
 # CertiAcademy
 
-> Plataforma de simulados e materiais de estudo para certificações Microsoft da linha 900 (AZ-900, AI-900, DP-900, PL-900, MS-900, SC-900).
+> Plataforma de simulados para as certificações fundamentais da Microsoft, em
+> **raphaelbarreto.com.br**. Site estático no GitHub Pages, com login, histórico
+> de desempenho e controle de acesso em Firebase — sem servidor próprio.
 
-## Descrição
+## O que é
 
-O CertiAcademy é um projeto educacional que oferece simulados interativos, cursos e materiais de apoio para quem deseja se preparar para as certificações Microsoft 900. Cada módulo contém simulados com questões no padrão das provas oficiais, explicações detalhadas e recursos para acelerar a preparação.
+Simulados que reproduzem o formato real do exame: resposta única, múltipla
+escolha, Sim/Não, arrastar e soltar, lista suspensa e múltiplas listas. Mesma
+escala de 1000 pontos e mesma nota de corte de 700 das provas oficiais. Ao
+terminar, o aluno vê em quais assuntos precisa voltar.
 
-## Funcionalidades
-- Simulados interativos para cada certificação
-- Correção automática e explicações das respostas
-- Materiais de apoio em PDF e outros formatos
-- Interface responsiva e moderna
-- Suporte a múltiplos exames: AZ-900, AI-900, DP-900, PL-900, MS-900, SC-900
-
-## Estrutura do Projeto
-
-```
-├── index.html                # Página inicial
-├── css/                      # Estilos globais
-├── imagens/                  # Logos e imagens gerais
-├── AI-900/                   # Simulados e materiais AI-900
-│   ├── curso.html
-│   ├── 01-SIMULADO/ ...
-│   └── arquivos/             # PDFs e resumos
-├── AZ-900/                   # Simulados e materiais AZ-900
-│   ├── curso.html
-│   ├── 01-SIMULADO/ ...
-│   └── arquivos/
-├── DP-900/                   # Simulados e materiais DP-900
-│   ├── curso.html
-│   ├── 01-SIMULADO/ ...
-│   └── arquivos/
-├── PL-900/                   # Simulados e materiais PL-900
-│   ├── curso.html
-│   ├── 01-Power-Plataform-I/ ...
-│   └── arquivos/
-├── MS-900/                   # Simulados e materiais MS-900
-│   ├── curso.html
-│   ├── 01-SIMULADO/ ...
-│   └── arquivos/
-├── SC-900/                   # Simulados e materiais SC-900
-│   ├── curso.html
-│   ├── 01-SIMULADO/ ...
-│   └── arquivos/
-└── ...
-```
-
-## Tecnologias Utilizadas
-- HTML5, CSS3 (TailwindCSS e customizado)
-- JavaScript (ES6+)
-- Estrutura modular de JS para simulados
-- PDFs e materiais complementares
-
-## Como Usar
-1. Clone o repositório:
-   ```
-   git clone https://github.com/raphaelbarretopro/certiacademy.git
-   ```
-2. Abra o arquivo `index.html` no navegador para acessar a plataforma localmente.
-3. Navegue pelos módulos de cada certificação para acessar simulados e materiais.
-
-## Validação Local
-
-Antes de publicar alterações, execute a validação estrutural do repositório:
-
-```
-node scripts/validate-simulados.mjs
-```
-
-Essa checagem valida automaticamente:
-- presença dos arquivos obrigatórios de cada simulado
-- inclusão única do script de módulo compartilhado em cada `index.html`
-- ausência de arquivos legados dentro dos simulados (como `enviar_problema.php`)
-- exportação de `questoes` nos arquivos de conteúdo
-- schema das questões por tipo (`unica`, `multipla`, `simnao`, `dragdrop`, `combobox`, `comboboxs`)
-- índices de resposta, metadados obrigatórios e links inválidos nos bancos de questões
-- consistência entre `cursos.json`, os caminhos reais em disco e os cards de `index.html`
-
-O workflow de GitHub Pages também executa essa validação antes do deploy.
-
-## Login e Sessão do Aluno
-
-O acesso aos simulados exige conta Google. A autenticação usa **Firebase Authentication** direto do navegador, sem backend próprio, e o site continua hospedado no GitHub Pages.
-
-### Configuração (uma vez por ambiente)
-
-1. Crie um projeto em [console.firebase.google.com](https://console.firebase.google.com)
-2. Adicione um app **Web** (`</>`) e copie o objeto `firebaseConfig`
-3. Cole os valores em `shared/simulado-engine/common/js/firebase-config.js`
-4. Em **Authentication → Sign-in method**, habilite o provedor **Google**
-5. Em **Authentication → Settings → Authorized domains**, adicione o domínio do GitHub Pages e `localhost`
-
-Enquanto a configuração estiver vazia, `login.html` exibe um aviso em vez de falhar com erro interno do SDK.
-
-> Os valores de `firebaseConfig` **não são segredos**. A configuração do cliente é pública por natureza: identifica o projeto, não autoriza nada. Quem protege os dados são as Security Rules — que entram na fase 3, junto com o histórico.
-
-### Como funciona
-
-| Arquivo | Papel |
+| | |
 |---|---|
-| `shared/.../js/firebase-config.js` | configuração do projeto e versão do SDK |
-| `shared/.../js/auth.js` | login, logout, exclusão de conta e o portão `exigirSessao()` |
-| `shared/.../js/session-ui.js` | saudação com o primeiro nome, avatar e botão de sair |
-| `login.html` | tela de entrada, com retorno ao destino pretendido |
-| `privacidade.html` | política de privacidade e exclusão de conta |
+| Certificações | 6 |
+| Simulados | 46 |
+| Questões | 1.835 |
 
-O portão vive no `app.js`, que já era o único ponto de entrada JavaScript dos simulados — por isso o login vale para todos eles sem que os HTML precisem declarar nada além do atributo `data-requer-sessao` no `body`.
+| Curso | Exame |
+|---|---|
+| AZ-900 | Microsoft Azure Fundamentals |
+| SC-900 | Microsoft Security, Compliance and Identity Fundamentals |
+| PL-900 | Microsoft Power Platform Fundamentals |
+| DP-900 | Microsoft Azure Data Fundamentals |
+| AI-901 | Microsoft Azure AI Fundamentals |
+| AB-900 | Microsoft 365 Copilot and Agent Administration |
 
-Três detalhes que o login obrigatório exige, e que estão implementados:
+> O AI-900 foi substituído pelo AI-901 e o MS-900 foi desativado em 31/03/2026.
+> Os dois saíram do repositório.
 
-- **espera de sessão** — o portão aguarda o primeiro disparo de `onAuthStateChanged` em vez de ler `currentUser` na carga da página; ler direto manda para o login justamente quem já estava logado;
-- **página oculta até o portão resolver** — o CSS compartilhado esconde `body[data-requer-sessao]` e o `app.js` libera com `data-sessao="ok"`, para que a estrutura da prova não pisque antes do redirecionamento. Se a autenticação falhar, a página reaparece com uma mensagem, nunca em branco;
-- **destino preservado** — quem abre o link direto de um simulado volta para ele depois de entrar. O parâmetro `next` só aceita caminhos do próprio site, para não virar um redirecionamento aberto.
+## Como funciona
 
-O login usa `signInWithPopup`, e não `signInWithRedirect`: o fluxo de redirecionamento depende de um iframe entre domínios e não funciona em navegadores que bloqueiam armazenamento de terceiros quando o site não está no domínio do Firebase Hosting.
-
-### Efeito no "Reportar Problema"
-
-Com sessão garantida, o reporte deixa de ser anônimo: `report.js` inclui nome e e-mail do aluno e define `_replyto`, permitindo responder direto a quem reportou.
-
-## Histórico e Dashboard
-
-Ao finalizar um simulado, o resultado é gravado no **Cloud Firestore** e passa a alimentar o painel em `dashboard.html`.
-
-### Configuração (uma vez por ambiente)
-
-1. No console do Firebase: **Criação → Firestore Database → Criar banco de dados**
-2. Região: `southamerica-east1` (São Paulo) — **não dá para mudar depois**
-3. Modo: **produção** (as regras vêm do arquivo abaixo)
-4. Abra a aba **Regras**, cole o conteúdo de [`firestore.rules`](firestore.rules) e publique
-
-> As regras são a **única proteção real** dos dados. O site é estático e a configuração do cliente é pública, então qualquer pessoa pode chamar o banco — o que impede o acesso indevido é o que está escrito nesse arquivo.
-
-### Estrutura das coleções
+O site é **estático**. Não há backend: o navegador fala direto com o Firebase, e
+a configuração do cliente é pública por natureza.
 
 ```
-users/{uid}                      perfil do aluno
-users/{uid}/resultados/{id}      uma prova concluída (não pode ser alterada)
-users/{uid}/resumo/agregado      médias já calculadas, lidas pelo dashboard
+navegador ──> Firebase Authentication   (quem é você)
+         └──> Cloud Firestore           (o que você pode ver e escrever)
 ```
 
-O documento de resumo existe para o dashboard custar **uma leitura** em vez de uma por prova. O custo migra da leitura, que acontece toda vez que o painel abre, para a escrita, que acontece uma vez por prova. São **duas escritas por simulado concluído** — dentro da cota gratuita, isso dá cerca de 10 mil provas por dia.
+Isso tem uma consequência que atravessa o projeto inteiro:
 
-### Como a gravação acontece
+> **As regras do Firestore são a única proteção real dos dados.** Esconder uma
+> página não protege nada — qualquer pessoa digita o endereço. O que impede um
+> aluno de ler os dados de outro, ou de se promover a administrador, é
+> exclusivamente o que está escrito em [`firestore.rules`](firestore.rules).
 
-O `quiz.js` não fala com o Firestore: ele apenas dispara o evento `certiacademy:resultado-final` com os números que já calculou para a tela de resultado. Quem escuta e grava é o `app.js`. Isso evita carregar o SDK do banco em quem só abriu a prova, e mantém o motor funcionando mesmo sem o histórico configurado.
+### Duas armadilhas registradas no arquivo de regras
 
-A gravação é idempotente: o estado salvo marca `resultadoGravado`, então recarregar a tela de resultado não duplica a prova. Se a gravação falhar, a marca **não** é feita e a tentativa se repete na próxima carga — o aluno continua vendo a própria nota de qualquer forma.
+- **As permissões se somam (OR).** Um `match /{documento=**}` dentro de
+  `users/{uid}` anularia qualquer restrição interna, inclusive o bloqueio de
+  alteração dos resultados. Por isso cada coleção é declarada explicitamente.
+- **Ninguém edita o próprio papel**, administrador incluído. Sem
+  `request.auth.uid != uid`, uma conta de administrador comprometida seria
+  irreversível de dentro do sistema.
 
-### Tempo por simulado
+## Acesso
 
-O limite deixou de ser fixo em 45 minutos. Um banco de questões pode declarar o seu:
+Entrar não basta: o acesso precisa ser **liberado**. O portão confere as duas
+coisas e manda quem não passou para `liberar.html`.
+
+```
+entrar (Google) ──> portão ──┬── liberado ──> simulados e painel
+                             ├── administrador ──> passa sempre
+                             └── sem acesso ──> liberar.html
+                                                ├── resgatar voucher
+                                                └── pedir acesso
+```
+
+| Coleção | Guarda | Quem escreve |
+|---|---|---|
+| `papeis/{uid}` | `admin` ou `aluno` | só administradores, nunca o próprio |
+| `acessos/{uid}` | origem, data e validade da liberação | administrador ou resgate de voucher |
+| `vouchers/{codigo}` | código de uso único | administrador cria, aluno marca como usado |
+| `solicitacoes/{uid}` | pedido de acesso | o próprio aluno, enquanto não aceito |
+| `users/{uid}` | perfil e histórico | o próprio aluno |
+
+**O código do voucher é o identificador do documento.** É o que permite resgatar
+sem expor a lista: o aluno não consegue listar a coleção, mas alcança um
+documento cujo id já conhece. O segredo é o próprio código — por isso ele vem de
+`crypto.getRandomValues`, com 12 caracteres de um alfabeto de 32 sem `I`, `O`,
+`0` e `1`, que se confundem ao digitar.
+
+O administrador passa sempre pelo portão, de propósito: sem isso ficaria
+trancado do lado de fora do painel que libera os outros.
+
+### Primeiro administrador
+
+Não pode ser criado pelo sistema — não existe administrador para criá-lo. Ele
+nasce à mão no Console do Firebase:
+
+1. **Authentication → Users**: copie o UID da conta
+2. **Firestore Database → Iniciar coleção** na raiz
+3. Coleção `papeis`, documento com o UID, campo `papel` (string) = `admin`
+
+### Painel do administrador
+
+`admin.html` reúne a fila de solicitações, a lista de cadastrados e os vouchers.
+Clicar no nome de um aluno abre `dashboard.html?aluno=<uid>` — é o mesmo painel
+de sempre, só muda a origem do uid, com uma faixa âmbar avisando de quem são os
+dados na tela.
+
+Cada seção carrega por conta própria: uma quebrada não derruba as outras.
+
+## Modos de simulado
+
+Antes de começar, o aluno escolhe. A escolha vale para a tentativa e fica no
+estado persistido — recarregar não pergunta de novo.
+
+| | Praticar | Simular a certificação |
+|---|---|---|
+| Tempo | sem limite, conta quanto levou | 45 minutos corridos |
+| Cronômetro | sobe | desce |
+| Fechar a aba | pausa | **não pausa** |
+| Ao esgotar | não acontece | entrega a prova como está |
+
+A diferença está em **como o tempo é contado**. Na prática, o cronômetro acumula
+o tempo com a página aberta — é treino, e pausar faz parte. No exame o tempo é de
+relógio: guardamos o instante de início e calculamos o que sobrou a partir de
+agora. Sem isso, fechar a aba pausaria o cronômetro e "não dá para pausar" seria
+só uma frase na tela.
+
+O tempo padrão é 45 minutos. Um banco pode declarar o seu:
 
 ```js
 export const tempoMinutos = 60;
 ```
 
-Sem essa linha vale o padrão de 45, e nada muda em relação ao comportamento anterior. Como o tempo virou indicador do histórico, vale ajustar os simulados cujo tamanho destoa — eles variam de 11 a 49 questões.
+## Histórico e desempenho
 
-### Exclusão de dados
-
-`privacidade.html` apaga a subárvore `users/{uid}` **antes** de remover a conta do Authentication: na ordem inversa, o aluno perderia a permissão de apagar os próprios documentos e eles ficariam órfãos no banco.
-
-## Manifesto de Cursos
-
-O arquivo `cursos.json` na raiz é a fonte única de quais cursos e simulados existem. A estrutura é derivada do disco; os textos editoriais (`titulo`, `chamada`) e o campo `visivelNaHome` são escritos à mão e preservados entre execuções.
-
-Para checar se o manifesto reflete a estrutura atual:
+Ao finalizar, o resultado vai para o Firestore e alimenta `dashboard.html`.
 
 ```
-node scripts/gerar-manifesto.mjs
+users/{uid}/resultados/{id}      uma prova concluída — não pode ser alterada
+users/{uid}/resumo/agregado      médias já calculadas, lidas pelo painel
 ```
 
-Para atualizá-lo depois de criar ou remover um curso ou simulado:
+O documento de resumo existe para o painel custar **uma leitura** em vez de uma
+por prova. O custo migra da leitura, que acontece toda vez que o painel abre,
+para a escrita, que acontece uma vez por prova.
+
+O `quiz.js` não fala com o Firestore: dispara o evento
+`certiacademy:resultado-final` com os números que já calculou para a tela de
+resultado, e quem grava é o `app.js`. Isso evita carregar o SDK do banco em quem
+só abriu a prova, e mantém o motor funcionando sem histórico configurado.
+
+A gravação é idempotente: o estado salvo marca `resultadoGravado`, então
+recarregar a tela de resultado não duplica a prova. Se falhar, a marca **não** é
+feita e a tentativa se repete na próxima carga — o aluno continua vendo a própria
+nota de qualquer forma.
+
+### O que as regras não garantem
+
+A nota é calculada no navegador. Validar isso exigiria Cloud Functions, que
+**saíram do plano gratuito em 3 de fevereiro de 2026**. Enquanto o histórico era
+pessoal, forjar um resultado só distorcia o próprio painel. Com administrador
+acompanhando alunos, isso deixou de ser inofensivo — está na lista de
+endurecimento abaixo.
+
+## Interface
+
+Todas as telas seguem a mesma paleta, tipografia e componentes do painel.
+
+### No celular
+
+A barra do simulado fica **no rodapé**, ao alcance do polegar: hambúrguer, a
+ampulheta, "Tempo restante" e o cronômetro. Tudo o mais — identidade, Home,
+curso, abortar, reportar problema, privacidade e sair — vive no menu lateral que
+o hambúrguer abre.
+
+A home e as páginas de curso seguem o mesmo desenho: hambúrguer à esquerda, a
+marca ao centro, e uma lupa que filtra os cartões enquanto se digita, ignorando
+acentos.
+
+Na coluna única, a ordem é progresso, pergunta, grade de números e por fim os
+outros simulados do curso: o que decide a prova fica no alto, o que serve para
+navegar vem depois.
+
+Os ícones são SVG, nunca caractere de símbolo — as fontes do iOS não cobrem boa
+parte das faixas Unicode de setas, e o Safari cai no glifo substituto.
+
+## Estrutura
 
 ```
-node scripts/gerar-manifesto.mjs --write
+index.html                  home (gerada)
+login.html                  entrada com Google
+liberar.html                voucher e pedido de acesso
+dashboard.html              desempenho do aluno, e de outro aluno para o admin
+admin.html                  painel do administrador
+privacidade.html            política e exclusão de conta
+cursos.json                 fonte única de cursos e simulados
+firestore.rules             as regras — publique no Console
+
+CURSO/
+  curso.html                gerada a partir do manifesto
+  NN-SIMULADO/
+    index.html              gerada a partir do manifesto
+    js/questoes.js          o único conteúdo próprio de cada simulado
+    img/
+
+shared/simulado-engine/common/
+  css/styles.css            o simulado inteiro
+  css/menu-lateral.css      barra inferior e gaveta (simulado, home e cursos)
+  js/                       ver tabela abaixo
+
+scripts/                    geração, sincronização e validação
 ```
 
-A validação do repositório recusa o build quando um card de `index.html` aponta para uma página inexistente, quando um curso marcado como visível não tem card, ou quando o manifesto referencia um simulado que não está em disco. Foi a ausência dessa checagem que permitiu que cards de cursos de teste ficassem publicados apontando para 404.
+### Módulos compartilhados
 
-Para tirar um curso da home sem removê-lo do repositório, marque `"visivelNaHome": false` no manifesto e retire o card correspondente de `index.html`.
+| Arquivo | Papel |
+|---|---|
+| `app.js` | único ponto de entrada dos 46 simulados; portão, motor e gravação |
+| `auth.js` | login, logout, exclusão de conta, `exigirSessao()` |
+| `acesso.js` | papéis, liberação, vouchers, solicitações, `exigirAcesso()` |
+| `store.js` | leitura e escrita do histórico no Firestore |
+| `quiz.js` | motor da prova, pontuação e tela de resultado |
+| `render.js` | desenho das questões por tipo |
+| `timer.js` | cronômetro, nos dois sentidos |
+| `escolha-modo.js` | a pergunta que abre o simulado |
+| `report.js` | envio do "Reportar Problema", sem PHP |
+| `session-ui.js` | bloco do aluno na barra do simulado |
+| `header-sessao.js` | bloco do aluno nas páginas públicas |
+| `menu-lateral.js` | motor da gaveta do celular |
+| `menu-publico.js` | barra inferior e busca da home e dos cursos |
+| `menu-mobile.js` · `menu-home.js` · `menu-curso.js` | as listas de cada página |
 
-### Páginas de curso
+O portão vive no `app.js`, que já era o único ponto de entrada JavaScript dos
+simulados — por isso login e liberação valem para todos eles sem que os 46 HTML
+precisem declarar nada além de `data-requer-sessao` no `body`.
 
-As páginas `CURSO/curso.html` são **geradas** a partir do manifesto — não edite à mão:
+## Manutenção
 
-```
-node scripts/gerar-paginas-curso.mjs --write
-```
+`cursos.json` é a fonte única. A home, as páginas de curso e os 46 `index.html`
+de simulado são **gerados** — não edite à mão.
 
-Cada curso traz no manifesto um objeto `exame` com os dados do guia de estudo oficial: nome, resumo, data das habilidades, situação, áreas avaliadas com peso e tópicos, e a documentação recomendada. A estrutura de simulados e a contagem de questões vêm do disco, então nunca ficam desatualizadas.
-
-O gerador reconhece duas situações:
-
-- **simulado em preparação** — banco ainda com a questão de exemplo (`Conteúdo em atualização`). Fica fora da lista, e a página informa quantos estão a caminho;
-- **exame desativado ou substituído** — a página abre com um aviso explicando a situação, como no MS-900 e no AI-900.
-
-Sem `--write` o script apenas compara e falha se alguma página estiver fora de sincronia; é assim que o CI garante que ninguém edite o HTML gerado à mão.
-
-## Sincronização do Motor dos Simulados
-
-Os simulados compartilham o mesmo motor base em arquivos como `quiz.js`, `render.js`, `timer.js`, `report.js` e `main.js`, todos concentrados em `shared`, enquanto cada simulado mantém apenas o banco `questoes.js`.
-
-Para checar se há divergências entre as cópias locais e a base canônica:
-
-```
-node scripts/sync-simulado-engine.mjs
-```
-
-Para aplicar a sincronização nas cópias compatíveis:
-
-```
-node scripts/sync-simulado-engine.mjs --write
-```
-
-Referências canônicas atuais:
-- base comum: `shared/simulado-engine/common`
-- variante específica de renderização: `shared/simulado-engine/variants/ab-900-01`
-
-Fluxo recomendado de manutenção:
-- altere primeiro a base compartilhada
-- execute `node scripts/sync-simulado-engine.mjs --write`
-- execute `node scripts/validate-simulados.mjs`
-
-## Runtime Compartilhado Parcial
-
-O repositório agora começou a eliminar duplicação física de runtime:
-- `styles.css` passou a ser referenciado diretamente de `shared/simulado-engine/common/css/styles.css`
-- a variante visual de `AB-900/01-SIMULADO` usa `shared/simulado-engine/variants/ab-900-01/css/styles.css`
-- `js/main.js` deixou de existir nos simulados e foi substituído pelo bootstrap compartilhado `shared/simulado-engine/common/js/app.js`
-- `js/render.js` deixou de existir nos simulados e passou a ser resolvido pelo bootstrap compartilhado, com exceção visual controlada para `AB-900/01-SIMULADO`
-- `js/quiz.js` deixou de existir nos simulados e passou a ser consumido diretamente de `shared/simulado-engine/common/js/quiz.js`
-- `js/timer.js` e `js/utils.js` deixaram de existir nos simulados e passaram a ser consumidos diretamente do shared
-- `enviar_problema.php` deixou de existir em todo o repositório: o envio do "Reportar Problema" passou a ser feito pelo módulo estático `shared/simulado-engine/common/js/report.js`
-
-Para reaplicar essa migração caso novos simulados sejam adicionados:
-
-```
+```bash
+node scripts/gerar-manifesto.mjs --write        # manifesto <- disco
+node scripts/gerar-paginas-curso.mjs --write    # páginas <- manifesto
+node scripts/sync-simulado-engine.mjs --write   # cópias <- motor compartilhado
 node scripts/migrate-shared-runtime-assets.mjs --write
+node scripts/validate-simulados.mjs
 ```
 
-## Envio do "Reportar Problema"
+Sem `--write` cada script apenas compara e falha se algo estiver fora de
+sincronia. É assim que o workflow do GitHub Pages garante que ninguém edite um
+arquivo gerado à mão — e foi essa checagem que pegou uma edição direta na home
+que já tinha derrubado um deploy.
 
-O botão "Reportar Problema" dependia de `enviar_problema.php` e da função `mail()` do PHP, o que nunca funcionou no GitHub Pages — a publicação é 100% estática e não executa PHP. O envio agora sai direto do navegador para o [FormSubmit](https://formsubmit.co), que entrega a mensagem por e-mail sem backend próprio e sem chave secreta no código.
+A validação confere arquivos obrigatórios, schema das questões por tipo, índices
+de resposta, ausência de caminhos absolutos que quebram em Project Pages, e a
+consistência entre manifesto, disco e home.
 
-Toda a lógica está em `shared/simulado-engine/common/js/report.js`, consumida pelo motor comum e pela variante `ab-900-01`. O HTML do modal e o CSS dos simulados não mudaram.
+### Novos cursos e simulados
 
-O destino é definido em uma única constante:
-
-```js
-export const REPORT_ENDPOINT = 'https://formsubmit.co/ajax/raphael.boliveira@gmail.com';
+```bash
+node scripts/scaffold-certiacademy.mjs course --course XX-000 --title "Nome" --simulados 3 --write
+node scripts/scaffold-certiacademy.mjs simulado --course XX-000 --name 04-SIMULADO --write
+node scripts/scaffold-ui-server.mjs              # a mesma coisa, com botões, em :4173
 ```
 
-### Ativação (uma única vez)
+Sem `--write` o comando só mostra a prévia. Cada simulado novo nasce apenas com
+`js/questoes.js` como conteúdo próprio.
 
-O FormSubmit só encaminha mensagens depois que o endereço é confirmado:
+### Utilitários de banco de questões
 
-1. publique as alterações e abra qualquer simulado;
-2. envie um reporte de teste pelo botão "Reportar Problema";
-3. o FormSubmit enviará um e-mail de ativação para o endereço configurado — abra o link de confirmação.
-
-A partir daí todos os reportes chegam normalmente. Enquanto o endereço não estiver confirmado, o modal exibe "Erro ao enviar".
-
-### Ocultando o e-mail (opcional)
-
-Após a ativação, o painel do FormSubmit disponibiliza um alias no formato `https://formsubmit.co/ajax/<hash>`. Substituir o endereço por esse alias em `REPORT_ENDPOINT` evita que o e-mail fique exposto no código publicado, sem nenhuma outra mudança.
-
-### Dados enviados
-
-Cada reporte leva curso, simulado, número da questão, texto do usuário e a URL da página. Curso e simulado são derivados do caminho da URL, reproduzindo o que o PHP fazia com `basename(dirname(__DIR__))` e `basename(__DIR__)`.
-
-## Utilitários de Conteúdo
-
-## Scaffold de Novos Cursos e Simulados
-
-### Interface gráfica local
-
-Se preferir usar uma interface com botões em vez de digitar comandos, inicie o servidor local da UI:
-
-```
-node scripts/scaffold-ui-server.mjs
+```bash
+node scripts/set-questoes-simulado.mjs --file CURSO/NN-SIMULADO/js/questoes.js --value tag
+node scripts/normalize-questoes-dominios.mjs --file ... --domains "A|B|C"
+node scripts/quote-questoes-keys.mjs --file ...
 ```
 
-Depois abra no navegador:
+## Configuração do Firebase
 
-```
-http://localhost:4173
-```
+Uma vez por ambiente:
 
-Essa interface gráfica:
-- chama internamente o `scripts/scaffold-certiacademy.mjs`
-- permite pré-visualizar ou criar um curso novo
-- permite pré-visualizar ou criar um novo simulado em curso existente
-- executa a validação do repositório automaticamente após a criação real
+1. Projeto em [console.firebase.google.com](https://console.firebase.google.com)
+2. App **Web** (`</>`) → copie o `firebaseConfig` para
+   `shared/simulado-engine/common/js/firebase-config.js`
+3. **Authentication → Sign-in method**: habilite **Google**
+4. **Authentication → Settings → Authorized domains**: adicione o domínio de
+   produção, `localhost` e `127.0.0.1`
+5. **Firestore Database → Criar banco** em `southamerica-east1` — **não dá para
+   mudar depois**
+6. **Firestore → Regras**: cole [`firestore.rules`](firestore.rules) e publique
 
-Se quiser usar outra porta:
+> Os valores de `firebaseConfig` **não são segredos**: identificam o projeto, não
+> autorizam nada.
 
-```
-node scripts/scaffold-ui-server.mjs --port 4180
-```
+**As regras vivem no Console, não no repositório.** Toda vez que uma coleção nova
+aparece no código, é preciso republicar o arquivo à mão — esquecer isso já
+produziu duas telas de erro em produção, e é por isso que as páginas hoje dizem
+exatamente essa causa quando o Firestore recusa uma leitura.
 
-Para criar um novo curso completo no padrão atual do repositório:
+### Domínio próprio
 
-```
-node scripts/scaffold-certiacademy.mjs course --course AZ-104 --title "Microsoft Azure Administrator" --simulados 3
-```
+O DNS aponta para os IPs do GitHub Pages e o domínio está na configuração do
+Pages. Como o deploy é por GitHub Actions, **não existe arquivo `CNAME` no
+repositório** — e não deve existir, para não haver duas fontes da mesma
+informação.
 
-O comando acima roda em modo de prévia. Para aplicar a criação:
+## Reportar Problema
 
-```
-node scripts/scaffold-certiacademy.mjs course --course AZ-104 --title "Microsoft Azure Administrator" --simulados 3 --write
-```
+O botão dependia de `enviar_problema.php` e da função `mail()`, o que nunca
+funcionou no GitHub Pages — a publicação é estática e não executa PHP. O envio
+agora sai do navegador para o [FormSubmit](https://formsubmit.co), sem backend e
+sem chave secreta no código. Com sessão garantida, o reporte leva nome e e-mail
+do aluno e define `_replyto`.
 
-Isso cria:
-- `curso.html`
-- `arquivos/.gitkeep`
-- um conjunto inicial de pastas `NN-SIMULADO`
-- `index.html`, `js/questoes.js` e `img/.gitkeep` em cada simulado
-- atualização automática do card do novo curso em `index.html`
+O destino fica em uma constante em `report.js`. Depois de ativado, o FormSubmit
+oferece um alias com hash que evita expor o e-mail no código publicado.
 
-Para criar apenas um novo simulado dentro de um curso existente:
+## Privacidade
 
-```
-node scripts/scaffold-certiacademy.mjs simulado --course AZ-104 --name 04-SIMULADO
-```
+`privacidade.html` apaga a subárvore `users/{uid}` **antes** de remover a conta
+do Authentication: na ordem inversa, o aluno perderia a permissão de apagar os
+próprios documentos e eles ficariam órfãos.
 
-Para aplicar a criação do novo simulado:
+A administração tem acesso de **leitura** ao histórico de estudos dos alunos, e a
+política diz isso — não consegue alterar nem apagar resultado de ninguém.
 
-```
-node scripts/scaffold-certiacademy.mjs simulado --course AZ-104 --name 04-SIMULADO --write
-```
+## O que ainda não está feito
 
-Observações do scaffold:
-- o runtime continua compartilhado via `shared/simulado-engine/common`
-- cada novo simulado nasce apenas com `js/questoes.js` como conteúdo próprio
-- o `questoes.js` inicial já é válido para passar na validação estrutural, mas deve ser substituído pelo banco real antes de publicar
-- no modo `simulado`, a navegação lateral (`sidebarDireita`) dos simulados existentes do mesmo curso é atualizada automaticamente para incluir o novo item
-- o simulado atual já é gerado com destaque visual automático na `sidebarDireita`
-
-Scripts utilitários de manutenção de banco de questões não devem mais ficar dentro de `js/` dos simulados.
-
-Para atualizar o campo `simulado` em um banco de questões:
-
-```
-node scripts/set-questoes-simulado.mjs --file AI-900/01-SIMULADO/js/questoes.js --value ai-1
-```
-
-Para normalizar domínios de um banco de questões:
-
-```
-node scripts/normalize-questoes-dominios.mjs --file AZ-900/01-SIMULADO/js/questoes.js --domains "Descrever os conceitos da nuvem|Descrever a arquitetura e os serviços do Azure|Descrever o gerenciamento e a governança do Azure"
-```
-
-Para adicionar aspas nas chaves de objetos em um banco de questões:
-
-```
-node scripts/quote-questoes-keys.mjs --file PL-900/01-Power-Plataform-I/js/questoes.js
-```
-
-Os scripts utilitários editoriais antigos não devem permanecer dentro das pastas `js/` dos simulados. Isso inclui arquivos como `simulado.js`, `dominio.js`, `aspas.js`, `corrigir-dominios.js`, `servidor.js`, `package.json`, `index.html` auxiliar e `node_modules` locais.
+- **App Check** não configurado. As credenciais do cliente são públicas por
+  design, então hoje um script fora do site pode conversar com o Firestore. As
+  regras continuam valendo, mas isso permite força bruta em voucher e consumo de
+  cota. É gratuito.
+- **Nota calculada no navegador** — ver acima.
+- **Cobrança por PIX**. Confirmação automática exige receber um webhook, e um
+  site estático não tem onde. Enquanto isso, a liberação manual pelo painel
+  cobre o caso.
+- `imagens/ampulheta.gif` tem 640×640 e 753 KB para ser desenhado em 24 px.
+- A pasta `css/` da raiz não é referenciada por nenhuma página.
 
 ## Licença
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+MIT. Veja [LICENSE](LICENSE).
 
-## Créditos e Contato
+## Créditos
 
-Desenvolvido por Raphael Barreto.
-
-Para dúvidas, sugestões ou colaborações, entre em contato pelo [LinkedIn](https://www.linkedin.com/in/raphaelbarretopro/) ou abra uma issue.
+Desenvolvido por Raphael Barreto —
+[LinkedIn](https://www.linkedin.com/in/raphaelbarretopro/).
 
 ---
-*Este projeto não é afiliado à Microsoft. As marcas e nomes de exames são propriedade de seus respectivos detentores.*
+
+*Este projeto não é afiliado à Microsoft. As marcas e nomes de exames são
+propriedade de seus respectivos detentores.*
