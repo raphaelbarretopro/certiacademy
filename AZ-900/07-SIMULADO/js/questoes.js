@@ -182,7 +182,7 @@ export const questoes = [
       "Azure IoT Hub",
       "Azure Sphere"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Azure Sphere é uma solução de IoT altamente segura que inclui uma unidade de microcontrolador (MCU) e um sistema operacional Linux personalizado.",
     "link": "https://learn.microsoft.com/pt-br/azure-sphere/product-overview/what-is-azure-sphere",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -323,7 +323,7 @@ export const questoes = [
       "o Azure Front Door",
       "o Microsoft Defender for Cloud"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "Bloqueie o tráfego de entrada para suas Máquinas Virtuais do Azure com o recurso de acesso just-in-time (JIT) do Microsoft Defender for Cloud. Isso reduz a exposição a ataques, mantendo o acesso fácil quando você precisar se conectar a uma VM.",
     "link": "https://learn.microsoft.com/pt-br/azure/defender-for-cloud/just-in-time-access-usage",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -340,7 +340,7 @@ export const questoes = [
       "Azure Monitor",
       "Microsoft Defender for Cloud"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Microsoft Defender for Cloud ajuda a simplificar o processo de atendimento aos requisitos de conformidade regulatória, usando o painel de conformidade regulatória. Você pode baixar relatórios em PDF/CSV, bem como relatórios de certificação do status de sua conformidade.",
     "link": "https://learn.microsoft.com/pt-br/azure/defender-for-cloud/regulatory-compliance-dashboard",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -357,7 +357,7 @@ export const questoes = [
       "Azure Key Vault",
       "Microsoft Defender for Cloud"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "Você pode habilitar o logon único (SSO) para um aplicativo empresarial por meio do Microsoft Entra ID. Grupos de segurança de aplicativo permitem configurar segurança de rede como uma extensão natural da estrutura de um aplicativo, permitindo agrupar máquinas virtuais e definir políticas de segurança de rede com base nesses grupos.",
     "link": "https://learn.microsoft.com/pt-br/entra/identity/enterprise-apps/add-application-portal-setup-sso",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -430,7 +430,7 @@ export const questoes = [
       "o Azure Front Door",
       "o Microsoft Defender for Cloud"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "Você pode usar o acesso just-in-time (JIT) do Microsoft Defender for Cloud para proteger suas máquinas virtuais (VMs) do Azure contra acesso não autorizado pela rede. Muitas vezes, os firewalls contêm regras de permissão que deixam suas VMs vulneráveis a ataques. O JIT permite que você conceda acesso às suas VMs apenas quando o acesso é necessário, nas portas necessárias, e pelo período de tempo necessário.",
     "link": "https://learn.microsoft.com/pt-br/azure/defender-for-cloud/just-in-time-access-usage",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -585,7 +585,7 @@ export const questoes = [
       "Azure Key Vault",
       "Microsoft Defender for Cloud"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Microsoft Entra ID fornece serviços como: Logon único (SSO), que permite lembrar apenas um nome de usuário e uma senha para acessar múltiplos aplicativos. Uma única identidade é vinculada a um usuário, o que simplifica o modelo de segurança. À medida que os usuários mudam de função ou saem de uma organização, as modificações de acesso são vinculadas a essa identidade, o que reduz muito o esforço necessário para alterar ou desabilitar contas.",
     "link": "https://learn.microsoft.com/pt-br/training/modules/describe-azure-identity-access-security/3-authentication-methods",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -707,7 +707,7 @@ export const questoes = [
       "Federação",
       "Emissão de tíquetes (Ticketing)"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "A autenticação é o processo de comprovar que você é quem diz ser. A autorização é o ato de conceder a uma parte já autenticada permissão para fazer algo.",
     "link": "https://learn.microsoft.com/pt-br/entra/identity-platform/authentication-vs-authorization",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
