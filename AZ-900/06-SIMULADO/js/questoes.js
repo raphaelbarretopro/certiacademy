@@ -160,7 +160,7 @@ export const questoes = [
       "devem ser restaurados antes que os dados possam ser acessados.",
       "devem ser reidratados para que os dados possam ser acessados."
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Armazenamento do Azure oferece diferentes camadas de acesso: quente (hot), fria (cool) e arquivo morto (archive). A camada de arquivo morto tem o menor custo de armazenamento, mas custos de recuperação de dados mais altos em comparação às camadas quente e fria. Os dados na camada de arquivo morto podem levar várias horas para serem recuperados. Enquanto um blob está no armazenamento de arquivo morto, os dados do blob ficam offline e não podem ser lidos, sobrescritos ou modificados. Para ler ou baixar um blob em arquivo morto, você deve primeiro reidratá-lo para uma camada online.",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/blobs/storage-blob-storage-tiers?tabs=azure-portal#archive-access-tier",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -177,7 +177,7 @@ export const questoes = [
       "em várias regiões do Azure.",
       "dentro de um único datacenter do Azure."
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "Uma Zona de Disponibilidade é uma oferta de alta disponibilidade que protege seus aplicativos e dados contra falhas de datacenter. As Zonas de Disponibilidade são locais fisicamente separados dentro de uma região do Azure.",
     "link": "https://learn.microsoft.com/pt-br/azure/availability-zones/az-overview",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -263,7 +263,7 @@ export const questoes = [
       "compartilhamento de arquivos.",
       "fila."
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "O agente de Sincronização de Arquivos do Azure permite que os dados em um servidor Windows sejam sincronizados com um compartilhamento de arquivos do Azure (Azure File share).",
     "link": "https://www.microsoft.com/pt-br/download/details.aspx?id=57159",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -328,7 +328,7 @@ export const questoes = [
       "armazenamento de chave/atributo para dados não relacionais e estruturados.",
       "serviço de armazenamento otimizado para objetos muito grandes, como arquivos de vídeo e bitmaps."
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Armazenamento de Blobs do Azure é usado principalmente para arquivos grandes e não estruturados, como áudio, vídeo, imagens e arquivos de backup, entre outros.",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/blobs/storage-blobs-introduction",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -497,7 +497,7 @@ export const questoes = [
       "local (LRS)",
       "de zona (ZRS)"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "A palavra-chave é 'redundância', o que significa que os dados precisarão ser armazenados em mais de um local. Contas de armazenamento Premium com blobs em blocos oferecem suporte apenas ao Armazenamento com Redundância de Zona (ZRS).",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/common/storage-redundancy",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -562,7 +562,7 @@ export const questoes = [
       "devem ser restaurados antes que os dados possam ser acessados.",
       "devem ser reidratados para que os dados possam ser acessados."
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "Os dados armazenados na camada de acesso Arquivo Morto de uma conta de Armazenamento do Azure devem ser reidratados antes que possam ser acessados.",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/blobs/storage-blob-storage-tiers?tabs=azure-portal#archive-access-tier",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -578,7 +578,7 @@ export const questoes = [
       "Microsoft Lifecycle Policy",
       "Software Assurance"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "O Software Assurance é o programa da Microsoft que permite reaproveitar (via Benefício de Uso Híbrido do Azure) licenças existentes de Windows Server ou SQL Server em máquinas virtuais do Azure.",
     "link": "https://azure.microsoft.com/pt-br/pricing/hybrid-benefit/",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -658,7 +658,7 @@ export const questoes = [
       "Armazenamento de Filas do Azure",
       "Armazenamento de Tabelas do Azure"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Arquivos do Azure oferece suporte à sincronização entre o armazenamento local e o Armazenamento do Azure. A capacidade destacada nesta questão se refere a um serviço nativo de sincronização chamado Sincronização de Arquivos do Azure (Azure File Sync), que estende as capacidades do Arquivos do Azure, transformando seus Servidores Windows locais em um cache de alta velocidade para seus compartilhamentos de arquivos na nuvem.",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/files/storage-sync-files-planning",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -705,7 +705,7 @@ export const questoes = [
       "Acesso Condicional",
       "Microsoft Intune"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Acesso Condicional é o mecanismo de política fundamental no núcleo da arquitetura de identidade Zero Trust da Microsoft. Ele funciona como um verificador automatizado de instruções \"se-então\" que agrega métricas em tempo real antes de conceder acesso a recursos corporativos.",
     "link": "https://learn.microsoft.com/pt-br/entra/identity/conditional-access/overview",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -772,7 +772,7 @@ export const questoes = [
       "a camada de acesso Fria (Cool) do Armazenamento de Blobs do Azure",
       "a camada de acesso Quente (Hot) do Armazenamento de Blobs do Azure"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "A camada de acesso Fria (Cool): esta camada é projetada para dados acessados com pouca frequência e que devem permanecer armazenados por pelo menos 30 dias. Se um blob for excluído, sobrescrito ou movido para outra camada antes do término dessa janela de 30 dias, o Azure cobra uma taxa de exclusão antecipada proporcional aos dias restantes de armazenamento. Já a camada Quente é otimizada para acesso frequente de leitura/gravação, não tem requisito de duração mínima de armazenamento e não cobra penalidades de exclusão antecipada, embora seu custo de armazenamento por gigabyte seja mais alto.",
     "link": "https://learn.microsoft.com/pt-br/azure/storage/blobs/access-tiers-overview",
     "dominio": "Descrever a arquitetura e os serviços do Azure",

@@ -97,7 +97,7 @@ export const questoes = [
       "centro de administração do Microsoft 365",
       "Microsoft Service Trust Portal"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "O Compliance Manager foi movido do Service Trust Portal para seu novo local no centro de conformidade (compliance center) do Microsoft 365. Todos os dados do cliente foram transferidos para o novo local, então é possível continuar usando o Compliance Manager sem interrupções. Embora a versão clássica do Compliance Manager permaneça no Service Trust Portal, todos os usuários são incentivados a usar o Compliance Manager no centro de administração do Microsoft 365.",
     "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/get-started-with-service-trust-portal?view=o365-worldwide",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -114,7 +114,7 @@ export const questoes = [
       "Modelos do Azure Resource Manager",
       "Grupos de gerenciamento"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "Modelos do Azure Resource Manager fornecem uma plataforma comum para implantar objetos em uma infraestrutura de nuvem e para implementar consistência em todo o ambiente do Azure. As políticas do Azure são usadas para definir regras sobre o que pode ser implantado e como deve ser implantado. Embora isso possa ajudar a garantir consistência, as políticas do Azure não fornecem, por si só, a plataforma comum para implantar objetos em uma infraestrutura de nuvem.",
     "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -146,7 +146,7 @@ export const questoes = [
       "o Microsoft Defender for Cloud no portal do Azure",
       "o Microsoft Trust Center"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O recurso da Microsoft que fornece informações detalhadas sobre segurança, privacidade, ofertas de conformidade, políticas e recursos em todos os produtos de nuvem da Microsoft é chamado de Microsoft Trust Center. O Trust Center é um hub centralizado que oferece recursos e documentação abrangentes para ajudar os clientes a entender e avaliar as capacidades de segurança e conformidade dos serviços de Nuvem da Microsoft.",
     "link": "https://www.microsoft.com/pt-br/trust-center",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -234,7 +234,7 @@ export const questoes = [
       "continua a funcionar normalmente.",
       "é agora um objeto somente leitura."
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "A VNET será marcada como 'Não conforme' quando a política for atribuída. No entanto, ela não será excluída e continuará a funcionar normalmente. O Azure Policy é um serviço no Azure usado para criar, atribuir e gerenciar políticas. Essas políticas impõem diferentes regras e efeitos sobre seus recursos, para que esses recursos permaneçam em conformidade com seus padrões corporativos e contratos de nível de serviço. Se houver recursos existentes que não estejam em conformidade com uma nova atribuição de política, eles aparecerão em Recursos não conformes.",
     "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -266,7 +266,7 @@ export const questoes = [
       "centro de Conformidade do Microsoft 365",
       "Microsoft Service Trust Portal"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "O Microsoft Service Trust Portal fornece uma variedade de conteúdo, ferramentas e outros recursos sobre práticas de segurança, privacidade e conformidade da Microsoft, incluindo relatórios de auditoria e um vasto acervo de informações de implementação de segurança e design com o objetivo de facilitar o atendimento aos objetivos de conformidade regulatória.",
     "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/get-started-with-service-trust-portal?view=o365-worldwide",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -528,7 +528,7 @@ export const questoes = [
       "alertas de orçamento (Budget alerts)",
       "conformidade (Compliance)"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "Alertas de orçamento (Budget alerts) notificam você quando os gastos, com base no uso ou no custo, atingem ou excedem o valor definido na condição de alerta do orçamento. Orçamentos do Gerenciamento de Custos são criados usando o portal do Azure ou a API de Consumo do Azure.",
     "link": "https://learn.microsoft.com/pt-br/azure/cost-management-billing/costs/cost-mgt-alerts-monitor-usage-spending",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -562,7 +562,7 @@ export const questoes = [
       "centro de administração do Microsoft 365",
       "Microsoft Service Trust Portal"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "O Compliance Manager foi movido do Service Trust Portal para seu novo local no centro de conformidade do Microsoft 365. Todos os dados do cliente foram transferidos, então é possível continuar usando o Compliance Manager sem interrupções.",
     "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/get-started-with-service-trust-portal?view=o365-worldwide",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -665,7 +665,7 @@ export const questoes = [
       "O Database Migration Assistant",
       "A calculadora de preços do Azure"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "A calculadora de TCO é projetada para ajudar você a comparar os custos de executar uma infraestrutura local em comparação com uma infraestrutura na nuvem do Azure. Com a calculadora de TCO, você insere a configuração atual da sua infraestrutura, incluindo servidores, bancos de dados, armazenamento e tráfego de rede de saída. A calculadora de TCO então compara os custos previstos do seu ambiente atual com um ambiente do Azure que suporte os mesmos requisitos de infraestrutura — incluindo economias com a redução do consumo de eletricidade.",
     "link": "https://learn.microsoft.com/pt-br/training/modules/plan-manage-azure-costs/2-compare-costs-tco-calculator",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -704,7 +704,7 @@ export const questoes = [
       "alertas de orçamento (Budget alerts)",
       "conformidade (Compliance)"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "Alertas de orçamento são um recurso nativo de governança dentro do conjunto Gerenciamento de Custos + Faturamento do Azure, projetado para prevenir excedentes inesperados e vazamento de gastos na nuvem.",
     "link": "https://learn.microsoft.com/pt-br/azure/cost-management-billing/costs/cost-mgt-alerts-monitor-usage-spending",
     "dominio": "Descrever o gerenciamento e a governança do Azure",

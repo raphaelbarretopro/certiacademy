@@ -490,7 +490,7 @@ export const questoes = [
       "Instâncias de máquinas virtuais de Spot do Azure",
       "Conjuntos de dimensionamento de máquinas virtuais do Azure"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "As instâncias de máquinas virtuais de Spot do Azure permitem utilizar a capacidade de computação não utilizada da Microsoft com grandes descontos. Elas são ideais para cargas de trabalho que podem ser interrompidas, como testes ou renderizações.",
     "link": "https://learn.microsoft.com/pt-br/azure/virtual-machines/spot-vms",
     "dominio": "Descrever a arquitetura e os serviços do Azure",

@@ -407,7 +407,7 @@ export const questoes = [
       "um agente do Azure Pipelines.",
       "o Azure VPN Gateway."
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Azure Arc simplifica a governança e o gerenciamento, entregando uma plataforma consistente de gerenciamento multinuvem e local. O Azure Arc fornece uma forma centralizada e unificada de: gerenciar todo o seu ambiente em conjunto, projetando seus recursos não Azure e/ou locais no Azure Resource Manager; gerenciar máquinas virtuais, clusters Kubernetes e bancos de dados como se estivessem sendo executados no Azure.",
     "link": "https://learn.microsoft.com/pt-br/azure/azure-arc/overview",
     "dominio": "Descrever a arquitetura e os serviços do Azure",
@@ -591,7 +591,7 @@ export const questoes = [
       "rede",
       "armazenamento"
     ],
-    "resposta": 3,
+    "resposta": 4,
     "explicacao": "Quando uma máquina virtual é parada (desalocada), o Azure não cobra pelas horas de núcleo da VM. No entanto, você continua acumulando cobranças pelo armazenamento do Azure necessário para o disco do SO da VM e quaisquer discos de dados anexados.",
     "link": "https://learn.microsoft.com/pt-br/azure/virtual-machines/states-billing",
     "dominio": "Descrever a arquitetura e os serviços do Azure",

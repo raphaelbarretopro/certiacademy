@@ -480,7 +480,7 @@ export const questoes = [
       "acessar seus dados armazenados no Azure",
       "acessar o portal do Azure"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "Uma VM parada (desalocada) fica offline e não é montada em um servidor host do Azure. Iniciar uma VM monta a VM em um servidor host antes que a VM seja iniciada. Assim que a VM é montada, ela se torna passível de cobrança. Por esse motivo, você não consegue iniciar uma VM depois que uma avaliação expirou. Você não é cobrado por contas de usuário do Microsoft Entra ID, então pode continuar criando contas. Você pode acessar dados que já estão armazenados no Azure. E você pode acessar o Portal do Azure — inclusive é possível reativar e fazer upgrade da assinatura expirada diretamente pelo portal.",
     "link": "https://learn.microsoft.com/pt-br/azure/virtual-machines/states-billing",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -497,7 +497,7 @@ export const questoes = [
       "selecionar Parar (Stop) para a máquina virtual a partir do portal do Azure",
       "desligar a máquina virtual a partir de uma sessão de Área de Trabalho Remota"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "Selecione Parar (Stop) para a máquina virtual no portal do Azure. Apenas desligar a máquina a partir do sistema operacional não é suficiente — você continuaria pagando pelos recursos de computação da VM do Azure (a alocação de hardware).",
     "link": "https://www.parkmycloud.com/does-azure-charge-for-stopped-vm/",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -615,7 +615,7 @@ export const questoes = [
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> estende a conformidade e o monitoramento do Azure para configurações híbridas e multinuvem.",
     "opcoes": ["Escolha uma opção", "Microsoft Entra Connect", "Azure Arc", "Azure Front Door", "Azure Policy"],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "O Azure Arc simplifica a governança e o gerenciamento, entregando uma plataforma consistente de gerenciamento multinuvem e local, permitindo estender a conformidade e o monitoramento do Azure para essas configurações híbridas.",
     "link": "https://learn.microsoft.com/pt-br/azure/azure-arc/overview",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -632,7 +632,7 @@ export const questoes = [
       "Modelos do Azure Resource Manager",
       "Grupos de gerenciamento"
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "Modelos do Azure Resource Manager fornecem uma plataforma comum para implantar objetos em uma infraestrutura de nuvem e para implementar consistência em todo o ambiente do Azure.",
     "link": "https://learn.microsoft.com/pt-br/azure/azure-resource-manager/templates/overview",
     "dominio": "Descrever o gerenciamento e a governança do Azure",

@@ -602,7 +602,7 @@ export const questoes = [
       "autenticação multifator (MFA).",
       "controle de acesso baseado em função (RBAC)."
     ],
-    "resposta": 2,
+    "resposta": 3,
     "explicacao": "Requerer que o usuário digite uma senha e responda a uma pergunta de segurança é um exemplo de autenticação multifator (MFA), pois exige mais de um fator/elemento para verificar a identidade do usuário.",
     "link": "https://learn.microsoft.com/pt-br/entra/identity/authentication/concept-mfa-howitworks",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
@@ -619,7 +619,7 @@ export const questoes = [
       "Federação",
       "Emissão de tíquetes (Ticketing)"
     ],
-    "resposta": 1,
+    "resposta": 2,
     "explicacao": "Autenticação, e não autorização, é o processo de verificar as credenciais de um usuário. A diferença entre autenticação e autorização é: Autenticação é comprovar sua identidade, provar que você é quem diz ser. O exemplo mais comum disso é entrar em um sistema fornecendo credenciais, como um nome de usuário e senha. Autorização é o que você tem permissão para fazer depois de ser autenticado — por exemplo, quais recursos você pode acessar e o que pode fazer com eles.",
     "link": "https://learn.microsoft.com/pt-br/entra/identity-platform/authentication-vs-authorization",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
