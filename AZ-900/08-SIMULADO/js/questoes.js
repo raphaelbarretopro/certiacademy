@@ -5,16 +5,16 @@
 // recursos e as ferramentas de governança e conformidade no Azure
 // (fatores de custo; calculadora de preços; Cost Management; marcas (tags);
 //  Microsoft Purview; Azure Policy; bloqueios de recursos)
-// 48 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 44 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
-// 1, 3, 138, 188, 189, 197, 209, 236, 272, 277, 280, 284, 285, 291, 292, 293, 294, 296,
-// 298, 302, 303, 304, 311, 312, 313, 314, 316, 318, 319, 321, 324, 327, 329, 346, 347,
-// 355, 357, 358, 359, 367, 368, 371, 373, 407, 412, 421, 460, 468
+// 1, 3, 138, 188, 189, 197, 209, 236, 272, 277, 280, 284, 285, 291, 292, 293, 294,
+// 302, 303, 304, 311, 312, 313, 314, 316, 318, 319, 321, 324, 327, 329, 346,
+// 355, 357, 358, 359, 367, 368, 371, 373, 407, 412, 460, 468
 //
 // ATENÇÃO — CONTRADIÇÃO INTERNA NO BANCO ORIGINAL:
 // A Q1 (drag-drop) exclui o plano Premier como opção que permite abrir novos chamados
-// de suporte, mas a Q34 (Q368 original), no mesmo banco, afirma explicitamente que TODOS
+// de suporte, mas a Q38 (Q368 original), no mesmo banco, afirma explicitamente que TODOS
 // os 5 planos (Basic, Developer, Standard, Professional Direct e Premier) permitem abrir
 // chamados de suporte. Mantive cada questão fiel à sua própria fonte, mas sinalizo a
 // inconsistência para revisão.
@@ -94,12 +94,12 @@ export const questoes = [
       "Escolha uma opção",
       "centro de administração do Microsoft Entra ID",
       "portal do Azure",
-      "centro de administração do Microsoft 365",
+      "portal de conformidade do Microsoft Purview",
       "Microsoft Service Trust Portal"
     ],
     "resposta": 3,
-    "explicacao": "O Compliance Manager foi movido do Service Trust Portal para seu novo local no centro de conformidade (compliance center) do Microsoft 365. Todos os dados do cliente foram transferidos para o novo local, então é possível continuar usando o Compliance Manager sem interrupções. Embora a versão clássica do Compliance Manager permaneça no Service Trust Portal, todos os usuários são incentivados a usar o Compliance Manager no centro de administração do Microsoft 365.",
-    "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/get-started-with-service-trust-portal?view=o365-worldwide",
+    "explicacao": "O Gerenciador de Conformidade (Compliance Manager) saiu do Service Trust Portal e hoje é executado no portal de conformidade do Microsoft Purview — o antigo centro de conformidade do Microsoft 365, que foi renomeado. Todos os dados do cliente foram transferidos junto, então o uso continua sem interrupção. O Service Trust Portal continua existindo, mas para relatórios de auditoria e documentos de conformidade da Microsoft, e não para executar o Gerenciador de Conformidade.",
+    "link": "https://learn.microsoft.com/pt-br/purview/compliance-manager",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
@@ -309,41 +309,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 18 (banco original Q296)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> explica quais dados a Microsoft processa, como a Microsoft processa esses dados, e a finalidade do processamento desses dados.",
-    "opcoes": [
-      "Escolha uma opção",
-      "A Declaração de Privacidade dos Serviços Online da Microsoft",
-      "Os Termos de Produto da Microsoft",
-      "O Contrato de Nível de Serviço Online da Microsoft",
-      "O Contrato de Assinatura Online para o Microsoft Azure"
-    ],
-    "resposta": 1,
-    "explicacao": "A Declaração de Privacidade da Microsoft explica quais dados pessoais a Microsoft processa, como a Microsoft os processa, e a finalidade do processamento desses dados.",
-    "link": "https://privacy.microsoft.com/pt-br/privacystatement",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco08"
-  },
-  // Questao 19 (banco original Q298)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Uma definição de iniciativa do Azure Policy é uma <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "coleção de definições de política",
-      "coleção de atribuições de definição de Azure Policy",
-      "grupo de definições de Azure Blueprints",
-      "grupo de atribuições de função de controle de acesso baseado em função (RBAC)"
-    ],
-    "resposta": 1,
-    "explicacao": "Uma definição de iniciativa é uma coleção de definições de política que são adaptadas para atingir um único objetivo abrangente. Definições de iniciativa simplificam o gerenciamento e a atribuição de definições de política, agrupando um conjunto de políticas como um único item.",
-    "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview#initiative-definition",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco08"
-  },
-  // Questao 20 (banco original Q302)
+  // Questao 18 (banco original Q302)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -358,7 +324,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 21 (banco original Q303)
+  // Questao 19 (banco original Q303)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -373,7 +339,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 22 (banco original Q304)
+  // Questao 20 (banco original Q304)
   {
     "tipo": "unica",
     "texto": "Sua empresa planeja migrar todos os dados locais para o Azure.\nVocê precisa identificar se o Azure está em conformidade com os requisitos regionais da empresa.\nO que você deve usar?",
@@ -384,7 +350,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 23 (banco original Q311)
+  // Questao 21 (banco original Q311)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa planeja adquirir uma assinatura do Azure.\nA política de suporte da empresa determina que o ambiente do Azure deve fornecer uma opção de acesso a engenheiros de suporte por telefone ou e-mail.\nVocê precisa recomendar qual plano de suporte atende ao requisito da política de suporte.\nSolução: Recomendar um plano de suporte Basic.\nIsso atende ao objetivo?",
@@ -395,7 +361,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 24 (banco original Q312)
+  // Questao 22 (banco original Q312)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa planeja adquirir uma assinatura do Azure.\nA política de suporte da empresa determina que o ambiente do Azure deve fornecer uma opção de acesso a engenheiros de suporte por telefone ou e-mail.\nVocê precisa recomendar qual plano de suporte atende ao requisito da política de suporte.\nSolução: Recomendar um plano de suporte Standard.\nIsso atende ao objetivo?",
@@ -406,7 +372,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 25 (banco original Q313)
+  // Questao 23 (banco original Q313)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa planeja adquirir uma assinatura do Azure.\nA política de suporte da empresa determina que o ambiente do Azure deve fornecer uma opção de acesso a engenheiros de suporte por telefone ou e-mail.\nVocê precisa recomendar qual plano de suporte atende ao requisito da política de suporte.\nSolução: Recomendar um plano de suporte Premier.\nIsso atende ao objetivo?",
@@ -417,7 +383,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 26 (banco original Q314)
+  // Questao 24 (banco original Q314)
   {
     "tipo": "unica",
     "texto": "Sua empresa planeja solicitar à Microsoft uma revisão arquitetônica de um ambiente do Azure.\nA empresa atualmente tem um plano de suporte Basic.\nVocê precisa recomendar um novo plano de suporte para a empresa. A solução deve minimizar os custos.\nQual plano de suporte você deve recomendar?",
@@ -428,7 +394,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 27 (banco original Q316)
+  // Questao 25 (banco original Q316)
   {
     "tipo": "unica",
     "texto": "O que é necessário para usar o Gerenciamento de Custos do Azure (Azure Cost Management)?",
@@ -444,7 +410,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 28 (banco original Q318)
+  // Questao 26 (banco original Q318)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa planeja adquirir uma assinatura do Azure.\nA política de suporte da empresa determina que o ambiente do Azure deve fornecer uma opção de acesso a engenheiros de suporte por telefone ou e-mail.\nVocê precisa recomendar qual plano de suporte atende ao requisito da política de suporte.\nSolução: Recomendar um plano de suporte Professional Direct.\nIsso atende ao objetivo?",
@@ -455,7 +421,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 29 (banco original Q319)
+  // Questao 27 (banco original Q319)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem um contrato de Software Assurance que inclui licenças do Microsoft SQL Server.\nVocê planeja implantar o SQL Server em máquinas virtuais do Azure.\nO que você deve fazer para minimizar os custos de licenciamento da implantação?",
@@ -471,7 +437,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 30 (banco original Q321)
+  // Questao 28 (banco original Q321)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -486,7 +452,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 31 (banco original Q324)
+  // Questao 29 (banco original Q324)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -501,7 +467,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 32 (banco original Q327)
+  // Questao 30 (banco original Q327)
   {
     "tipo": "unica",
     "texto": "Qual afirmação descreve com precisão a Política de Ciclo de Vida Moderno (Modern Lifecycle Policy) para serviços do Azure?",
@@ -517,7 +483,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 33 (banco original Q329)
+  // Questao 31 (banco original Q329)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode usar <combobox> no Azure para enviar alertas por e-mail quando o custo do período de faturamento atual de uma assinatura do Azure exceder um limite especificado.",
@@ -534,7 +500,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 34 (banco original Q346)
+  // Questao 32 (banco original Q346)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> explica quais dados a Microsoft processa, como a Microsoft processa esses dados, e a finalidade do processamento desses dados.",
@@ -551,24 +517,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 35 (banco original Q347)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Você pode acessar o Compliance Manager a partir do(a) <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "centro de administração do Microsoft Entra ID",
-      "portal do Azure",
-      "centro de administração do Microsoft 365",
-      "Microsoft Service Trust Portal"
-    ],
-    "resposta": 3,
-    "explicacao": "O Compliance Manager foi movido do Service Trust Portal para seu novo local no centro de conformidade do Microsoft 365. Todos os dados do cliente foram transferidos, então é possível continuar usando o Compliance Manager sem interrupções.",
-    "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/get-started-with-service-trust-portal?view=o365-worldwide",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco08"
-  },
-  // Questao 36 (banco original Q355)
+  // Questao 33 (banco original Q355)
   {
     "tipo": "unica",
     "texto": "Qual é o prazo mais longo que você pode comprar para Instâncias de Máquina Virtual (VM) Reservadas do Azure?",
@@ -579,7 +528,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 37 (banco original Q357)
+  // Questao 34 (banco original Q357)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem 10 escritórios. Você planeja gerar vários relatórios de faturamento a partir do portal do Azure. Cada relatório conterá a utilização de recursos do Azure de cada escritório.\nQual recurso do Azure Resource Manager você deve usar antes de gerar os relatórios?",
@@ -590,7 +539,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 38 (banco original Q358)
+  // Questao 35 (banco original Q358)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -605,7 +554,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 39 (banco original Q359)
+  // Questao 36 (banco original Q359)
   {
     "tipo": "unica",
     "texto": "Esta questão exige que você avalie o texto sublinhado para determinar se está correto.\nSe a Microsoft planeja encerrar o suporte para um serviço do Azure que NÃO tem um serviço sucessor, a Microsoft fornecerá notificação com pelo menos 12 meses de antecedência.\nInstruções: Revise o texto sublinhado. Se ele tornar a afirmação correta, selecione \"Nenhuma alteração é necessária\". Se a afirmação estiver incorreta, selecione a opção que a torna correta.",
@@ -616,7 +565,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 40 (banco original Q367)
+  // Questao 37 (banco original Q367)
   {
     "tipo": "unica",
     "texto": "Esta questão exige que você avalie o texto sublinhado para determinar se está correto.\nUma solução de plano de suporte que oferece informações de melhores práticas, status de integridade e notificações, e acesso 24/7 a informações de faturamento pelo menor custo possível é um plano de suporte Standard.\nInstruções: Revise o texto sublinhado. Se ele tornar a afirmação correta, selecione \"Nenhuma alteração é necessária\". Se a afirmação estiver incorreta, selecione a opção que a torna correta.",
@@ -627,7 +576,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 41 (banco original Q368)
+  // Questao 38 (banco original Q368)
   {
     "tipo": "unica",
     "texto": "Em quais planos de suporte do Azure você pode abrir um novo chamado de suporte?",
@@ -643,7 +592,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 42 (banco original Q371)
+  // Questao 39 (banco original Q371)
   {
     "tipo": "unica",
     "texto": "Esta questão exige que você avalie o texto sublinhado para determinar se está correto.\nO plano de suporte Standard do Azure é a opção de menor custo para receber acesso 24x7 a engenheiros de suporte por telefone.\nInstruções: Revise o texto sublinhado. Se ele tornar a afirmação correta, selecione \"Nenhuma alteração é necessária\". Se a afirmação estiver incorreta, selecione a opção que a torna correta.",
@@ -654,7 +603,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 43 (banco original Q373)
+  // Questao 40 (banco original Q373)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> pode calcular a economia de custos devido à redução do consumo de eletricidade, como resultado da migração de servidores Microsoft SQL locais para o Azure.",
@@ -671,7 +620,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 44 (banco original Q407)
+  // Questao 41 (banco original Q407)
   {
     "tipo": "unica",
     "texto": "O que você deve usar para rastrear os custos dos recursos do Azure?",
@@ -682,7 +631,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 45 (banco original Q412)
+  // Questao 42 (banco original Q412)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure que contém vários recursos.\nVocê precisa identificar qual departamento é responsável pelo custo de cada recurso.\nO que você deve usar?",
@@ -693,24 +642,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 46 (banco original Q421)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Você pode usar <combobox> no Azure para enviar alertas por e-mail quando o custo do período de faturamento atual de uma assinatura do Azure exceder um limite especificado.",
-    "opcoes": [
-      "Escolha uma opção",
-      "recomendações do Advisor",
-      "controle de acesso (IAM)",
-      "alertas de orçamento (Budget alerts)",
-      "conformidade (Compliance)"
-    ],
-    "resposta": 3,
-    "explicacao": "Alertas de orçamento são um recurso nativo de governança dentro do conjunto Gerenciamento de Custos + Faturamento do Azure, projetado para prevenir excedentes inesperados e vazamento de gastos na nuvem.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cost-management-billing/costs/cost-mgt-alerts-monitor-usage-spending",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco08"
-  },
-  // Questao 47 (banco original Q460)
+  // Questao 43 (banco original Q460)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -725,7 +657,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },
-  // Questao 48 (banco original Q468)
+  // Questao 44 (banco original Q468)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",

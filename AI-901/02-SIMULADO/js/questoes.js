@@ -171,7 +171,7 @@ export const questoes = [
   {
     "tipo": "unica",
     "texto": "Você desenvolveu um aplicativo em Python que envia um arquivo JPEG de uma foto local para um modelo habilitado para visão. Para enviar os dados localmente (sem fazer upload público da foto), como você deve configurar o campo da imagem na chamada da API?",
-    "opcoes": ["data:image/jpeg;base64,<dados_binários_da_imagem>", "file:///C:/images/photo.jpg", "C:\\images\\photo.jpg", "https://<sua-conta-de-storage>.blob.core.windows.net/<container>/<arquivo>.jpg"],
+    "opcoes": ["data:image/jpeg;base64,[dados binários da imagem]", "file:///C:/images/photo.jpg", "C:\\images\\photo.jpg", "https://[sua-conta-de-storage].blob.core.windows.net/[container]/[arquivo].jpg"],
     "resposta": 0,
     "explicacao": "Para injetar uma imagem local diretamente em uma chamada REST, é obrigatório converter seus bits binários para texto utilizando codificação Base64 e anexar o cabeçalho de Mime-Type correto (data:image/jpeg;base64,...).",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision#call-the-chat-completion-apis",

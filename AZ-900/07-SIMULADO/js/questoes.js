@@ -5,12 +5,12 @@
 // (Microsoft Entra ID e Entra Domain Services; SSO, MFA, acesso sem senha;
 //  identidades externas; Acesso Condicional; RBAC; Confiança Zero;
 //  defesa em profundidade; Microsoft Defender para Nuvem)
-// 48 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 44 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
-// 8, 26, 27, 29, 30, 33, 48, 55, 121, 124, 130, 143, 221, 224, 225, 227, 228, 234, 237, 238,
-// 239, 241, 243, 244, 249, 251, 254, 255, 261, 264, 268, 270, 271, 273, 274, 278, 279, 281,
-// 288, 297, 305, 308, 335, 379, 384, 408, 418, 444
+// 8, 26, 27, 29, 30, 33, 48, 55, 121, 124, 130, 143, 221, 224, 225, 227, 228, 234, 237,
+// 239, 243, 249, 251, 254, 255, 261, 264, 268, 270, 271, 273, 274, 278, 279, 281,
+// 288, 297, 305, 308, 335, 379, 384, 418, 444
 //
 // NOTAS DE TERMINOLOGIA:
 // "Azure Active Directory (Azure AD)" foi atualizado para "Microsoft Entra ID" em toda a
@@ -312,24 +312,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 20 (banco original Q238)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Você pode habilitar o acesso just-in-time (JIT) a VMs usando <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "Azure Bastion",
-      "o Firewall do Azure",
-      "o Azure Front Door",
-      "o Microsoft Defender for Cloud"
-    ],
-    "resposta": 4,
-    "explicacao": "Bloqueie o tráfego de entrada para suas Máquinas Virtuais do Azure com o recurso de acesso just-in-time (JIT) do Microsoft Defender for Cloud. Isso reduz a exposição a ataques, mantendo o acesso fácil quando você precisar se conectar a uma VM.",
-    "link": "https://learn.microsoft.com/pt-br/azure/defender-for-cloud/just-in-time-access-usage",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco07"
-  },
-  // Questao 21 (banco original Q239)
+  // Questao 20 (banco original Q239)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode visualizar o relatório de conformidade regulatória da sua empresa a partir do <combobox>.",
@@ -346,24 +329,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 22 (banco original Q241)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> permite que os usuários se autentiquem em vários aplicativos usando logon único (SSO).",
-    "opcoes": [
-      "Escolha uma opção",
-      "Grupos de segurança de aplicativo no Azure",
-      "Microsoft Entra ID",
-      "Azure Key Vault",
-      "Microsoft Defender for Cloud"
-    ],
-    "resposta": 2,
-    "explicacao": "Você pode habilitar o logon único (SSO) para um aplicativo empresarial por meio do Microsoft Entra ID. Grupos de segurança de aplicativo permitem configurar segurança de rede como uma extensão natural da estrutura de um aplicativo, permitindo agrupar máquinas virtuais e definir políticas de segurança de rede com base nesses grupos.",
-    "link": "https://learn.microsoft.com/pt-br/entra/identity/enterprise-apps/add-application-portal-setup-sso",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco07"
-  },
-  // Questao 23 (banco original Q243)
+  // Questao 21 (banco original Q243)
   {
     "tipo": "dragdrop",
     "texto": "Associe o termo à descrição correta. Cada termo pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -387,18 +353,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 24 (banco original Q244)
-  {
-    "tipo": "unica",
-    "texto": "Sua empresa planeja automatizar a implantação de servidores no Azure.\nSeu gestor está preocupado que credenciais administrativas possam ser expostas durante a implantação.\nVocê precisa recomendar uma solução do Azure que criptografe as credenciais administrativas durante a implantação.\nO que você deve incluir na recomendação?",
-    "opcoes": ["Azure Key Vault", "Azure Information Protection", "Microsoft Defender for Cloud", "Autenticação Multifator do Azure (MFA)"],
-    "resposta": 0,
-    "explicacao": "O Azure Key Vault protege chaves criptográficas, certificados (e as chaves privadas associadas aos certificados) e segredos (como strings de conexão e senhas) na nuvem.",
-    "link": "https://learn.microsoft.com/pt-br/azure/key-vault/general/security-features",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco07"
-  },
-  // Questao 25 (banco original Q249)
+  // Questao 22 (banco original Q249)
   {
     "tipo": "comboboxs",
     "texto": "Você planeja implementar vários serviços de segurança para um ambiente do Azure. Você precisa identificar quais serviços do Azure devem ser usados para atender aos seguintes requisitos de segurança:\n• Monitorar ameaças usando sensores\n• Aplicar Autenticação Multifator do Azure (MFA) com base em uma condição\nQual serviço do Azure você deve identificar para cada requisito? Para responder, selecione as opções apropriadas na área de resposta.",
@@ -419,7 +374,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 26 (banco original Q251)
+  // Questao 23 (banco original Q251)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode habilitar o acesso just-in-time (JIT) a VMs usando <combobox>.",
@@ -436,7 +391,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 27 (banco original Q254)
+  // Questao 24 (banco original Q254)
   {
     "tipo": "unica",
     "texto": "Esta questão exige que você avalie o texto sublinhado para determinar se está correto.\nO Azure Key Vault é usado para armazenar segredos para contas de usuário do Microsoft Entra ID.\nInstruções: Revise o texto sublinhado. Se ele tornar a afirmação correta, selecione \"Nenhuma alteração é necessária\". Se a afirmação estiver incorreta, selecione a opção que a torna correta.",
@@ -447,7 +402,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 28 (banco original Q255)
+  // Questao 25 (banco original Q255)
   {
     "tipo": "unica",
     "texto": "Sua empresa planeja automatizar a implantação de servidores no Azure.\nSeu gestor está preocupado que credenciais administrativas possam ser expostas durante a implantação.\nVocê precisa recomendar uma solução do Azure que criptografe as credenciais administrativas durante a implantação.\nO que você deve incluir na recomendação?",
@@ -458,7 +413,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 29 (banco original Q261)
+  // Questao 26 (banco original Q261)
   {
     "tipo": "unica",
     "texto": "Você precisa coletar e analisar automaticamente eventos de segurança do Microsoft Entra ID.\nO que você deve usar?",
@@ -469,7 +424,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 30 (banco original Q264)
+  // Questao 27 (banco original Q264)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -484,7 +439,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 31 (banco original Q268)
+  // Questao 28 (banco original Q268)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -499,7 +454,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 32 (banco original Q270)
+  // Questao 29 (banco original Q270)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -514,7 +469,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 33 (banco original Q271)
+  // Questao 30 (banco original Q271)
   {
     "tipo": "unica",
     "texto": "Você precisa garantir que, quando usuários do Microsoft Entra ID se conectarem ao Microsoft Entra ID pela Internet usando um endereço IP anônimo, os usuários sejam automaticamente solicitados a alterar sua senha.\nQual serviço do Azure você deve usar?",
@@ -525,7 +480,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 34 (banco original Q273)
+  // Questao 31 (banco original Q273)
   {
     "tipo": "unica",
     "texto": "A que um aplicativo deve se conectar para recuperar tokens de segurança?",
@@ -536,7 +491,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 35 (banco original Q274)
+  // Questao 32 (banco original Q274)
   {
     "tipo": "unica",
     "texto": "Sua rede contém uma floresta do Active Directory. A floresta contém 5.000 contas de usuário.\nSua empresa planeja migrar todos os recursos de rede para o Azure e desativar o datacenter local.\nVocê precisa recomendar uma solução para minimizar o impacto sobre os usuários após a migração planejada.\nO que você deve recomendar?",
@@ -552,7 +507,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 36 (banco original Q278)
+  // Questao 33 (banco original Q278)
   {
     "tipo": "unica",
     "texto": "Você tem uma assinatura do Azure e 100 dispositivos Windows 10.\nVocê precisa garantir que apenas usuários cujos dispositivos tenham os patches de segurança mais recentes instalados possam acessar aplicativos integrados ao Microsoft Entra ID.\nO que você deve implementar?",
@@ -563,7 +518,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 37 (banco original Q279)
+  // Questao 34 (banco original Q279)
   {
     "tipo": "unica",
     "texto": "O que o Azure Information Protection pode criptografar?",
@@ -574,7 +529,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 38 (banco original Q281)
+  // Questao 35 (banco original Q281)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> permite que os usuários se autentiquem em vários aplicativos usando logon único (SSO).",
@@ -591,7 +546,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 39 (banco original Q288)
+  // Questao 36 (banco original Q288)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Exigir que um usuário digite uma senha e responda a uma pergunta de segurança ao se conectar ao Microsoft Entra ID é um exemplo de <combobox>.",
@@ -608,7 +563,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 40 (banco original Q297)
+  // Questao 37 (banco original Q297)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é o processo de verificar as credenciais de um usuário.",
@@ -625,7 +580,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 41 (banco original Q305)
+  // Questao 38 (banco original Q305)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -640,7 +595,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 42 (banco original Q308)
+  // Questao 39 (banco original Q308)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -655,7 +610,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 43 (banco original Q335)
+  // Questao 40 (banco original Q335)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -670,7 +625,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 44 (banco original Q379)
+  // Questao 41 (banco original Q379)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -685,7 +640,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 45 (banco original Q384)
+  // Questao 42 (banco original Q384)
   {
     "tipo": "unica",
     "texto": "O que é usado para conceder permissão a recursos da Área de Trabalho Virtual do Azure?",
@@ -696,24 +651,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 46 (banco original Q408)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é o processo de verificar as credenciais de um usuário.",
-    "opcoes": [
-      "Escolha uma opção",
-      "Autorização",
-      "Autenticação",
-      "Federação",
-      "Emissão de tíquetes (Ticketing)"
-    ],
-    "resposta": 2,
-    "explicacao": "A autenticação é o processo de comprovar que você é quem diz ser. A autorização é o ato de conceder a uma parte já autenticada permissão para fazer algo.",
-    "link": "https://learn.microsoft.com/pt-br/entra/identity-platform/authentication-vs-authorization",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco07"
-  },
-  // Questao 47 (banco original Q418)
+  // Questao 43 (banco original Q418)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -728,7 +666,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco07"
   },
-  // Questao 48 (banco original Q444)
+  // Questao 44 (banco original Q444)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",

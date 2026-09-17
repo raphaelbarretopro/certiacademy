@@ -24,38 +24,6 @@ export const questoes = [
   },
   // Questao 02
   {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Um aplicativo Web do Azure que consulta um servidor Microsoft SQL local é um exemplo de nuvem <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "híbrida",
-      "de vários fornecedores",
-      "privada",
-      "pública"
-    ],
-    "resposta": 1,
-    "explicacao": "A nuvem híbrida permite que aplicações se comuniquem entre ambientes locais e a nuvem pública. No exemplo da questão, o aplicativo Web do Azure acessa um recurso local (SQL Server), caracterizando um cenário de nuvem híbrida.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cloud-adoption-framework/scenarios/hybrid/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2"
-  },
-  // Questao 03
-  {
-    "tipo": "simnao",
-    "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
-    "afirmacoes": [
-      "A sincronização do Microsoft Entra Connect é um serviço de nuvem do Azure.",
-      "Você deve implantar um controlador de domínio para provisionar o Microsoft Entra Domain Services.",
-      "O Microsoft Entra ID dá suporte ao SSO (logon único)."
-    ],
-    "respostas": [false, false, true],
-    "explicacao": "O Microsoft Entra Connect é um componente local, não um serviço de nuvem. O Entra Domain Services provisiona automaticamente um domínio gerenciado, sem necessidade de um controlador de domínio. O Microsoft Entra ID oferece suporte a SSO, permitindo que os usuários acessem vários aplicativos com uma única autenticação.",
-    "link": "https://learn.microsoft.com/pt-br/entra/identity/hybrid/connect/whatis-azure-ad-connect",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2"
-  },
-  // Questao 04
-  {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
     "afirmacoes": [
@@ -69,7 +37,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 05
+  // Questao 03
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -84,7 +52,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 06
+  // Questao 04
   {
     "tipo": "unica",
     "texto": "No serviço de nuvem SaaS (software como serviço), qual responsabilidade é compartilhada entre a Microsoft e o cliente?",
@@ -100,7 +68,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 07
+  // Questao 05
   {
     "tipo": "unica",
     "texto": "Você tem 50 máquinas virtuais hospedadas no local e 50 máquinas virtuais hospedadas no Azure. As máquinas virtuais locais e as máquinas virtuais do Azure conectam-se entre si. Qual tipo de modelo de nuvem é este?",
@@ -115,7 +83,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 08
+  // Questao 06
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -130,7 +98,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 09
+  // Questao 07
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -145,7 +113,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 10
+  // Questao 08
   {
     "tipo": "unica",
     "texto": "Qual é o período de tempo mais longo em que é possível comprar Instâncias de VM Reservadas do Azure?",
@@ -161,7 +129,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 11
+  // Questao 09
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Quando um aplicativo na nuvem pode alocar e liberar recursos, ele tem <combobox>.",
@@ -179,7 +147,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 12
+  // Questao 10
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Dimensionamento automático é um exemplo de <combobox>.",
@@ -196,7 +164,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 13
+  // Questao 11
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O Azure Cosmos DB é um exemplo de oferta de <combobox>.",
@@ -213,7 +181,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 14
+  // Questao 12
   {
     "tipo": "comboboxs",
     "texto": "Qual solução de implantação de nuvem é usada para máquinas virtuais do Azure e bancos de dados SQL do Azure? Para responder, selecione as opções adequadas na área de resposta.",
@@ -242,7 +210,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 15
+  // Questao 13
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -257,7 +225,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 16
+  // Questao 14
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure e três unidades de negócios. Você pretende implantar novos recursos em cada unidade de negócios. Você precisa garantir que os novos recursos sejam implantados usando um método confiável e repetível que aplique as mesmas configurações a cada recurso. O que você deve usar?",
@@ -273,7 +241,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 17
+  // Questao 15
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure que contém vários recursos. Você precisa identificar qual departamento é responsável pelo custo de cada recurso. O que você deve usar?",
@@ -288,7 +256,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 18
+  // Questao 16
   {
     "tipo": "multipla",
     "texto": "Um administrador do Azure pretende executar um script do PowerShell que cria recursos do Azure. Você precisa recomendar a configuração de computador a ser usada para executar o script. Quais os três computadores que podem executar o script? Cada resposta correta apresenta uma solução completa.",
@@ -305,7 +273,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 19
+  // Questao 17
   {
     "tipo": "unica",
     "texto": "O que você pode usar para enviar automaticamente um alerta se um administrador parar uma máquina virtual do Azure?",
@@ -321,7 +289,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 20
+  // Questao 18
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você tem uma rede virtual do Azure chamada VNET1 em um grupo de recursos chamado RG1. Você atribui a definição Tipo de Recurso Não Permitido do Azure Policy e especifica que as redes virtuais não são um tipo de recurso permitido em RG1. VNET1 <combobox>.",
@@ -338,7 +306,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 21
+  // Questao 19
   {
     "tipo": "dragdrop",
     "texto": "Você cria um grupo de recursos chamado RG1 no Azure Resource Manager. Você precisa impedir a exclusão acidental dos recursos em RG1. Qual configuração você deve usar? Para responder, selecione a configuração apropriada na área de resposta.",
@@ -360,7 +328,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 22
+  // Questao 20
   {
     "tipo": "multipla",
     "texto": "Você planeja reduzir despesas contínuas com o Azure. Você precisa identificar quais fatores afetam os custos de um recurso. Quais são os três fatores que você deve identificar? Cada resposta correta apresenta uma solução completa.",
@@ -377,7 +345,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 23
+  // Questao 21
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure que contém recursos em várias regiões. Você precisa garantir que os administradores possam criar recursos apenas nessas regiões. O que você deve usar?",
@@ -393,7 +361,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 24
+  // Questao 22
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -408,7 +376,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 25
+  // Questao 23
   {
     "tipo": "unica",
     "texto": "Sua empresa tem várias unidades de negócios. Cada unidade de negócios requer 20 recursos diferentes do Azure para operação diária. Todas as unidades de negócios exigem os mesmos tipos de recurso do Azure. Você precisa recomendar uma solução para automatizar a criação dos recursos do Azure. O que você deve incluir na recomendação?",
@@ -424,7 +392,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 26
+  // Questao 24
   {
     "tipo": "unica",
     "texto": "Você tem um aplicativo Web que é executado no Azure. Você precisa identificar quanto tempo se leva para que as páginas da Web carreguem no navegador de um usuário. O que você deve usar?",
@@ -440,7 +408,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 27
+  // Questao 25
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode usar <combobox> no Azure para enviar alertas por email quando o custo do período de cobrança atual por uma assinatura do Azure ultrapassar um limite especificado.",
@@ -457,7 +425,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 28
+  // Questao 26
   {
     "tipo": "unica",
     "texto": "Qual tarefa você pode executar usando o Assistente do Azure?",
@@ -473,24 +441,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 29
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Uma instância de contêiner do Azure é um exemplo de <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "serviço de computação",
-      "serviço de identidade",
-      "serviço de rede",
-      "serviço de armazenamento"
-    ],
-    "resposta": 1,
-    "explicacao": "A Instância de Contêiner do Azure (Azure Container Instance) permite executar contêineres na nuvem sem gerenciar máquinas virtuais. Ela se enquadra na categoria de serviços de computação do Azure.",
-    "link": "https://learn.microsoft.com/pt-br/azure/container-instances/container-instances-overview",
-    "dominio": "Descrever a arquitetura e os serviços do Azure",
-    "simulado": "az-2"
-  },
-  // Questao 30
+  // Questao 27
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Os dados armazenados na Camada de acesso aos arquivos de uma conta do Armazenamento do Azure <combobox>.",
@@ -507,7 +458,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 31
+  // Questao 28
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Quando precisar delegar permissões a diversas máquinas virtuais do Azure simultaneamente, você deverá implantá-las <combobox>.",
@@ -524,7 +475,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 32
+  // Questao 29
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> dá suporte à sincronização entre o armazenamento local e o Armazenamento do Azure.",
@@ -541,7 +492,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 33
+  // Questao 30
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -556,7 +507,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2"
   },
-  // Questao 34
+  // Questao 31
   {
     "tipo": "dragdrop",
     "texto": "Faça a correspondência dos serviços de armazenamento do Azure com as descrições apropriadas.",
@@ -581,7 +532,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 35 - IMAGEM img/azb2q35.png
+  // Questao 32 - IMAGEM img/azb2q35.png
   {
     "tipo": "dragdrop",
     "texto": "Você precisa concluir a estratégia de defesa em profundidade usada em um datacenter. O que você deve fazer? Para responder, arraste as camadas apropriadas até as posições corretas no modelo. Cada camada pode ser usada uma vez, mais de uma vez ou pode não ser usada.",
@@ -606,7 +557,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 36
+  // Questao 33
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -621,7 +572,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 37
+  // Questao 34
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -636,7 +587,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2"
   },
-  // Questao 38
+  // Questao 35
   {
     "tipo": "multipla",
     "texto": "Você precisa gerenciar contêineres. Quais são os dois serviços que você pode usar?",
@@ -653,7 +604,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2"
   },
-  // Questao 39
+  // Questao 36
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem às organizações a capacidade de gerenciar a conformidade dos recursos do Azure em várias assinaturas.",

@@ -585,7 +585,7 @@ export const questoes = [
   },
   {
     "tipo": "combobox",
-    "texto": "Você está aprendendo sobre o Power Apps e como usar gatilhos. Quando uma condição é atendida, o Power Apps pode disparar um(a)",
+    "texto": "Você está aprendendo sobre o Power Apps e como usar gatilhos. Quando uma condição é atendida, o Power Apps pode disparar um(a) <combobox>",
     "opcoes": [
       "Selecione uma resposta",
       "conector.",

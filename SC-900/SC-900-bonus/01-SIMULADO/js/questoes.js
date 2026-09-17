@@ -133,10 +133,10 @@ export const questoes = [
       "Principal de serviço",
       "Identidade do usuário"
     ],
-    "resposta": 0,
+    "resposta": 1,
     "dominio": "Descrever os recursos do Microsoft Entra",
     "simulado": "sc-b1",
-    "explicacao": "Um recurso do Azure pode usar um dispositivo conectado ao Azure Active Directory (Azure AD) como uma identidade atribuída automaticamente para acessar os serviços do Azure.",
+    "explicacao": "Uma identidade gerenciada atribuída pelo sistema é criada automaticamente junto com o recurso do Azure e é excluída com ele. O próprio Azure cuida das credenciais, então o recurso se autentica em qualquer serviço que aceite o Microsoft Entra ID sem guardar segredos no código. O principal de serviço também é uma identidade de aplicativo, mas precisa ser criado e ter suas credenciais gerenciadas por você — não é atribuído automaticamente. Um dispositivo conectado ao Microsoft Entra ID é um computador ingressado no diretório, e não uma identidade que um recurso do Azure usa para acessar serviços.",
     "link": "https://learn.microsoft.com/pt-br/azure/active-directory/managed-identities-azure-resources/overview"
   },
   {

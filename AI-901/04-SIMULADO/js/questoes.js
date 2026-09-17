@@ -20,7 +20,7 @@ export const questoes = [
   {
     "tipo": "unica",
     "texto": "Você tem um projeto do Microsoft Foundry que contém uma implantação de modelo de chat habilitado para visão. Seu aplicativo em Python usa a API de respostas para enviar uma solicitação com um prompt e uma imagem JPEG local. Qual valor você deve usar para incluir a imagem local na requisição HTTP?",
-    "opcoes": ["data:image/jpeg;base64,...", "C:\\images\\photo.jpg", "file:///C:/images/photo.jpg", "https://<storage>.blob.core.windows.net/<container>/<file>.jpg"],
+    "opcoes": ["data:image/jpeg;base64,...", "C:\\images\\photo.jpg", "file:///C:/images/photo.jpg", "https://[storage].blob.core.windows.net/[container]/[arquivo].jpg"],
     "resposta": 0,
     "explicacao": "Para enviar imagens locais sem hospedá-las publicamente na internet, a API REST do Azure OpenAI exige que os binários da imagem sejam convertidos em uma string codificada em Base64.",
     "link": "https://learn.microsoft.com/pt-br/azure/ai-services/openai/how-to/gpt-with-vision",

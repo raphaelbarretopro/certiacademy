@@ -5,12 +5,12 @@
 // (Azure Monitor, Log Analytics, Application Insights; Azure Service Health;
 //  Azure Advisor; Microsoft Sentinel/Defender for Cloud como ferramentas de
 //  monitoramento de segurança)
-// 47 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 43 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
-// 14, 15, 106, 117, 123, 126, 158, 166, 168, 169, 171, 177, 178, 179, 180, 183, 190,
-// 198, 213, 216, 223, 230, 233, 247, 248, 265, 266, 275, 290, 332, 339, 342, 362, 363,
-// 364, 370, 374, 402, 405, 423, 429, 438, 441, 458, 464, 466, 474
+// 14, 15, 106, 117, 123, 158, 166, 168, 169, 171, 177, 178, 179, 180, 183, 190,
+// 198, 213, 216, 223, 230, 233, 248, 265, 266, 275, 332, 339, 342, 362, 363,
+// 364, 370, 374, 402, 405, 423, 429, 438, 458, 464, 466, 474
 //
 // NOTA DE TERMINOLOGIA: "Azure Security Center" foi atualizado para "Microsoft Defender
 // for Cloud" e "Azure Sentinel" para "Microsoft Sentinel" em todo este bloco, conforme
@@ -79,24 +79,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 06 (banco original Q126)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> pode calcular a economia de custos devido à redução do consumo de eletricidade, como resultado da migração de servidores Microsoft SQL locais para o Azure.",
-    "opcoes": [
-      "Escolha uma opção",
-      "A ferramenta Azure Migrate: Avaliação de Servidor",
-      "A calculadora de Custo Total de Propriedade (TCO) do Azure",
-      "O Database Migration Assistant",
-      "A calculadora de preços do Azure"
-    ],
-    "resposta": 2,
-    "explicacao": "A calculadora de Custo Total de Propriedade (TCO) é usada para estimar a economia de custos que você pode alcançar ao migrar suas cargas de trabalho de aplicativos para o Azure.",
-    "link": "https://blog.abouttmc.com/azure-cloud-total-cost-of-ownership",
-    "dominio": "Descrever as ferramentas de monitoramento no Azure",
-    "simulado": "az-2026-bloco10"
-  },
-  // Questao 07 (banco original Q158)
+  // Questao 06 (banco original Q158)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O Application Insights é um recurso do(a) <combobox>.",
@@ -107,7 +90,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 08 (banco original Q166)
+  // Questao 07 (banco original Q166)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -122,7 +105,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 09 (banco original Q168)
+  // Questao 08 (banco original Q168)
   {
     "tipo": "unica",
     "texto": "Você precisa visualizar uma lista de eventos de manutenção planejada que podem afetar a disponibilidade de uma assinatura do Azure.\nQual painel (blade) você deve usar no portal do Azure? Para responder, selecione o painel apropriado na área de resposta.",
@@ -140,7 +123,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 10 (banco original Q169)
+  // Questao 09 (banco original Q169)
   {
     "tipo": "dragdrop",
     "texto": "Associe o serviço do Azure à definição correta. Instruções: Para responder, arraste o serviço apropriado do Azure da coluna à esquerda para sua descrição à direita. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -167,7 +150,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 11 (banco original Q171)
+  // Questao 10 (banco original Q171)
   {
     "tipo": "comboboxs",
     "texto": "Você precisa identificar quais painéis (blades) no portal do Azure devem ser usados para realizar as seguintes tarefas:\n• Monitorar a integridade dos serviços do Azure.\n• Navegar pelas imagens de máquinas virtuais disponíveis.\n• Visualizar recomendações de segurança.\nQual painel você deve identificar para cada tarefa? Para responder, selecione as opções apropriadas na área de resposta.",
@@ -193,7 +176,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 12 (banco original Q177)
+  // Questao 11 (banco original Q177)
   {
     "tipo": "unica",
     "texto": "Sua empresa planeja implantar uma solução de Inteligência Artificial (IA) no Azure.\nO que a empresa deve usar para construir, testar e implantar soluções de análise preditiva?",
@@ -204,7 +187,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 13 (banco original Q178)
+  // Questao 12 (banco original Q178)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -219,7 +202,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 14 (banco original Q179)
+  // Questao 13 (banco original Q179)
   {
     "tipo": "unica",
     "texto": "O que você pode usar para enviar automaticamente um alerta caso um administrador pare uma máquina virtual do Azure?",
@@ -230,7 +213,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 15 (banco original Q180)
+  // Questao 14 (banco original Q180)
   {
     "tipo": "dragdrop",
     "texto": "Associe os serviços do Azure às descrições corretas. Instruções: Para responder, arraste o serviço apropriado do Azure da coluna à esquerda para sua descrição à direita. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -257,7 +240,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 16 (banco original Q183)
+  // Questao 15 (banco original Q183)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -272,7 +255,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 17 (banco original Q190)
+  // Questao 16 (banco original Q190)
   {
     "tipo": "dragdrop",
     "texto": "Associe o serviço do Azure à descrição correta. Instruções: Para responder, arraste o serviço apropriado do Azure da coluna à esquerda para sua descrição à direita. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -299,7 +282,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 18 (banco original Q198)
+  // Questao 17 (banco original Q198)
   {
     "tipo": "unica",
     "texto": "O que você pode usar para identificar máquinas virtuais do Azure subutilizadas ou não utilizadas?",
@@ -310,7 +293,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 19 (banco original Q213)
+  // Questao 18 (banco original Q213)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -325,7 +308,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 20 (banco original Q216)
+  // Questao 19 (banco original Q216)
   {
     "tipo": "unica",
     "texto": "Você tem uma máquina virtual chamada VM1 que executa o Windows Server 2016. A VM1 está na região Leste dos EUA do Azure.\nQual serviço do Azure você deve usar no portal do Azure para visualizar notificações de falha de serviço que podem afetar a disponibilidade da VM1?",
@@ -336,7 +319,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 21 (banco original Q223)
+  // Questao 20 (banco original Q223)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -351,7 +334,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 22 (banco original Q230)
+  // Questao 21 (banco original Q230)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O Microsoft Sentinel usa playbooks para <combobox>.",
@@ -368,7 +351,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 23 (banco original Q233)
+  // Questao 22 (banco original Q233)
   {
     "tipo": "unica",
     "texto": "Você tem um workspace do Microsoft Sentinel.\nVocê precisa automatizar respostas a ameaças detectadas pelo Microsoft Sentinel.\nO que você deve usar?",
@@ -384,18 +367,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 24 (banco original Q247)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: A proteção contra negação de serviço distribuída (DDoS) do Azure é um exemplo de proteção implementada na <combobox>.",
-    "opcoes": ["Escolha uma opção", "camada de aplicativo", "camada de computação", "camada de rede", "camada de perímetro"],
-    "resposta": 4,
-    "explicacao": "A camada de perímetro usa a proteção contra negação de serviço distribuída (DDoS) para filtrar ataques em larga escala antes que possam causar uma negação de serviço para os usuários.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/secure-network-connectivity-azure/2-what-is-defense-in-depth",
-    "dominio": "Descrever as ferramentas de monitoramento no Azure",
-    "simulado": "az-2026-bloco10"
-  },
-  // Questao 25 (banco original Q248)
+  // Questao 23 (banco original Q248)
   {
     "tipo": "unica",
     "texto": "Você precisa configurar uma solução do Azure que atenda aos seguintes requisitos:\n• Protege sites contra ataques\n• Gera relatórios que contêm detalhes de tentativas de ataque\nO que você deve incluir na solução?",
@@ -406,7 +378,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 26 (banco original Q265)
+  // Questao 24 (banco original Q265)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode visualizar o relatório de conformidade regulatória da sua empresa a partir do(a) <combobox>.",
@@ -417,7 +389,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 27 (banco original Q266)
+  // Questao 25 (banco original Q266)
   {
     "tipo": "unica",
     "texto": "O que você deve usar para avaliar se o ambiente do Azure da sua empresa atende aos requisitos regulatórios?",
@@ -428,7 +400,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 28 (banco original Q275)
+  // Questao 26 (banco original Q275)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -443,18 +415,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 29 (banco original Q290)
-  {
-    "tipo": "unica",
-    "texto": "O que você deve usar para avaliar se o ambiente do Azure da sua empresa atende aos requisitos regulatórios?",
-    "opcoes": ["Azure Service Health", "Azure Knowledge Center", "Microsoft Defender for Cloud", "Azure Advisor"],
-    "resposta": 2,
-    "explicacao": "O Microsoft Defender for Cloud ajuda a simplificar o processo de atendimento aos requisitos de conformidade regulatória, usando o painel de conformidade regulatória.",
-    "link": "https://learn.microsoft.com/pt-br/azure/defender-for-cloud/regulatory-compliance-dashboard",
-    "dominio": "Descrever as ferramentas de monitoramento no Azure",
-    "simulado": "az-2026-bloco10"
-  },
-  // Questao 30 (banco original Q332)
+  // Questao 27 (banco original Q332)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure que contém os seguintes recursos não utilizados:\n• 20 contas de usuário no Microsoft Entra ID\n• Cinco grupos no Microsoft Entra ID\n• 10 endereços IP públicos\n• 10 interfaces de rede\nVocê precisa reduzir os custos do Azure para a empresa.\nQuais recursos não utilizados você deve remover?",
@@ -465,7 +426,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 31 (banco original Q339)
+  // Questao 28 (banco original Q339)
   {
     "tipo": "unica",
     "texto": "Qual tarefa você pode realizar usando o Azure Advisor?",
@@ -481,7 +442,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 32 (banco original Q342)
+  // Questao 29 (banco original Q342)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem acesso à capacidade de computação não utilizada do Azure, com descontos profundos.",
@@ -498,7 +459,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 33 (banco original Q362)
+  // Questao 30 (banco original Q362)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa tem uma assinatura do Azure que contém os seguintes recursos não utilizados:\n• 20 contas de usuário no Microsoft Entra ID\n• Cinco grupos no Microsoft Entra ID\n• 10 endereços IP públicos\n• 10 interfaces de rede\nVocê precisa reduzir os custos do Azure para a empresa.\nSolução: Você remove as interfaces de rede não utilizadas.\nIsso atende ao objetivo?",
@@ -509,7 +470,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 34 (banco original Q363)
+  // Questao 31 (banco original Q363)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa tem uma assinatura do Azure que contém os seguintes recursos não utilizados:\n• 20 contas de usuário no Microsoft Entra ID\n• Cinco grupos no Microsoft Entra ID\n• 10 endereços IP públicos\n• 10 interfaces de rede\nVocê precisa reduzir os custos do Azure para a empresa.\nSolução: Você remove os endereços IP públicos não utilizados.\nIsso atende ao objetivo?",
@@ -520,7 +481,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 35 (banco original Q364)
+  // Questao 32 (banco original Q364)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa tem uma assinatura do Azure que contém os seguintes recursos não utilizados:\n• 20 contas de usuário no Microsoft Entra ID\n• Cinco grupos no Microsoft Entra ID\n• 10 endereços IP públicos\n• 10 interfaces de rede\nVocê precisa reduzir os custos do Azure para a empresa.\nSolução: Você remove as contas de usuário não utilizadas.\nIsso atende ao objetivo?",
@@ -531,7 +492,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 36 (banco original Q370)
+  // Questao 33 (banco original Q370)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSua empresa tem uma assinatura do Azure que contém os seguintes recursos não utilizados:\n• 20 contas de usuário no Microsoft Entra ID\n• Cinco grupos no Microsoft Entra ID\n• 10 endereços IP públicos\n• 10 interfaces de rede\nVocê precisa reduzir os custos do Azure para a empresa.\nSolução: Você remove os grupos não utilizados.\nIsso atende ao objetivo?",
@@ -542,7 +503,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 37 (banco original Q374)
+  // Questao 34 (banco original Q374)
   {
     "tipo": "unica",
     "texto": "Você precisa comparar o uso de nuvem de uma empresa com as melhores práticas do setor.\nO que você deve usar?",
@@ -553,7 +514,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 38 (banco original Q402)
+  // Questao 35 (banco original Q402)
   {
     "tipo": "unica",
     "texto": "Qual serviço pode substituir automaticamente um bloqueio de recurso caso o bloqueio seja removido?",
@@ -564,7 +525,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 39 (banco original Q405)
+  // Questao 36 (banco original Q405)
   {
     "tipo": "multipla",
     "texto": "Você planeja coletar e analisar detalhes de eventos para cinco máquinas virtuais do Azure.\nVocê precisa executar consultas para comparar os detalhes de eventos coletados de todas as máquinas virtuais.\nQuais duas ferramentas você deve usar? Cada resposta correta apresenta parte da solução.\nNOTA: Cada seleção correta vale um ponto.",
@@ -575,7 +536,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 40 (banco original Q423)
+  // Questao 37 (banco original Q423)
   {
     "tipo": "unica",
     "texto": "Você tem um aplicativo Web em execução no Azure.\nVocê precisa identificar o tempo que leva para as páginas Web carregarem no navegador de um usuário.\nO que você deve usar?",
@@ -586,7 +547,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 41 (banco original Q429)
+  // Questao 38 (banco original Q429)
   {
     "tipo": "multipla",
     "texto": "Quais dois recursos ou serviços podem ser integrados ao Azure Monitor? Cada resposta correta apresenta parte da solução.\nNOTA: Cada resposta correta vale um ponto.",
@@ -597,7 +558,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 42 (banco original Q438)
+  // Questao 39 (banco original Q438)
   {
     "tipo": "unica",
     "texto": "Onde o Azure Monitor armazena dados de eventos?",
@@ -613,24 +574,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 43 (banco original Q441)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Se um grupo de recursos chamado RG1 tiver um bloqueio de exclusão, <combobox> excluir RG1.",
-    "opcoes": [
-      "Escolha uma opção",
-      "somente um membro do grupo de administradores globais poderá",
-      "o bloqueio de exclusão deverá ser removido antes que um administrador possa",
-      "uma política do Azure deverá ser modificada antes que um administrador possa",
-      "uma marca do Azure deverá ser adicionada antes que um administrador possa"
-    ],
-    "resposta": 2,
-    "explicacao": "O bloqueio de exclusão deve ser removido antes que um administrador possa excluir o grupo de recursos.",
-    "link": "https://learn.microsoft.com/pt-br/azure/azure-resource-manager/management/lock-resources",
-    "dominio": "Descrever as ferramentas de monitoramento no Azure",
-    "simulado": "az-2026-bloco10"
-  },
-  // Questao 44 (banco original Q458)
+  // Questao 40 (banco original Q458)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -645,7 +589,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 45 (banco original Q464)
+  // Questao 41 (banco original Q464)
   {
     "tipo": "comboboxs",
     "texto": "Você precisa identificar quais painéis (blades) no portal do Azure devem ser usados para realizar as seguintes tarefas:\n• Visualizar recomendações de segurança.\n• Monitorar a integridade dos serviços do Azure.\nQual painel você deve identificar para cada tarefa? Para responder, selecione as opções apropriadas na área de resposta.",
@@ -666,7 +610,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 46 (banco original Q466)
+  // Questao 42 (banco original Q466)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode usar <combobox> para fazer recomendações sobre economia de custos.",
@@ -677,7 +621,7 @@ export const questoes = [
     "dominio": "Descrever as ferramentas de monitoramento no Azure",
     "simulado": "az-2026-bloco10"
   },
-  // Questao 47 (banco original Q474) — ÚLTIMA QUESTÃO DO BANCO COMPLETO
+  // Questao 43 (banco original Q474) — ÚLTIMA QUESTÃO DO BANCO COMPLETO
   {
     "tipo": "unica",
     "texto": "O que você pode usar para fazer recomendações que reduzirão os custos do Azure?",

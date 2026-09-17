@@ -441,8 +441,8 @@ export const questoes = [
       "uma dimensão agregada",
       "uma medida agregada"
     ],
-    "resposta": 1,
-    "explicacao": "Em modelos analíticos multidimensionais, como no SQL Server Analysis Services (SSAS), as interseções entre dimensões formam células em um cubo. Cada célula pode conter valores agregados baseados nas medidas e dimensões selecionadas.",
+    "resposta": 3,
+    "explicacao": "O cubo é o modelo analítico inteiro, não um ponto dele. Cada ponto onde as dimensões se cruzam é uma célula do cubo, e o que a célula guarda é uma medida agregada — por exemplo, a soma das vendas do produto X, na loja Y, em março. Trocar a dimensão escolhida (do mês para o trimestre, digamos) muda o nível de agregação dessa medida.",
     "link": "https://learn.microsoft.com/pt-br/analysis-services/multidimensional-models/cubes-in-multidimensional-models",
     "dominio": "Descrever uma carga de trabalho de análise no Azure",
     "simulado": "dp-7"

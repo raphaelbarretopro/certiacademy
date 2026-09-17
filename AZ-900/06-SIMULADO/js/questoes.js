@@ -5,11 +5,11 @@
 // (comparação de serviços de armazenamento; níveis de armazenamento; opções de
 //  redundância; opções/tipos de conta de armazenamento; AzCopy, Storage Explorer,
 //  File Sync; opções de migração — Azure Migrate, Azure Data Box)
-// 47 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 45 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
 // 2, 13, 68, 73, 92, 109, 111, 112, 115, 118, 119, 120, 133, 134, 147, 157, 160, 162, 163,
-// 175, 214, 245, 334, 376, 383, 385, 394, 395, 396, 397, 399, 400, 401, 414, 422, 428, 431,
+// 175, 214, 334, 376, 383, 385, 394, 395, 396, 397, 399, 400, 401, 422, 428, 431,
 // 432, 446, 449, 450, 455, 456, 465, 469, 470, 471
 // ==========================================
 
@@ -362,24 +362,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 22 (banco original Q245)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Depois de criar uma máquina virtual, você precisa modificar o(a) <combobox> para permitir conexões à porta TCP 8080 na máquina virtual.",
-    "opcoes": [
-      "Escolha uma opção",
-      "grupo de segurança de rede (NSG)",
-      "gateway de rede virtual",
-      "rede virtual",
-      "tabela de rotas"
-    ],
-    "resposta": 1,
-    "explicacao": "Você pode usar um grupo de segurança de rede do Azure para filtrar o tráfego de rede de e para recursos do Azure em uma rede virtual. Um grupo de segurança de rede contém regras de segurança que permitem ou negam tráfego de entrada e saída, especificando origem, destino, porta e protocolo para cada regra.",
-    "link": "https://learn.microsoft.com/pt-br/azure/virtual-network/network-security-groups-overview",
-    "dominio": "Descrever a arquitetura e os serviços do Azure",
-    "simulado": "az-2026-bloco06"
-  },
-  // Questao 23 (banco original Q334)
+  // Questao 22 (banco original Q334)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -394,7 +377,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 24 (banco original Q376)
+  // Questao 23 (banco original Q376)
   {
     "tipo": "unica",
     "texto": "Quantas cópias de dados são mantidas por uma conta de Armazenamento do Azure que usa armazenamento com redundância local (LRS)?",
@@ -405,7 +388,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 25 (banco original Q383)
+  // Questao 24 (banco original Q383)
   {
     "tipo": "unica",
     "texto": "Quantas cópias de dados são mantidas por uma conta de Armazenamento do Azure que usa armazenamento georredundante (GRS)?",
@@ -416,7 +399,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 26 (banco original Q385)
+  // Questao 25 (banco original Q385)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -431,7 +414,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 27 (banco original Q394)
+  // Questao 26 (banco original Q394)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -446,7 +429,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 28 (banco original Q395)
+  // Questao 27 (banco original Q395)
   {
     "tipo": "dragdrop",
     "texto": "Associe os serviços de armazenamento do Azure às descrições apropriadas. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -471,7 +454,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 29 (banco original Q396)
+  // Questao 28 (banco original Q396)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -486,7 +469,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 30 (banco original Q397)
+  // Questao 29 (banco original Q397)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Contas de armazenamento Premium com blobs em blocos (premium block blobs) oferecem suporte apenas a redundância <combobox>.",
@@ -503,7 +486,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 31 (banco original Q399)
+  // Questao 30 (banco original Q399)
   {
     "tipo": "unica",
     "texto": "Você precisa criar um novo compartilhamento de arquivos do Azure (Azure file share).\nO que você deve usar? Para responder, selecione o serviço apropriado.",
@@ -520,7 +503,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 32 (banco original Q400)
+  // Questao 31 (banco original Q400)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -535,7 +518,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 33 (banco original Q401)
+  // Questao 32 (banco original Q401)
   {
     "tipo": "unica",
     "texto": "O que você deve usar para impedir que o tráfego de uma rede virtual do Azure seja roteado para uma conta de Armazenamento do Azure através da internet?",
@@ -551,24 +534,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 34 (banco original Q414)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Os dados armazenados na camada de acesso Arquivo Morto (Archive) de uma conta de Armazenamento do Azure <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "podem ser acessados a qualquer momento usando-se azcopy.exe.",
-      "só podem ser lidos usando-se o Backup do Azure.",
-      "devem ser restaurados antes que os dados possam ser acessados.",
-      "devem ser reidratados para que os dados possam ser acessados."
-    ],
-    "resposta": 4,
-    "explicacao": "Os dados armazenados na camada de acesso Arquivo Morto de uma conta de Armazenamento do Azure devem ser reidratados antes que possam ser acessados.",
-    "link": "https://learn.microsoft.com/pt-br/azure/storage/blobs/storage-blob-storage-tiers?tabs=azure-portal#archive-access-tier",
-    "dominio": "Descrever a arquitetura e os serviços do Azure",
-    "simulado": "az-2026-bloco06"
-  },
-  // Questao 35 (banco original Q422)
+  // Questao 33 (banco original Q422)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Se as licenças do Windows Server ou do Microsoft SQL Server estiverem cobertas por <combobox>, você pode reaproveitar as licenças em máquinas virtuais do Azure.",
@@ -584,7 +550,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 36 (banco original Q428)
+  // Questao 34 (banco original Q428)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -599,7 +565,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 37 (banco original Q431)
+  // Questao 35 (banco original Q431)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -614,7 +580,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 38 (banco original Q432)
+  // Questao 36 (banco original Q432)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é um serviço de migração física usado para transferir grandes quantidades de dados de modo rápido, econômico e confiável.",
@@ -631,7 +597,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 39 (banco original Q446)
+  // Questao 37 (banco original Q446)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: A camada de acesso Fria (Cool) é otimizada <combobox>.",
@@ -647,7 +613,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 40 (banco original Q449)
+  // Questao 38 (banco original Q449)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> oferece suporte à sincronização entre o armazenamento local e o Armazenamento do Azure.",
@@ -664,7 +630,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 41 (banco original Q450)
+  // Questao 39 (banco original Q450)
   {
     "tipo": "unica",
     "texto": "Você tem uma conta de Armazenamento do Azure chamada storage1.\nVocê precisa garantir que contêineres possam ser criados em storage1, mas não excluídos dele.\nO que você deve fazer?",
@@ -680,7 +646,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 42 (banco original Q455)
+  // Questao 40 (banco original Q455)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -695,7 +661,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 43 (banco original Q456)
+  // Questao 41 (banco original Q456)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> avalia sinais para permitir ou negar logins no Microsoft Entra ID.",
@@ -711,7 +677,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 44 (banco original Q465)
+  // Questao 42 (banco original Q465)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -726,7 +692,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 45 (banco original Q469)
+  // Questao 43 (banco original Q469)
   {
     "tipo": "dragdrop",
     "texto": "Associe o método de autenticação ao nível de segurança e conveniência apropriado. Cada método pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -750,7 +716,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 46 (banco original Q470)
+  // Questao 44 (banco original Q470)
   {
     "tipo": "unica",
     "texto": "Quantas cópias de dados são armazenadas no armazenamento geo-zona-redundante (GZRS)?",
@@ -761,7 +727,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco06"
   },
-  // Questao 47 (banco original Q471)
+  // Questao 45 (banco original Q471)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Se você excluir dados de <combobox> antes de decorridos 30 dias, você deverá pagar uma taxa de exclusão antecipada.",

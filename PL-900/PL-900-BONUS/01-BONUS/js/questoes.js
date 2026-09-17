@@ -201,16 +201,30 @@ export const questoes = [
     "simulado": "pl-b1"
   },
   {
-    "tipo": "combobox",
-    "texto": "Uma empresa pretende criar um fluxo de trabalho que execute periodicamente uma ação no Dynamics 365 com base nos dados de soluções baseadas em nuvem de terceiros. Qual componente você deve usar para criar o fluxo de trabalho? Para resposta, selecione os componentes adequados de acordo com a ação. Selecione uma resposta.: <combobox>",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Gatilhos",
-      "Aplicativos Lógicos",
-      "Conectores",
-      "Gateways"
+    "tipo": "comboboxs",
+    "texto": "Uma empresa pretende criar um fluxo de trabalho que execute periodicamente uma ação no Dynamics 365 com base nos dados de soluções baseadas em nuvem de terceiros. Quais componentes você deve usar para criar o fluxo de trabalho? Para responder, selecione os componentes adequados de acordo com a ação.",
+    "pares": [
+      {
+        "requisito": "- Permitir que o fluxo alcance um serviço de terceiros que está fora da nuvem da Microsoft.",
+        "opcoes": [
+          "Gatilhos",
+          "Aplicativos Lógicos",
+          "Conectores",
+          "Gateways"
+        ],
+        "resposta": 3
+      },
+      {
+        "requisito": "- Verificar de forma proativa se os dados mudaram e iniciar o fluxo automaticamente.",
+        "opcoes": [
+          "Gatilhos",
+          "Aplicativos Lógicos",
+          "Conectores",
+          "Gateways"
+        ],
+        "resposta": 0
+      }
     ],
-    "resposta": 4,
     "explicacao": "Para garantir que o Power Automate possa interagir com aplicativos de terceiros, é necessário o uso de um gateway, especialmente quando o serviço está fora da nuvem Microsoft. Já para verificar alterações de forma proativa nos dados, utilizam-se gatilhos, que iniciam automaticamente os fluxos ao detectar essas mudanças.",
     "link": "https://learn.microsoft.com/pt-br/data-integration/gateway/service-gateway-install",
     "dominio": "Demonstrar os recursos do Power Automate",
@@ -462,15 +476,28 @@ export const questoes = [
     "simulado": "pl-b1"
   },
   {
-    "tipo": "combobox",
-    "texto": "Você está criando visualizações do Power BI. É necessário saber em que visual onde um usuário pode executar cada função. Que solução você deve usar? Para responder, selecione a opção apropriada na área de resposta. Requisitos: - Tomar decisões ao analisar KPIs de alto nível. - Fazer uma busca detalhada em um visual. Selecione uma resposta: <combobox>",
-    "opcoes": [
-      "Selecione uma resposta",
-      "Serviço do Power BI",
-      "Power BI Desktop",
-      "Painéis do Power BI"
+    "tipo": "comboboxs",
+    "texto": "Você está criando visualizações do Power BI. É necessário saber em qual solução um usuário pode executar cada função. Que solução você deve usar? Para responder, selecione as opções apropriadas na área de resposta.",
+    "pares": [
+      {
+        "requisito": "- Tomar decisões ao analisar KPIs de alto nível.",
+        "opcoes": [
+          "Serviço do Power BI",
+          "Power BI Desktop",
+          "Painéis do Power BI"
+        ],
+        "resposta": 2
+      },
+      {
+        "requisito": "- Fazer uma busca detalhada em um visual.",
+        "opcoes": [
+          "Serviço do Power BI",
+          "Power BI Desktop",
+          "Painéis do Power BI"
+        ],
+        "resposta": 1
+      }
     ],
-    "resposta": 3,
     "explicacao": "Painéis do Power BI são usados para visualização rápida de KPIs em tempo real no serviço online. Para buscas detalhadas, interações e análises aprofundadas nos dados, a ferramenta adequada é o Power BI Desktop.",
     "link": "https://learn.microsoft.com/pt-br/power-bi/fundamentals/service-basic-concepts",
     "dominio": "Demonstrar as funcionalidades do Power BI",

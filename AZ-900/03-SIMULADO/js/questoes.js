@@ -3,11 +3,11 @@
 // Descrição: Simulado AZ-900 (fonte: CertyIQ, versão 2026) — tradução PT-BR
 // BLOCO 3 de 10 — Descrever os tipos de serviço de nuvem
 // (IaaS, PaaS, SaaS, casos de uso apropriados para cada tipo)
-// 47 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 44 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
-// 4, 5, 6, 36, 41, 42, 43, 45, 46, 56, 59, 65, 66, 69, 71, 72, 74, 75, 82, 83, 84, 86,
-// 149, 150, 212, 240, 242, 267, 269, 283, 295, 300, 307, 330, 331, 340, 349, 378, 389,
+// 4, 5, 6, 36, 41, 42, 43, 45, 46, 56, 59, 65, 66, 69, 71, 74, 75, 82, 83, 84, 86,
+// 149, 150, 212, 242, 267, 269, 283, 295, 300, 307, 330, 331, 340, 378, 389,
 // 411, 413, 445, 447, 453, 454, 462, 472
 // ==========================================
 
@@ -226,24 +226,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 16 (banco original Q72)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Um banco de dados Microsoft SQL Server hospedado na nuvem e com atualizações de software gerenciadas pela Azure é um exemplo de <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "recuperação de desastre como serviço (DRaaS)",
-      "infraestrutura como serviço (IaaS)",
-      "plataforma como serviço (PaaS)",
-      "software como serviço (SaaS)"
-    ],
-    "resposta": 3,
-    "explicacao": "A palavra-chave é \"gerenciadas pela Azure\" — quando as atualizações de software são gerenciadas pelo provedor de nuvem, isso é uma característica de PaaS (Plataforma como Serviço).",
-    "link": "https://learn.microsoft.com/pt-br/azure/azure-sql/azure-sql-iaas-vs-paas-what-is-overview",
-    "dominio": "Descrever os tipos de serviço de nuvem",
-    "simulado": "az-2026-bloco03"
-  },
-  // Questao 17 (banco original Q74)
+  // Questao 16 (banco original Q74)
   {
     "tipo": "unica",
     "texto": "O que um cliente fornece em um modelo de software como serviço (SaaS)?",
@@ -259,7 +242,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 18 (banco original Q75)
+  // Questao 17 (banco original Q75)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -274,7 +257,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 19 (banco original Q82)
+  // Questao 18 (banco original Q82)
   {
     "tipo": "comboboxs",
     "texto": "Você planeja usar o Azure para hospedar dois aplicativos chamados App1 e App2. Os aplicativos devem atender aos seguintes requisitos:\n• Você deve conseguir modificar o código do App1.\n• O esforço administrativo para gerenciar o sistema operacional do App1 deve ser minimizado.\n• O App2 deve ser executado de forma interativa com o sistema operacional do servidor.\nQual tipo de serviço de nuvem você deve usar para cada aplicativo? Para responder, selecione as opções apropriadas na área de resposta.",
@@ -303,7 +286,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 20 (banco original Q83)
+  // Questao 19 (banco original Q83)
   {
     "tipo": "unica",
     "texto": "Você tem um aplicativo de contabilidade chamado App1 que usa um banco de dados legado.\nVocê planeja mover o App1 para a nuvem.\nQual modelo de serviço você deve usar?",
@@ -318,7 +301,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 21 (banco original Q84)
+  // Questao 20 (banco original Q84)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Ao implementar uma solução de Software como Serviço (SaaS), você é responsável por <combobox>.",
@@ -335,7 +318,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 22 (banco original Q86)
+  // Questao 21 (banco original Q86)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Um banco de dados Microsoft SQL Server hospedado na nuvem e com atualizações de software gerenciadas pela Azure é um exemplo de <combobox>.",
@@ -352,7 +335,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 23 (banco original Q149)
+  // Questao 22 (banco original Q149)
   {
     "tipo": "dragdrop",
     "texto": "Associe os modelos de serviço de nuvem às respectivas ofertas. Cada modelo pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -376,7 +359,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 24 (banco original Q150)
+  // Questao 23 (banco original Q150)
   {
     "tipo": "dragdrop",
     "texto": "Associe os modelos de serviço de nuvem às respectivas soluções. Cada modelo pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -400,7 +383,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 25 (banco original Q212)
+  // Questao 24 (banco original Q212)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é um serviço de análise baseado em Apache Spark.",
@@ -417,23 +400,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 26 (banco original Q240)
-  {
-    "tipo": "unica",
-    "texto": "Você precisa coletar e analisar automaticamente eventos de segurança do Microsoft Entra ID.\nO que você deve usar?",
-    "opcoes": [
-      "Microsoft Sentinel",
-      "Azure Synapse Analytics",
-      "Microsoft Entra Connect",
-      "Azure Key Vault"
-    ],
-    "resposta": 0,
-    "explicacao": "O Microsoft Sentinel é uma solução escalável, nativa em nuvem, de gerenciamento de eventos e informações de segurança (SIEM) e de resposta automatizada e orquestrada de segurança (SOAR). Ele fornece análises de segurança inteligentes e inteligência contra ameaças em toda a empresa, oferecendo uma única solução para detecção de ataques, visibilidade de ameaças, busca proativa e resposta a ameaças.",
-    "link": "https://learn.microsoft.com/pt-br/azure/sentinel/overview",
-    "dominio": "Descrever os tipos de serviço de nuvem",
-    "simulado": "az-2026-bloco03"
-  },
-  // Questao 27 (banco original Q242)
+  // Questao 25 (banco original Q242)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -448,7 +415,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 28 (banco original Q267)
+  // Questao 26 (banco original Q267)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Sua empresa implementa <combobox> para adicionar automaticamente uma marca d'água a documentos do Microsoft Word que contenham informações de cartão de crédito.",
@@ -465,7 +432,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 29 (banco original Q269)
+  // Questao 27 (banco original Q269)
   {
     "tipo": "multipla",
     "texto": "Quais são os dois tipos de clientes elegíveis para usar o Azure Governamental para desenvolver uma solução de nuvem? Cada resposta correta apresenta uma solução completa.",
@@ -482,7 +449,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 30 (banco original Q283)
+  // Questao 28 (banco original Q283)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -497,7 +464,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 31 (banco original Q295)
+  // Questao 29 (banco original Q295)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -512,7 +479,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 32 (banco original Q300)
+  // Questao 30 (banco original Q300)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -527,7 +494,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 33 (banco original Q307)
+  // Questao 31 (banco original Q307)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é o processo de estabelecer a identidade de um usuário ou serviço que deseja acessar um recurso.",
@@ -544,7 +511,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 34 (banco original Q330)
+  // Questao 32 (banco original Q330)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -559,7 +526,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 35 (banco original Q331)
+  // Questao 33 (banco original Q331)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -574,7 +541,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 36 (banco original Q340)
+  // Questao 34 (banco original Q340)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -589,24 +556,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 37 (banco original Q349)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é um serviço de análise baseado em Apache Spark.",
-    "opcoes": [
-      "Escolha uma opção",
-      "Azure Databricks",
-      "Azure Data Factory",
-      "Azure DevOps",
-      "Azure Synapse Analytics"
-    ],
-    "resposta": 1,
-    "explicacao": "O Azure Databricks é uma plataforma de análise baseada em Apache Spark, projetada para ciência de dados e engenharia de dados, com componentes como o MLib (biblioteca de machine learning).",
-    "link": "https://learn.microsoft.com/pt-br/azure/databricks/introduction/",
-    "dominio": "Descrever os tipos de serviço de nuvem",
-    "simulado": "az-2026-bloco03"
-  },
-  // Questao 38 (banco original Q378)
+  // Questao 35 (banco original Q378)
   {
     "tipo": "unica",
     "texto": "O que é um exemplo de escala vertical em um ambiente de nuvem?",
@@ -622,7 +572,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 39 (banco original Q389)
+  // Questao 36 (banco original Q389)
   {
     "tipo": "unica",
     "texto": "Qual modelo de serviço de nuvem minimiza a responsabilidade de gerenciamento do cliente?",
@@ -637,7 +587,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 40 (banco original Q411)
+  // Questao 37 (banco original Q411)
   {
     "tipo": "multipla",
     "texto": "Você planeja reduzir as despesas contínuas com o Azure.\nVocê precisa identificar quais fatores afetam os custos de um recurso.\nQuais três fatores você deve identificar? Cada resposta correta apresenta uma solução completa.",
@@ -654,7 +604,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 41 (banco original Q413)
+  // Questao 38 (banco original Q413)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O Azure Cosmos DB é um exemplo de oferta de <combobox>.",
@@ -671,7 +621,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 42 (banco original Q445)
+  // Questao 39 (banco original Q445)
   {
     "tipo": "multipla",
     "texto": "No modelo de serviço de nuvem de infraestrutura como serviço (IaaS), quais são os dois componentes que são responsabilidade do provedor de serviços de nuvem? Cada resposta correta apresenta uma solução completa.",
@@ -688,7 +638,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 43 (banco original Q447)
+  // Questao 40 (banco original Q447)
   {
     "tipo": "dragdrop",
     "texto": "Você precisa identificar o nível de responsabilidade compartilhada de um cliente com base no modelo de serviço de nuvem. Em qual ordem os modelos devem ser listados, da maior responsabilidade (no alto) para a menor responsabilidade do cliente (embaixo)? Para responder, mova todos os modelos da lista para a área de resposta e organize-os na ordem correta.",
@@ -708,7 +658,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 44 (banco original Q453)
+  // Questao 41 (banco original Q453)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -723,7 +673,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 45 (banco original Q454)
+  // Questao 42 (banco original Q454)
   {
     "tipo": "unica",
     "texto": "Você precisa migrar um servidor local usando uma migração do tipo lift-and-shift.\nPara qual tipo de serviço de nuvem você deve migrar?",
@@ -738,7 +688,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 46 (banco original Q462)
+  // Questao 43 (banco original Q462)
   {
     "tipo": "unica",
     "texto": "O Microsoft 365 é um exemplo de qual modelo de serviço de nuvem?",
@@ -753,7 +703,7 @@ export const questoes = [
     "dominio": "Descrever os tipos de serviço de nuvem",
     "simulado": "az-2026-bloco03"
   },
-  // Questao 47 (banco original Q472)
+  // Questao 44 (banco original Q472)
   {
     "tipo": "dragdrop",
     "texto": "Associe o serviço de nuvem à descrição correta. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",

@@ -4,7 +4,7 @@
 // BLOCO 2 de 10 — Descrever os benefícios do uso de serviços de nuvem
 // (alta disponibilidade e escalabilidade; confiabilidade e previsibilidade;
 //  segurança e governança; capacidade de gerenciamento)
-// 47 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 37 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 // Terminologia atualizada onde aplicável (Azure Sentinel -> Microsoft Sentinel)
 // ==========================================
 
@@ -139,24 +139,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 09 (banco original Q81, idêntica à Q50)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: O Azure Site Recovery fornece <combobox> para máquinas virtuais.",
-    "opcoes": [
-      "Escolha uma opção",
-      "tolerância a falhas",
-      "recuperação de desastre",
-      "elasticidade",
-      "alta disponibilidade"
-    ],
-    "resposta": 2,
-    "explicacao": "Você configura a recuperação de desastre para VMs do Azure usando o Azure Site Recovery.",
-    "link": "https://learn.microsoft.com/pt-br/azure/site-recovery/azure-to-azure-tutorial-enable-replication",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 10 (banco original Q88, idêntica em conceito à Q392)
+  // Questao 09 (banco original Q88, idêntica em conceito à Q392)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O dimensionamento automático (autoscaling) é um exemplo de <combobox>.",
@@ -173,7 +156,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 11 (banco original Q90)
+  // Questao 10 (banco original Q90)
   {
     "tipo": "unica",
     "texto": "Qual termo representa a capacidade de aumentar a capacidade de computação de uma máquina virtual adicionando memória ou CPUs?",
@@ -184,7 +167,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 12 (banco original Q93)
+  // Questao 11 (banco original Q93)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> permite que recursos do Azure sejam implantados próximos aos usuários.",
@@ -201,7 +184,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 13 (banco original Q94)
+  // Questao 12 (banco original Q94)
   {
     "tipo": "dragdrop",
     "texto": "Associe o benefício da computação em nuvem à descrição apropriada. Cada benefício pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -226,7 +209,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 14 (banco original Q95)
+  // Questao 13 (banco original Q95)
   {
     "tipo": "unica",
     "texto": "Qual benefício da computação em nuvem fornece acesso contínuo do usuário a um aplicativo baseado em nuvem, com indisponibilidade mínima?",
@@ -237,7 +220,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 15 (banco original Q108)
+  // Questao 14 (banco original Q108)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -252,41 +235,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 16 (banco original Q139)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Uma Zona de Disponibilidade no Azure tem locais fisicamente separados <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "em dois continentes",
-      "dentro de uma única região do Azure",
-      "em várias regiões do Azure",
-      "dentro de um único datacenter do Azure"
-    ],
-    "resposta": 2,
-    "explicacao": "As zonas de disponibilidade do Azure são locais fisicamente separados dentro de cada região do Azure, tolerantes a falhas locais.",
-    "link": "https://learn.microsoft.com/pt-br/azure/reliability/availability-zones-overview",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 17 (banco original Q146)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Uma região do Azure <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "contém um ou mais datacenters conectados por uma rede de baixa latência.",
-      "é encontrada em todos os países onde a Microsoft tem uma subsidiária.",
-      "pode ser encontrada em todos os países da Europa e das Américas apenas.",
-      "contém um ou mais datacenters conectados por uma rede de alta latência."
-    ],
-    "resposta": 1,
-    "explicacao": "Cada região do Azure é composta por datacenters implantados dentro de um perímetro definido por latência, conectados por meio de uma rede regional dedicada de baixa latência. Esse design garante que os serviços do Azure em qualquer região ofereçam o melhor desempenho e segurança possíveis.",
-    "link": "https://learn.microsoft.com/pt-br/azure/reliability/availability-zones-overview",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 18 (banco original Q154)
+  // Questao 15 (banco original Q154)
   {
     "tipo": "unica",
     "texto": "Esta questão exige que você avalie o texto sublinhado para determinar se está correto.\nUm dos benefícios do Azure SQL Data Warehouse é que a alta disponibilidade já vem integrada à plataforma.\nInstruções: Revise o texto sublinhado. Se ele tornar a afirmação correta, selecione \"Nenhuma alteração é necessária\". Se a afirmação estiver incorreta, selecione a opção que a torna correta.",
@@ -297,7 +246,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 19 (banco original Q170)
+  // Questao 16 (banco original Q170)
   {
     "tipo": "dragdrop",
     "texto": "Associe o serviço do Azure à descrição correta. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -324,7 +273,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 20 (banco original Q174)
+  // Questao 17 (banco original Q174)
   {
     "tipo": "unica",
     "texto": "Você planeja implantar um site no Azure. O site será acessado por usuários do mundo todo e hospedará arquivos de vídeo grandes.\nVocê precisa recomendar qual recurso do Azure deve ser usado para fornecer a melhor experiência de reprodução de vídeo.\nO que você deve recomendar?",
@@ -335,35 +284,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 21 (banco original Q200)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é um serviço de análise baseado em Apache Spark.",
-    "opcoes": [
-      "Escolha uma opção",
-      "Azure Databricks",
-      "Azure Data Factory",
-      "Azure DevOps",
-      "Azure Synapse Analytics"
-    ],
-    "resposta": 1,
-    "explicacao": "O Azure Databricks é um serviço rápido, fácil e colaborativo de análise de big data baseado em Apache Spark, projetado para ciência de dados e engenharia de dados.",
-    "link": "https://azure.microsoft.com/pt-br/products/databricks/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 22 (banco original Q222)
-  {
-    "tipo": "unica",
-    "texto": "Qual serviço do Azure você pode usar como uma solução de gerenciamento de eventos e informações de segurança (SIEM)?",
-    "opcoes": ["Azure Analysis Services", "Microsoft Sentinel", "Azure Information Protection", "Azure Cognitive Services"],
-    "resposta": 1,
-    "explicacao": "O Microsoft Sentinel (anteriormente Azure Sentinel) é uma solução escalável, nativa em nuvem, de gerenciamento de eventos e informações de segurança (SIEM) e de resposta automatizada e orquestrada de segurança (SOAR).",
-    "link": "https://azure.microsoft.com/pt-br/products/microsoft-sentinel/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 23 (banco original Q229)
+  // Questao 18 (banco original Q229)
   {
     "tipo": "unica",
     "texto": "Quais recursos podem ser usados como origem em uma regra de segurança de entrada de um grupo de segurança de rede?",
@@ -379,7 +300,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 24 (banco original Q235, idêntica em conceito à Q222)
+  // Questao 19 (banco original Q235, idêntica em conceito à Q222)
   {
     "tipo": "unica",
     "texto": "Qual serviço do Azure você pode usar como uma solução de gerenciamento de eventos e informações de segurança (SIEM)?",
@@ -390,24 +311,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 25 (banco original Q246, idêntica à Q232 do Bloco 1)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: A proteção contra negação de serviço distribuída (DDoS) do Azure é um exemplo de proteção implementada na <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "camada de aplicativo",
-      "camada de computação",
-      "camada de rede",
-      "camada de perímetro"
-    ],
-    "resposta": 4,
-    "explicacao": "A camada de perímetro utiliza proteção contra negação de serviço distribuída (DDoS) para filtrar ataques em larga escala antes que possam causar uma negação de serviço para os usuários.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/secure-network-connectivity-azure/2-what-is-defense-in-depth",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 26 (banco original Q289)
+  // Questao 20 (banco original Q289)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O Azure China <combobox>.",
@@ -424,7 +328,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 27 (banco original Q325)
+  // Questao 21 (banco original Q325)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você tem um aplicativo composto por um aplicativo Web do Azure com um SLA (Contrato de Nível de Serviço) de 99,95% e um banco de dados SQL do Azure com um SLA de 99,99%. O SLA composto para o aplicativo é <combobox>.",
@@ -441,7 +345,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 28 (banco original Q326)
+  // Questao 22 (banco original Q326)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -456,7 +360,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 29 (banco original Q338, idêntica à Q439)
+  // Questao 23 (banco original Q338, idêntica à Q439)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você implanta um recurso do Azure. O recurso fica indisponível por um período prolongado devido a uma interrupção de serviço. A Microsoft irá <combobox>.",
@@ -473,7 +377,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 30 (banco original Q341)
+  // Questao 24 (banco original Q341)
   {
     "tipo": "unica",
     "texto": "Você tem um aplicativo do Azure que usa os serviços mostrados na tabela a seguir: Aplicativos Web do Serviço de Aplicativo (SLA de 99,95%) e Banco de Dados SQL do Azure (SLA de 99,99%).\nComo você deve calcular o SLA composto para o aplicativo?",
@@ -489,7 +393,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 31 (banco original Q344, idêntica à Q372)
+  // Questao 25 (banco original Q344, idêntica à Q372)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Todos os serviços do Azure que estão em pré-visualização pública (public preview) são <combobox>.",
@@ -506,7 +410,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 32 (banco original Q352, idêntica à Q231 do Bloco 1)
+  // Questao 26 (banco original Q352, idêntica à Q231 do Bloco 1)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> no Firewall do Azure permitem que usuários na internet acessem um servidor em uma rede virtual.",
@@ -523,7 +427,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 33 (banco original Q356)
+  // Questao 27 (banco original Q356)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -538,10 +442,10 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 34 (banco original Q365)
+  // Questao 28 (banco original Q365)
   {
     "tipo": "comboboxs",
-    "texto": "Como você deve calcular a porcentagem de tempo de atividade mensal? Para responder, selecione as opções apropriadas na área de resposta. A fórmula é: (<combobox 1>) / <combobox 2> × <combobox 3>",
+    "texto": "Como você deve calcular a porcentagem de tempo de atividade mensal? Para responder, selecione as opções apropriadas na área de resposta. A fórmula é: (parte 1) / parte 2 × parte 3",
     "pares": [
       {
         "requisito": "Primeira parte da fórmula (numerador):",
@@ -576,24 +480,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 35 (banco original Q372, idêntica à Q344)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Todos os serviços do Azure que estão em pré-visualização pública (public preview) são <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "fornecidos sem nenhuma documentação",
-      "configuráveis apenas pela CLI do Azure",
-      "excluídos dos Contratos de Nível de Serviço (SLAs)",
-      "configuráveis apenas pelo portal do Azure"
-    ],
-    "resposta": 3,
-    "explicacao": "Os recursos de pré-visualização são disponibilizados sob a condição de aceitação de termos suplementares. Esses termos estabelecem que as pré-visualizações são fornecidas \"como estão\", \"com todas as falhas\" e \"conforme disponibilidade\", e são excluídas dos Contratos de Nível de Serviço e da garantia limitada.",
-    "link": "https://azure.microsoft.com/pt-br/support/legal/preview-supplemental-terms/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 36 (banco original Q377)
+  // Questao 29 (banco original Q377)
   {
     "tipo": "unica",
     "texto": "O que permite que um serviço de nuvem se adapte rapidamente a requisitos em mudança?",
@@ -604,7 +491,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 37 (banco original Q386)
+  // Questao 30 (banco original Q386)
   {
     "tipo": "dragdrop",
     "texto": "Associe o benefício da computação em nuvem ao requisito apropriado. Cada benefício pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -629,7 +516,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 38 (banco original Q388)
+  // Questao 31 (banco original Q388)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> permite avançar com confiança, tendo foco na performance ou no custo.",
@@ -646,7 +533,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 39 (banco original Q392, idêntica em conceito à Q88)
+  // Questao 32 (banco original Q392, idêntica em conceito à Q88)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Quando um aplicativo em nuvem pode alocar e liberar recursos, ele tem <combobox>.",
@@ -664,7 +551,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 40 (banco original Q406)
+  // Questao 33 (banco original Q406)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Um SLA do Azure é um acordo formal entre a Microsoft e um cliente que define <combobox>.",
@@ -681,24 +568,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 41 (banco original Q417)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Você tem uma rede virtual do Azure chamada VNET1 em um grupo de recursos chamado RG1. Você atribui a definição de Azure Policy \"Tipo de Recurso Não Permitido\" e especifica que redes virtuais não são um tipo de recurso permitido em RG1. VNET1 <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "é excluída automaticamente.",
-      "é movida automaticamente para outro grupo de recursos.",
-      "continua a funcionar normalmente.",
-      "é agora um objeto somente leitura."
-    ],
-    "resposta": 3,
-    "explicacao": "O Azure Policy impede a criação de novos recursos que não estejam em conformidade com a política, mas não afeta recursos existentes de forma retroativa. Portanto, a VNET1 continua funcionando normalmente mesmo após a aplicação da política.",
-    "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 42 (banco original Q424)
+  // Questao 34 (banco original Q424)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> garante o acesso a recursos de nuvem em caso de falha de serviço.",
@@ -715,7 +585,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 43 (banco original Q426)
+  // Questao 35 (banco original Q426)
   {
     "tipo": "dragdrop",
     "texto": "Associe o benefício da computação em nuvem ao requisito apropriado. Cada benefício pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -739,24 +609,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 44 (banco original Q439, idêntica à Q338)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Você implanta um recurso do Azure. O recurso fica indisponível por um período prolongado devido a uma interrupção de serviço. A Microsoft irá <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "reembolsar sua conta bancária.",
-      "migrar o recurso para outra assinatura.",
-      "creditar sua conta do Azure.",
-      "enviar um código de cupom que você pode resgatar por créditos do Azure."
-    ],
-    "resposta": 3,
-    "explicacao": "Quando o SLA de um serviço do Azure não é cumprido, a Microsoft credita a conta do Azure do cliente com o valor correspondente, conforme os termos do Contrato de Nível de Serviço.",
-    "link": "https://azure.microsoft.com/pt-br/support/legal/sla/summary/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco02"
-  },
-  // Questao 45 (banco original Q452)
+  // Questao 36 (banco original Q452)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -771,7 +624,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 46 (banco original Q473)
+  // Questao 37 (banco original Q473)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O SLA (Contrato de Nível de Serviço) de um provedor de serviço de nuvem expressa <combobox> como uma porcentagem de tempo de atividade ao longo de um determinado ano.",

@@ -5,19 +5,20 @@
 // (regiões, pares de regiões, regiões soberanas, zonas de disponibilidade,
 //  datacenters, recursos e grupos de recursos, assinaturas, grupos de gerenciamento,
 //  hierarquia de grupos de recursos / assinaturas / grupos de gerenciamento)
-// 48 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 44 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
-// 96, 98, 100, 101, 102, 103, 104, 107, 113, 114, 116, 127, 128, 129, 135, 136, 141, 142,
-// 144, 145, 152, 153, 159, 199, 226, 258, 263, 276, 282, 286, 287, 299, 301, 306, 310, 320,
-// 322, 328, 337, 353, 360, 403, 410, 419, 433, 437, 451, 467
+// 96, 98, 100, 101, 102, 103, 104, 107, 113, 114, 116, 127, 128, 129, 135, 136,
+// 144, 145, 152, 153, 159, 199, 258, 263, 276, 282, 286, 287, 299, 301, 306, 310, 320,
+// 322, 328, 337, 353, 360, 403, 410, 419, 433, 451, 467
 //
-// ATENÇÃO — CONTRADIÇÃO INTERNA NO BANCO ORIGINAL:
-// As Questões 32 (Q299) e 43 (Q410) têm o MESMO enunciado ("___ fornecem às organizações
-// a capacidade de gerenciar a conformidade de recursos do Azure em várias assinaturas"),
-// mas a fonte original traz gabaritos DIFERENTES: Q299 = "Azure policies", Q410 =
-// "Management groups". Mantive fiel à fonte em cada uma, mas recomendo decidir com o
-// grupo qual resposta usar como oficial antes de aplicar em avaliação.
+// CONTRADIÇÃO DO BANCO ORIGINAL — RESOLVIDA:
+// As Questões 29 (Q299) e 40 (Q410) vinham da fonte com o MESMO enunciado ("___ fornecem
+// às organizações a capacidade de gerenciar a conformidade de recursos do Azure em várias
+// assinaturas") e gabaritos DIFERENTES: Q299 = "Azure policies", Q410 = "Management groups".
+// Em vez de descartar uma, separamos as duas: a Q29 continua perguntando quem gerencia a
+// conformidade (Políticas do Azure) e a Q40 foi reescrita para perguntar pelo escopo acima
+// das assinaturas (Grupos de gerenciamento). As duas agora ensinam a diferença.
 // ==========================================
 
 export const questoes = [
@@ -259,35 +260,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 17 (banco original Q141)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Você tem várias máquinas virtuais em uma assinatura do Azure. Você cria uma nova assinatura. <combobox>",
-    "opcoes": [
-      "Escolha uma opção",
-      "As máquinas virtuais não podem ser movidas para a nova assinatura.",
-      "As máquinas virtuais podem ser movidas para a nova assinatura.",
-      "As máquinas virtuais só podem ser movidas para a nova assinatura se estiverem todas no mesmo grupo de recursos.",
-      "As máquinas virtuais só podem ser movidas para a nova assinatura se executarem o Windows Server 2019."
-    ],
-    "resposta": 2,
-    "explicacao": "Você pode mover uma VM e seus recursos associados para uma assinatura diferente usando o portal do Azure. O processo deve ser repetido para cada grupo de recursos contendo as VMs a serem movidas.",
-    "link": "https://learn.microsoft.com/pt-br/azure/virtual-machines/windows/move-vm",
-    "dominio": "Descrever os principais componentes arquitetônicos do Azure",
-    "simulado": "az-2026-bloco04"
-  },
-  // Questao 18 (banco original Q142)
-  {
-    "tipo": "unica",
-    "texto": "Você precisa comprar um dispositivo de segurança virtual de terceiros para implantar em uma assinatura do Azure.\nO que você deve usar?",
-    "opcoes": ["Assinaturas do Azure", "Microsoft Defender for Cloud", "Azure Marketplace", "Microsoft Store"],
-    "resposta": 2,
-    "explicacao": "Alguns serviços de revenda de terceiros disponíveis no Azure Marketplace agora consomem o saldo de Pré-pagamento do Azure do seu Contrato Enterprise (EA).",
-    "link": "https://learn.microsoft.com/pt-br/azure/cost-management-billing/manage/ea-azure-marketplace",
-    "dominio": "Descrever os principais componentes arquitetônicos do Azure",
-    "simulado": "az-2026-bloco04"
-  },
-  // Questao 19 (banco original Q144)
+  // Questao 17 (banco original Q144)
   {
     "tipo": "unica",
     "texto": "Você planeja implantar um serviço em máquinas virtuais do Azure.\nVocê precisa garantir que o serviço fique disponível caso um datacenter falhe.\nO que você deve usar como parte da implantação da máquina virtual?",
@@ -303,7 +276,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 20 (banco original Q145)
+  // Questao 18 (banco original Q145)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure que contém recursos em várias regiões.\nVocê precisa garantir que os administradores só possam criar recursos nessas regiões.\nO que você deve usar?",
@@ -314,7 +287,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 21 (banco original Q152)
+  // Questao 19 (banco original Q152)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Quando você precisa delegar permissões a várias máquinas virtuais do Azure simultaneamente, você deve implantar as máquinas virtuais <combobox>.",
@@ -331,7 +304,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 22 (banco original Q153)
+  // Questao 20 (banco original Q153)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nVocê planeja implantar várias máquinas virtuais do Azure.\nVocê precisa garantir que os serviços em execução nas máquinas virtuais fiquem disponíveis caso um único datacenter falhe.\nSolução: Você implanta as máquinas virtuais em duas ou mais zonas de disponibilidade.\nIsso atende ao objetivo?",
@@ -342,7 +315,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 23 (banco original Q159)
+  // Questao 21 (banco original Q159)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -357,7 +330,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 24 (banco original Q199)
+  // Questao 22 (banco original Q199)
   {
     "tipo": "unica",
     "texto": "Qual nó no portal do Azure você deve usar para atribuir a um usuário a função de Leitor (Reader) para um grupo de recursos?",
@@ -368,22 +341,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 25 (banco original Q226)
-  {
-    "tipo": "simnao",
-    "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
-    "afirmacoes": [
-      "O Microsoft Defender for Cloud pode monitorar recursos do Azure e recursos locais.",
-      "Todos os recursos do Microsoft Defender for Cloud são gratuitos.",
-      "No Microsoft Defender for Cloud, você pode baixar um relatório de Conformidade Regulatória."
-    ],
-    "respostas": [true, false, true],
-    "explicacao": "O Microsoft Defender for Cloud (anteriormente Azure Security Center) é um sistema unificado de gerenciamento de segurança de infraestrutura que fortalece a postura de segurança dos seus datacenters e fornece proteção avançada contra ameaças em suas cargas de trabalho híbridas — seja no Azure ou não — bem como localmente. Apenas alguns recursos, como avaliação contínua e recomendações de segurança, e o Secure Score do Azure, são gratuitos. Os recursos avançados de monitoramento do Defender for Cloud também permitem rastrear e gerenciar a conformidade e a governança ao longo do tempo, incluindo o download de relatórios de Conformidade Regulatória.",
-    "link": "https://learn.microsoft.com/pt-br/azure/defender-for-cloud/defender-for-cloud-introduction",
-    "dominio": "Descrever os principais componentes arquitetônicos do Azure",
-    "simulado": "az-2026-bloco04"
-  },
-  // Questao 26 (banco original Q258)
+  // Questao 23 (banco original Q258)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -398,7 +356,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 27 (banco original Q263)
+  // Questao 24 (banco original Q263)
   {
     "tipo": "unica",
     "texto": "Esta questão exige que você avalie o texto sublinhado para determinar se está correto.\nO Azure Alemanha pode ser usado apenas por residentes legais da Alemanha.\nInstruções: Revise o texto sublinhado. Se ele tornar a afirmação correta, selecione \"Nenhuma alteração é necessária\". Se a afirmação estiver incorreta, selecione a opção que a torna correta.",
@@ -414,7 +372,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 28 (banco original Q276)
+  // Questao 25 (banco original Q276)
   {
     "tipo": "unica",
     "texto": "Você cria um grupo de recursos chamado RG1 no Azure Resource Manager.\nVocê precisa impedir a exclusão acidental dos recursos em RG1.\nQual configuração você deve usar? Para responder, selecione a configuração apropriada na área de resposta.",
@@ -425,7 +383,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 29 (banco original Q282)
+  // Questao 26 (banco original Q282)
   {
     "tipo": "unica",
     "texto": "Você tem uma assinatura do Azure.\nOnde você encontrará detalhes sobre os dados pessoais coletados pela Microsoft, como a Microsoft usa esses dados e para que finalidade são usados?",
@@ -441,7 +399,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 30 (banco original Q286)
+  // Questao 27 (banco original Q286)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -456,7 +414,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 31 (banco original Q287)
+  // Questao 28 (banco original Q287)
   {
     "tipo": "dragdrop",
     "texto": "Associe o recurso à descrição apropriada. Cada recurso pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -480,7 +438,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 32 (banco original Q299)
+  // Questao 29 (banco original Q299)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem às organizações a capacidade de gerenciar a conformidade dos recursos do Azure em várias assinaturas.",
@@ -492,12 +450,12 @@ export const questoes = [
       "Planos do Azure App Service"
     ],
     "resposta": 3,
-    "explicacao": "Se sua organização tem muitas assinaturas, você pode precisar de uma forma de gerenciar com eficiência o acesso, as políticas e a conformidade dessas assinaturas. Os grupos de gerenciamento do Azure fornecem um nível de escopo acima das assinaturas — você organiza assinaturas em contêineres chamados \"grupos de gerenciamento\" e aplica suas condições de governança a eles, que são automaticamente herdadas por todas as assinaturas e recursos aninhados. Você pode, por exemplo, aplicar políticas a um grupo de gerenciamento que limita as regiões disponíveis para a criação de VMs — essa política seria aplicada a todos os grupos de gerenciamento aninhados, assinaturas e recursos.\n\nNota: a fonte deste banco de questões apresenta o mesmo enunciado em outra questão (Q43 deste bloco) com o gabarito \"Grupos de gerenciamento\" em vez de \"Políticas do Azure\" — recomenda-se decidir com a turma qual das duas respostas será considerada oficial.",
+    "explicacao": "Quem avalia e relata conformidade é o Azure Policy: você define regras (regiões permitidas, tipos de SKU, marcas obrigatórias) e ele verifica cada recurso, marcando o que está em conformidade e o que não está em um painel de conformidade. Atribuída no escopo de um grupo de gerenciamento, a política é herdada por todas as assinaturas abaixo dele — é assim que a conformidade passa a valer em várias assinaturas de uma vez. O grupo de gerenciamento sozinho é só o contêiner onde a política é atribuída; ele organiza as assinaturas, mas não avalia recurso nenhum.",
     "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview",
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 33 (banco original Q301)
+  // Questao 30 (banco original Q301)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -512,7 +470,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 34 (banco original Q306)
+  // Questao 31 (banco original Q306)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Se um grupo de recursos chamado RG1 tiver um bloqueio de exclusão, <combobox> excluir RG1.",
@@ -529,7 +487,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 35 (banco original Q310)
+  // Questao 32 (banco original Q310)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Um serviço do Azure fica disponível a todos os clientes do Azure quando está em <combobox>.",
@@ -546,7 +504,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 36 (banco original Q320)
+  // Questao 33 (banco original Q320)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem 10 departamentos.\nA empresa planeja implementar um ambiente do Azure.\nVocê precisa garantir que cada departamento possa usar uma opção de pagamento diferente para os serviços do Azure que consome.\nO que você deve criar para cada departamento?",
@@ -557,7 +515,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 37 (banco original Q322)
+  // Questao 34 (banco original Q322)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -572,7 +530,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 38 (banco original Q328)
+  // Questao 35 (banco original Q328)
   {
     "tipo": "unica",
     "texto": "Você precisa solicitar à Microsoft o aumento do limite de cota de uma assinatura da sua empresa.\nQual painel (blade) você deve usar no portal do Azure? Para responder, selecione o painel apropriado na área de resposta.",
@@ -583,7 +541,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 39 (banco original Q337)
+  // Questao 36 (banco original Q337)
   {
     "tipo": "unica",
     "texto": "Quem pode usar a calculadora de Custo Total de Propriedade (TCO) do Azure?",
@@ -599,7 +557,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 40 (banco original Q353)
+  // Questao 37 (banco original Q353)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -614,7 +572,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 41 (banco original Q360)
+  // Questao 38 (banco original Q360)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -629,7 +587,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 42 (banco original Q403)
+  // Questao 39 (banco original Q403)
   {
     "tipo": "unica",
     "texto": "Você precisa criar um novo usuário para uma assinatura do Azure.\nO que você deve usar? Para responder, selecione o serviço na área de resposta.",
@@ -640,10 +598,10 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 43 (banco original Q410)
+  // Questao 40 (banco original Q410)
   {
     "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem às organizações a capacidade de gerenciar a conformidade dos recursos do Azure em várias assinaturas.",
+    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem às organizações um nível de escopo acima das assinaturas, no qual várias assinaturas são organizadas em contêineres que herdam as condições de governança aplicadas a eles.",
     "opcoes": [
       "Escolha uma opção",
       "Grupos de recursos",
@@ -652,12 +610,12 @@ export const questoes = [
       "Planos do Azure App Service"
     ],
     "resposta": 2,
-    "explicacao": "Os Grupos de gerenciamento do Azure permitem que as organizações organizem assinaturas e apliquem políticas de governança e conformidade de forma centralizada, atuando em um nível superior ao das assinaturas.\n\nNota: a fonte deste banco de questões apresenta o mesmo enunciado na Q32 deste bloco com o gabarito \"Políticas do Azure\" em vez de \"Grupos de gerenciamento\" — recomenda-se decidir com a turma qual das duas respostas será considerada oficial.",
+    "explicacao": "Os grupos de gerenciamento ficam acima das assinaturas na hierarquia do Azure: você agrupa assinaturas em contêineres e tudo o que é aplicado ao contêiner — atribuições de política e de função — desce por herança para as assinaturas e os recursos aninhados. Grupos de recursos ficam abaixo da assinatura, e não acima dela, então não alcançam várias assinaturas. As políticas do Azure são o que se aplica a esse escopo (veja a Q32 deste bloco), e não o escopo em si.",
     "link": "https://learn.microsoft.com/pt-br/azure/governance/management-groups/overview",
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 44 (banco original Q419)
+  // Questao 41 (banco original Q419)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -672,7 +630,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 45 (banco original Q433)
+  // Questao 42 (banco original Q433)
   {
     "tipo": "unica",
     "texto": "Sua empresa tem uma assinatura do Azure e três unidades de negócios.\nVocê planeja implantar novos recursos para cada unidade de negócios.\nVocê precisa garantir que os novos recursos sejam implantados usando um método repetível e confiável, que aplique as mesmas configurações a cada recurso.\nO que você deve usar?",
@@ -683,24 +641,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 46 (banco original Q437)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Quando você precisa delegar permissões a várias máquinas virtuais do Azure simultaneamente, você deve implantar as máquinas virtuais <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "na mesma região do Azure.",
-      "usando o mesmo modelo do Azure Resource Manager.",
-      "no mesmo grupo de recursos.",
-      "na mesma zona de disponibilidade."
-    ],
-    "resposta": 3,
-    "explicacao": "Um grupo de recursos é um contêiner lógico para recursos do Azure. Grupos de recursos facilitam o gerenciamento de recursos do Azure. Com um grupo de recursos, você pode permitir que um usuário gerencie todos os recursos no grupo, como máquinas virtuais, sites e sub-redes. As permissões que você aplica ao grupo de recursos se aplicam a todos os recursos contidos nele.",
-    "link": "https://learn.microsoft.com/pt-br/azure/azure-resource-manager/management/overview",
-    "dominio": "Descrever os principais componentes arquitetônicos do Azure",
-    "simulado": "az-2026-bloco04"
-  },
-  // Questao 47 (banco original Q451)
+  // Questao 43 (banco original Q451)
   {
     "tipo": "unica",
     "texto": "Você tem uma assinatura do Azure.\nVocê precisa usar o Azure Cloud Shell para executar um script de implantação.\nO que você deve usar para acessar o Cloud Shell?",
@@ -711,7 +652,7 @@ export const questoes = [
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
-  // Questao 48 (banco original Q467)
+  // Questao 44 (banco original Q467)
   {
     "tipo": "dragdrop",
     "texto": "Em qual ordem os recursos do Azure devem ser organizados, do objeto pai de maior nível (no topo) ao objeto filho de menor nível (embaixo)? Para responder, mova todos os recursos da lista para a área de resposta e organize-os na ordem correta.",

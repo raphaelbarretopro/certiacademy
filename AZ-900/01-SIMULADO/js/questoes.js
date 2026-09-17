@@ -4,7 +4,7 @@
 // BLOCO 1 de 10 — Descrever a computação em nuvem
 // (definição, responsabilidade compartilhada, modelos público/privado/híbrido,
 //  modelo de consumo, modelos de preço, computação sem servidor)
-// 47 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 41 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 // Terminologia atualizada onde aplicável (Azure AD -> Microsoft Entra ID)
 // ==========================================
 
@@ -136,24 +136,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 11 (banco original Q40, idêntica à Q409 e Q440)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Ao planejar migrar um site público para o Azure, você deve planejar <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "implantar uma VPN",
-      "pagar custos de uso mensais",
-      "pagar para transferir todos os dados do site para o Azure",
-      "reduzir o número de conexões ao site"
-    ],
-    "resposta": 2,
-    "explicacao": "O Azure é um serviço de pagamento conforme o uso (pay-as-you-go), o que significa que você será cobrado com base no seu consumo. Você deve planejar pagar custos de uso mensais pelos serviços e recursos do Azure usados para hospedar seu site.",
-    "link": "https://azure.microsoft.com/pt-br/pricing/purchase-options/pay-as-you-go/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco01"
-  },
-  // Questao 12 (banco original Q47)
+  // Questao 11 (banco original Q47)
   {
     "tipo": "unica",
     "texto": "Você tem uma rede local que contém 100 servidores.\nVocê precisa recomendar uma solução que forneça recursos adicionais para seus usuários. A solução deve minimizar os custos de despesa de capital e operacional.\nO que você deve incluir na recomendação?",
@@ -169,7 +152,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 13 (banco original Q49)
+  // Questao 12 (banco original Q49)
   {
     "tipo": "unica",
     "texto": "Você planeja migrar vários servidores de uma rede local para o Azure.\nQual é uma vantagem de usar um serviço de nuvem pública para os servidores em vez de uma rede local?",
@@ -185,7 +168,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 14 (banco original Q51)
+  // Questao 13 (banco original Q51)
   {
     "tipo": "unica",
     "texto": "Em qual tipo de modelo de nuvem todos os recursos de hardware são de propriedade de terceiros e compartilhados entre vários locatários?",
@@ -196,7 +179,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 15 (banco original Q52, idêntica à Q85)
+  // Questao 14 (banco original Q52, idêntica à Q85)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Um aplicativo Web do Azure que consulta um servidor Microsoft SQL local é um exemplo de nuvem <combobox>.",
@@ -213,7 +196,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 16 (banco original Q53, idêntica à Q348)
+  // Questao 15 (banco original Q53, idêntica à Q348)
   {
     "tipo": "unica",
     "texto": "Você tem 1.000 máquinas virtuais hospedadas em hosts Hyper-V em um datacenter.\nVocê planeja migrar todas as máquinas virtuais para uma assinatura do Azure com pagamento conforme o uso.\nVocê precisa identificar qual modelo de despesa usar para a solução do Azure planejada.\nQual modelo de despesa você deve identificar?",
@@ -224,7 +207,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 17 (banco original Q58)
+  // Questao 16 (banco original Q58)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -239,7 +222,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 18 (banco original Q60)
+  // Questao 17 (banco original Q60)
   {
     "tipo": "unica",
     "texto": "Em quais modelos de nuvem você pode implantar servidores físicos?",
@@ -255,7 +238,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 19 (banco original Q61)
+  // Questao 18 (banco original Q61)
   {
     "tipo": "dragdrop",
     "texto": "Associe o modelo de nuvem à vantagem correta. Cada modelo de nuvem pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -279,7 +262,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 20 (banco original Q62)
+  // Questao 19 (banco original Q62)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -294,7 +277,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 21 (banco original Q63)
+  // Questao 20 (banco original Q63)
   {
     "tipo": "unica",
     "texto": "Você tem 50 máquinas virtuais hospedadas localmente e 50 máquinas virtuais hospedadas no Azure. As máquinas virtuais locais e as do Azure se conectam entre si.\nQual tipo de modelo de nuvem é este?",
@@ -305,7 +288,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 22 (banco original Q67)
+  // Questao 21 (banco original Q67)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -320,7 +303,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 23 (banco original Q76)
+  // Questao 22 (banco original Q76)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -335,7 +318,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 24 (banco original Q77)
+  // Questao 23 (banco original Q77)
   {
     "tipo": "unica",
     "texto": "Qual é o primeiro estágio no Cloud Adoption Framework da Microsoft para o Azure?",
@@ -351,7 +334,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 25 (banco original Q78)
+  // Questao 24 (banco original Q78)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -366,7 +349,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 26 (banco original Q79)
+  // Questao 25 (banco original Q79)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -381,24 +364,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 27 (banco original Q85, idêntica à Q52)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Um aplicativo Web do Azure que consulta um servidor Microsoft SQL local é um exemplo de nuvem <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "híbrida",
-      "de múltiplos fornecedores",
-      "privada",
-      "pública"
-    ],
-    "resposta": 1,
-    "explicacao": "Uma nuvem híbrida é um ambiente de computação que combina um datacenter local (nuvem privada) com uma nuvem pública, permitindo que dados e aplicativos sejam compartilhados entre eles.",
-    "link": "https://azure.microsoft.com/pt-br/overview/what-is-hybrid-cloud-computing/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco01"
-  },
-  // Questao 28 (banco original Q87)
+  // Questao 26 (banco original Q87)
   {
     "tipo": "unica",
     "texto": "Qual modelo de computação em nuvem inclui recursos locais e recursos baseados em nuvem?",
@@ -409,7 +375,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 29 (banco original Q91)
+  // Questao 27 (banco original Q91)
   {
     "tipo": "multipla",
     "texto": "Quais são dois benefícios da computação em nuvem? Cada resposta correta apresenta uma solução completa.",
@@ -425,7 +391,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 30 (banco original Q125)
+  // Questao 28 (banco original Q125)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -440,7 +406,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 31 (banco original Q137)
+  // Questao 29 (banco original Q137)
   {
     "tipo": "dragdrop",
     "texto": "Associe a solução sem servidor (serverless) à característica correta. Cada solução pode ser usada uma vez, mais de uma vez ou não ser usada.",
@@ -463,7 +429,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 32 (banco original Q193)
+  // Questao 30 (banco original Q193)
   {
     "tipo": "unica",
     "texto": "Qual serviço fornece computação sem servidor (serverless) no Azure?",
@@ -479,7 +445,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 33 (banco original Q231)
+  // Questao 31 (banco original Q231)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> no Firewall do Azure permitem que usuários na internet acessem um servidor em uma rede virtual.",
@@ -496,7 +462,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 34 (banco original Q232)
+  // Questao 32 (banco original Q232)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: A proteção contra negação de serviço distribuída (DDoS) do Azure é um exemplo de proteção implementada na <combobox>.",
@@ -513,7 +479,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 35 (banco original Q323)
+  // Questao 33 (banco original Q323)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -528,24 +494,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 36 (banco original Q345)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Se uma máquina virtual do Azure tiver o status Parada (desalocada), você continuará pagando por <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "capacidade de computação",
-      "operações de E/S",
-      "rede",
-      "armazenamento"
-    ],
-    "resposta": 4,
-    "explicacao": "O Azure não cobra pelas horas de núcleo da VM enquanto ela está Parada (Desalocada). No entanto, você continua acumulando cobranças pelo armazenamento do Azure necessário para o disco do SO da VM e quaisquer discos de dados anexados.",
-    "link": "https://learn.microsoft.com/pt-br/azure/virtual-machines/states-billing",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco01"
-  },
-  // Questao 37 (banco original Q350)
+  // Questao 34 (banco original Q350)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -560,7 +509,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 38 (banco original Q354)
+  // Questao 35 (banco original Q354)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -575,7 +524,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 39 (banco original Q380)
+  // Questao 36 (banco original Q380)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -590,7 +539,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 40 (banco original Q382)
+  // Questao 37 (banco original Q382)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -605,7 +554,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 41 (banco original Q390)
+  // Questao 38 (banco original Q390)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você planeja implantar 20 máquinas virtuais em um ambiente do Azure. Para garantir que uma máquina virtual chamada VM1 não possa se conectar às outras máquinas virtuais, VM1 deve <combobox>.",
@@ -622,24 +571,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 42 (banco original Q391, idêntica à Q38)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Uma organização que hospeda sua própria infraestrutura <combobox> não precisa mais de um datacenter.",
-    "opcoes": [
-      "Escolha uma opção",
-      "em uma nuvem privada",
-      "em uma nuvem híbrida",
-      "na nuvem pública",
-      "em um host Hyper-V"
-    ],
-    "resposta": 3,
-    "explicacao": "Uma organização que hospeda sua infraestrutura na nuvem pública não precisa mais manter um datacenter próprio, pois toda a infraestrutura é fornecida pelo provedor de nuvem.",
-    "link": "https://learn.microsoft.com/pt-br/training/modules/principles-cloud-computing/4-cloud-deployment-models",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco01"
-  },
-  // Questao 43 (banco original Q393)
+  // Questao 39 (banco original Q393)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> executa código de aplicativo no Azure sem exigir um servidor.",
@@ -656,24 +588,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 44 (banco original Q409, idêntica à Q40 e Q440)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: Ao planejar migrar um site público para o Azure, você deve planejar <combobox>.",
-    "opcoes": [
-      "Escolha uma opção",
-      "implantar uma VPN",
-      "pagar custos de uso mensais",
-      "pagar para transferir todos os dados do site para o Azure",
-      "reduzir o número de conexões ao site"
-    ],
-    "resposta": 2,
-    "explicacao": "O Azure é um serviço de pagamento conforme o uso: você será cobrado com base no seu consumo, portanto deve planejar pagar custos de uso mensais pelos serviços e recursos usados para hospedar seu site.",
-    "link": "https://azure.microsoft.com/pt-br/pricing/purchase-options/pay-as-you-go/",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco01"
-  },
-  // Questao 45 (banco original Q440, idêntica à Q40 e Q409)
+  // Questao 40 (banco original Q440, idêntica à Q40 e Q409)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Ao planejar migrar um site público para o Azure, você deve planejar <combobox>.",
@@ -690,7 +605,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 46 (banco original Q448)
+  // Questao 41 (banco original Q448)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",

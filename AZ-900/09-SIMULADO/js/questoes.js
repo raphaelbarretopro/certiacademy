@@ -5,12 +5,12 @@
 // recursos do Azure (portal do Azure; Azure Cloud Shell, CLI e PowerShell;
 // Azure Arc; Infraestrutura como Código (IaC); Azure Resource Manager e
 // modelos ARM)
-// 47 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 45 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
 // 16, 17, 18, 24, 28, 70, 161, 164, 165, 167, 172, 173, 176, 181, 184, 185, 186, 187,
 // 191, 194, 195, 196, 201, 204, 205, 206, 207, 208, 211, 215, 219, 315, 317, 343, 369,
-// 375, 398, 404, 415, 420, 425, 430, 435, 436, 442, 443, 459
+// 375, 404, 415, 420, 425, 430, 435, 436, 443, 459
 //
 // ATENÇÃO — CONTRADIÇÃO INTERNA NO BANCO ORIGINAL:
 // A Q52 (Q167 original) afirma que um computador macOS com PowerShell Core 6.0
@@ -107,7 +107,7 @@ export const questoes = [
   // Questao 07 (banco original Q161)
   {
     "tipo": "comboboxs",
-    "texto": "Você tem um ambiente do Azure que contém 10 aplicativos Web. A qual URL você deve se conectar para gerenciar todos os recursos do Azure? Para responder, selecione as opções apropriadas na área de resposta. O formato da URL é: https://<combobox 1><combobox 2>com",
+    "texto": "Você tem um ambiente do Azure que contém 10 aplicativos Web. A qual URL você deve se conectar para gerenciar todos os recursos do Azure? Para responder, selecione as opções apropriadas na área de resposta. O formato da URL é: https://[parte 1][parte 2]com",
     "pares": [
       {
         "requisito": "Primeira parte da URL:",
@@ -187,7 +187,7 @@ export const questoes = [
     "opcoes": ["Azure CLI", "o portal do Azure", "Azure Cloud Shell", "Windows PowerShell", "Azure Storage Explorer"],
     "respostas": [1, 2],
     "explicacao": "O portal do Azure é o portal baseado na Web para gerenciar o Azure. Sendo baseado na Web, você pode usar o portal do Azure em um iPhone. O Azure Cloud Shell é uma linha de comando baseada na Web para gerenciar o Azure. Você acessa o Azure Cloud Shell a partir do portal do Azure. Sendo baseado na Web, você pode usar o Azure Cloud Shell em um iPhone. A Azure CLI pode ser instalada no macOS, mas não pode ser instalada em um iPhone. O Windows PowerShell pode ser instalado no macOS, mas não pode ser instalado em um iPhone. O Azure Storage Explorer não é usado para gerenciar aplicativos Web do Azure.",
-    "link": "http://www.deployazure.com/management/managing-azure-from-ipad/",
+    "link": "https://azure.microsoft.com/pt-br/get-started/azure-portal/mobile-app",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
@@ -525,18 +525,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 37 (banco original Q398)
-  {
-    "tipo": "multipla",
-    "texto": "Você tem um aplicativo Web do Azure.\nVocê precisa gerenciar as configurações do aplicativo Web a partir de um iPhone.\nQuais são duas ferramentas de gerenciamento do Azure que você pode usar? Cada resposta correta apresenta uma solução completa.\nNOTA: Cada seleção correta vale um ponto.",
-    "opcoes": ["Windows PowerShell", "Azure Cloud Shell", "o portal do Azure", "Azure Storage Explorer"],
-    "respostas": [1, 2],
-    "explicacao": "Tanto o Azure Cloud Shell quanto o portal do Azure são baseados na Web e podem ser acessados por um navegador em qualquer dispositivo, incluindo um iPhone. O Windows PowerShell e o Azure Storage Explorer não podem ser instalados diretamente em um iPhone.",
-    "link": "https://azure.microsoft.com/pt-br/get-started/azure-portal/mobile-app",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco09"
-  },
-  // Questao 38 (banco original Q404)
+  // Questao 37 (banco original Q404)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Modelos do Azure Resource Manager (ARM) usam o formato <combobox>.",
@@ -547,7 +536,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 39 (banco original Q415)
+  // Questao 38 (banco original Q415)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -562,7 +551,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 40 (banco original Q420)
+  // Questao 39 (banco original Q420)
   {
     "tipo": "unica",
     "texto": "Você tem servidores locais que executam o Windows Server.\nO que você deve implementar para gerenciar os servidores usando o portal do Azure?",
@@ -573,7 +562,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 41 (banco original Q425)
+  // Questao 40 (banco original Q425)
   {
     "tipo": "unica",
     "texto": "O que um aplicativo de desktop deve usar para interagir com o Azure e gerenciar recursos?",
@@ -584,7 +573,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 42 (banco original Q430)
+  // Questao 41 (banco original Q430)
   {
     "tipo": "unica",
     "texto": "O que fornece uma forma unificada de projetar e gerenciar recursos não pertencentes ao Azure dentro do Azure Resource Manager (ARM)?",
@@ -595,7 +584,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 43 (banco original Q435)
+  // Questao 42 (banco original Q435)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -610,7 +599,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 44 (banco original Q436)
+  // Questao 43 (banco original Q436)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> estende a conformidade e o monitoramento do Azure para configurações híbridas e multinuvem.",
@@ -621,24 +610,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 45 (banco original Q442)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem uma plataforma comum para implantar objetos em uma infraestrutura de nuvem e para implementar consistência em todo o ambiente do Azure.",
-    "opcoes": [
-      "Escolha uma opção",
-      "Políticas do Azure",
-      "Grupos de recursos",
-      "Modelos do Azure Resource Manager",
-      "Grupos de gerenciamento"
-    ],
-    "resposta": 3,
-    "explicacao": "Modelos do Azure Resource Manager fornecem uma plataforma comum para implantar objetos em uma infraestrutura de nuvem e para implementar consistência em todo o ambiente do Azure.",
-    "link": "https://learn.microsoft.com/pt-br/azure/azure-resource-manager/templates/overview",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-2026-bloco09"
-  },
-  // Questao 46 (banco original Q443)
+  // Questao 44 (banco original Q443)
   {
     "tipo": "multipla",
     "texto": "Um administrador do Azure planeja executar um script do PowerShell que cria recursos do Azure.\nVocê precisa recomendar qual configuração de computador deve ser usada para executar o script.\nQuais três computadores podem executar o script? Cada resposta correta apresenta uma solução completa.\nNOTA: Cada seleção correta vale um ponto.",
@@ -655,7 +627,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco09"
   },
-  // Questao 47 (banco original Q459)
+  // Questao 45 (banco original Q459)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",

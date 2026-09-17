@@ -5,11 +5,11 @@
 // (tipos de computação; opções de VM; recursos necessários para VMs; opções de
 //  hospedagem de aplicativos; rede virtual, sub-redes, emparelhamento, DNS,
 //  Gateway de VPN, ExpressRoute; endpoints públicos e privados)
-// 48 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 46 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 //
 // CORRESPONDÊNCIA COM O BANCO ORIGINAL (numeração do PDF em inglês, em ordem):
-// 7, 9, 21, 25, 34, 64, 89, 97, 99, 105, 110, 122, 131, 132, 140, 148, 151, 155, 156,
-// 182, 192, 202, 203, 210, 217, 218, 220, 250, 252, 253, 256, 257, 259, 260, 262, 309,
+// 7, 21, 25, 34, 64, 89, 97, 99, 105, 110, 122, 131, 132, 140, 148, 151, 155, 156,
+// 182, 202, 203, 210, 217, 218, 220, 250, 252, 253, 256, 257, 259, 260, 262, 309,
 // 333, 336, 361, 366, 381, 387, 416, 427, 434, 457, 461, 463
 // ==========================================
 
@@ -31,18 +31,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 02 (banco original Q9) — já traduzida no lote01
-  {
-    "tipo": "unica",
-    "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Porém, cada questão possui um resultado distinto. Avalie se a solução atende aos requisitos.\nSua empresa planeja migrar todas as suas máquinas virtuais para uma assinatura do Azure com pagamento conforme o uso (pay-as-you-go). As máquinas virtuais estão atualmente hospedadas em hosts Hyper-V em um datacenter.\nVocê precisa garantir que a solução do Azure pretendida utilize o modelo de despesa correto.\nSolução: Você deve recomendar o uso do modelo de despesa elástico.\nA solução atende ao objetivo?",
-    "opcoes": ["Sim", "Não"],
-    "resposta": 1,
-    "explicacao": "Elasticidade não é um modelo de despesa, e sim uma das características da computação em nuvem. A vantagem básica da nuvem é migrar de um modelo de Despesa de Capital (CapEx) elevado para um modelo de pagamento conforme o uso, que é uma Despesa Operacional (OpEx).",
-    "link": "https://azure.microsoft.com/pt-br/pricing/purchase-options/pay-as-you-go/",
-    "dominio": "Descrever a arquitetura e os serviços do Azure",
-    "simulado": "az-2026-bloco05"
-  },
-  // Questao 03 (banco original Q21) — já traduzida no lote01
+  // Questao 02 (banco original Q21) — já traduzida no lote01
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Porém, cada questão possui um resultado distinto. Avalie se a solução atende aos requisitos.\nOs desenvolvedores da sua empresa pretendem implantar um grande número de máquinas virtuais personalizadas semanalmente. Eles também removerão essas máquinas virtuais na mesma semana em que foram implantadas. Sessenta por cento das VMs têm o Windows Server 2016 instalado, enquanto os outros quarenta por cento têm o Ubuntu Linux instalado.\nVocê precisa garantir que o esforço administrativo necessário para esse processo seja reduzido, empregando um serviço adequado do Azure.\nSolução: Você recomenda o uso do Microsoft Managed Desktop.\nA solução atende ao objetivo?",
@@ -53,7 +42,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 04 (banco original Q25) — já traduzida no lote01
+  // Questao 03 (banco original Q25) — já traduzida no lote01
   {
     "tipo": "unica",
     "texto": "Você tem máquinas virtuais (VMs) hospedadas no Microsoft Azure. As VMs estão localizadas em uma única rede virtual do Azure chamada VNet1.\nA empresa tem usuários que trabalham remotamente. Os usuários remotos precisam de acesso às VMs na VNet1.\nVocê precisa fornecer acesso para os trabalhadores remotos.\nO que você deve fazer?",
@@ -70,7 +59,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 05 (banco original Q34)
+  // Questao 04 (banco original Q34)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -85,7 +74,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 06 (banco original Q64)
+  // Questao 05 (banco original Q64)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -100,7 +89,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 07 (banco original Q89)
+  // Questao 06 (banco original Q89)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -115,7 +104,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 08 (banco original Q97)
+  // Questao 07 (banco original Q97)
   {
     "tipo": "unica",
     "texto": "Você planeja estender a rede da sua empresa para o Azure.\nA rede contém um dispositivo VPN que usa o endereço IP 131.107.200.1.\nVocê precisa criar um recurso do Azure que defina o dispositivo VPN no Azure.\nQual recurso do Azure você deve criar? Para responder, selecione o recurso apropriado na área de resposta.",
@@ -135,7 +124,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 09 (banco original Q99)
+  // Questao 08 (banco original Q99)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nVocê planeja implantar várias máquinas virtuais do Azure.\nVocê precisa garantir que os serviços em execução nas máquinas virtuais fiquem disponíveis caso um único datacenter falhe.\nSolução: Você implanta as máquinas virtuais em um conjunto de dimensionamento (scale set).\nIsso atende ao objetivo?",
@@ -146,7 +135,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 10 (banco original Q105)
+  // Questao 09 (banco original Q105)
   {
     "tipo": "multipla",
     "texto": "Você tem um ambiente do Azure que contém várias máquinas virtuais do Azure.\nVocê planeja implementar uma solução que permita que os computadores clientes da sua rede local se comuniquem com as máquinas virtuais do Azure.\nVocê precisa recomendar quais recursos do Azure devem ser criados para a solução planejada.\nQuais dois recursos do Azure você deve incluir na recomendação? Cada resposta correta apresenta parte da solução.",
@@ -163,7 +152,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 11 (banco original Q110)
+  // Questao 10 (banco original Q110)
   {
     "tipo": "unica",
     "texto": "Sua empresa planeja mover vários servidores para o Azure.\nA política de conformidade da empresa determina que um servidor chamado FinServer deve estar em um segmento de rede separado.\nVocê está avaliando quais serviços do Azure podem ser usados para atender aos requisitos da política de conformidade.\nQual solução do Azure você deve recomendar?",
@@ -179,7 +168,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 12 (banco original Q122)
+  // Questao 11 (banco original Q122)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nVocê planeja implantar várias máquinas virtuais do Azure.\nVocê precisa garantir que os serviços em execução nas máquinas virtuais fiquem disponíveis caso um único datacenter falhe.\nSolução: Você implanta as máquinas virtuais em dois ou mais conjuntos de dimensionamento (scale sets).\nIsso atende ao objetivo?",
@@ -190,7 +179,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 13 (banco original Q131)
+  // Questao 12 (banco original Q131)
   {
     "tipo": "multipla",
     "texto": "Você planeja implantar várias máquinas virtuais do Azure.\nVocê precisa garantir que os serviços em execução nas máquinas virtuais permaneçam disponíveis caso um único datacenter falhe.\nQuais são as duas soluções possíveis? Cada resposta correta apresenta uma solução completa.",
@@ -206,7 +195,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 14 (banco original Q132)
+  // Questao 13 (banco original Q132)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você planeja implantar 20 máquinas virtuais em um ambiente do Azure. Para garantir que uma máquina virtual chamada VM1 não possa se conectar a outras máquinas virtuais, VM1 deve <combobox>.",
@@ -223,7 +212,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 15 (banco original Q140)
+  // Questao 14 (banco original Q140)
   {
     "tipo": "dragdrop",
     "texto": "Associe os serviços do Azure às descrições corretas. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -250,7 +239,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 16 (banco original Q148)
+  // Questao 15 (banco original Q148)
   {
     "tipo": "unica",
     "texto": "Qual é a função de uma VPN Site a Site?",
@@ -265,7 +254,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 17 (banco original Q151)
+  // Questao 16 (banco original Q151)
   {
     "tipo": "multipla",
     "texto": "Você precisa gerenciar contêineres.\nQuais dois serviços você pode usar? Cada resposta correta apresenta uma solução completa.",
@@ -282,7 +271,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 18 (banco original Q155)
+  // Questao 17 (banco original Q155)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nVocê planeja implantar várias máquinas virtuais do Azure.\nVocê precisa garantir que os serviços em execução nas máquinas virtuais fiquem disponíveis caso um único datacenter falhe.\nSolução: Você implanta as máquinas virtuais em duas ou mais regiões.\nIsso atende ao objetivo?",
@@ -293,7 +282,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 19 (banco original Q156)
+  // Questao 18 (banco original Q156)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Uma instância de contêiner do Azure é um exemplo de <combobox>.",
@@ -310,7 +299,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 20 (banco original Q182)
+  // Questao 19 (banco original Q182)
   {
     "tipo": "unica",
     "texto": "Uma equipe de desenvolvedores da sua empresa planeja implantar e, depois, remover 50 máquinas virtuais toda semana. Todas as máquinas virtuais são configuradas usando modelos do Azure Resource Manager.\nVocê precisa recomendar qual serviço do Azure minimizará o esforço administrativo necessário para implantar e remover as máquinas virtuais.\nO que você deve recomendar?",
@@ -326,34 +315,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 21 (banco original Q192)
-  {
-    "tipo": "dragdrop",
-    "texto": "Associe os serviços do Azure às descrições corretas. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
-    "itens": [
-      { "label": "Azure Functions" },
-      { "label": "Azure App Service" },
-      { "label": "Máquinas virtuais do Azure" },
-      { "label": "Instâncias de Contêiner do Azure" }
-    ],
-    "grupos": [
-      "Fornecem virtualização do sistema operacional",
-      "Fornecem um ambiente portátil para aplicativos em contêiner",
-      "São usados para criar, implantar e dimensionar aplicativos Web",
-      "Fornecem uma plataforma para código sem servidor (serverless)"
-    ],
-    "respostas": {
-      "Fornecem virtualização do sistema operacional": ["Máquinas virtuais do Azure"],
-      "Fornecem um ambiente portátil para aplicativos em contêiner": ["Instâncias de Contêiner do Azure"],
-      "São usados para criar, implantar e dimensionar aplicativos Web": ["Azure App Service"],
-      "Fornecem uma plataforma para código sem servidor (serverless)": ["Azure Functions"]
-    },
-    "explicacao": "Máquinas virtuais do Azure fornecem virtualização do sistema operacional. As Instâncias de Contêiner do Azure fornecem um ambiente portátil para executar aplicativos em contêiner sem gerenciar VMs. O Azure App Service é usado para criar, implantar e dimensionar aplicativos Web. O Azure Functions fornece uma plataforma para código sem servidor.",
-    "link": "https://learn.microsoft.com/pt-br/azure/container-instances/container-instances-overview",
-    "dominio": "Descrever a arquitetura e os serviços do Azure",
-    "simulado": "az-2026-bloco05"
-  },
-  // Questao 22 (banco original Q202)
+  // Questao 20 (banco original Q202)
   {
     "tipo": "dragdrop",
     "texto": "Associe o serviço do Azure à definição correta. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -380,7 +342,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 23 (banco original Q203)
+  // Questao 21 (banco original Q203)
   {
     "tipo": "unica",
     "texto": "Uma equipe de desenvolvedores da sua empresa planeja implantar e, depois, remover 50 máquinas virtuais personalizadas toda semana. Trinta das máquinas virtuais executam o Windows Server 2016 e 20 executam o Ubuntu Linux.\nVocê precisa recomendar qual serviço do Azure minimizará o esforço administrativo necessário para implantar e remover as máquinas virtuais.\nO que você deve recomendar?",
@@ -396,7 +358,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 24 (banco original Q210)
+  // Questao 22 (banco original Q210)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você pode gerenciar um servidor Windows local como um recurso do Azure usando <combobox>.",
@@ -413,7 +375,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 25 (banco original Q217)
+  // Questao 23 (banco original Q217)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSeu ambiente do Azure contém várias máquinas virtuais do Azure.\nVocê precisa garantir que uma máquina virtual chamada VM1 seja acessível pela internet via HTTP.\nSolução: Você modifica um perfil do Azure Traffic Manager.\nIsso atende ao objetivo?",
@@ -424,7 +386,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 26 (banco original Q218)
+  // Questao 24 (banco original Q218)
   {
     "tipo": "unica",
     "texto": "Sua empresa planeja implantar vários servidores Web e vários servidores de banco de dados no Azure.\nVocê precisa recomendar uma solução do Azure para limitar os tipos de conexões dos servidores Web para os servidores de banco de dados.\nO que você deve incluir na recomendação?",
@@ -440,7 +402,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 27 (banco original Q220)
+  // Questao 25 (banco original Q220)
   {
     "tipo": "unica",
     "texto": "Qual serviço fornece filtragem de tráfego de rede em várias assinaturas e redes virtuais do Azure?",
@@ -456,7 +418,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 28 (banco original Q250)
+  // Questao 26 (banco original Q250)
   {
     "tipo": "multipla",
     "texto": "Seu ambiente do Azure contém várias máquinas virtuais do Azure.\nVocê precisa garantir que uma máquina virtual chamada VM1 seja acessível pela internet via HTTP.\nQuais são as duas soluções possíveis? Cada resposta correta apresenta uma solução completa.",
@@ -472,7 +434,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 29 (banco original Q252)
+  // Questao 27 (banco original Q252)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -487,7 +449,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 30 (banco original Q253)
+  // Questao 28 (banco original Q253)
   {
     "tipo": "unica",
     "texto": "Você tem um ambiente do Azure que contém 10 redes virtuais e 100 máquinas virtuais.\nVocê precisa limitar a quantidade de tráfego de entrada para todas as redes virtuais do Azure.\nO que você deve criar?",
@@ -503,7 +465,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 31 (banco original Q256)
+  // Questao 29 (banco original Q256)
   {
     "tipo": "unica",
     "texto": "Você planeja implantar várias máquinas virtuais do Azure.\nVocê precisa controlar as portas que dispositivos na internet podem usar para acessar as máquinas virtuais.\nO que você deve usar?",
@@ -519,7 +481,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 32 (banco original Q257)
+  // Questao 30 (banco original Q257)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Depois de criar uma máquina virtual, você precisa modificar o(a) <combobox> para permitir conexões à porta TCP 8080 na máquina virtual.",
@@ -536,7 +498,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 33 (banco original Q259)
+  // Questao 31 (banco original Q259)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSeu ambiente do Azure contém várias máquinas virtuais do Azure.\nVocê precisa garantir que uma máquina virtual chamada VM1 seja acessível pela internet via HTTP.\nSolução: Você modifica um grupo de segurança de rede (NSG).\nIsso atende ao objetivo?",
@@ -547,7 +509,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 34 (banco original Q260)
+  // Questao 32 (banco original Q260)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSeu ambiente do Azure contém várias máquinas virtuais do Azure.\nVocê precisa garantir que uma máquina virtual chamada VM1 seja acessível pela internet via HTTP.\nSolução: Você modifica um plano de proteção DDoS.\nIsso atende ao objetivo?",
@@ -558,7 +520,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 35 (banco original Q262)
+  // Questao 33 (banco original Q262)
   {
     "tipo": "unica",
     "texto": "Nota: Esta questão faz parte de um grupo de questões que descreve o mesmo cenário. Cada questão contém uma solução única que pode atender aos objetivos declarados. Alguns conjuntos de questões podem ter mais de uma solução correta, enquanto outros podem não ter nenhuma solução correta.\nDepois de responder a uma questão desta seção, você NÃO poderá retornar a ela. Por isso, essas questões não aparecerão na tela de revisão.\nSeu ambiente do Azure contém várias máquinas virtuais do Azure.\nVocê precisa garantir que uma máquina virtual chamada VM1 seja acessível pela internet via HTTP.\nSolução: Você modifica um firewall do Azure.\nIsso atende ao objetivo?",
@@ -569,7 +531,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 36 (banco original Q309)
+  // Questao 34 (banco original Q309)
   {
     "tipo": "unica",
     "texto": "O que é garantido em um Contrato de Nível de Serviço (SLA) do Azure para máquinas virtuais?",
@@ -580,7 +542,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 37 (banco original Q333)
+  // Questao 35 (banco original Q333)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Se uma máquina virtual do Azure tiver o status Parada (desalocada), você continuará pagando por <combobox>.",
@@ -597,7 +559,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 38 (banco original Q336)
+  // Questao 36 (banco original Q336)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -612,7 +574,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 39 (banco original Q361)
+  // Questao 37 (banco original Q361)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -627,7 +589,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 40 (banco original Q366)
+  // Questao 38 (banco original Q366)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -642,7 +604,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 41 (banco original Q381)
+  // Questao 39 (banco original Q381)
   {
     "tipo": "unica",
     "texto": "Qual recurso adicional é necessário para uma máquina virtual do Azure?",
@@ -653,7 +615,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 42 (banco original Q387)
+  // Questao 40 (banco original Q387)
   {
     "tipo": "dragdrop",
     "texto": "Associe os serviços do Azure às descrições apropriadas. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -677,7 +639,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 43 (banco original Q416)
+  // Questao 41 (banco original Q416)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -692,7 +654,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 44 (banco original Q427)
+  // Questao 42 (banco original Q427)
   {
     "tipo": "dragdrop",
     "texto": "Associe os componentes de segurança às camadas apropriadas do modelo de defesa em profundidade. Cada componente pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -712,7 +674,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 45 (banco original Q434)
+  // Questao 43 (banco original Q434)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -727,7 +689,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 46 (banco original Q457)
+  // Questao 44 (banco original Q457)
   {
     "tipo": "dragdrop",
     "texto": "Associe os serviços de computação do Azure às descrições apropriadas. Cada serviço pode ser usado uma vez, mais de uma vez ou não ser usado.",
@@ -750,7 +712,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 47 (banco original Q461)
+  // Questao 45 (banco original Q461)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -765,7 +727,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-2026-bloco05"
   },
-  // Questao 48 (banco original Q463)
+  // Questao 46 (banco original Q463)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
