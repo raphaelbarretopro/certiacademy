@@ -1,7 +1,7 @@
 <!-- ==========================================
 Arquivo: admin.html
-Descrição: Painel do administrador — alunos cadastrados, papéis, liberação de
-           acesso e vouchers.
+Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
+           liberação de acesso e vouchers.
 
            Esta página não é secreta: qualquer pessoa consegue abri-la, e é
            assim mesmo. O que impede alguém de usá-la é o Firestore recusar
@@ -78,7 +78,7 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
   <main class="container mx-auto px-6 py-10 max-w-6xl">
 
     <h1 class="text-3xl font-bold mb-1">Painel do administrador</h1>
-    <p class="text-gray-600 mb-8">Alunos cadastrados, perfis de acesso e vouchers.</p>
+    <p class="text-gray-600 mb-8">Alunos cadastrados, turmas, perfis de acesso e vouchers.</p>
 
     <!-- estado: carregando -->
     <div id="carregando" class="bg-white rounded-2xl shadow p-10 text-center text-gray-500">
@@ -114,8 +114,50 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
         <div id="listaPedidos" class="space-y-4"></div>
       </section>
 
+      <!-- ===== Turmas ===== -->
+      <section id="secaoTurmas" class="bg-white rounded-xl shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-1">Turmas</h2>
+        <p class="text-sm text-gray-500 mb-5">
+          Um único código para um grupo de alunos. Você informa o nome da turma e
+          quantas pessoas podem usar o código; quem resgatar entra na turma já com
+          o acesso liberado.
+        </p>
+
+        <div class="flex flex-wrap items-end gap-3 mb-6">
+          <label class="text-sm flex-1 min-w-[200px]">
+            <span class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Nome da turma</span>
+            <input id="nomeTurma" type="text" maxlength="80" placeholder="AZ-900 — turma de setembro"
+              class="border border-gray-300 rounded-lg px-3 py-2 w-full">
+          </label>
+          <label class="text-sm">
+            <span class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Quantidade de alunos</span>
+            <input id="vagasTurma" type="number" min="1" max="500" value="30"
+              class="border border-gray-300 rounded-lg px-3 py-2 w-36 num">
+          </label>
+          <button id="criarTurmaBtn" type="button"
+            class="bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 hover:bg-blue-700">
+            Criar turma e gerar código
+          </button>
+        </div>
+
+        <div id="turmaCriada" class="oculto mb-6 bg-green-50 border border-green-300 rounded-xl p-4" role="status">
+          <p id="turmaCriadaTitulo" class="text-sm font-semibold text-green-900 mb-2"></p>
+          <pre id="codigoTurmaCriada" class="codigo text-lg text-green-900 m-0"></pre>
+          <button id="copiarTurmaBtn" type="button"
+            class="mt-3 border border-green-400 rounded-lg px-3 py-1.5 text-sm text-green-900 hover:bg-green-100">
+            Copiar código
+          </button>
+        </div>
+
+        <div id="semTurmas" class="text-sm text-gray-500 oculto">
+          Nenhuma turma criada ainda.
+        </div>
+
+        <div id="listaTurmas" class="grid gap-4 md:grid-cols-2"></div>
+      </section>
+
       <!-- ===== Alunos ===== -->
-      <section class="bg-white rounded-xl shadow p-6 mb-6">
+      <section id="secaoAlunos" class="bg-white rounded-xl shadow p-6 mb-6">
         <div class="flex flex-wrap items-start justify-between gap-3 mb-1">
           <h2 class="text-lg font-semibold">Alunos cadastrados</h2>
           <button id="migrarBtn" type="button"
@@ -123,9 +165,13 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
             Liberar todos sem acesso
           </button>
         </div>
-        <p class="text-sm text-gray-500 mb-5">
+        <p class="text-sm text-gray-500 mb-4">
           Do acesso mais recente para o mais antigo. Clique no nome para ver o desempenho.
         </p>
+
+        <!-- Filtro: todos, avulsos (sem turma) ou uma turma. Montado por script. -->
+        <div id="filtroAlunos" class="flex flex-wrap gap-2 mb-2" role="group" aria-label="Filtrar alunos por turma"></div>
+        <p id="infoFiltro" class="text-sm text-gray-600 mb-4 oculto" aria-live="polite"></p>
 
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
@@ -135,6 +181,7 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
                 <th class="py-2 pr-4">Último acesso</th>
                 <th class="py-2 pr-4">Perfil</th>
                 <th class="py-2 pr-4">Acesso</th>
+                <th class="py-2 pr-4">Turma</th>
                 <th class="py-2">Ações</th>
               </tr>
             </thead>
@@ -152,8 +199,8 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       <section class="bg-white rounded-xl shadow p-6">
         <h2 class="text-lg font-semibold mb-1">Vouchers</h2>
         <p class="text-sm text-gray-500 mb-5">
-          Cada código libera um aluno, uma única vez. Só aparece aqui — o código não é
-          recuperável depois se você não anotar.
+          Cada código libera um aluno, uma única vez. Para liberar um grupo de uma vez,
+          crie uma turma. Os códigos das turmas aparecem na seção Turmas, não aqui.
         </p>
 
         <div class="flex flex-wrap items-end gap-3 mb-6">
@@ -164,7 +211,7 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
           </label>
           <label class="text-sm flex-1 min-w-[200px]">
             <span class="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1">Nota (opcional)</span>
-            <input id="notaVoucher" type="text" maxlength="80" placeholder="turma de setembro"
+            <input id="notaVoucher" type="text" maxlength="80" placeholder="quem vai receber este código"
               class="border border-gray-300 rounded-lg px-3 py-2 w-full">
           </label>
           <button id="gerarBtn" type="button"
@@ -205,19 +252,29 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
   <script type="module">
     import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
     import {
+      LIMITE_VAGAS,
+      acessoVigente,
+      alterarVagas,
+      alunosPorUid,
+      colocarEmTurma,
       concederAcesso,
+      criarTurma,
       criarVouchers,
       decidirSolicitacao,
       definirPapel,
       ehAdmin,
       listarAlunos,
       listarSolicitacoes,
+      listarTurmas,
       listarVouchers,
+      listarVouchersDeTurma,
       mensagemDeFalha,
       mapaDeAcessos,
       mapaDePapeis,
+      reliberarAcesso,
       revogarAcesso,
-      revogarVoucher
+      revogarVoucher,
+      tirarDaTurma
     } from './shared/simulado-engine/common/js/acesso.js';
 
     const el = id => document.getElementById(id);
@@ -305,6 +362,71 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
     let acessos = new Map();
     let cursor = null;
 
+    // Turmas. Carregam antes da lista de alunos: a coluna "Turma" e o seletor de
+    // cada linha dependem delas.
+    let turmas = [];
+    let turmasPorId = new Map();
+    let vouchersPorTurma = new Map();
+
+    // Quando a leitura das turmas falha (por exemplo, as regras novas ainda não
+    // foram publicadas), o painel segue sem elas — e o aviso não pode ser
+    // apagado pelas releituras seguintes.
+    let turmasIndisponiveis = false;
+
+    // 'todos' | 'avulsos' | 'turma'. Avulso é o aluno que não está em turma.
+    let filtro = { tipo: 'todos', turmaId: null };
+
+    // ==========================================
+    // Montagem de elementos
+    // Descrição: nome de turma, de aluno e código são digitados por gente. Nos
+    //            elementos novos tudo entra por textContent, que nunca
+    //            interpreta HTML — não depende de lembrar de escapar.
+    // ==========================================
+    function criar(tag, classe, texto) {
+      const elemento = document.createElement(tag);
+      if (classe) elemento.className = classe;
+      if (texto !== undefined) elemento.textContent = texto;
+      return elemento;
+    }
+
+    function botaoPequeno(rotulo, aoClicar) {
+      const botao = criar('button', 'border border-gray-300 rounded px-2 py-1 text-xs hover:bg-gray-100', rotulo);
+      botao.type = 'button';
+      botao.addEventListener('click', aoClicar);
+      return botao;
+    }
+
+    // Trava o controle enquanto a ação roda e, se falhar, avisa e o destrava.
+    async function executar(controle, acao, mensagemDeErro) {
+      controle.disabled = true;
+      try {
+        await acao();
+      } catch (erro) {
+        console.error(mensagemDeErro, erro);
+        alert(mensagemDeErro);
+        controle.disabled = false;
+      }
+    }
+
+    function nomeDaTurma(turmaId) {
+      if (!turmaId) return '';
+      const turma = turmasPorId.get(turmaId);
+      return turma ? turma.nome : 'turma removida';
+    }
+
+    // Quantos alunos a turma tem: quem entrou pelo código e quem o
+    // administrador colocou à mão. Sai dos acessos, que já estão em memória.
+    function totalDaTurma(turmaId) {
+      let total = 0;
+      for (const acesso of acessos.values()) {
+        if (acesso.turmaId === turmaId) total++;
+      }
+      return total;
+    }
+
+    // ==========================================
+    // Alunos
+    // ==========================================
     function etiquetaPapel(uid) {
       const papel = (papeis.get(uid) || {}).papel;
       return papel === 'admin'
@@ -316,14 +438,53 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       const acesso = acessos.get(uid);
       if (!acesso) return '<span class="etiqueta bg-amber-100 text-amber-800">bloqueado</span>';
 
-      return `<span class="etiqueta bg-green-100 text-green-800">${acesso.origem || 'liberado'}</span>`;
+      if (acesso.revogadoEm) return '<span class="etiqueta bg-red-100 text-red-800">revogado</span>';
+      if (!acessoVigente(acesso)) return '<span class="etiqueta bg-amber-100 text-amber-800">vencido</span>';
+
+      return `<span class="etiqueta bg-green-100 text-green-800">${escapar(acesso.origem) || 'liberado'}</span>`;
+    }
+
+    function linhaDeContaRemovida(aluno) {
+      const linha = document.createElement('tr');
+
+      linha.innerHTML = `
+        <td class="py-3 pr-4 text-gray-500">
+          (conta removida pelo aluno)
+          <div class="text-xs text-gray-400 codigo">${escapar(aluno.uid)}</div>
+        </td>
+        <td class="py-3 pr-4 text-gray-400">—</td>
+        <td class="py-3 pr-4 text-gray-400">—</td>
+        <td class="py-3 pr-4"></td>
+        <td class="py-3 pr-4 text-gray-700">${escapar(nomeDaTurma((acessos.get(aluno.uid) || {}).turmaId))}</td>
+        <td class="py-3"><div class="flex flex-wrap items-center gap-2"></div></td>
+      `;
+
+      // A etiqueta de acesso já sabe lidar com quem não tem documento.
+      linha.children[3].innerHTML = etiquetaAcesso(aluno.uid);
+
+      linha.lastElementChild.firstElementChild.appendChild(botaoPequeno('Tirar da turma', async event => {
+        if (!confirm('Tirar esta conta removida da turma?')) return;
+
+        await executar(event.currentTarget, async () => {
+          await tirarDaTurma(aluno.uid);
+          await recarregar();
+        }, 'Não foi possível tirar da turma.');
+      }));
+
+      return linha;
     }
 
     function linhaDoAluno(aluno) {
+      // A conta foi apagada pelo próprio aluno (LGPD): sobrou só o vínculo.
+      if (aluno.removido) return linhaDeContaRemovida(aluno);
+
       const linha = document.createElement('tr');
+      const acesso = acessos.get(aluno.uid) || null;
       const ehEu = aluno.uid === perfil.uid;
       const admin = (papeis.get(aluno.uid) || {}).papel === 'admin';
-      const liberado = acessos.has(aluno.uid);
+      const liberado = acessoVigente(acesso);
+      const revogado = Boolean(acesso && acesso.revogadoEm);
+      const turmaId = acesso ? acesso.turmaId || null : null;
 
       linha.innerHTML = `
         <td class="py-3 pr-4">
@@ -336,72 +497,392 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
         <td class="py-3 pr-4 num text-gray-600">${dataCurta(aluno.ultimoAcessoEm)}</td>
         <td class="py-3 pr-4">${etiquetaPapel(aluno.uid)}</td>
         <td class="py-3 pr-4">${etiquetaAcesso(aluno.uid)}</td>
-        <td class="py-3 whitespace-nowrap"></td>
+        <td class="py-3 pr-4 text-gray-700">${
+          turmaId ? escapar(nomeDaTurma(turmaId)) : '<span class="text-gray-400">—</span>'
+        }</td>
+        <td class="py-3"><div class="flex flex-wrap items-center gap-2"></div></td>
       `;
 
-      const acoes = linha.lastElementChild;
+      const acoes = linha.lastElementChild.firstElementChild;
 
       // Ninguém edita o próprio papel — a regra recusa, e esconder o botão
       // evita oferecer uma ação que sempre falharia.
       if (!ehEu) {
-        const botaoPapel = document.createElement('button');
-        botaoPapel.type = 'button';
-        botaoPapel.className = 'border border-gray-300 rounded px-2 py-1 text-xs hover:bg-gray-100 mr-2';
-        botaoPapel.textContent = admin ? 'Tornar aluno' : 'Tornar administrador';
-        botaoPapel.addEventListener('click', async () => {
+        acoes.appendChild(botaoPequeno(admin ? 'Tornar aluno' : 'Tornar administrador', async event => {
           const novo = admin ? 'aluno' : 'admin';
           if (!confirm(`Definir ${aluno.email} como ${novo}?`)) return;
 
-          botaoPapel.disabled = true;
-          try {
+          await executar(event.currentTarget, async () => {
             await definirPapel(aluno.uid, novo, perfil.uid);
             await recarregar();
-          } catch (erro) {
-            console.error('Falha ao definir papel:', erro);
-            alert('Não foi possível alterar o perfil.');
-            botaoPapel.disabled = false;
-          }
-        });
-        acoes.appendChild(botaoPapel);
+          }, 'Não foi possível alterar o perfil.');
+        }));
       }
 
-      const botaoAcesso = document.createElement('button');
-      botaoAcesso.type = 'button';
-      botaoAcesso.className = 'border border-gray-300 rounded px-2 py-1 text-xs hover:bg-gray-100';
-      botaoAcesso.textContent = liberado ? 'Revogar acesso' : 'Liberar acesso';
-      botaoAcesso.addEventListener('click', async () => {
-        if (liberado && !confirm(`Revogar o acesso de ${aluno.email}?`)) return;
+      // Três estados, um botão: revogar quem está liberado, liberar de novo
+      // quem foi revogado (a turma continua, o acesso volta) e liberar quem
+      // nunca teve acesso.
+      const rotuloAcesso = liberado ? 'Revogar acesso' : (revogado ? 'Liberar novamente' : 'Liberar acesso');
 
-        botaoAcesso.disabled = true;
-        try {
-          if (liberado) await revogarAcesso(aluno.uid);
-          else await concederAcesso(aluno.uid, perfil.uid);
-          await recarregar();
-        } catch (erro) {
-          console.error('Falha ao alterar o acesso:', erro);
-          alert('Não foi possível alterar o acesso.');
-          botaoAcesso.disabled = false;
+      acoes.appendChild(botaoPequeno(rotuloAcesso, async event => {
+        if (liberado) {
+          const aviso = turmaId ? ' Ele continua na turma, sem acesso.' : '';
+          if (!confirm(`Revogar o acesso de ${aluno.email}?${aviso}`)) return;
         }
-      });
-      acoes.appendChild(botaoAcesso);
+
+        await executar(event.currentTarget, async () => {
+          if (liberado) await revogarAcesso(aluno.uid, { adminUid: perfil.uid, acesso });
+          else if (revogado) await reliberarAcesso(aluno.uid);
+          else await concederAcesso(aluno.uid, perfil.uid, { turmaId });
+
+          await recarregar();
+        }, 'Não foi possível alterar o acesso.');
+      }));
+
+      // Administrador não é aluno: não faz sentido pô-lo numa turma.
+      if (!admin) {
+        const destinos = turmas.filter(t => t.id !== turmaId);
+
+        if (destinos.length) {
+          const seletor = criar('select', 'border border-gray-300 rounded px-1 py-1 text-xs bg-white');
+          seletor.setAttribute('aria-label', `Colocar ${aluno.email} em uma turma`);
+          seletor.appendChild(new Option(turmaId ? 'Trocar de turma…' : 'Colocar em turma…', ''));
+
+          for (const turma of destinos) seletor.appendChild(new Option(turma.nome, turma.id));
+
+          seletor.addEventListener('change', async () => {
+            const destino = seletor.value;
+            if (!destino) return;
+
+            const libera = acesso ? '' : ' Isso também libera o acesso dele.';
+            if (!confirm(`Colocar ${aluno.email} na turma "${nomeDaTurma(destino)}"?${libera}`)) {
+              seletor.value = '';
+              return;
+            }
+
+            await executar(seletor, async () => {
+              await colocarEmTurma(aluno.uid, destino, perfil.uid, acesso);
+              await recarregar();
+            }, 'Não foi possível colocar o aluno na turma.');
+
+            // Se a ação falhou o seletor foi destravado: volta ao título, para
+            // o mesmo destino poder ser escolhido de novo.
+            seletor.value = '';
+          });
+
+          acoes.appendChild(seletor);
+        }
+
+        if (turmaId) {
+          acoes.appendChild(botaoPequeno('Tirar da turma', async event => {
+            if (!confirm(`Tirar ${aluno.email} da turma "${nomeDaTurma(turmaId)}"? Ele continua com o acesso, como aluno avulso.`)) return;
+
+            await executar(event.currentTarget, async () => {
+              await tirarDaTurma(aluno.uid);
+              await recarregar();
+            }, 'Não foi possível tirar o aluno da turma.');
+          }));
+        }
+      }
 
       return linha;
     }
 
+    function linhaVazia(texto) {
+      const linha = document.createElement('tr');
+      const celula = criar('td', 'py-6 text-sm text-gray-500', texto);
+      celula.colSpan = 6;
+      linha.appendChild(celula);
+      el('listaAlunos').appendChild(linha);
+    }
+
+    function ehAvulso(aluno) {
+      return !(acessos.get(aluno.uid) || {}).turmaId;
+    }
+
     async function carregarPagina() {
-      const pagina = await listarAlunos({ limite: 25, cursor });
+      const pagina = await listarAlunos({
+        limite: 25,
+        cursor,
+        filtro: filtro.tipo === 'avulsos' ? ehAvulso : null
+      });
+
       for (const aluno of pagina.itens) el('listaAlunos').appendChild(linhaDoAluno(aluno));
 
       cursor = pagina.proximoCursor;
       el('maisBtn').classList.toggle('oculto', !cursor);
+
+      // Lista vazia. Com filtro, ainda pode haver avulsos adiante: a leitura
+      // para num teto e devolve o cursor em vez de varrer a base toda.
+      if (!el('listaAlunos').children.length) {
+        linhaVazia(cursor
+          ? 'Nenhum aluno avulso neste trecho. Clique em "Carregar mais" para continuar procurando.'
+          : (filtro.tipo === 'avulsos' ? 'Nenhum aluno avulso.' : 'Nenhum aluno cadastrado.'));
+      }
+    }
+
+    // Os membros de uma turma vêm dos acessos, que já estão em memória, e não
+    // da lista paginada: um aluno da turma pode estar a páginas de distância.
+    async function mostrarMembros() {
+      const uids = [];
+      for (const [uid, acesso] of acessos) {
+        if (acesso.turmaId === filtro.turmaId) uids.push(uid);
+      }
+
+      if (!uids.length) {
+        linhaVazia('Nenhum aluno nesta turma ainda. Coloque alunos à mão pela lista "Todos" ou envie o código da turma.');
+        return;
+      }
+
+      for (const aluno of await alunosPorUid(uids)) {
+        el('listaAlunos').appendChild(linhaDoAluno(aluno));
+      }
+    }
+
+    function atualizarInfoFiltro() {
+      const info = el('infoFiltro');
+
+      if (filtro.tipo === 'avulsos') {
+        info.textContent = 'Alunos que não pertencem a nenhuma turma.';
+      } else if (filtro.tipo === 'turma') {
+        const total = totalDaTurma(filtro.turmaId);
+        info.textContent = `${nomeDaTurma(filtro.turmaId)} — ${total} ${total === 1 ? 'aluno' : 'alunos'}.`;
+      }
+
+      info.classList.toggle('oculto', filtro.tipo === 'todos');
+    }
+
+    async function mostrarLista() {
+      el('listaAlunos').innerHTML = '';
+      cursor = null;
+      atualizarInfoFiltro();
+
+      if (filtro.tipo === 'turma') {
+        el('maisBtn').classList.add('oculto');
+        await mostrarMembros();
+      } else {
+        await carregarPagina();
+      }
+    }
+
+    async function escolherFiltro(tipo, turmaId = null) {
+      filtro = { tipo, turmaId };
+      desenharFiltro();
+
+      try {
+        await mostrarLista();
+      } catch (erro) {
+        console.error('Falha ao filtrar os alunos:', erro);
+        avisoNaSecao('#listaAlunos', explicar(erro));
+      }
+    }
+
+    function desenharFiltro() {
+      const alvo = el('filtroAlunos');
+      alvo.innerHTML = '';
+
+      const opcoes = [
+        { tipo: 'todos', turmaId: null, rotulo: 'Todos' },
+        { tipo: 'avulsos', turmaId: null, rotulo: 'Avulsos' },
+        ...turmas.map(turma => ({
+          tipo: 'turma',
+          turmaId: turma.id,
+          rotulo: `${turma.nome} (${totalDaTurma(turma.id)})`
+        }))
+      ];
+
+      for (const opcao of opcoes) {
+        const ativa = filtro.tipo === opcao.tipo && filtro.turmaId === opcao.turmaId;
+
+        const botao = criar('button',
+          'rounded-full border px-3 py-1 text-sm ' + (ativa
+            ? 'bg-blue-600 border-blue-600 text-white font-semibold'
+            : 'border-gray-300 text-gray-700 hover:bg-gray-100'),
+          opcao.rotulo);
+
+        botao.type = 'button';
+        botao.setAttribute('aria-pressed', String(ativa));
+        botao.addEventListener('click', () => escolherFiltro(opcao.tipo, opcao.turmaId));
+
+        alvo.appendChild(botao);
+      }
     }
 
     async function recarregar() {
       [papeis, acessos] = await Promise.all([mapaDePapeis(), mapaDeAcessos()]);
-      el('listaAlunos').innerHTML = '';
-      cursor = null;
-      await carregarPagina();
+
+      // Os cartões e as contagens do filtro dependem dos acessos.
+      desenharTurmas();
+      await mostrarLista();
     }
+
+    // ==========================================
+    // Turmas
+    // ==========================================
+    async function carregarTurmas() {
+      const [lista, vouchers] = await Promise.all([listarTurmas(), listarVouchersDeTurma()]);
+
+      turmas = lista;
+      turmasPorId = new Map(lista.map(turma => [turma.id, turma]));
+      vouchersPorTurma = new Map(vouchers.map(voucher => [voucher.turmaId, voucher]));
+    }
+
+    async function copiarTexto(texto, botao) {
+      const original = botao.textContent;
+
+      try {
+        await navigator.clipboard.writeText(texto);
+        botao.textContent = 'Copiado';
+        setTimeout(() => { botao.textContent = original; }, 1500);
+      } catch {
+        // Sem permissão de área de transferência o código continua à vista
+        // para seleção manual, então não vale interromper com um alerta.
+      }
+    }
+
+    async function alterarVagasDaTurma(turma, voucher, usadas) {
+      const minimo = Math.max(1, usadas);
+
+      const resposta = prompt(
+        `Vagas do código da turma "${turma.nome}".\n\n` +
+        `Mínimo ${minimo} (quem já entrou). Informe ${minimo} para encerrar as inscrições. Máximo ${LIMITE_VAGAS}.`,
+        String(voucher.vagas)
+      );
+
+      if (resposta === null) return;
+
+      const novas = Math.trunc(Number(resposta));
+
+      if (!(novas >= minimo && novas <= LIMITE_VAGAS)) {
+        alert(`Informe um número entre ${minimo} e ${LIMITE_VAGAS}.`);
+        return;
+      }
+
+      if (novas === voucher.vagas) return;
+
+      try {
+        await alterarVagas(voucher.codigo, novas);
+        await carregarTurmas();
+        desenharTurmas();
+      } catch (erro) {
+        console.error('Falha ao alterar as vagas:', erro);
+        alert('Não foi possível alterar as vagas.');
+      }
+    }
+
+    function cartaoDaTurma(turma) {
+      const voucher = vouchersPorTurma.get(turma.id);
+      const usadas = voucher ? Object.keys(voucher.usados || {}).length : 0;
+      const membros = totalDaTurma(turma.id);
+
+      const cartao = criar('div', 'border border-gray-200 rounded-xl p-4');
+
+      const topo = criar('div', 'flex flex-wrap items-start justify-between gap-3');
+      const titulo = criar('div');
+      titulo.appendChild(criar('div', 'font-semibold', turma.nome));
+      titulo.appendChild(criar('div', 'text-xs text-gray-500 num', `Criada em ${dataCurta(turma.criadoEm)}`));
+      topo.appendChild(titulo);
+
+      topo.appendChild(botaoPequeno('Ver alunos', () => {
+        escolherFiltro('turma', turma.id);
+        el('secaoAlunos').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }));
+      cartao.appendChild(topo);
+
+      if (voucher) {
+        const linhaDoCodigo = criar('div', 'flex flex-wrap items-center gap-2 mt-3');
+        linhaDoCodigo.appendChild(criar('span', 'codigo font-medium bg-gray-50 border border-gray-200 rounded px-2 py-1', voucher.codigo));
+        linhaDoCodigo.appendChild(botaoPequeno('Copiar', event => copiarTexto(voucher.codigo, event.currentTarget)));
+        cartao.appendChild(linhaDoCodigo);
+
+        const porcentagem = Math.min(100, Math.round((usadas / voucher.vagas) * 100));
+        const vagas = criar('div', 'mt-3');
+        vagas.appendChild(criar('div', 'text-sm text-gray-700 num', `${usadas} de ${voucher.vagas} vagas do código usadas`));
+
+        const trilho = criar('div', 'h-2 bg-gray-100 rounded-full overflow-hidden mt-1');
+        const enchimento = criar('div', 'h-2 bg-blue-600 rounded-full');
+        enchimento.style.width = `${porcentagem}%`;
+        trilho.appendChild(enchimento);
+        vagas.appendChild(trilho);
+
+        cartao.appendChild(vagas);
+      } else {
+        cartao.appendChild(criar('p', 'mt-3 text-sm text-amber-800', 'O código desta turma não foi encontrado.'));
+      }
+
+      const rodape = criar('div', 'flex flex-wrap items-center justify-between gap-3 mt-3');
+      rodape.appendChild(criar('span', 'text-sm text-gray-600 num', `${membros} ${membros === 1 ? 'aluno' : 'alunos'} na turma`));
+
+      if (voucher) {
+        rodape.appendChild(botaoPequeno('Alterar vagas', () => alterarVagasDaTurma(turma, voucher, usadas)));
+      }
+
+      cartao.appendChild(rodape);
+      return cartao;
+    }
+
+    function desenharTurmas() {
+      // Com a leitura das turmas falha, o aviso da seção precisa sobreviver.
+      if (!turmasIndisponiveis) {
+        el('listaTurmas').innerHTML = '';
+        for (const turma of turmas) el('listaTurmas').appendChild(cartaoDaTurma(turma));
+        el('semTurmas').classList.toggle('oculto', turmas.length > 0);
+      }
+
+      desenharFiltro();
+    }
+
+    el('criarTurmaBtn').addEventListener('click', async () => {
+      const nome = el('nomeTurma').value.trim();
+      const vagas = Number(el('vagasTurma').value);
+
+      if (!nome) {
+        alert('Informe o nome da turma.');
+        el('nomeTurma').focus();
+        return;
+      }
+
+      if (!Number.isInteger(vagas) || vagas < 1 || vagas > LIMITE_VAGAS) {
+        alert(`A quantidade de alunos precisa ser um número inteiro entre 1 e ${LIMITE_VAGAS}.`);
+        el('vagasTurma').focus();
+        return;
+      }
+
+      el('criarTurmaBtn').disabled = true;
+
+      let criada;
+
+      try {
+        criada = await criarTurma(nome, vagas, perfil.uid);
+      } catch (erro) {
+        console.error('Falha ao criar a turma:', erro);
+        alert(`Não foi possível criar a turma. ${explicar(erro)}`);
+        el('criarTurmaBtn').disabled = false;
+        return;
+      }
+
+      // A turma já existe. Daqui em diante o código precisa aparecer mesmo que
+      // a releitura da lista falhe — senão ele se perderia à vista.
+      el('turmaCriadaTitulo').textContent =
+        `Turma "${nome}" criada. Envie este código aos ${vagas} ${vagas === 1 ? 'aluno' : 'alunos'}:`;
+      el('codigoTurmaCriada').textContent = criada.codigo;
+      el('turmaCriada').classList.remove('oculto');
+      el('nomeTurma').value = '';
+
+      try {
+        await carregarTurmas();
+        turmasIndisponiveis = false;
+        desenharTurmas();
+      } catch (erro) {
+        console.error('Falha ao recarregar as turmas:', erro);
+      }
+
+      el('criarTurmaBtn').disabled = false;
+    });
+
+    el('copiarTurmaBtn').addEventListener('click', event => {
+      copiarTexto(el('codigoTurmaCriada').textContent, event.currentTarget);
+    });
 
     el('maisBtn').addEventListener('click', async () => {
       el('maisBtn').disabled = true;
@@ -552,7 +1033,9 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
     }
 
     async function carregarVouchers() {
-      const vouchers = await listarVouchers(100);
+      // Os vouchers de turma têm o próprio lugar (seção Turmas). Aqui o botão
+      // Revogar deles falharia: a regra só apaga voucher de uso único.
+      const vouchers = (await listarVouchers(100)).filter(voucher => voucher.tipo !== 'turma');
       el('listaVouchers').innerHTML = '';
       for (const voucher of vouchers) el('listaVouchers').appendChild(linhaDoVoucher(voucher));
     }
@@ -628,7 +1111,9 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       if (alvo.tagName === 'TBODY') {
         const linha = document.createElement('tr');
         const celula = document.createElement('td');
-        celula.colSpan = 4;
+
+        // Ocupa a linha inteira, seja qual for o número de colunas da tabela.
+        celula.colSpan = alvo.closest('table').querySelectorAll('thead th').length;
         celula.className = 'py-4 text-sm text-amber-800';
         celula.setAttribute('role', 'alert');
         celula.textContent = texto;
@@ -638,11 +1123,21 @@ Descrição: Painel do administrador — alunos cadastrados, papéis, liberaçã
       }
 
       const aviso = document.createElement('p');
-      aviso.className = 'text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-3';
+      aviso.className = 'text-sm text-amber-800 bg-amber-50 border border-amber-200 rounded-lg p-3 col-span-full';
       aviso.setAttribute('role', 'alert');
       aviso.textContent = texto;
       alvo.appendChild(aviso);
     }
+
+    // As turmas carregam antes dos alunos: a coluna "Turma" e o seletor de cada
+    // linha dependem delas. Se falharem, o painel segue sem elas e avisa no
+    // lugar — uma coleção que existe no código e ainda não nas regras não pode
+    // esconder a lista de alunos.
+    await carregarSecao('as turmas', carregarTurmas, erro => {
+      turmasIndisponiveis = true;
+      el('semTurmas').classList.add('oculto');
+      avisoNaSecao('#listaTurmas', explicar(erro));
+    });
 
     // A lista de alunos é o painel; sem ela não há o que mostrar.
     const alunosOk = await carregarSecao('os alunos', recarregar, erro => falhar(explicar(erro)));

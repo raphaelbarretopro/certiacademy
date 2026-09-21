@@ -64,15 +64,16 @@ coisas e manda quem não passou para `liberar.html`.
 entrar (Google) ──> portão ──┬── liberado ──> simulados e painel
                              ├── administrador ──> passa sempre
                              └── sem acesso ──> liberar.html
-                                                ├── resgatar voucher
+                                                ├── resgatar voucher (ou código de turma)
                                                 └── pedir acesso
 ```
 
 | Coleção | Guarda | Quem escreve |
 |---|---|---|
 | `papeis/{uid}` | `admin` ou `aluno` | só administradores, nunca o próprio |
-| `acessos/{uid}` | origem, data e validade da liberação | administrador ou resgate de voucher |
-| `vouchers/{codigo}` | código de uso único | administrador cria, aluno marca como usado |
+| `acessos/{uid}` | origem, validade, turma e revogação | administrador ou resgate de voucher |
+| `vouchers/{codigo}` | código de uso único **ou** de turma | administrador cria; aluno resgata |
+| `turmas/{id}` | nome da turma | só administradores |
 | `solicitacoes/{uid}` | pedido de acesso | o próprio aluno, enquanto não aceito |
 | `users/{uid}` | perfil e histórico | o próprio aluno |
 
@@ -85,6 +86,45 @@ documento cujo id já conhece. O segredo é o próprio código — por isso ele 
 O administrador passa sempre pelo portão, de propósito: sem isso ficaria
 trancado do lado de fora do painel que libera os outros.
 
+### Turmas
+
+Uma turma é um grupo de alunos com **um código só**. O administrador informa o
+nome e a quantidade de alunos; o sistema gera o código, que vale para essa
+quantidade de pessoas. Quem resgata entra na turma já com o acesso liberado. O
+voucher de uso único continua existindo, para quem não é de turma nenhuma — o
+**aluno avulso**.
+
+```
+turmas/{id}         nome
+vouchers/{codigo}   tipo: 'turma', turmaId, vagas, usados: { <uid>: <instante> }
+acessos/{uid}       turmaId  (a turma de um aluno é este campo)
+```
+
+Como as regras mantêm isso honesto, sem servidor:
+
+- **As vagas** são o tamanho do mapa `usados`. A regra recusa o resgate que
+  passaria de `vagas`, e o uid vira **chave** do mapa: o mesmo aluno não ocupa
+  duas vagas, e cada um só consegue escrever a própria chave.
+- **O resgate é um lote (`writeBatch`), tudo ou nada.** A marca em `usados` e a
+  liberação em `acessos` só passam juntas (`getAfter`/`existsAfter`). Uma falha
+  no meio nunca queima uma vaga sem liberar ninguém.
+- **A turma do aluno vem do voucher**, nunca do que o navegador mandou: a regra
+  compara o `turmaId` do acesso com o do voucher. Um aluno não escolhe a
+  própria turma.
+- **Um código de turma não se gasta como uso único** — isso entregaria a turma
+  inteira a uma pessoa. O voucher de turma nem tem o campo `usado`.
+- O **código não fica** no documento da turma, que qualquer aluno logado pode
+  ler pelo id (a tela de boas-vindas mostra o nome). Fica só no voucher.
+
+**Revogar** quem está numa turma o mantém na turma, marcado `revogado`, sem
+acesso — e ele não volta a entrar usando o código, porque o documento de acesso
+continua existindo. Para um aluno avulso, revogar apaga a liberação, como
+sempre foi. Colocar um aluno na turma **à mão** não consome vaga do código.
+
+O mapa `usados` deixa qualquer aluno **que tenha o código** ler os uids de quem
+já resgatou. Um uid sozinho não dá acesso a dado nenhum, e quem tem o código é
+da própria turma; fica registrado como risco aceito.
+
 ### Primeiro administrador
 
 Não pode ser criado pelo sistema — não existe administrador para criá-lo. Ele
@@ -96,10 +136,25 @@ nasce à mão no Console do Firebase:
 
 ### Painel do administrador
 
-`admin.html` reúne a fila de solicitações, a lista de cadastrados e os vouchers.
-Clicar no nome de um aluno abre `dashboard.html?aluno=<uid>` — é o mesmo painel
-de sempre, só muda a origem do uid, com uma faixa âmbar avisando de quem são os
-dados na tela.
+`admin.html` reúne a fila de solicitações, as turmas, a lista de cadastrados e os
+vouchers. Clicar no nome de um aluno abre `dashboard.html?aluno=<uid>` — é o
+mesmo painel de sempre, só muda a origem do uid, com uma faixa âmbar avisando de
+quem são os dados na tela.
+
+**Turmas.** Nome e quantidade de alunos geram a turma e o código. Cada turma vira
+um cartão com o código (e um botão de copiar), as vagas do código usadas e
+**Ver alunos**. **Alterar vagas** aceita de quem já entrou até 500; informar
+exatamente quem já entrou encerra as inscrições.
+
+**Filtro de alunos.** `Todos` (a lista de sempre), `Avulsos` (quem não está em
+turma) e uma chip por turma, com a contagem. Clicar numa turma lista os alunos
+dela. Cada linha tem **Colocar em turma** — para o avulso, e também para trocar
+de turma — e **Tirar da turma**. Colocar na turma um aluno que ainda estava
+bloqueado também o libera, e o aviso diz isso.
+
+**Avulsos** lê os cadastrados de 50 em 50 até juntar uma página, com teto por
+clique, porque o filtro é feito no navegador. Os membros de uma turma vêm dos
+acessos, que já estão em memória, e não da lista paginada.
 
 Cada seção carrega por conta própria: uma quebrada não derruba as outras.
 
@@ -185,7 +240,7 @@ parte das faixas Unicode de setas, e o Safari cai no glifo substituto.
 ```
 index.html                  home (gerada)
 login.html                  entrada com Google
-liberar.html                voucher e pedido de acesso
+liberar.html                voucher (ou código de turma) e pedido de acesso
 dashboard.html              desempenho do aluno, e de outro aluno para o admin
 admin.html                  painel do administrador
 privacidade.html            política e exclusão de conta
@@ -213,7 +268,7 @@ scripts/                    geração, sincronização e validação
 |---|---|
 | `app.js` | único ponto de entrada dos 46 simulados; portão, motor e gravação |
 | `auth.js` | login, logout, exclusão de conta, `exigirSessao()` |
-| `acesso.js` | papéis, liberação, vouchers, solicitações, `exigirAcesso()` |
+| `acesso.js` | papéis, liberação, vouchers, turmas, solicitações, `exigirAcesso()` |
 | `store.js` | leitura e escrita do histórico no Firestore |
 | `quiz.js` | motor da prova, pontuação e tela de resultado |
 | `render.js` | desenho das questões por tipo |

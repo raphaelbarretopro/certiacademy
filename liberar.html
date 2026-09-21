@@ -131,7 +131,9 @@ Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
     import { exigirSessao, sair } from './shared/simulado-engine/common/js/auth.js';
     import {
       enviarSolicitacao,
+      estaLiberado,
       lerSolicitacao,
+      lerTurma,
       lerVoucher,
       mensagemDeFalha,
       normalizarCodigo,
@@ -158,6 +160,18 @@ Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
       avisar(mensagemDeFalha(erro));
       document.getElementById('resgatarBtn').disabled = true;
       throw erro;
+    }
+
+    // Quem já está liberado não tem o que fazer aqui — abriu a página por um
+    // link antigo, ou é administrador. Falhar esta leitura não pode derrubar a
+    // página: o resgate por código continua valendo.
+    try {
+      if (await estaLiberado(perfil.uid)) {
+        window.location.replace('./#certificacoes');
+        await new Promise(() => {});
+      }
+    } catch (erro) {
+      console.error('Falha ao conferir a liberacao:', erro);
     }
 
     document.body.dataset.sessao = 'ok';
@@ -188,36 +202,55 @@ Descrição: Onde para quem entrou mas ainda não tem acesso liberado.
       try {
         // A conferência antes do resgate existe só para dar um motivo claro
         // quando falha. Quem decide se o código vale é a regra do Firestore.
-        const { situacao } = await lerVoucher(codigo);
+        const { situacao } = await lerVoucher(codigo, perfil.uid);
 
-        if (situacao === 'inexistente') {
-          avisar('Código não encontrado. Confira as letras e os números.');
+        const recusas = {
+          inexistente: 'Código não encontrado. Confira as letras e os números.',
+          usado: 'Este código já foi usado.',
+          expirado: 'Este código expirou.',
+          // Código de turma: as vagas acabaram, ou este aluno já entrou por ele.
+          cheio: 'As vagas desta turma foram preenchidas. Fale com a administração.',
+          jaUsou: 'Você já usou este código. Se o seu acesso foi revogado, fale com a administração.'
+        };
+
+        if (recusas[situacao]) {
+          avisar(recusas[situacao]);
           el('resgatarBtn').disabled = false;
           return;
         }
 
-        if (situacao === 'usado') {
-          avisar('Este código já foi usado.');
-          el('resgatarBtn').disabled = false;
-          return;
+        const { turmaId } = await resgatarVoucher(perfil.uid, codigo);
+
+        // O nome da turma é só cortesia: se a leitura falhar, o acesso já foi
+        // liberado e a mensagem genérica basta. textContent — o nome é digitado
+        // pelo administrador, mas nunca vira HTML.
+        let nomeDaTurma = null;
+        if (turmaId) {
+          try {
+            const turma = await lerTurma(turmaId);
+            nomeDaTurma = turma && turma.nome;
+          } catch (erro) {
+            console.error('Falha ao ler o nome da turma:', erro);
+          }
         }
 
-        if (situacao === 'expirado') {
-          avisar('Este código expirou.');
-          el('resgatarBtn').disabled = false;
-          return;
-        }
+        avisar(
+          nomeDaTurma
+            ? `Bem-vindo à turma ${nomeDaTurma}! Acesso liberado. Redirecionando...`
+            : 'Acesso liberado. Redirecionando...',
+          'ok'
+        );
 
-        await resgatarVoucher(perfil.uid, codigo);
-        avisar('Acesso liberado. Redirecionando...', 'ok');
-        window.location.replace('./#certificacoes');
+        // Com o nome da turma na tela, dá um instante para ele ser lido.
+        setTimeout(() => window.location.replace('./#certificacoes'), nomeDaTurma ? 1600 : 0);
       } catch (erro) {
         console.error('Falha ao resgatar o voucher:', erro);
 
-        // Duas abas resgatando o mesmo código ao mesmo tempo: a segunda cai
-        // aqui, porque a regra recusa um voucher que já saiu de não usado.
+        // Duas pessoas resgatando o mesmo código ao mesmo tempo: quem chega
+        // depois cai aqui, porque a regra recusa um voucher que já foi usado
+        // ou uma turma que acabou de lotar.
         if (erro && erro.code === 'permission-denied') {
-          avisar('Não foi possível usar este código. Ele pode ter sido usado por outra pessoa agora mesmo.');
+          avisar('Não foi possível usar este código. Ele pode ter sido usado por outra pessoa, ou as vagas acabaram, agora mesmo.');
         } else {
           avisar('Falha de conexão. Tente novamente.');
         }
