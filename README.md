@@ -152,6 +152,15 @@ dela. Cada linha tem **Colocar em turma** — para o avulso, e também para troc
 de turma — e **Tirar da turma**. Colocar na turma um aluno que ainda estava
 bloqueado também o libera, e o aviso diz isso.
 
+**Último simulado.** A tabela mostra, por aluno, o resultado mais recente — `curso ·
+simulado`, pontuação, percentual de acerto, data e se ficou acima ou abaixo do
+corte de 700, com as mesmas cores do dashboard (verde e âmbar). Assim dá para
+acompanhar a turma sem abrir o dashboard de cada um. Custa **uma leitura por
+aluno exibido**, feita quando a linha aparece e guardada enquanto a página está
+aberta: atualizar a lista depois de mover um aluno não relê ninguém. As colunas
+Acesso e Turma saíram da tabela — o filtro já diz a turma. Só há etiqueta de
+acesso quando ele **falta** (`bloqueado`, `revogado`, `vencido`), junto ao nome.
+
 **Avulsos** lê os cadastrados de 50 em 50 até juntar uma página, com teto por
 clique, porque o filtro é feito no navegador. Os membros de uma turma vêm dos
 acessos, que já estão em memória, e não da lista paginada.

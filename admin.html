@@ -57,6 +57,16 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
       font-weight: 600;
       white-space: nowrap;
     }
+
+    /* Mesmas cores do dashboard do aluno: verde acima do corte, âmbar abaixo.
+       Não é vermelho de propósito — abaixo do corte é "ainda não", não "erro". */
+    .aprovado {
+      color: #0e7a52;
+    }
+
+    .abaixo {
+      color: #a96a00;
+    }
   </style>
 </head>
 
@@ -180,8 +190,7 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
                 <th class="py-2 pr-4">Aluno</th>
                 <th class="py-2 pr-4">Último acesso</th>
                 <th class="py-2 pr-4">Perfil</th>
-                <th class="py-2 pr-4">Acesso</th>
-                <th class="py-2 pr-4">Turma</th>
+                <th class="py-2 pr-4">Último simulado</th>
                 <th class="py-2">Ações</th>
               </tr>
             </thead>
@@ -276,6 +285,10 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
       revogarVoucher,
       tirarDaTurma
     } from './shared/simulado-engine/common/js/acesso.js';
+
+    // Só leitura: o último resultado de cada aluno vem da mesma função que o
+    // dashboard usa para o histórico. O store.js não foi alterado.
+    import { lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
 
     const el = id => document.getElementById(id);
 
@@ -434,14 +447,89 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
         : '<span class="etiqueta bg-gray-100 text-gray-700">aluno</span>';
     }
 
-    function etiquetaAcesso(uid) {
+    // Só há o que sinalizar quando o aluno NÃO tem acesso: bloqueado, revogado
+    // ou vencido. Quem está liberado — a maioria — não ganha etiqueta nenhuma,
+    // e a lista fica limpa. Sem isso, sumir com a coluna Acesso esconderia o
+    // "revogado" de quem continua na turma: só o texto do botão diria.
+    function sinalizacaoDeAcesso(uid) {
       const acesso = acessos.get(uid);
-      if (!acesso) return '<span class="etiqueta bg-amber-100 text-amber-800">bloqueado</span>';
 
-      if (acesso.revogadoEm) return '<span class="etiqueta bg-red-100 text-red-800">revogado</span>';
-      if (!acessoVigente(acesso)) return '<span class="etiqueta bg-amber-100 text-amber-800">vencido</span>';
+      let rotulo = null;
+      let classe = 'bg-amber-100 text-amber-800';
 
-      return `<span class="etiqueta bg-green-100 text-green-800">${escapar(acesso.origem) || 'liberado'}</span>`;
+      if (!acesso) rotulo = 'bloqueado';
+      else if (acesso.revogadoEm) { rotulo = 'revogado'; classe = 'bg-red-100 text-red-800'; }
+      else if (!acessoVigente(acesso)) rotulo = 'vencido';
+
+      return rotulo ? `<span class="etiqueta ${classe} ml-1 align-middle">${rotulo}</span>` : '';
+    }
+
+    // ==========================================
+    // Último simulado
+    // Descrição: uma leitura por aluno exibido (o resultado mais recente), feita
+    //            quando a linha aparece e guardada enquanto a página está
+    //            aberta. Recarregar a lista depois de colocar um aluno em turma,
+    //            por exemplo, não lê tudo de novo.
+    //
+    //            O que fica guardado é a PROMESSA da leitura, não o resultado:
+    //            duas linhas do mesmo aluno pedindo ao mesmo tempo compartilham
+    //            uma leitura só. Se a leitura falha, a entrada é descartada e a
+    //            próxima vez que a linha aparecer tenta de novo.
+    // ==========================================
+    const ultimosSimulados = new Map();
+
+    function ultimoSimuladoDe(uid) {
+      if (!ultimosSimulados.has(uid)) {
+        const leitura = lerResultados(uid, { limite: 1 })
+          .then(pagina => pagina.itens[0] || null);
+
+        leitura.catch(() => ultimosSimulados.delete(uid));
+        ultimosSimulados.set(uid, leitura);
+      }
+
+      return ultimosSimulados.get(uid);
+    }
+
+    // Duas linhas curtas, no mesmo padrão do dashboard do aluno: "curso · simulado"
+    // e a pontuação com a cor da nota de corte. A cor sozinha não basta para quem
+    // não distingue verde de âmbar, então a situação vai também por escrito.
+    function preencherUltimoSimulado(celula, resultado) {
+      celula.textContent = '';
+
+      if (!resultado) {
+        celula.appendChild(criar('span', 'text-gray-400', 'Nenhum simulado'));
+        return;
+      }
+
+      const acima = resultado.pontuacao >= NOTA_DE_CORTE;
+      const cor = acima ? 'aprovado' : 'abaixo';
+
+      celula.appendChild(criar('div', 'font-medium text-gray-800', `${resultado.curso} · ${resultado.simulado}`));
+
+      const nota = criar('div', 'num');
+      nota.appendChild(criar('span', `font-semibold ${cor}`, `${resultado.pontuacao} pts`));
+      nota.appendChild(criar('span', 'text-gray-700', ` · ${resultado.percentual}% de acerto`));
+      celula.appendChild(nota);
+
+      celula.appendChild(criar('div', `text-xs num ${cor}`,
+        `${dataCurta(resultado.finalizadoEm)} · ${acima ? 'acima' : 'abaixo'} do corte`));
+    }
+
+    function celulaDoUltimoSimulado(uid) {
+      const celula = criar('td', 'py-3 pr-4 text-sm');
+      celula.appendChild(criar('span', 'text-gray-400', '…'));
+      celula.setAttribute('aria-busy', 'true');
+
+      ultimoSimuladoDe(uid)
+        .then(resultado => preencherUltimoSimulado(celula, resultado))
+        .catch(erro => {
+          console.error('Falha ao ler o último simulado de', uid, erro);
+          celula.textContent = '';
+          celula.appendChild(criar('span', 'text-gray-400', '—'));
+        })
+        .finally(() => celula.removeAttribute('aria-busy'));
+
+      return celula;
     }
 
     function linhaDeContaRemovida(aluno) {
@@ -449,18 +537,14 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
 
       linha.innerHTML = `
         <td class="py-3 pr-4 text-gray-500">
-          (conta removida pelo aluno)
+          (conta removida pelo aluno)${sinalizacaoDeAcesso(aluno.uid)}
           <div class="text-xs text-gray-400 codigo">${escapar(aluno.uid)}</div>
         </td>
         <td class="py-3 pr-4 text-gray-400">—</td>
         <td class="py-3 pr-4 text-gray-400">—</td>
-        <td class="py-3 pr-4"></td>
-        <td class="py-3 pr-4 text-gray-700">${escapar(nomeDaTurma((acessos.get(aluno.uid) || {}).turmaId))}</td>
+        <td class="py-3 pr-4 text-gray-400">—</td>
         <td class="py-3"><div class="flex flex-wrap items-center gap-2"></div></td>
       `;
-
-      // A etiqueta de acesso já sabe lidar com quem não tem documento.
-      linha.children[3].innerHTML = etiquetaAcesso(aluno.uid);
 
       linha.lastElementChild.firstElementChild.appendChild(botaoPequeno('Tirar da turma', async event => {
         if (!confirm('Tirar esta conta removida da turma?')) return;
@@ -491,17 +575,17 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
           <a href="./dashboard.html?aluno=${encodeURIComponent(aluno.uid)}"
              class="font-medium text-blue-700 hover:underline">
             ${escapar(aluno.nomeCompleto || aluno.primeiroNome) || '(sem nome)'}
-          </a>
+          </a>${sinalizacaoDeAcesso(aluno.uid)}
           <div class="text-xs text-gray-500">${escapar(aluno.email)}</div>
         </td>
         <td class="py-3 pr-4 num text-gray-600">${dataCurta(aluno.ultimoAcessoEm)}</td>
         <td class="py-3 pr-4">${etiquetaPapel(aluno.uid)}</td>
-        <td class="py-3 pr-4">${etiquetaAcesso(aluno.uid)}</td>
-        <td class="py-3 pr-4 text-gray-700">${
-          turmaId ? escapar(nomeDaTurma(turmaId)) : '<span class="text-gray-400">—</span>'
-        }</td>
         <td class="py-3"><div class="flex flex-wrap items-center gap-2"></div></td>
       `;
+
+      // O último simulado entra antes das ações e é preenchido quando a leitura
+      // chega: a linha aparece na hora, sem esperar por uma leitura por aluno.
+      linha.insertBefore(celulaDoUltimoSimulado(aluno.uid), linha.lastElementChild);
 
       const acoes = linha.lastElementChild.firstElementChild;
 
@@ -591,7 +675,7 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
     function linhaVazia(texto) {
       const linha = document.createElement('tr');
       const celula = criar('td', 'py-6 text-sm text-gray-500', texto);
-      celula.colSpan = 6;
+      celula.colSpan = el('listaAlunos').closest('table').querySelectorAll('thead th').length;
       linha.appendChild(celula);
       el('listaAlunos').appendChild(linha);
     }
