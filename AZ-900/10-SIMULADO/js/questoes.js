@@ -19,7 +19,7 @@
 
 export const questoes = [
   
-  // Questao 03 (banco original Q106)
+  // Questao 01 (banco original Q106)
   {
     "tipo": "unica",
     "texto": "Você tenta criar várias instâncias gerenciadas do Microsoft SQL Server em um ambiente do Azure e recebe uma mensagem informando que você deve aumentar os limites da sua assinatura do Azure.\nO que você deve fazer para aumentar os limites?",
