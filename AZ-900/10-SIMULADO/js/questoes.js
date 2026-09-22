@@ -18,29 +18,7 @@
 // ==========================================
 
 export const questoes = [
-
-  // Questao 01 (banco original Q14) — já traduzida no lote01
-  {
-    "tipo": "unica",
-    "texto": "Nota: esta questão do banco original (Q14) já foi traduzida integralmente no primeiro lote enviado (referente ao Azure Monitor e coleta centralizada de eventos). Consulte o arquivo do lote 1 para o enunciado completo e a explicação detalhada.",
-    "opcoes": ["Azure Event Hubs", "Azure Analysis Services", "Azure Monitor", "Azure Stream Analytics"],
-    "resposta": 0,
-    "explicacao": "O Azure Event Hubs é uma plataforma de streaming de big data e serviço de ingestão de eventos — a palavra-chave é 'evento', não apenas qualquer dado de telemetria.",
-    "link": "https://learn.microsoft.com/pt-br/azure/event-hubs/event-hubs-about",
-    "dominio": "Descrever as ferramentas de monitoramento no Azure",
-    "simulado": "az-2026-bloco10"
-  },
-  // Questao 02 (banco original Q15) — já traduzida no lote01
-  {
-    "tipo": "unica",
-    "texto": "Nota: esta questão do banco original (Q15) já foi traduzida integralmente no primeiro lote enviado (referente a ferramentas de monitoramento e ao Azure Service Health). Consulte o arquivo do lote 1 para o enunciado completo e a explicação detalhada.",
-    "opcoes": ["Azure Monitor", "Azure Service Health", "Azure Advisor", "Microsoft Trust Center"],
-    "resposta": 1,
-    "explicacao": "O Azure Service Health fornece uma visão personalizada da integridade dos serviços e regiões do Azure que você está usando — sendo o melhor lugar para buscar comunicações sobre interrupções, atividades de manutenção planejada e outros avisos de integridade, já que a experiência autenticada do Service Health sabe quais serviços e recursos você usa atualmente.",
-    "link": "https://learn.microsoft.com/pt-br/azure/service-health/overview",
-    "dominio": "Descrever as ferramentas de monitoramento no Azure",
-    "simulado": "az-2026-bloco10"
-  },
+  
   // Questao 03 (banco original Q106)
   {
     "tipo": "unica",
