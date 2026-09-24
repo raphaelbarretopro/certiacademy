@@ -214,12 +214,12 @@ export const questoes = [
     "opcoes": [
       "o site do Knowledge Center",
       "o painel Advisor no portal do Azure",
-      "o Compliance Manager do Service Trust Portal",
+      "o Compliance Manager do Microsoft Purview",
       "o painel Soluções no portal do Azure"
     ],
     "resposta": 2,
-    "explicacao": "O Compliance Manager no Service Trust Portal é uma ferramenta de avaliação de risco baseada em fluxo de trabalho que ajuda a rastrear, atribuir e verificar as atividades de conformidade regulatória da sua organização relacionadas aos serviços de Nuvem da Microsoft, como Microsoft 365, Dynamics 365 e Azure. O Compliance Manager foi movido do Service Trust Portal para seu novo local no centro de conformidade do Microsoft 365.",
-    "link": "https://learn.microsoft.com/pt-br/microsoft-365/compliance/get-started-with-service-trust-portal?view=o365-worldwide",
+    "explicacao": "O Compliance Manager, do Microsoft Purview, é uma ferramenta de avaliação de conformidade baseada em fluxo de trabalho: traz avaliações prontas para normas e regulamentos do setor, sugere ações de melhoria e calcula uma pontuação de conformidade da organização, incluindo os controles que a Microsoft gerencia nos serviços de nuvem, como Microsoft 365, Dynamics 365 e Azure. Ele saiu do Service Trust Portal — que continua existindo para os relatórios de auditoria da Microsoft — e hoje fica no portal de conformidade do Microsoft Purview. Para ver a conformidade dos recursos das suas assinaturas do Azure com padrões regulatórios, existe também o painel de conformidade regulatória do Microsoft Defender for Cloud, tratado no bloco de monitoramento.",
+    "link": "https://learn.microsoft.com/pt-br/purview/compliance-manager",
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-2026-bloco08"
   },

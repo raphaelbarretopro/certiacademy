@@ -4,7 +4,7 @@
 // BLOCO 1 de 10 — Descrever a computação em nuvem
 // (definição, responsabilidade compartilhada, modelos público/privado/híbrido,
 //  modelo de consumo, modelos de preço, computação sem servidor)
-// 41 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
+// 40 questões — distribuição balanceada conforme guia oficial de estudos AZ-900
 // Terminologia atualizada onde aplicável (Azure AD -> Microsoft Entra ID)
 // ==========================================
 
@@ -445,24 +445,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 31 (banco original Q231)
-  {
-    "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> no Firewall do Azure permitem que usuários na internet acessem um servidor em uma rede virtual.",
-    "opcoes": [
-      "Escolha uma opção",
-      "Regras de aplicativo",
-      "Regras de NAT (Conversão de Endereços de Rede)",
-      "Regras de rede",
-      "Marcas de serviço"
-    ],
-    "resposta": 2,
-    "explicacao": "As regras de NAT (Network Address Translation) no Firewall do Azure permitem que o tráfego proveniente da internet seja traduzido e encaminhado para um servidor dentro de uma rede virtual. Ao processar as regras, o Firewall do Azure aplica primeiro as regras de NAT, depois as regras de rede e, por último, as regras de aplicativo.",
-    "link": "https://learn.microsoft.com/pt-br/azure/firewall/rule-processing",
-    "dominio": "Descrever os conceitos da nuvem",
-    "simulado": "az-2026-bloco01"
-  },
-  // Questao 32 (banco original Q232)
+  // Questao 31 (banco original Q232)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: A proteção contra negação de serviço distribuída (DDoS) do Azure é um exemplo de proteção implementada na <combobox>.",
@@ -479,7 +462,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 33 (banco original Q323)
+  // Questao 32 (banco original Q323)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -494,7 +477,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 34 (banco original Q350)
+  // Questao 33 (banco original Q350)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -509,7 +492,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 35 (banco original Q354)
+  // Questao 34 (banco original Q354)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -524,7 +507,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 36 (banco original Q380)
+  // Questao 35 (banco original Q380)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -539,7 +522,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 37 (banco original Q382)
+  // Questao 36 (banco original Q382)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -554,7 +537,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 38 (banco original Q390)
+  // Questao 37 (banco original Q390)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você planeja implantar 20 máquinas virtuais em um ambiente do Azure. Para garantir que uma máquina virtual chamada VM1 não possa se conectar às outras máquinas virtuais, VM1 deve <combobox>.",
@@ -571,7 +554,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 39 (banco original Q393)
+  // Questao 38 (banco original Q393)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> executa código de aplicativo no Azure sem exigir um servidor.",
@@ -588,7 +571,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 40 (banco original Q440, idêntica à Q40 e Q409)
+  // Questao 39 (banco original Q440, idêntica à Q40 e Q409)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Ao planejar migrar um site público para o Azure, você deve planejar <combobox>.",
@@ -605,7 +588,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco01"
   },
-  // Questao 41 (banco original Q448)
+  // Questao 40 (banco original Q448)
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",

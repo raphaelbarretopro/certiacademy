@@ -169,28 +169,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
-  // Questao 11 - img/azb1q13.png
-  {
-    "tipo": "unica",
-    "texto": "Você precisa gerenciar o Azure usando o Azure Cloud Shell. Qual ícone do portal do Azure você deve selecionar? Para responder, selecione o ícone apropriado na área de resposta.",
-    "imagemUrl": "img/azb1q13.png",
-    "opcoes": [
-      "Ícone 1",
-      "Ícone 2",
-      "Ícone 3",
-      "Ícone 4",
-      "Ícone 5",
-      "Ícone 6",
-      "Ícone 7"
-    ],
-    "resposta": 2,
-    "explicacao": "O Azure Cloud Shell pode ser acessado diretamente pelo ícone em forma de prompt (>) no canto superior direito do portal do Azure. Ele permite executar scripts e comandos em Bash ou PowerShell diretamente no navegador.",
-    "link": "https://learn.microsoft.com/pt-br/azure/cloud-shell/overview",
-    "dominio": "Descrever o gerenciamento e a governança do Azure",
-    "simulado": "az-1"
-  },
-
-  // Questao 12
+  // Questao 11
   {
     "tipo": "multipla",
     "texto": "No modelo de serviço de nuvem IaaS (infraestrutura como serviço), quais são os dois componentes que são responsabilidade do provedor de serviços de nuvem? Cada resposta correta apresenta uma solução completa.",
@@ -207,7 +186,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 13
+  // Questao 12
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -222,7 +201,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
-  // Questao 14
+  // Questao 13
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -237,7 +216,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
-  // Questao 15
+  // Questao 14
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Os serviços do Azure China <combobox>.",
@@ -254,7 +233,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 16
+  // Questao 15
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -269,7 +248,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
-  // Questao 17
+  // Questao 16
   {
     "tipo": "unica",
     "texto": "Sua empresa pretende começar a usar o Azure e migrará todos os recursos de rede para o Azure. Você precisa iniciar o processo de planejamento explorando o Azure. O que você deve criar primeiro?",
@@ -285,7 +264,7 @@ export const questoes = [
     "dominio": "Descrever o gerenciamento e a governança do Azure",
     "simulado": "az-1"
   },
-  // Questao 18
+  // Questao 17
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> é um serviço de migração física usado para transferir grandes quantidades de dados de modo rápido, confiável e de baixo custo.",
@@ -302,7 +281,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 19
+  // Questao 18
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -317,7 +296,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 20
+  // Questao 19
   {
     "tipo": "unica",
     "texto": "Você pretende mapear uma unidade de rede de vários computadores que executam o Windows 11 para o Armazenamento do Azure. Você precisa criar uma solução de armazenamento no Azure para a unidade mapeada planejada. O que você deve criar?",
@@ -333,7 +312,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 21
+  // Questao 20
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -348,7 +327,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 22
+  // Questao 21
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Você planeja implantar 20 máquinas virtuais em um ambiente do Azure. Para garantir que uma máquina virtual chamada VM1 não possa se conectar a outras máquinas virtuais, VM1 deverá <combobox>.",
@@ -365,7 +344,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 23
+  // Questao 22
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -380,7 +359,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 24
+  // Questao 23
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: O SLA (contrato de nível de serviço) de um provedor de serviço de nuvem expressa <combobox> como uma porcentagem do tempo de atividade ao longo de um determinado ano.",
@@ -397,7 +376,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 25
+  // Questao 24
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem acesso à capacidade de computação não utilizada do Azure com descontos significativos.",
@@ -414,7 +393,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 26
+  // Questao 25
   {
     "tipo": "unica",
     "texto": "Sua empresa hospeda um aplicativo contábil chamado App1, que é usado por todos os clientes da empresa. O App1 apresenta uso baixo durante as três primeiras semanas de cada mês e uso muito alto durante a última semana de cada mês. Qual benefício dos Serviços de Nuvem do Azure dá suporte ao gerenciamento de custo para esse tipo de padrão de uso?",
@@ -430,7 +409,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 27
+  // Questao 26
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: Um banco de dados do Microsoft SQL Server que é hospedado na nuvem e tem atualizações de software gerenciadas pelo Azure é um exemplo de <combobox>.",
@@ -449,7 +428,7 @@ export const questoes = [
   },
   // (uma questao do banco original nao foi incluida: NAO VEIO FOTO)
 
-  // Questao 28
+  // Questao 27
   {
     "tipo": "unica",
     "texto": "Qual é um exemplo de escala vertical em um ambiente de nuvem?",
@@ -465,7 +444,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 29
+  // Questao 28
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -480,7 +459,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-1"
   },
-  // Questao 30
+  // Questao 29
   {
     "tipo": "dragdrop",
     "texto": "Você precisa identificar o nível de responsabilidade compartilhada de um cliente com base no modelo de serviço de nuvem. Em qual ordem os modelos devem ser listados da maior responsabilidade (no alto) para a menor responsabilidade do cliente (embaixo)? Para responder, mova todos os modelos da lista de modelos para a área de resposta e organize-os na ordem correta.",
@@ -504,7 +483,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 31
+  // Questao 30
   {
     "tipo": "simnao",
     "texto": "Para cada uma das afirmações a seguir, selecione Sim se a afirmação for verdadeira. Caso contrário, selecione Não.",
@@ -519,7 +498,7 @@ export const questoes = [
     "dominio": "Descrever a arquitetura e os serviços do Azure",
     "simulado": "az-1"
   },
-  // Questao 32
+  // Questao 31
   {
     "tipo": "unica",
     "texto": "O que um aplicativo deve usar para interagir com o Azure e gerenciar recursos?",

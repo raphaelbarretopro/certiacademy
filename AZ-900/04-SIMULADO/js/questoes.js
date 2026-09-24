@@ -16,9 +16,11 @@
 // As Questões 29 (Q299) e 40 (Q410) vinham da fonte com o MESMO enunciado ("___ fornecem
 // às organizações a capacidade de gerenciar a conformidade de recursos do Azure em várias
 // assinaturas") e gabaritos DIFERENTES: Q299 = "Azure policies", Q410 = "Management groups".
-// Em vez de descartar uma, separamos as duas: a Q29 continua perguntando quem gerencia a
-// conformidade (Políticas do Azure) e a Q40 foi reescrita para perguntar pelo escopo acima
-// das assinaturas (Grupos de gerenciamento). As duas agora ensinam a diferença.
+// A resposta correta é "Grupos de gerenciamento": é o que diz a documentação oficial da
+// Microsoft (gerenciar acesso, políticas e conformidade de várias assinaturas) e o consenso
+// da discussão desta questão; o gabarito "Azure policies" da Q299 era erro da fonte. A Q29
+// agora marca Grupos de gerenciamento, e a Q40 foi reescrita para perguntar pelas Políticas
+// do Azure, de modo que as duas ensinam a diferença sem se repetir.
 // ==========================================
 
 export const questoes = [
@@ -449,9 +451,9 @@ export const questoes = [
       "Políticas do Azure",
       "Planos do Azure App Service"
     ],
-    "resposta": 3,
-    "explicacao": "Quem avalia e relata conformidade é o Azure Policy: você define regras (regiões permitidas, tipos de SKU, marcas obrigatórias) e ele verifica cada recurso, marcando o que está em conformidade e o que não está em um painel de conformidade. Atribuída no escopo de um grupo de gerenciamento, a política é herdada por todas as assinaturas abaixo dele — é assim que a conformidade passa a valer em várias assinaturas de uma vez. O grupo de gerenciamento sozinho é só o contêiner onde a política é atribuída; ele organiza as assinaturas, mas não avalia recurso nenhum.",
-    "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview",
+    "resposta": 2,
+    "explicacao": "Os grupos de gerenciamento são o nível de escopo acima das assinaturas. Quando a organização tem muitas assinaturas, você as organiza em grupos de gerenciamento e aplica ali o acesso, as políticas e as condições de conformidade, que descem por herança para todas as assinaturas abaixo — é isso que permite gerenciar a conformidade em várias assinaturas de uma vez. As políticas do Azure são as regras que se aplicam a esse escopo: avaliam e impõem, mas não organizam assinaturas. Os grupos de recursos ficam abaixo da assinatura, então não alcançam várias delas.",
+    "link": "https://learn.microsoft.com/pt-br/azure/governance/management-groups/overview",
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },
@@ -601,7 +603,7 @@ export const questoes = [
   // Questao 40 (banco original Q410)
   {
     "tipo": "combobox",
-    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> fornecem às organizações um nível de escopo acima das assinaturas, no qual várias assinaturas são organizadas em contêineres que herdam as condições de governança aplicadas a eles.",
+    "texto": "Selecione a resposta que completa a frase corretamente: <combobox> permitem definir regras, como restringir as regiões em que os recursos podem ser criados, e avaliar se os recursos existentes estão em conformidade com elas.",
     "opcoes": [
       "Escolha uma opção",
       "Grupos de recursos",
@@ -609,9 +611,9 @@ export const questoes = [
       "Políticas do Azure",
       "Planos do Azure App Service"
     ],
-    "resposta": 2,
-    "explicacao": "Os grupos de gerenciamento ficam acima das assinaturas na hierarquia do Azure: você agrupa assinaturas em contêineres e tudo o que é aplicado ao contêiner — atribuições de política e de função — desce por herança para as assinaturas e os recursos aninhados. Grupos de recursos ficam abaixo da assinatura, e não acima dela, então não alcançam várias assinaturas. As políticas do Azure são o que se aplica a esse escopo (veja a Q32 deste bloco), e não o escopo em si.",
-    "link": "https://learn.microsoft.com/pt-br/azure/governance/management-groups/overview",
+    "resposta": 3,
+    "explicacao": "As políticas do Azure (Azure Policy) definem regras — por exemplo, permitir criar máquinas virtuais só em certas regiões — e avaliam continuamente os recursos, apontando os que estão em conformidade e os que não estão; conforme o efeito da regra, também podem negar ou corrigir o que foge dela. As regras são atribuídas a um escopo, como um grupo de gerenciamento, uma assinatura ou um grupo de recursos (veja, neste bloco, a pergunta sobre gerenciar a conformidade em várias assinaturas). Grupos de gerenciamento e grupos de recursos apenas organizam os recursos: não avaliam nem impõem regra alguma.",
+    "link": "https://learn.microsoft.com/pt-br/azure/governance/policy/overview",
     "dominio": "Descrever os principais componentes arquitetônicos do Azure",
     "simulado": "az-2026-bloco04"
   },

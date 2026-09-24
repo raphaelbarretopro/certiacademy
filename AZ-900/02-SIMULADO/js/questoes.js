@@ -410,7 +410,7 @@ export const questoes = [
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
   },
-  // Questao 26 (banco original Q352, idêntica à Q231 do Bloco 1)
+  // Questao 26 (banco original Q352; a idêntica Q231, do Bloco 1, foi removida)
   {
     "tipo": "combobox",
     "texto": "Selecione a resposta que completa a frase corretamente: <combobox> no Firewall do Azure permitem que usuários na internet acessem um servidor em uma rede virtual.",
@@ -422,7 +422,7 @@ export const questoes = [
       "Marcas de serviço"
     ],
     "resposta": 2,
-    "explicacao": "As regras de DNAT permitem ou negam tráfego de entrada através do(s) endereço(s) IP público(s) do firewall. Você usa uma regra de DNAT quando quer que um endereço IP público seja traduzido para um endereço IP privado, permitindo filtrar o tráfego da internet e traduzi-lo para recursos internos no Azure.",
+    "explicacao": "As regras de DNAT (Destination Network Address Translation, também chamadas de \"regras de NAT\" em algumas fontes) permitem ou negam tráfego de entrada através do(s) endereço(s) IP público(s) do firewall. Você usa uma regra de DNAT quando quer que um endereço IP público seja traduzido para um endereço IP privado, permitindo filtrar o tráfego da internet e traduzi-lo para recursos internos no Azure. Ao processar as regras, o Firewall do Azure aplica primeiro as regras DNAT, depois as regras de rede e, por último, as regras de aplicativo.",
     "link": "https://learn.microsoft.com/pt-br/azure/firewall/policy-rule-sets",
     "dominio": "Descrever os conceitos da nuvem",
     "simulado": "az-2026-bloco02"
