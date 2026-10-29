@@ -67,6 +67,51 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
     .abaixo {
       color: #a96a00;
     }
+
+    .so-impressao {
+      display: none;
+    }
+
+    /* Impressão / PDF: só o relatório de aproveitamento. O painel em si —
+       turmas, vouchers, botões de ação — não tem o que fazer no papel. */
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      header,
+      #carregando,
+      #erro,
+      #conteudo,
+      .nao-imprimir {
+        display: none !important;
+      }
+
+      .so-impressao {
+        display: block;
+      }
+
+      main {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      tr,
+      #relatorioIndicadores > * {
+        break-inside: avoid;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+    }
   </style>
 </head>
 
@@ -87,8 +132,42 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
 
   <main class="container mx-auto px-6 py-10 max-w-6xl">
 
-    <h1 class="text-3xl font-bold mb-1">Painel do administrador</h1>
-    <p class="text-gray-600 mb-8">Alunos cadastrados, turmas, perfis de acesso e vouchers.</p>
+    <h1 class="nao-imprimir text-3xl font-bold mb-1">Painel do administrador</h1>
+    <p class="nao-imprimir text-gray-600 mb-8">Alunos cadastrados, turmas, perfis de acesso e vouchers.</p>
+
+    <!-- ===== Relatório de aproveitamento (só no PDF) =====
+         Montado pelo botão "Imprimir aproveitamento", com os alunos do filtro
+         escolhido na seção Alunos. -->
+    <section id="relatorio" class="so-impressao">
+      <div class="mb-4 pb-3 border-b">
+        <img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-10 mb-2">
+        <h1 class="text-2xl font-bold m-0">Aproveitamento dos alunos</h1>
+        <p class="text-sm text-gray-600 m-0">
+          <span id="relatorioGrupo"></span> · gerado em <span id="relatorioData" class="num"></span>
+        </p>
+      </div>
+
+      <div id="relatorioIndicadores" class="grid grid-cols-5 gap-3 mb-5"></div>
+
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-left text-xs uppercase tracking-wide text-gray-500 border-b">
+            <th class="py-2 pr-3">Aluno</th>
+            <th class="py-2 pr-3">Turma</th>
+            <th class="py-2 pr-3 text-right">Simulados</th>
+            <th class="py-2 pr-3 text-right">Média</th>
+            <th class="py-2 pr-3 text-right">Aprovação</th>
+            <th class="py-2">Último simulado</th>
+          </tr>
+        </thead>
+        <tbody id="relatorioLinhas" class="divide-y"></tbody>
+      </table>
+
+      <p class="text-xs text-gray-500 mt-4">
+        Média de todas as tentativas, em pontos de 0 a 1000. Linha de corte: 700.
+        Aprovação: simulados concluídos acima do corte.
+      </p>
+    </section>
 
     <!-- estado: carregando -->
     <div id="carregando" class="bg-white rounded-2xl shadow p-10 text-center text-gray-500">
@@ -170,10 +249,16 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
       <section id="secaoAlunos" class="bg-white rounded-xl shadow p-6 mb-6">
         <div class="flex flex-wrap items-start justify-between gap-3 mb-1">
           <h2 class="text-lg font-semibold">Alunos cadastrados</h2>
-          <button id="migrarBtn" type="button"
-            class="border border-gray-300 rounded-lg px-3 py-2 text-sm hover:bg-gray-100">
-            Liberar todos sem acesso
-          </button>
+          <div class="flex flex-wrap gap-2">
+            <button id="imprimirBtn" type="button"
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm font-semibold hover:bg-gray-100">
+              Imprimir aproveitamento (PDF)
+            </button>
+            <button id="migrarBtn" type="button"
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm hover:bg-gray-100">
+              Liberar todos sem acesso
+            </button>
+          </div>
         </div>
         <p class="text-sm text-gray-500 mb-4">
           Do acesso mais recente para o mais antigo. Clique no nome para ver o desempenho.
@@ -288,7 +373,7 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
 
     // Só leitura: o último resultado de cada aluno vem da mesma função que o
     // dashboard usa para o histórico. O store.js não foi alterado.
-    import { lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
+    import { lerResultados, lerResumo, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
 
     const el = id => document.getElementById(id);
 
@@ -388,6 +473,10 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
 
     // 'todos' | 'avulsos' | 'turma'. Avulso é o aluno que não está em turma.
     let filtro = { tipo: 'todos', turmaId: null };
+
+    // Os alunos que a lista está mostrando agora, na ordem em que entraram.
+    // É deles que o relatório de aproveitamento é feito.
+    let alunosExibidos = [];
 
     // ==========================================
     // Montagem de elementos
@@ -692,6 +781,7 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
       });
 
       for (const aluno of pagina.itens) el('listaAlunos').appendChild(linhaDoAluno(aluno));
+      alunosExibidos.push(...pagina.itens);
 
       cursor = pagina.proximoCursor;
       el('maisBtn').classList.toggle('oculto', !cursor);
@@ -720,6 +810,7 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
 
       for (const aluno of await alunosPorUid(uids)) {
         el('listaAlunos').appendChild(linhaDoAluno(aluno));
+        alunosExibidos.push(aluno);
       }
     }
 
@@ -738,6 +829,7 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
 
     async function mostrarLista() {
       el('listaAlunos').innerHTML = '';
+      alunosExibidos = [];
       cursor = null;
       atualizarInfoFiltro();
 
@@ -976,6 +1068,150 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
         console.error('Falha ao paginar:', erro);
       }
       el('maisBtn').disabled = false;
+    });
+
+    // ==========================================
+    // Relatório de aproveitamento (PDF)
+    // Descrição: Os alunos do filtro atual — com "Todos" ou "Avulsos", a lista
+    //            é completada até o fim antes, para o PDF não sair só com a
+    //            primeira página. Uma leitura do resumo por aluno, a mesma que
+    //            alimenta o dashboard dele; o último simulado reaproveita a
+    //            leitura que a linha da tabela já fez.
+    //
+    //            Administradores ficam de fora: não são alunos.
+    // ==========================================
+    function grupoDoRelatorio() {
+      if (filtro.tipo === 'avulsos') return 'Alunos avulsos (sem turma)';
+      if (filtro.tipo === 'turma') return `Turma ${nomeDaTurma(filtro.turmaId)}`;
+      return 'Todos os alunos';
+    }
+
+    function indicadorDoRelatorio(rotulo, valor, detalhe) {
+      const bloco = criar('div', 'border border-gray-200 rounded-lg p-3');
+      bloco.appendChild(criar('div', 'text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1', rotulo));
+      bloco.appendChild(criar('div', 'text-2xl font-bold num', valor));
+      if (detalhe) bloco.appendChild(criar('div', 'text-xs text-gray-500 mt-1', detalhe));
+      return bloco;
+    }
+
+    function linhaDoRelatorio({ aluno, resumo, ultimo }) {
+      const linha = criar('tr');
+      const total = (resumo && resumo.totalSimulados) || 0;
+      const turmaId = (acessos.get(aluno.uid) || {}).turmaId;
+
+      const quem = criar('td', 'py-2 pr-3');
+      quem.appendChild(criar('div', 'font-medium', aluno.nomeCompleto || aluno.primeiroNome || '(sem nome)'));
+      quem.appendChild(criar('div', 'text-xs text-gray-500', aluno.email || ''));
+
+      const turma = criar('td', 'py-2 pr-3 text-gray-700', turmaId ? nomeDaTurma(turmaId) : '—');
+      const simulados = criar('td', 'py-2 pr-3 num text-right', String(total));
+
+      let media;
+      let aprovacao;
+
+      if (total) {
+        const cor = resumo.mediaPontuacao >= NOTA_DE_CORTE ? 'aprovado' : 'abaixo';
+        media = criar('td', `py-2 pr-3 num text-right font-semibold ${cor}`, String(resumo.mediaPontuacao || 0));
+        aprovacao = criar('td', 'py-2 pr-3 num text-right');
+        aprovacao.appendChild(criar('div', 'font-semibold', `${resumo.taxaAprovacao || 0}%`));
+        aprovacao.appendChild(criar('div', 'text-xs text-gray-500', `${resumo.aprovados || 0} de ${total}`));
+      } else {
+        media = criar('td', 'py-2 pr-3 text-right text-gray-400', '—');
+        aprovacao = criar('td', 'py-2 pr-3 text-right text-gray-400', '—');
+      }
+
+      const ultimoSimulado = criar('td', 'py-2 text-sm');
+      preencherUltimoSimulado(ultimoSimulado, ultimo);
+
+      linha.append(quem, turma, simulados, media, aprovacao, ultimoSimulado);
+      return linha;
+    }
+
+    async function montarRelatorio() {
+      // "Todos" e "Avulsos" são paginados: o relatório precisa da lista inteira.
+      while (filtro.tipo !== 'turma' && cursor) await carregarPagina();
+
+      const alunos = alunosExibidos
+        .filter(aluno => !aluno.removido && (papeis.get(aluno.uid) || {}).papel !== 'admin')
+        .sort((a, b) => (a.nomeCompleto || a.primeiroNome || a.email || '')
+          .localeCompare(b.nomeCompleto || b.primeiroNome || b.email || '', 'pt-BR'));
+
+      // Uma leitura que falha não derruba o relatório: o aluno sai sem dados.
+      const dados = await Promise.all(alunos.map(async aluno => {
+        const [resumo, ultimo] = await Promise.all([
+          lerResumo(aluno.uid).catch(() => null),
+          ultimoSimuladoDe(aluno.uid).catch(() => null)
+        ]);
+        return { aluno, resumo, ultimo };
+      }));
+
+      // Indicadores do grupo. Média e aprovação ponderadas pelo número de
+      // simulados: quem fez dez provas pesa mais do que quem fez uma.
+      let simulados = 0;
+      let somaPontos = 0;
+      let aprovados = 0;
+      let comSimulado = 0;
+      let acimaDoCorte = 0;
+
+      for (const { resumo } of dados) {
+        const total = (resumo && resumo.totalSimulados) || 0;
+        if (!total) continue;
+
+        comSimulado++;
+        simulados += total;
+        somaPontos += (resumo.mediaPontuacao || 0) * total;
+        aprovados += resumo.aprovados || 0;
+        if ((resumo.mediaPontuacao || 0) >= NOTA_DE_CORTE) acimaDoCorte++;
+      }
+
+      const mediaGrupo = simulados ? Math.round(somaPontos / simulados) : 0;
+      const taxaGrupo = simulados ? Math.round((aprovados / simulados) * 100) : 0;
+
+      el('relatorioGrupo').textContent = grupoDoRelatorio();
+      el('relatorioData').textContent = new Date().toLocaleDateString('pt-BR');
+
+      const indicadores = el('relatorioIndicadores');
+      indicadores.innerHTML = '';
+      indicadores.append(
+        indicadorDoRelatorio('Alunos', String(alunos.length), `${comSimulado} com simulado`),
+        indicadorDoRelatorio('Simulados', String(simulados), 'concluídos'),
+        indicadorDoRelatorio('Média do grupo', String(mediaGrupo), 'de 1000 pontos'),
+        indicadorDoRelatorio('Taxa de aprovação', `${taxaGrupo}%`, `${aprovados} de ${simulados} acima de ${NOTA_DE_CORTE}`),
+        indicadorDoRelatorio('Média acima do corte', String(acimaDoCorte),
+          acimaDoCorte === 1 ? 'aluno' : 'alunos')
+      );
+
+      const corpo = el('relatorioLinhas');
+      corpo.innerHTML = '';
+
+      if (!dados.length) {
+        const linha = criar('tr');
+        const celula = criar('td', 'py-6 text-sm text-gray-500', 'Nenhum aluno neste grupo.');
+        celula.colSpan = 6;
+        linha.appendChild(celula);
+        corpo.appendChild(linha);
+      }
+
+      for (const item of dados) corpo.appendChild(linhaDoRelatorio(item));
+    }
+
+    el('imprimirBtn').addEventListener('click', async () => {
+      const botao = el('imprimirBtn');
+      const original = botao.textContent;
+
+      botao.disabled = true;
+      botao.textContent = 'Preparando relatório…';
+
+      try {
+        await montarRelatorio();
+        window.print();
+      } catch (erro) {
+        console.error('Falha ao montar o relatorio:', erro);
+        alert(`Não foi possível montar o relatório. ${explicar(erro)}`);
+      }
+
+      botao.textContent = original;
+      botao.disabled = false;
     });
 
     // ==========================================

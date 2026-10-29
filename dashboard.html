@@ -82,6 +82,63 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     .oculto {
       display: none !important;
     }
+
+    .so-impressao {
+      display: none;
+    }
+
+    /* Impressão / PDF: só o relatório. Sem cabeçalho, rodapé e botões, sem
+       sombras, e com as grades fixas — a folha A4 é mais estreita que o ponto
+       "lg" do Tailwind e, sem isso, os indicadores sairiam empilhados. */
+    @media print {
+      @page {
+        size: A4;
+        margin: 12mm;
+      }
+
+      body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      header,
+      footer,
+      .nao-imprimir {
+        display: none !important;
+      }
+
+      .so-impressao {
+        display: block;
+      }
+
+      main {
+        max-width: none !important;
+        padding: 0 !important;
+      }
+
+      .shadow {
+        box-shadow: none !important;
+        border: 1px solid #e5e7eb;
+      }
+
+      #conteudo .lg\:grid-cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      #conteudo .lg\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      #conteudo .grid > *,
+      tr {
+        break-inside: avoid;
+      }
+
+      thead {
+        display: table-header-group;
+      }
+    }
   </style>
 </head>
 
@@ -111,7 +168,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
 
     <!-- Faixa de administrador: sem ela é fácil confundir o desempenho de um
          aluno com o próprio, já que o painel é exatamente o mesmo. -->
-    <div id="faixaAdmin" class="oculto bg-amber-50 border border-amber-300 rounded-xl px-5 py-4 mb-6 flex flex-wrap items-center justify-between gap-3">
+    <div id="faixaAdmin" class="nao-imprimir oculto bg-amber-50 border border-amber-300 rounded-xl px-5 py-4 mb-6 flex flex-wrap items-center justify-between gap-3">
       <p class="text-sm text-amber-900 m-0">
         Você está vendo o desempenho de <strong id="alunoObservado"></strong>,
         como administrador.
@@ -119,7 +176,22 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
       <a href="./admin.html" class="text-sm font-semibold text-amber-900 underline">Voltar ao painel</a>
     </div>
 
-    <h1 id="tituloPainel" class="text-3xl font-bold mb-1">Meu desempenho</h1>
+    <!-- Só no PDF: de quem é o relatório e quando foi gerado. -->
+    <div class="so-impressao mb-4 pb-3 border-b">
+      <img src="./imagens/certiacademy_logo.svg" alt="CertiAcademy" class="h-10 mb-2">
+      <p class="text-sm text-gray-600 m-0">
+        Relatório de desempenho de <strong id="impressaoNome"></strong> · gerado em
+        <span id="impressaoData" class="num"></span>
+      </p>
+    </div>
+
+    <div class="flex flex-wrap items-start justify-between gap-3 mb-1">
+      <h1 id="tituloPainel" class="text-3xl font-bold">Meu desempenho</h1>
+      <button id="imprimirBtn" type="button"
+        class="nao-imprimir oculto border border-gray-300 bg-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-gray-100">
+        Imprimir / salvar em PDF
+      </button>
+    </div>
     <p id="subtituloPainel" class="text-gray-600 mb-8">Todos os simulados que você concluiu, e o que eles dizem sobre o seu preparo.</p>
 
     <!-- estado: carregando -->
@@ -216,7 +288,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
           </table>
         </div>
 
-        <div class="text-center mt-6">
+        <div class="nao-imprimir text-center mt-6">
           <button id="maisBtn" type="button"
             class="border border-gray-300 rounded-lg px-5 py-2 text-sm hover:bg-gray-100 oculto">
             Carregar mais
@@ -245,6 +317,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
       ['carregando', 'vazio', 'erro', 'conteudo'].forEach(nome => {
         el(nome).classList.toggle('oculto', nome !== qual);
       });
+      el('imprimirBtn').classList.toggle('oculto', qual !== 'conteudo');
     }
 
     function falhar(texto) {
@@ -446,7 +519,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     // ==========================================
     const pedido = new URLSearchParams(location.search).get('aluno');
     let alvoUid = perfil.uid;
-    let alvoNome = perfil.primeiroNome;
+    let alvoNome = perfil.nomeCompleto || perfil.primeiroNome;
 
     if (pedido && pedido !== perfil.uid && await ehAdmin(perfil.uid)) {
       const aluno = await lerAluno(pedido);
@@ -502,6 +575,23 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
         console.error('Falha ao paginar o historico:', erro);
       }
       el('maisBtn').disabled = false;
+    });
+
+    // O PDF leva o histórico inteiro, não só as páginas já abertas na tela.
+    el('impressaoNome').textContent = alvoNome;
+
+    el('imprimirBtn').addEventListener('click', async () => {
+      const botao = el('imprimirBtn');
+      botao.disabled = true;
+      try {
+        while (cursor) await carregarPagina();
+      } catch (erro) {
+        console.error('Falha ao completar o historico para impressao:', erro);
+      }
+      botao.disabled = false;
+
+      el('impressaoData').textContent = new Date().toLocaleDateString('pt-BR');
+      window.print();
     });
 
     try {
