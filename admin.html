@@ -204,6 +204,26 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
         <div id="listaPedidos" class="space-y-4"></div>
       </section>
 
+      <!-- ===== Feedbacks ===== -->
+      <section id="secaoFeedbacks" class="bg-white rounded-xl shadow p-6 mb-6">
+        <h2 class="text-lg font-semibold mb-1">
+          Feedbacks dos alunos
+          <span id="contaFeedbacks" class="etiqueta bg-amber-100 text-amber-800 align-middle ml-1 oculto"></span>
+        </h2>
+        <p class="text-sm text-gray-500 mb-5">
+          Nada aparece no site sem a sua aprovação. "Aprovar e destacar" coloca a avaliação
+          em evidência na página inicial e no curso.
+        </p>
+
+        <h3 class="text-sm font-semibold text-gray-700 mb-3">Aguardando decisão</h3>
+        <div id="semFeedbacks" class="text-sm text-gray-500 oculto mb-4">Nenhum feedback pendente.</div>
+        <div id="listaFeedbacks" class="space-y-4 mb-8"></div>
+
+        <h3 class="text-sm font-semibold text-gray-700 mb-3">Publicados</h3>
+        <div id="semPublicados" class="text-sm text-gray-500 oculto">Nenhum feedback publicado ainda.</div>
+        <div id="listaPublicados" class="space-y-4"></div>
+      </section>
+
       <!-- ===== Turmas ===== -->
       <section id="secaoTurmas" class="bg-white rounded-xl shadow p-6 mb-6">
         <h2 class="text-lg font-semibold mb-1">Turmas</h2>
@@ -371,6 +391,15 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
       revogarVoucher,
       tirarDaTurma
     } from './shared/simulado-engine/common/js/acesso.js';
+
+    import {
+      ESCOPO_GERAL,
+      alternarDestaque,
+      decidirFeedback,
+      listarAprovados,
+      listarPendentes,
+      removerFeedback
+    } from './shared/simulado-engine/common/js/feedback.js';
 
     // Só leitura: o último resultado de cada aluno vem da mesma função que o
     // dashboard usa para o histórico. O store.js não foi alterado.
@@ -1314,6 +1343,126 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
     }
 
     // ==========================================
+    // Feedbacks
+    // Descrição: nome, texto e escopo são escritos pelo aluno. Tudo entra na
+    //            página por textContent, nunca por innerHTML.
+    // ==========================================
+    function estrelasEmTexto(n) {
+      const cheias = Math.max(0, Math.min(5, Number(n) || 0));
+      return '★'.repeat(cheias) + '☆'.repeat(5 - cheias);
+    }
+
+    function rotuloDoEscopo(escopo) {
+      return escopo === ESCOPO_GERAL ? 'Plataforma' : String(escopo || '');
+    }
+
+    function botaoDeFeedback(rotulo, classe, aoClicar) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = classe;
+      b.textContent = rotulo;
+      b.addEventListener('click', async () => {
+        const grupo = b.parentElement;
+        for (const outro of grupo.children) outro.disabled = true;
+
+        try {
+          await aoClicar();
+          await carregarFeedbacks();
+        } catch (erro) {
+          if (erro && erro.message === 'cancelado') {
+            for (const outro of grupo.children) outro.disabled = false;
+            return;
+          }
+          console.error('Falha ao atualizar o feedback:', erro);
+          alert('Não foi possível concluir a ação.');
+          for (const outro of grupo.children) outro.disabled = false;
+        }
+      });
+      return b;
+    }
+
+    function cartaoDeFeedback(feedback, publicado) {
+      const cartao = document.createElement('div');
+      cartao.className = 'border border-gray-200 rounded-xl p-4';
+
+      const cabecalho = document.createElement('div');
+      cabecalho.className = 'flex flex-wrap items-start justify-between gap-3 mb-3';
+
+      const autor = document.createElement('div');
+      const nome = document.createElement('div');
+      nome.className = 'font-semibold';
+      nome.textContent = feedback.nomePublico || '(sem nome)';
+      const meta = document.createElement('div');
+      meta.className = 'text-xs text-gray-500';
+      meta.textContent = `${rotuloDoEscopo(feedback.escopo)} · ${dataCurta(feedback.criadoEm)}`;
+      autor.append(nome, meta);
+
+      const nota = document.createElement('div');
+      nota.className = 'text-amber-500 text-lg tracking-wide';
+      nota.setAttribute('aria-label', `${feedback.estrelas} de 5 estrelas`);
+      nota.textContent = estrelasEmTexto(feedback.estrelas);
+
+      cabecalho.append(autor, nota);
+
+      const texto = document.createElement('p');
+      texto.className = 'text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3 whitespace-pre-wrap';
+      texto.textContent = feedback.texto;
+
+      const acoes = document.createElement('div');
+      acoes.className = 'flex flex-wrap gap-2';
+
+      if (!publicado) {
+        acoes.append(
+          botaoDeFeedback('Aprovar e destacar',
+            'bg-blue-600 text-white font-semibold rounded-lg px-4 py-2 text-sm hover:bg-blue-700',
+            () => decidirFeedback(feedback.id, true, perfil.uid, { destaque: true })),
+          botaoDeFeedback('Aprovar',
+            'border border-blue-600 text-blue-700 font-semibold rounded-lg px-4 py-2 text-sm hover:bg-blue-50',
+            () => decidirFeedback(feedback.id, true, perfil.uid)),
+          botaoDeFeedback('Rejeitar',
+            'border border-gray-300 rounded-lg px-4 py-2 text-sm hover:bg-gray-100',
+            () => decidirFeedback(feedback.id, false, perfil.uid))
+        );
+      } else {
+        if (feedback.destaque) {
+          const selo = document.createElement('span');
+          selo.className = 'etiqueta bg-amber-100 text-amber-800 self-center';
+          selo.textContent = 'em destaque';
+          acoes.append(selo);
+        }
+
+        acoes.append(
+          botaoDeFeedback(feedback.destaque ? 'Tirar destaque' : 'Destacar',
+            'border border-gray-300 rounded-lg px-4 py-2 text-sm hover:bg-gray-100',
+            () => alternarDestaque(feedback.id, !feedback.destaque, perfil.uid)),
+          botaoDeFeedback('Remover',
+            'border border-red-300 text-red-700 rounded-lg px-4 py-2 text-sm hover:bg-red-50',
+            async () => {
+              if (!confirm('Remover este feedback publicado? A ação não pode ser desfeita.')) {
+                throw new Error('cancelado');
+              }
+              await removerFeedback(feedback.id);
+            })
+        );
+      }
+
+      cartao.append(cabecalho, texto, acoes);
+      return cartao;
+    }
+
+    async function carregarFeedbacks() {
+      const [pendentes, publicados] = await Promise.all([listarPendentes(), listarAprovados({ limite: 200 })]);
+
+      el('listaFeedbacks').replaceChildren(...pendentes.map(f => cartaoDeFeedback(f, false)));
+      el('listaPublicados').replaceChildren(...publicados.map(f => cartaoDeFeedback(f, true)));
+
+      el('semFeedbacks').classList.toggle('oculto', pendentes.length > 0);
+      el('semPublicados').classList.toggle('oculto', publicados.length > 0);
+      el('contaFeedbacks').textContent = String(pendentes.length);
+      el('contaFeedbacks').classList.toggle('oculto', pendentes.length === 0);
+    }
+
+    // ==========================================
     // Vouchers
     // ==========================================
     function linhaDoVoucher(voucher) {
@@ -1471,6 +1620,12 @@ Descrição: Painel do administrador — alunos cadastrados, turmas, papéis,
       await carregarSecao('as solicitacoes', carregarPedidos, erro => {
         el('semPedidos').classList.add('oculto');
         avisoNaSecao('#listaPedidos', explicar(erro));
+      });
+
+      await carregarSecao('os feedbacks', carregarFeedbacks, erro => {
+        el('semFeedbacks').classList.add('oculto');
+        el('semPublicados').classList.add('oculto');
+        avisoNaSecao('#listaFeedbacks', explicar(erro));
       });
 
       await carregarSecao('os vouchers', carregarVouchers, erro => {
