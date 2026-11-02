@@ -300,6 +300,17 @@ function blocoAviso(exame) {
 // ==========================================
 // Funcao: montarPagina(curso, exame, simulados)
 // ==========================================
+// Seção oculta até o módulo confirmar que há avaliações aprovadas.
+function blocoDepoimentos(escopo, titulo, classe) {
+  return `    <section id="depoimentos" data-escopo="${escapar(escopo)}" class="${classe}" hidden>
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+        <h2 class="text-2xl font-bold">${escapar(titulo)}</h2>
+        <div data-depoimentos-resumo class="flex items-center"></div>
+      </div>
+      <div data-depoimentos class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>`;
+}
+
 async function montarPagina(curso, exame, simulados, emPreparacao = 0) {
   const principais = simulados.filter(s => !ehBonus(s.nome));
   const bonus = simulados.filter(s => ehBonus(s.nome));
@@ -543,7 +554,7 @@ ${blocoRecursos(exame)}
     </section>
 ${await blocoMateriais(curso)}
 ${blocoPlano(exame, principais[0])}
-
+${blocoDepoimentos(curso.codigo, 'O que os alunos dizem sobre este curso', 'mb-8')}
   </main>
 
   <footer class="bg-gray-800 text-gray-300 py-8">
@@ -565,6 +576,10 @@ ${blocoPlano(exame, principais[0])}
     // ele escreve, em vez de repetir a lógica de encerrar a sessão.
     await montarHeaderSessao(document.getElementById('sessaoHeader'));
     montarMenuCurso();
+
+    import('../shared/simulado-engine/common/js/feedback-publico.js')
+      .then(m => m.montarDepoimentos(document.getElementById('depoimentos'), { escopo: ${JSON.stringify(curso.codigo)} }))
+      .catch(() => {});
   </script>
 
 </body>
@@ -954,6 +969,10 @@ ${cartoes}
     </details>
   </section>
 
+  <div class="container mx-auto px-6 max-w-6xl">
+${blocoDepoimentos('geral', 'O que os alunos dizem', 'py-12')}
+  </div>
+
   <!-- Chamada final -->
   <section class="bg-blue-600 text-white">
     <div class="container mx-auto px-6 py-16 max-w-3xl text-center">
@@ -988,6 +1007,10 @@ ${cartoes}
     // ele escreve, em vez de repetir a lógica de encerrar a sessão.
     await montarHeaderSessao(document.getElementById('sessaoHeader'));
     montarMenuHome();
+
+    import('./shared/simulado-engine/common/js/feedback-publico.js')
+      .then(m => m.montarDepoimentos(document.getElementById('depoimentos'), { escopo: 'geral' }))
+      .catch(() => {});
   </script>
 
 </body>

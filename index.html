@@ -407,6 +407,16 @@ Descrição: Página inicial do CertiAcademy.
     </details>
   </section>
 
+  <div class="container mx-auto px-6 max-w-6xl">
+    <section id="depoimentos" data-escopo="geral" class="py-12" hidden>
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+        <h2 class="text-2xl font-bold">O que os alunos dizem</h2>
+        <div data-depoimentos-resumo class="flex items-center"></div>
+      </div>
+      <div data-depoimentos class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+  </div>
+
   <!-- Chamada final -->
   <section class="bg-blue-600 text-white">
     <div class="container mx-auto px-6 py-16 max-w-3xl text-center">
@@ -441,6 +451,10 @@ Descrição: Página inicial do CertiAcademy.
     // ele escreve, em vez de repetir a lógica de encerrar a sessão.
     await montarHeaderSessao(document.getElementById('sessaoHeader'));
     montarMenuHome();
+
+    import('./shared/simulado-engine/common/js/feedback-publico.js')
+      .then(m => m.montarDepoimentos(document.getElementById('depoimentos'), { escopo: 'geral' }))
+      .catch(() => {});
   </script>
 
 </body>

@@ -496,7 +496,13 @@ Descrição: Página do curso preparatório para o exame SC-900.
         aproveitamento aparecem primeiro, e são por onde vale recomeçar.
       </p>
     </section>
-
+    <section id="depoimentos" data-escopo="SC-900" class="mb-8" hidden>
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+        <h2 class="text-2xl font-bold">O que os alunos dizem sobre este curso</h2>
+        <div data-depoimentos-resumo class="flex items-center"></div>
+      </div>
+      <div data-depoimentos class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
   </main>
 
   <footer class="bg-gray-800 text-gray-300 py-8">
@@ -518,6 +524,10 @@ Descrição: Página do curso preparatório para o exame SC-900.
     // ele escreve, em vez de repetir a lógica de encerrar a sessão.
     await montarHeaderSessao(document.getElementById('sessaoHeader'));
     montarMenuCurso();
+
+    import('../shared/simulado-engine/common/js/feedback-publico.js')
+      .then(m => m.montarDepoimentos(document.getElementById('depoimentos'), { escopo: "SC-900" }))
+      .catch(() => {});
   </script>
 
 </body>
