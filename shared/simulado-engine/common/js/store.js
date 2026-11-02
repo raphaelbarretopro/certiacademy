@@ -257,6 +257,17 @@ export async function apagarDadosDoAluno(uid) {
     restam = paginas.docs.length === 300;
   }
 
+  // Avaliações publicadas ou pendentes também são dados do aluno. A regra de
+  // leitura aceita a consulta porque ela filtra pelo próprio uid.
+  const avaliacoes = await fs.getDocs(
+    fs.query(fs.collection(db, 'feedbacks'), fs.where('uid', '==', uid))
+  );
+  if (!avaliacoes.empty) {
+    const loteAvaliacoes = fs.writeBatch(db);
+    avaliacoes.docs.forEach(documento => loteAvaliacoes.delete(documento.ref));
+    await loteAvaliacoes.commit();
+  }
+
   const lote = fs.writeBatch(db);
   lote.delete(fs.doc(db, 'users', uid, 'resumo', 'agregado'));
   lote.delete(fs.doc(db, 'users', uid));

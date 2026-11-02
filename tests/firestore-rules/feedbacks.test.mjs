@@ -143,6 +143,10 @@ await caso('outro aluno nao edita a avaliacao alheia', () =>
   })));
 
 console.log('Exclusao');
+await caso('dono lista as proprias (pendentes inclusas) por uid', () =>
+  assertSucceeds(getDocs(query(collection(ana, 'feedbacks'), where('uid', '==', 'ana')))));
+await caso('outro aluno nao lista as avaliacoes alheias por uid', () =>
+  assertFails(getDocs(query(collection(bia, 'feedbacks'), where('uid', '==', 'ana')))));
 await caso('outro aluno nao apaga', () => assertFails(deleteDoc(ref(bia, 'ana_AZ-900'))));
 await caso('dono apaga a propria', () => assertSucceeds(deleteDoc(ref(ana, 'ana_AZ-900'))));
 await caso('admin apaga qualquer uma', () => assertSucceeds(deleteDoc(ref(adm, 'ana_geral'))));

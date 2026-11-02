@@ -91,9 +91,18 @@ Descrição: Política de privacidade e exclusão de conta do CertiAcademy.
     <p>Esses dados existem para uma finalidade só: mostrar a você a sua própria evolução e apontar os assuntos em que
       vale investir mais estudo.</p>
 
+    <h2>Avaliações que você escreve</h2>
+    <p>Se você optar por avaliar a plataforma ou um curso, guardamos a nota de 1 a 5 estrelas, o texto que você
+      escreveu e o nome que você escolheu exibir (sugerimos o primeiro nome e a inicial do sobrenome). A avaliação só
+      é publicada na página inicial ou na página do curso depois da sua autorização expressa, marcada no formulário, e
+      da aprovação da administração. Nenhum e-mail ou foto é exibido junto dela.</p>
+    <p>Você pode editar (a avaliação volta para nova análise) ou apagar a sua avaliação quando quiser, no painel
+      “Meu desempenho”. Ao excluir a conta, as suas avaliações também são removidas.</p>
+
     <h2>Quem tem acesso</h2>
     <p>Seu histórico é pessoal. As regras de segurança do banco de dados permitem que apenas a sua própria conta
-      escreva os seus dados. Não há ranking, não há comparação entre alunos e nada é exibido publicamente.</p>
+      escreva os seus dados. Não há ranking, não há comparação entre alunos e seus resultados não são exibidos publicamente. A única exceção são as avaliações
+      que você decidir publicar, descritas acima.</p>
     <p><strong>A administração do CertiAcademy tem acesso de leitura ao seu histórico de estudos</strong> — nome,
       e-mail, simulados concluídos, pontuações e aproveitamento por assunto. Isso existe para acompanhar o andamento
       dos alunos e dar suporte quando você precisar. A administração não consegue alterar nem apagar os seus
@@ -187,7 +196,7 @@ Descrição: Política de privacidade e exclusão de conta do CertiAcademy.
 
       excluirBtn.addEventListener('click', async () => {
         const confirmado = confirm(
-          'Excluir sua conta remove permanentemente todo o seu histórico de simulados. Esta ação não pode ser desfeita.\n\nDeseja continuar?'
+          'Excluir sua conta remove permanentemente todo o seu histórico de simulados e as suas avaliações. Esta ação não pode ser desfeita.\n\nDeseja continuar?'
         );
 
         if (!confirmado) return;
