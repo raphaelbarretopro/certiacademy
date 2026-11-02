@@ -179,6 +179,16 @@ async function handleRequest(request, response) {
   }
 
   if (request.method === 'POST' && requestUrl.pathname === '/api/scaffold') {
+    // Bloqueia CSRF/DNS rebinding: so aceita chamadas da propria interface local.
+    const origin = request.headers.origin;
+    const host = (request.headers.host || '').replace(/:\d+$/, '');
+    const localHosts = ['localhost', '127.0.0.1'];
+    const originHost = origin ? (() => { try { return new URL(origin).hostname; } catch { return ''; } })() : host;
+    if (!localHosts.includes(host) || !localHosts.includes(originHost)) {
+      sendJson(response, 403, { ok: false, error: 'Origem nao permitida.' });
+      return;
+    }
+
     await handleApiScaffold(request, response);
     return;
   }
@@ -200,7 +210,7 @@ async function main() {
     });
   });
 
-  server.listen(port, () => {
+  server.listen(port, '127.0.0.1', () => {
     console.log(`Scaffold UI disponivel em http://localhost:${port}`);
     console.log('Use Ctrl+C para encerrar.');
   });

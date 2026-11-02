@@ -58,7 +58,22 @@ function ensureRelativePath(value, flagName) {
     throw new Error(`A opcao ${flagName} deve ser um caminho relativo dentro do repositorio.`);
   }
 
-  return normalized;
+  const resolved = path.resolve(workspaceRoot, normalized);
+  const relativeToRoot = path.relative(workspaceRoot, resolved);
+  if (!relativeToRoot || relativeToRoot.startsWith('..') || path.isAbsolute(relativeToRoot)) {
+    throw new Error(`A opcao ${flagName} deve ser um caminho relativo dentro do repositorio.`);
+  }
+
+  return toPosix(relativeToRoot);
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
 function ensureNonEmpty(value, fallback) {
@@ -143,9 +158,9 @@ function buildCourseHeadline(courseCode, title) {
 function buildHomeCardSnippet(coursePath, courseCode, courseSummary) {
   return [
     '<div class="bg-white rounded-2xl shadow p-6 hover:shadow-lg transition">',
-    `  <h3 class="text-xl font-semibold mb-2">${courseCode}</h3>`,
-    `  <p class="text-gray-600 text-sm mb-4">${courseSummary}</p>`,
-    `  <a href="./${toPosix(coursePath)}/curso.html" class="text-blue-600 font-medium">Atualize este texto de chamada antes de publicar →</a>`,
+    `  <h3 class="text-xl font-semibold mb-2">${escapeHtml(courseCode)}</h3>`,
+    `  <p class="text-gray-600 text-sm mb-4">${escapeHtml(courseSummary)}</p>`,
+    `  <a href="./${escapeHtml(encodeURI(toPosix(coursePath)))}/curso.html" class="text-blue-600 font-medium">Atualize este texto de chamada antes de publicar →</a>`,
     '</div>'
   ].join('\n');
 }
