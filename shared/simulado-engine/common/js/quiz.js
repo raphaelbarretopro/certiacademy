@@ -951,6 +951,12 @@ function mostrarResultadoFinal(forceRender = false) {
       </div>
     </div>
 
+    <div id="rfAvaliacao" class="rf-painel rf-avaliacao" hidden>
+      <h2 class="rf-painel-titulo">Avalie sua experiência</h2>
+      <p class="rf-painel-sub">A plataforma está te ajudando? Sua avaliação só aparece no site depois de aprovada.</p>
+      <div id="rfAvaliacaoForm"></div>
+    </div>
+
     <div class="rf-painel">
       <h2 class="rf-painel-titulo">Aproveitamento por assunto</h2>
       <p class="rf-painel-sub">Quanto você aproveitou dos pontos disponíveis em cada seção do exame.</p>
@@ -986,6 +992,7 @@ function mostrarResultadoFinal(forceRender = false) {
   if (progressoContainer) progressoContainer.style.display = 'none';
 
   notificarResultadoParaHistorico();
+  document.dispatchEvent(new CustomEvent('certiacademy:resultado-exibido'));
 }
 
 // ==========================================
@@ -1311,6 +1318,9 @@ function voltarResultadoFinal() {
   setTimeout(() => {
     desenharGraficos();
   }, 50);
+
+  // O innerHTML também descartou o formulário de avaliação montado antes.
+  document.dispatchEvent(new CustomEvent('certiacademy:resultado-exibido'));
 }
 
 // Permite navegação direta ao clicar na lista lateral

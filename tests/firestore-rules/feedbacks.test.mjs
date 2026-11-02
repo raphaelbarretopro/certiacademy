@@ -143,6 +143,10 @@ await caso('outro aluno nao edita a avaliacao alheia', () =>
   })));
 
 console.log('Exclusao');
+await caso('aluno le o proprio documento inexistente (checagem antes de criar)', () =>
+  assertSucceeds(getDoc(ref(dora, 'dora_AZ-900'))));
+await caso('aluno nao le documento inexistente de outro', () =>
+  assertFails(getDoc(ref(dora, 'bia_AZ-900'))));
 await caso('dono lista as proprias (pendentes inclusas) por uid', () =>
   assertSucceeds(getDocs(query(collection(ana, 'feedbacks'), where('uid', '==', 'ana')))));
 await caso('outro aluno nao lista as avaliacoes alheias por uid', () =>

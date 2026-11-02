@@ -91,13 +91,42 @@ const {
 //            se repete na próxima vez que a página abrir, porque só marcamos
 //            como gravado depois da confirmação.
 // ==========================================
-document.addEventListener('certiacademy:resultado-final', async evento => {
+let gravacaoDoResultado = null;
+
+document.addEventListener('certiacademy:resultado-final', evento => {
+  gravacaoDoResultado = (async () => {
+    try {
+      const { salvarResultado } = await import('./store.js');
+      await salvarResultado(perfil, evento.detail);
+      marcarResultadoGravado();
+      return true;
+    } catch (erro) {
+      console.error('Nao foi possivel gravar o resultado no historico:', erro);
+      return false;
+    }
+  })();
+});
+
+// Avaliação logo abaixo da nota. Só depois de o resultado gravado: a regra do
+// banco exige o agregado, que nasce junto com o primeiro resultado.
+document.addEventListener('certiacademy:resultado-exibido', async () => {
   try {
-    const { salvarResultado } = await import('./store.js');
-    await salvarResultado(perfil, evento.detail);
-    marcarResultadoGravado();
+    if (gravacaoDoResultado && !(await gravacaoDoResultado)) return;
+
+    const painel = document.getElementById('rfAvaliacao');
+    const destino = document.getElementById('rfAvaliacaoForm');
+    if (!painel || !destino) return;
+
+    const { escoposDoAluno, montarFormulario } = await import('./feedback-form.js');
+    const { curso } = quizModule.montarResultadoParaHistorico();
+
+    const escopos = escoposDoAluno({ [curso]: true });
+    if (escopos.length > 1) escopos.push(escopos.shift());
+
+    montarFormulario(destino, { perfil, escopos });
+    painel.hidden = false;
   } catch (erro) {
-    console.error('Nao foi possivel gravar o resultado no historico:', erro);
+    console.warn('Formulário de avaliação indisponível:', erro);
   }
 });
 

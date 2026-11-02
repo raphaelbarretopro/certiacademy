@@ -243,7 +243,12 @@ service cloud.firestore {
     //            Firestore recusa a listagem inteira.
     // ==========================================
     match /feedbacks/{feedbackId} {
-      allow get, list: if resource.data.situacao == 'aprovado'
+      allow get: if resource == null
+          ? (request.auth != null && feedbackId.split('_')[0] == request.auth.uid)
+          : (resource.data.situacao == 'aprovado'
+              || ehDono(resource.data.uid)
+              || ehAdmin());
+      allow list: if resource.data.situacao == 'aprovado'
         || ehDono(resource.data.uid)
         || ehAdmin();
 
