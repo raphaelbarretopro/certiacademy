@@ -1,0 +1,48 @@
+/* Tema inspirado no perfil do LinkedIn: fundo bege-acinzentado (#F4F2EE) e
+   cartões brancos com borda fina e cantos arredondados, sem sombra.
+   Carregado depois do Tailwind 2 para sobrescrever as utilitárias. */
+body,
+.bg-gray-50 {
+  background-color: #F4F2EE !important;
+  color: rgba(0, 0, 0, .9);
+}
+
+.bg-white.rounded-xl,
+.bg-white.rounded-lg {
+  border: 1px solid #E0DFDC;
+}
+
+.shadow,
+.shadow-sm,
+.shadow-md,
+.shadow-lg {
+  box-shadow: none !important;
+}
+
+header.bg-white {
+  border-bottom: 1px solid #E0DFDC;
+}
+
+.border-gray-100,
+.border-gray-200,
+details.faq {
+  border-color: #E0DFDC !important;
+}
+
+.text-gray-800,
+.text-gray-700 {
+  color: rgba(0, 0, 0, .9) !important;
+}
+
+.text-gray-600,
+.text-gray-500 {
+  color: rgba(0, 0, 0, .6) !important;
+}
+
+.hover\:bg-gray-50:hover {
+  background-color: #F3F2EF !important;
+}
+
+.trilha {
+  background: #E0DFDC !important;
+}

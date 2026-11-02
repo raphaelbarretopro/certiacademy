@@ -331,6 +331,7 @@ Descrição: Página do curso preparatório para o exame ${exame.codigo}.
   <title>Curso Preparatório ${escapar(exame.codigo)} | CertiAcademy</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../shared/simulado-engine/common/css/menu-lateral.css">
+  <link rel="stylesheet" href="../css/tema-linkedin.css">
   <meta name="robots" content="noindex, nofollow">
   <style>
     body {
@@ -646,6 +647,7 @@ Descrição: Página inicial do CertiAcademy.
   <title>CertiAcademy | Simulados para certificações Microsoft</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./shared/simulado-engine/common/css/menu-lateral.css">
+  <link rel="stylesheet" href="./css/tema-linkedin.css">
   <meta name="robots" content="noindex, nofollow">
   <style>
     body {
@@ -996,7 +998,8 @@ ${blocoDepoimentos('geral', 'O que os alunos dizem', 'py-12')}
         <a href="./privacidade.html" class="hover:text-white">Privacidade</a>
         <a href="mailto:raphael.boliveira@gmail.com" class="hover:text-white">Contato</a>
       </div>
-    </div>
+              <p class="mt-4">Desenvolvido por <a href="https://www.linkedin.com/in/raphaelbarretopro/" target="_blank" rel="noopener noreferrer" class="underline hover:text-white">Raphael Barreto</a></p>
+            </div>
   </footer>
 
   <script type="module">
