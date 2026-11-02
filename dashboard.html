@@ -297,6 +297,16 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
         </div>
       </section>
 
+      <!-- avaliação da plataforma: só para o próprio aluno -->
+      <section id="secaoFeedback" class="nao-imprimir bg-white rounded-xl shadow p-6 mt-6 oculto">
+        <h2 class="text-lg font-semibold mb-1">Sua opinião importa</h2>
+        <p class="text-sm text-gray-500 mb-5">
+          Avalie a plataforma ou um curso que você treinou. Antes de aparecer no site, cada
+          avaliação passa por aprovação.
+        </p>
+        <div id="formFeedback"></div>
+      </section>
+
     </div>
 
   </main>
@@ -311,6 +321,7 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
     import { sair } from './shared/simulado-engine/common/js/auth.js';
     import { lerAluno, lerResumo, lerResultados, NOTA_DE_CORTE } from './shared/simulado-engine/common/js/store.js';
     import { ehAdmin, exigirAcesso, mensagemDeFalha } from './shared/simulado-engine/common/js/acesso.js';
+    import { escoposDoAluno, montarFormulario } from './shared/simulado-engine/common/js/feedback-form.js';
 
     const el = id => document.getElementById(id);
 
@@ -606,6 +617,13 @@ Descrição: Histórico e desempenho do aluno. Lê o documento agregado
         pintarDominios(resumo);
         await carregarPagina();
         mostrar('conteudo');
+
+        // O formulário é do próprio aluno: o administrador que observa o
+        // painel de outro não avalia por ele.
+        if (alvoUid === perfil.uid) {
+          montarFormulario(el('formFeedback'), { perfil, escopos: escoposDoAluno(resumo.porCurso) });
+          el('secaoFeedback').classList.remove('oculto');
+        }
       }
     } catch (erro) {
       console.error('Falha ao carregar o dashboard:', erro);
