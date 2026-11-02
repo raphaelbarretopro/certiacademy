@@ -20,6 +20,7 @@ rules_version = '2';
 //                resgate nasce junto com a liberacao (mesmo lote, tudo ou nada)
 //              - liberacao de acesso so nasce de voucher resgatado ou da mao do administrador
 //              - a turma de um aluno vem do voucher que ele resgatou, nunca do que ele mandou
+//              - feedback so e publico depois de aprovado pelo administrador, e so ele destaca
 //
 //            O que elas NAO garantem: que a pontuacao seja verdadeira. A nota e
 //            calculada no navegador, e validar isso exigiria Cloud Functions,
@@ -92,6 +93,24 @@ service cloud.firestore {
     // aluno veria uma recusa sem explicacao.
     function expiracaoDoVoucher(codigo) {
       return get(/databases/$(database)/documents/vouchers/$(codigo)).data.get('acessoExpiraEm', null);
+    }
+
+    // Acesso vigente de quem esta pedindo: documento existe, nao foi revogado e
+    // nao venceu. Espelha acessoVigente() do acesso.js. get() com padrao pelo
+    // mesmo motivo das funcoes acima. Administrador entra sempre.
+    function temAcessoVigente(uid) {
+      return ehAdmin()
+        || (exists(/databases/$(database)/documents/acessos/$(uid))
+            && get(/databases/$(database)/documents/acessos/$(uid)).data.get('revogadoEm', null) == null
+            && (get(/databases/$(database)/documents/acessos/$(uid)).data.get('expiraEm', null) == null
+                || get(/databases/$(database)/documents/acessos/$(uid)).data.expiraEm > request.time));
+    }
+
+    // O aluno gravou ao menos uma prova: o agregado so nasce junto com o
+    // primeiro resultado. E um indicio, nao uma prova - esse documento e
+    // gravavel pelo proprio aluno, como toda a subarvore users/{uid}.
+    function jaFezSimulado(uid) {
+      return exists(/databases/$(database)/documents/users/$(uid)/resumo/agregado);
     }
 
     // ==========================================
@@ -208,6 +227,90 @@ service cloud.firestore {
         && request.resource.data.decididaEm == request.time;
 
       allow delete: if ehAdmin();
+    }
+
+    // ==========================================
+    // Feedbacks
+    // Descricao: avaliacao do aluno (1 a 5 estrelas + texto), da plataforma
+    //            ('geral') ou de um curso ('AZ-900'). O id e <uid>_<escopo>:
+    //            cada aluno tem no maximo uma avaliacao por escopo, e reenviar
+    //            edita em vez de duplicar.
+    //
+    //            Nada vai ao ar sem o administrador: todo envio ou edicao do
+    //            aluno nasce 'pendente' e sem destaque. O publico (inclusive
+    //            sem login) le SOMENTE os 'aprovado'. As consultas do site
+    //            precisam filtrar por situacao == 'aprovado', senao o
+    //            Firestore recusa a listagem inteira.
+    // ==========================================
+    match /feedbacks/{feedbackId} {
+      allow get, list: if resource.data.situacao == 'aprovado'
+        || ehDono(resource.data.uid)
+        || ehAdmin();
+
+      allow create: if ehDono(request.resource.data.uid)
+        && temAcessoVigente(request.auth.uid)
+        && jaFezSimulado(request.auth.uid)
+        && request.resource.data.keys().hasOnly([
+             'uid', 'escopo', 'estrelas', 'texto', 'nomePublico',
+             'consentimento', 'situacao', 'destaque', 'criadoEm'
+           ])
+        && request.resource.data.keys().hasAll([
+             'uid', 'escopo', 'estrelas', 'texto', 'nomePublico',
+             'consentimento', 'situacao', 'destaque', 'criadoEm'
+           ])
+        && request.resource.data.escopo is string
+        && (request.resource.data.escopo == 'geral'
+            || request.resource.data.escopo.matches('^[A-Z]{2,3}-[0-9]{3}[A-Z]?$'))
+        && feedbackId == request.auth.uid + '_' + request.resource.data.escopo
+        && request.resource.data.estrelas is int
+        && request.resource.data.estrelas >= 1
+        && request.resource.data.estrelas <= 5
+        && request.resource.data.texto is string
+        && request.resource.data.texto.size() >= 20
+        && request.resource.data.texto.size() <= 600
+        && request.resource.data.nomePublico is string
+        && request.resource.data.nomePublico.size() >= 2
+        && request.resource.data.nomePublico.size() <= 60
+        && request.resource.data.consentimento == true
+        && request.resource.data.situacao == 'pendente'
+        && request.resource.data.destaque == false
+        && request.resource.data.criadoEm == request.time;
+
+      // O aluno reescreve a propria avaliacao, que volta para a fila. Os campos
+      // de decisao e o destaque nao estao na lista: so o administrador mexe.
+      allow update: if ehDono(resource.data.uid)
+        && temAcessoVigente(request.auth.uid)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['estrelas', 'texto', 'nomePublico', 'consentimento',
+                       'situacao', 'destaque', 'atualizadoEm'])
+        && request.resource.data.estrelas is int
+        && request.resource.data.estrelas >= 1
+        && request.resource.data.estrelas <= 5
+        && request.resource.data.texto is string
+        && request.resource.data.texto.size() >= 20
+        && request.resource.data.texto.size() <= 600
+        && request.resource.data.nomePublico is string
+        && request.resource.data.nomePublico.size() >= 2
+        && request.resource.data.nomePublico.size() <= 60
+        && request.resource.data.consentimento == true
+        && request.resource.data.situacao == 'pendente'
+        && request.resource.data.destaque == false
+        && request.resource.data.atualizadoEm == request.time;
+
+      // A decisao do administrador fica registrada com autor e hora, e so ele
+      // destaca - e so uma avaliacao aprovada pode ser destaque.
+      allow update: if ehAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['situacao', 'destaque', 'decididoPor', 'decididoEm'])
+        && request.resource.data.situacao in ['aprovado', 'rejeitado']
+        && request.resource.data.destaque is bool
+        && (request.resource.data.destaque == false
+            || request.resource.data.situacao == 'aprovado')
+        && request.resource.data.decididoPor == request.auth.uid
+        && request.resource.data.decididoEm == request.time;
+
+      // O aluno apaga a propria (LGPD); o administrador remove qualquer uma.
+      allow delete: if ehDono(resource.data.uid) || ehAdmin();
     }
 
     // ==========================================
